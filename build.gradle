@@ -4,8 +4,8 @@ plugins {
 	id 'java'
 	id 'checkstyle'
 	id 'jacoco'
+	id 'application'
 }
-
 group = 'org.fundacionjala'
 version = '0.0.1-SNAPSHOT'
 sourceCompatibility = '11'
