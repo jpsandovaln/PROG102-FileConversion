@@ -9,7 +9,24 @@ import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
 
 public class AudioModel {
-    public String convertAudio(MultipartFile file, String format, String codec, String bitRate, String channels, String sampleRate, String start, String duration, String vol, String input, String converted, String tool) {
+
+    /**
+     * Show all output of audio file conversion
+     * @param file uploaded
+     * @param format string
+     * @param codec string
+     * @param bitRate string
+     * @param channels string
+     * @param sampleRate string
+     * @param start string
+     * @param duration string
+     * @param vol string
+     * @return all output of audio file conversion
+     */
+    public String convertAudio(final MultipartFile file, final String format, final String codec,
+                               final String bitRate, final String channels, final String sampleRate,
+                               final String start, final String duration, final String vol,
+                               final String input, final String converted, final String tool) {
         try {
             String fileName = file.getOriginalFilename();
             String exitThree = "";
@@ -53,14 +70,12 @@ public class AudioModel {
             BufferedReader reader = new BufferedReader(streamReader);
             StringBuilder result = new StringBuilder();
             while (reader.ready()) {
-                result.append((char)reader.read());
+                result.append((char) reader.read());
             }
             return result.toString();
-        }
-        catch (java.io.IOException e) {
+        } catch (java.io.IOException e) {
             return e.getMessage();
-        }
-        catch (java.lang.InterruptedException e) {
+        } catch (java.lang.InterruptedException e) {
             return e.getMessage();
         }
     }
