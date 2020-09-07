@@ -36,3 +36,4 @@ out/
 ### Project ###
 /storage/*
 /thirdParty/*
+/src/main/resources/application.properties
