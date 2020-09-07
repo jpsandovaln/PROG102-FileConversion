@@ -18,8 +18,16 @@ import org.springframework.web.bind.annotation.RestController;
 public class MetadataController {
     @Autowired
     private MetadataExtractor extractor;
+
+    /**
+     * Receives a file's path and extracts its metadata
+     * @param pathFile path of file
+     * @param exportFormat the format to export metadata
+     * @param detail amount of information to extract
+     * @return the extracted metadata
+     */
     @RequestMapping(value = "extractMetadata", method = RequestMethod.POST, params = {"pathFile", "exportFormat", "detail"})
-    public String getMetadata(@RequestParam(required = true) String pathFile, @RequestParam(required = true) String exportFormat, @RequestParam String detail) {
+    public String getMetadata(@RequestParam(required = true) final String pathFile, @RequestParam(required = true) final String exportFormat, @RequestParam final String detail) {
         if (pathFile.isEmpty() || exportFormat.isEmpty()) {
             return "error empty";
         } else {
