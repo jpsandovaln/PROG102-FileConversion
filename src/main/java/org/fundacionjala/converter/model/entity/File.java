@@ -23,6 +23,9 @@ public class File {
         this.md5 = md5;
     }
 
+    public File(final Long id, final String path, final String md5) {
+    }
+
     /**
      * @return the id
      */
