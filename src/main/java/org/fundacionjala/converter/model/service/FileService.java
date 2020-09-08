@@ -9,6 +9,10 @@ import org.fundacionjala.converter.model.repository.FileRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+/**
+ * @author Laura Montaño
+ * @version 0.1
+ */
 @Service
 public class FileService {
     @Autowired
@@ -77,8 +81,8 @@ public class FileService {
      * @param file - the reference to the object File to delete
      */
     public void deleteFile(final File file) {
-        File fileTemp = new File(file.getId(), file.getPath(), file.getMd5());
-        fileRepository.delete(fileTemp);
+        File fileToDelete = fileRepository.findByMd5(file.getMd5());
+        fileRepository.delete(fileToDelete);
     }
 
     /**
@@ -87,7 +91,6 @@ public class FileService {
      */
     public void deleteFileByMd5(final String md5) {
         File fileToDelete = fileRepository.findByMd5(md5);
-        File fileTemp = new File(fileToDelete.getId(), fileToDelete.getPath(), fileToDelete.getMd5());
-        fileRepository.delete(fileTemp);
+        fileRepository.delete(fileToDelete);
     }
 }

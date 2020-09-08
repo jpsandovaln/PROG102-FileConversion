@@ -6,6 +6,10 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
+/**
+ * @author Julia Escalante
+ * @version 0.1
+ */
 @RestController
 public class HelloController {
     /**
