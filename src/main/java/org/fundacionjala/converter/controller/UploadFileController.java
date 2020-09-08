@@ -3,7 +3,7 @@ package org.fundacionjala.converter.controller;
 import org.fundacionjala.converter.model.ChecksumMD5;
 import org.fundacionjala.converter.model.entity.File;
 import org.fundacionjala.converter.model.service.FileService;
-import org.fundacionjala.converter.service.FileUploadService;
+import org.fundacionjala.converter.model.service.FileUploadService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -25,7 +25,7 @@ public class UploadFileController {
      * @return upload file
      */
     @GetMapping("/")
-    public String displayUploadView() {
+    public String index() {
         return "upload file";
     }
 
@@ -84,18 +84,30 @@ public class UploadFileController {
      * delete the file in data base
      * @param file to delete
      */
-    @DeleteMapping("/file")
-    public void addFile(@RequestParam final File file) {
-        fileService.deleteFile(file);
+    @DeleteMapping("/delete")
+    public ResponseEntity<?>  deleteFile(@RequestBody final File file) {
+        if (fileService.getFileByMd5(file.getMd5()) != null) {
+            fileService.deleteFile(file);
+            return new ResponseEntity<Object>("file deleted", HttpStatus.OK);
+        } else {
+            return new ResponseEntity<Object>("file doesn't exist", HttpStatus.OK);
+        }
     }
 
     /**
      * delete the file according to your md5
      * @param md5's file to delete
      */
-    @DeleteMapping("/file{md5}")
-    public void addFile(@RequestParam final String md5) {
-        fileService.deleteFileByMd5(md5);
+    @DeleteMapping("/delete-md5{md5}")
+    public ResponseEntity<?>  deleteByMD5(@RequestParam("md5")  final String md5) {
+        File file = fileService.getFileByMd5(md5);
+        String filename = file.toString();
+        if (file != null) {
+            fileService.deleteFile(file);
+            return new ResponseEntity<Object>("file deleted" + filename, HttpStatus.OK);
+        } else {
+            return new ResponseEntity<Object>("file doesn't exist" + filename, HttpStatus.OK);
+        }
     }
 
     /**
@@ -123,8 +135,9 @@ public class UploadFileController {
      * @param md5 to find
      * @return file
      */
-    @GetMapping("/file{md5}")
-    public File getFile(@RequestParam final String md5) {
+    @GetMapping("/file-md5{md5}")
+    public File getFileByMD5(@RequestParam final String md5) {
+        fileService.getFileByMd5(md5);
         return  fileService.getFileByMd5(md5);
     }
 
@@ -132,7 +145,7 @@ public class UploadFileController {
      * update file in data base
      * @param file to update
      */
-    @PostMapping("/file")
+    @PostMapping("/update-file")
     public void updateFile(@RequestParam final File file) {
         fileService.updateFile(file);
     }
