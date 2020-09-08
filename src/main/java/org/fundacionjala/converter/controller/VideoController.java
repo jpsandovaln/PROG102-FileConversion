@@ -17,7 +17,7 @@ public class VideoController {
   public String videoConverter(@RequestParam("file") final MultipartFile file, @RequestParam("ext") final String ext) {
     VideoModel video = new VideoModel(file);
     if (ext.equals("mp4")) {
-      video.compresToMp4();
+      video.compressToMp4();
     } else if (ext.equals("gif")) {
       video.gif();
     }

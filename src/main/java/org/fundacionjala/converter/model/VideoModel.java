@@ -20,14 +20,14 @@ public class VideoModel {
   /**
    * videoModel Compres to mp4
    */
-  public boolean compresToMp4() {
+  public boolean compressToMp4() {
     String output = common.getStorageConvertedPath() + "demo2.mp4";
     List<String> command = parameter.COMPRESS.getParameter();
     command.add(0, common.videoExecutable());
     command.add(fileName);
     command.add(output);
     if (common.execute(command)) {
-      setOutputFileNmae(output);
+      setOutputFileName(output);
       return true;
     }
     return false;
@@ -47,7 +47,7 @@ public class VideoModel {
       System.out.println(value);
     });
     if (common.execute(command)) {
-      setOutputFileNmae(output);
+      setOutputFileName(output);
       return true;
     }
     return false;
@@ -62,7 +62,7 @@ public class VideoModel {
   /**
    * This method setOutputFileNmae
    */
-  public void setOutputFileNmae(final String outputFileName) {
+  public void setOutputFileName(final String outputFileName) {
     this.outputFileName = outputFileName;
   }
 
