@@ -33,7 +33,7 @@ public class UploadFileController {
      * displays upload file without param
      * @return upload file
      */
-    @GetMapping("/")
+    @GetMapping("/modifying")
     public String index() {
         return "upload file";
     }
