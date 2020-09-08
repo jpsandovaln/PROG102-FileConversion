@@ -28,11 +28,11 @@ public class FileService {
 
     /**
      * Returns element asociated to the given id
-     * @param i - the Long id of element to show
+     * @param index - the Long id of element to show
      * @return file - a reference to the file from the table
      */
-    public File getFileById(final int i) {
-        Optional<File> file = fileRepository.findById((long) i);
+    public File getFileById(final int index) {
+        Optional<File> file = fileRepository.findById((long) index);
         if (file.isPresent()) {
             return file.get();
         } else {
