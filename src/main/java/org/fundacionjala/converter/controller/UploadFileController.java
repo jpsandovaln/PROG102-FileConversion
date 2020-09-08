@@ -61,7 +61,7 @@ public class UploadFileController {
         }
     }
     /**
-     * displays file upload successfully with message correct or incorrect md5
+     * displays message about file loading, and inserted md5 is correct or not
      * @param file uploaded
      * @param md5 String
      * @return file upload successfully with message correct or incorrect md5
