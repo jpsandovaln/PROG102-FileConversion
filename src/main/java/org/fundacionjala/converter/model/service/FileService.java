@@ -9,6 +9,10 @@ import org.fundacionjala.converter.model.repository.FileRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+/**
+ * @author Laura Montaño
+ * @version 0.1
+ */
 @Service
 public class FileService {
     @Autowired

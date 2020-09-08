@@ -7,6 +7,10 @@ import java.io.InputStream;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 
+/**
+ * @author Julia Escalante
+ * @version 0.1
+ */
 public class ChecksumMD5 {
     public static final int SIZE_BYTE = 1024;
 
