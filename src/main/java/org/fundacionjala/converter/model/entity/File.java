@@ -6,6 +6,10 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
+/**
+ * @author Laura Montaño
+ * @version 0.1
+ */
 @Entity
 @Table(name = "files")
 public class File {

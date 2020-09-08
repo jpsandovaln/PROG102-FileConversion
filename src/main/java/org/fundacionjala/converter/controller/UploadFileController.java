@@ -17,6 +17,10 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 
+/**
+ * @author Julia Escalante
+ * @version 0.1
+ */
 @RestController
 public class UploadFileController {
 
