@@ -10,6 +10,7 @@ import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
 import java.util.List;
 import java.util.Properties;
+import java.util.concurrent.ExecutionException;
 
 import org.springframework.web.multipart.MultipartFile;
 
@@ -63,17 +64,14 @@ public class Commons {
    *
    * @param file the file to move
    * @return the file location
+   * @throws IOException
    */
-  public String moveFileInputStorage(final MultipartFile file) {
+  public String moveFileInputStorage(final MultipartFile file) throws IOException {
     String pathFile = getStoragePath() + file.getOriginalFilename();
-    try {
       Files.createDirectories(Paths.get(getStoragePath())); //remove
       Files.createDirectories(Paths.get(getStorageConvertedPath())); // remove
       Files.copy(file.getInputStream(), Paths.get(pathFile), StandardCopyOption.REPLACE_EXISTING);
       return pathFile;
-    } catch (Exception e) {
-      return e.getMessage();
-    }
   }
 
   /**
@@ -81,9 +79,12 @@ public class Commons {
    *
    * @param command list of the commands
    * @return status of the execution
+   * @throws ExecutionException
+   * @throws IOException
+   * @throws InterruptedException
    */
-  public boolean execute(final List<String> command) {
-    try {
+  public void execute(final List<String> command) throws ExecutionException, IOException, InterruptedException {
+
       Process processDuration = new ProcessBuilder(command).redirectErrorStream(true).start();
       StringBuilder outPut = new StringBuilder();
       BufferedReader processOutputReader = new BufferedReader(new InputStreamReader(processDuration.getInputStream()));
@@ -92,11 +93,5 @@ public class Commons {
         outPut.append(line + System.lineSeparator());
       }
       processDuration.waitFor();
-      System.out.println(outPut.toString());
-      return true;
-    } catch (Exception e) {
-      System.err.println(e.getMessage());
-      return false;
-    }
   }
 }

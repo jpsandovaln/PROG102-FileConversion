@@ -1,6 +1,8 @@
 package org.fundacionjala.converter.model;
 
+import java.io.IOException;
 import java.util.List;
+import java.util.concurrent.ExecutionException;
 
 import org.fundacionjala.converter.commons.Commons;
 import org.springframework.web.multipart.MultipartFile;
@@ -12,45 +14,42 @@ public class VideoModel {
   private Commons common;
   private VideoParameter parameter;
 
-  public VideoModel(final MultipartFile file) {
+  public VideoModel(final MultipartFile file) throws IOException {
     common = new Commons("video");
     fileName = common.moveFileInputStorage(file);
   }
 
   /**
    * videoModel Compres to mp4
+   *
+   * @throws ExecutionException
+   * @throws InterruptedException
+   * @throws IOException
    */
-  public boolean compressToMp4() {
+  public void compressToMp4() throws ExecutionException, IOException, InterruptedException {
     String output = common.getStorageConvertedPath() + "demo2.mp4";
     List<String> command = parameter.COMPRESS.getParameter();
     command.add(0, common.videoExecutable());
     command.add(fileName);
     command.add(output);
-    if (common.execute(command)) {
-      setOutputFileName(output);
-      return true;
-    }
-    return false;
+    common.execute(command);
   }
 
   /**
    * videoModel convert to gif
+   *
+   * @throws ExecutionException
+   * @throws InterruptedException
+   * @throws IOException
    */
-  public boolean gif() {
+  public void gif() throws ExecutionException, IOException, InterruptedException {
     String output = common.getStorageConvertedPath() + "demo2.gif";
     List<String> command = parameter.GIF.getParameter();
     command.add(0, common.videoExecutable());
     command.add(fileName);
     command.add(output);
-
-    command.stream().forEach(value -> {
-      System.out.println(value);
-    });
-    if (common.execute(command)) {
-      setOutputFileName(output);
-      return true;
-    }
-    return false;
+    common.execute(command);
+    setOutputFileName(output);
   }
   /**
    * This method return the file name
