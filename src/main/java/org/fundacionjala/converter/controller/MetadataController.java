@@ -36,7 +36,7 @@ public class MetadataController {
     @RequestMapping(value = "extractMetadata", method = RequestMethod.POST)
     public String getMetadata(final RequestMetadataParam request) {
         if (request.getPathFile().isEmpty() || request.getExportFormat().isEmpty()) {
-            return "error empty";
+            return "The fields cannot be empty";
         } else {
             metadataParam.setFilePath(request.getPathFile());
             metadataParam.setFormatExport(metadataParam.getFormatExport(request.getExportFormat()));

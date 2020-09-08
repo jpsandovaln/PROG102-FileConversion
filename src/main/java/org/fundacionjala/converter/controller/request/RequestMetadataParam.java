@@ -16,6 +16,23 @@ public class RequestMetadataParam {
     private String pathFile;
     private String exportFormat;
     private String detail;
+    private String md5;
+
+    /**
+     * Returns md5
+     * @return md5
+     */
+    public String getMd5() {
+        return md5;
+    }
+
+    /**
+     * Sets md5 parameter
+     * @param md5
+     */
+    public void setMd5(final String md5) {
+        this.md5 = md5;
+    }
 
     /**
      * Sets path of file
