@@ -1,10 +1,18 @@
+/**
+ * Copyright (c) 2020 Fundacion Jala.
+ *
+ * This software is the confidential and proprietary information of Fundacion Jala
+ * ("Confidential Information"). You shall not disclose such Confidential
+ * Information and shall use it only in accordance with the terms of the
+ * license agreement you entered into with Fundacion Jala
+ */
 package org.fundacionjala.converter.model.metadata;
-
 import org.fundacionjala.converter.model.Param;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.stereotype.Service;
 
-@Service
+/**
+ * @author Angela Martinez
+ * @version 0.1
+ */
 public class MetadataParam extends Param {
     public static final String REDIRECTION = " > ";
     private String filePath;
@@ -12,52 +20,85 @@ public class MetadataParam extends Param {
     private String formatExportCommand;
     private String detail;
     private String fileName = "metadata";
-    //@Value("${filesMetadataPath}")
-    //private String fileMetadataPath;
-    private String targetDir = "storage/convertedFiles/metadata/";
-    //@Value("${metadata.path}")
-    private String toolPath = "thirdParty/exiftool/exiftool.exe ";
+    private String targetDir;
+    private String toolPath;
 
-    public void setFileName(String fileName) {
+    /**
+     * Sets the name of the metadata file
+     * @param fileName
+     */
+    public void setFileName(final String fileName) {
         this.fileName = fileName;
     }
 
-    public void setTargetDir(String targetDir) {
+    /**
+     * Sets the path of the directory where the metadata will be stored
+     * @param targetDir
+     */
+    public void setTargetDir(final String targetDir) {
         this.targetDir = targetDir;
     }
 
-    public void setToolPath(String toolPath) {
+    /**
+     * Sets the path where the tool is saved
+     * @param toolPath
+     */
+    public void setToolPath(final String toolPath) {
         this.toolPath = toolPath;
     }
-    public void setFormatExportCommand(String formatExportCommand) {
+
+    /**
+     * Sets format to export metadata
+     * @param formatExportCommand
+     */
+    public void setFormatExportCommand(final String formatExportCommand) {
         this.formatExportCommand = formatExportCommand;
     }
 
+    /**
+     * Returns the name of the metadata file
+     * @return
+     */
     public String getFileName() {
         return fileName;
     }
 
-    public static String getREDIRECTION() {
-        return REDIRECTION;
-    }
-
+    /**
+     * Returns the path of file
+     * @return
+     */
     public String getFilePath() {
         return filePath;
     }
 
+    /**
+     * Returns the format to export metadata
+     * @return
+     */
     public String getFormatExport() {
         return formatExport;
     }
 
+    /**
+     * Returns parameter for detail
+     * @return
+     */
     public String getDetail() {
         return detail;
     }
 
+    /**
+     * Returns the path where the metadata will be saved
+     * @return
+     */
     public String getTargetDir() {
-        System.out.println(targetDir);
         return targetDir;
     }
 
+    /**
+     * Returns the path where the tool is saved
+     * @return
+     */
     public String getToolPath() {
         return toolPath;
     }
@@ -78,12 +119,16 @@ public class MetadataParam extends Param {
                 return ".txt";
             case "T":
                 return ".csv";
-            case "s":
-                return "screen";
             default:
                 return ".xmp";
         }
     }
+
+    /**
+     * Returns the parameter to define the type of format to export the metadata
+     * @param format
+     * @return
+     */
     public String getFormatExportCommand(final String format) {
         switch (format) {
             case "j":
@@ -99,11 +144,16 @@ public class MetadataParam extends Param {
         }
     }
 
-    public String getFormatExportCommand() {
-            return formatExportCommand;
-    }
     /**
-     * Returns the command for detail
+     * Returns the format to export metadata
+     * @return
+     */
+    public String getFormatExportCommand() {
+        return formatExportCommand;
+    }
+
+    /**
+     * Returns the parameter for detail
      * @param detail amount of information to extract
      * @return the commando for detail
      */
@@ -118,11 +168,19 @@ public class MetadataParam extends Param {
         }
     }
 
-    public void setFormatExport(String formatExport) {
+    /**
+     * Sets format to export metadata
+     * @param formatExport
+     */
+    public void setFormatExport(final String formatExport) {
         this.formatExport = formatExport;
     }
 
-    public void setDetail(String detail) {
+    /**
+     * Sets details
+     * @param detail
+     */
+    public void setDetail(final String detail) {
         this.detail = detail;
     }
 

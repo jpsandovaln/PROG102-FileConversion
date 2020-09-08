@@ -11,10 +11,6 @@ package org.fundacionjala.converter.model.metadata;
 import org.fundacionjala.converter.model.CommandBuilder;
 import org.fundacionjala.converter.model.IExtractor;
 import org.fundacionjala.converter.model.Param;
-import org.springframework.stereotype.Service;
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -22,13 +18,23 @@ import java.util.List;
  * @author Angela Martinez
  * @version 0.1
  */
-@Service
 public class MetadataExtractor implements IExtractor {
     private Process process;
-    private List<String> listParams = new ArrayList<String>();
-    private CommandBuilder commandBuilder = new CommandBuilder();
+    private List<String> listParams;
+    private CommandBuilder commandBuilder;
 
+    public MetadataExtractor() {
+        listParams = new ArrayList<String>();
+        commandBuilder = new CommandBuilder();
+    }
+
+    /**
+     * Returns a list with the parameters
+     * @param param object with the parameters
+     * @return List<String>
+     */
     public List<String> getListParams(final Param param) {
+        listParams.clear();
         MetadataParam metadataParam = (MetadataParam) param;
         listParams.add(metadataParam.getToolPath());
         listParams.add(metadataParam.getFormatExportCommand());
@@ -40,9 +46,18 @@ public class MetadataExtractor implements IExtractor {
         listParams.add(metadataParam.getFormatExport());
         return listParams;
     }
-    public String extract(final Param param) {
-        String sSistemaOperativo = System.getProperty("os.name");
-        return commandBuilder.execute(getListParams(param));
+
+    /**
+     * Extract file's metadata
+     * @param param
+     * @throws Exception
+     */
+    public void extract(final Param param) throws Exception {
+        try {
+            commandBuilder.execute(getListParams(param));
+        } catch (Exception e) {
+            throw e;
+        }
     }
 }
 

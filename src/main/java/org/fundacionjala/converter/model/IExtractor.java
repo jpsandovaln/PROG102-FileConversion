@@ -5,5 +5,5 @@ package org.fundacionjala.converter.model;
  * @version 0.1
  */
 public interface IExtractor {
-    String extract(final Param param);
+    void extract(Param param) throws Exception;
 }

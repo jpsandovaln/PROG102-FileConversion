@@ -7,12 +7,12 @@
  * license agreement you entered into with Fundacion Jala
  */
 package org.fundacionjala.converter.controller;
+import org.fundacionjala.converter.controller.request.RequestMetadataParam;
 import org.fundacionjala.converter.model.metadata.MetadataExtractor;
 import org.fundacionjala.converter.model.metadata.MetadataParam;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 /**
@@ -21,27 +21,35 @@ import org.springframework.web.bind.annotation.RestController;
  */
 @RestController
 public class MetadataController {
-    @Autowired
-    private MetadataExtractor metadataExtractor;
+    private MetadataExtractor metadataExtractor = new MetadataExtractor();
+    private MetadataParam metadataParam = new MetadataParam();
+    @Value("${filesMetadataPath}")
+    private String targetDir;
+    @Value("${metadata.path}")
+    private String toolPath;
 
     /**
-     * Receives a file's path and extracts its metadata
-     * @param pathFile path of file
-     * @param exportFormat the format to export metadata
-     * @param detail amount of information to extract
-     * @return the extracted metadata
+     * Receives a request and extracts its metadata
+     * @param request requestMetadataParam object
+     * @return a message
      */
-    @RequestMapping(value = "extractMetadata", method = RequestMethod.POST, params = {"pathFile", "exportFormat", "detail"})
-    public String getMetadata(@RequestParam(required = true) final String pathFile, @RequestParam(required = true) final String exportFormat, @RequestParam final String detail) {
-        if (pathFile.isEmpty() || exportFormat.isEmpty()) {
+    @RequestMapping(value = "extractMetadata", method = RequestMethod.POST)
+    public String getMetadata(final RequestMetadataParam request) {
+        if (request.getPathFile().isEmpty() || request.getExportFormat().isEmpty()) {
             return "error empty";
         } else {
-            MetadataParam metadataParam = new MetadataParam();
-            metadataParam.setFilePath(pathFile);
-            metadataParam.setFormatExport(metadataParam.getFormatExport(exportFormat));
-            metadataParam.setFormatExportCommand(metadataParam.getFormatExportCommand(exportFormat));
-            metadataParam.setDetail(metadataParam.getDetail(detail));
-            return metadataExtractor.extract(metadataParam);
+            metadataParam.setFilePath(request.getPathFile());
+            metadataParam.setFormatExport(metadataParam.getFormatExport(request.getExportFormat()));
+            metadataParam.setFormatExportCommand(metadataParam.getFormatExportCommand(request.getExportFormat()));
+            metadataParam.setDetail(metadataParam.getDetail(request.getDetail()));
+            metadataParam.setTargetDir(targetDir);
+            metadataParam.setToolPath(toolPath);
+            try {
+                metadataExtractor.extract(metadataParam);
+            } catch (Exception e) {
+                return e.getMessage();
+            }
         }
+        return "Extraction successful";
     }
 }
