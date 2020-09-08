@@ -29,6 +29,9 @@ dependencies {
 	compileOnly 'org.projectlombok:lombok'
 	runtimeOnly 'mysql:mysql-connector-java'
 	developmentOnly 'org.springframework.boot:spring-boot-devtools'
+	compile 'com.itextpdf:itext7-core:7.0.2'
+	compile group: "org.apache.poi", name: "poi", version: "3.9"
+	compile group: 'fr.opensagres.xdocreport', name: 'org.apache.poi.xwpf.converter.pdf', version: '1.0.6'
 	annotationProcessor 'org.springframework.boot:spring-boot-configuration-processor'
 	annotationProcessor 'org.projectlombok:lombok'
 	testImplementation('org.springframework.boot:spring-boot-starter-test') {
@@ -63,6 +66,5 @@ checkstyleTest {
 }
 
 check.dependsOn jacocoTestReport
-
 test.finalizedBy("checkstyleMain")
 test.finalizedBy("jacocoTestReport")
