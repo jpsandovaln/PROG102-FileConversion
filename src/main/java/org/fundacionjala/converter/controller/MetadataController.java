@@ -8,6 +8,7 @@
  */
 package org.fundacionjala.converter.controller;
 import org.fundacionjala.converter.controller.request.RequestMetadataParam;
+import org.fundacionjala.converter.controller.request.RequestMetadataValidator;
 import org.fundacionjala.converter.model.metadata.MetadataExtractor;
 import org.fundacionjala.converter.model.metadata.MetadataParam;
 import org.springframework.beans.factory.annotation.Value;
@@ -23,6 +24,7 @@ import org.springframework.web.bind.annotation.RestController;
 public class MetadataController {
     private MetadataExtractor metadataExtractor = new MetadataExtractor();
     private MetadataParam metadataParam = new MetadataParam();
+    private RequestMetadataValidator requestMetadataValidator= new RequestMetadataValidator();
     @Value("${filesMetadataPath}")
     private String targetDir;
     @Value("${metadata.path}")
@@ -35,8 +37,10 @@ public class MetadataController {
      */
     @RequestMapping(value = "extractMetadata", method = RequestMethod.POST)
     public String getMetadata(final RequestMetadataParam request) {
-        if (request.getPathFile().isEmpty() || request.getExportFormat().isEmpty()) {
-            return "The fields cannot be empty";
+        //if (request.getPathFile().isEmpty() || request.getExportFormat().isEmpty()) {
+        //    return "The fields cannot be empty";
+        if (!requestMetadataValidator.isValid(request)) {
+            return "Error";
         } else {
             metadataParam.setFilePath(request.getPathFile());
             metadataParam.setFormatExport(metadataParam.getFormatExport(request.getExportFormat()));

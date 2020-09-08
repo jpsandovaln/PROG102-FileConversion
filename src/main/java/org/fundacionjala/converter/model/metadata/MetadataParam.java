@@ -120,7 +120,7 @@ public class MetadataParam extends Param {
             case "T":
                 return ".csv";
             default:
-                return ".xmp";
+                return ".XMP";
         }
     }
 
