@@ -32,7 +32,7 @@ public class ImageModel {
         try {
             String path = "C:\\Users\\Administrator\\Desktop";
             String fileName = file.getOriginalFilename();
-            String cmd = "cd " + path + " && magick " + fileName + " -crop "+ height + "x" + weight + "+" + startPositionX + "+"+ startPositionY + " " + newName + "." +extension;
+            String cmd = "cd " + path + " && magick " + fileName + " -crop " + height + "x" + weight + "+" + startPositionX + "+" + startPositionY + " " + newName + "." + extension;
             readCmdCommand(cmd);
             return "successfully";
         }catch (Exception ex)
