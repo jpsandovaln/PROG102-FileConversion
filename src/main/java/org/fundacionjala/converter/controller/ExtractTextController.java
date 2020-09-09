@@ -32,12 +32,11 @@ public class ExtractTextController {
     public String extractTextFromImage(final @RequestParam("file") MultipartFile file, final  @RequestParam(required = false) String language,
                                        final @RequestParam(required = false) String type) throws Exception {
         String fileName = file.getOriginalFilename();
-        String result = "";
         String source = input + fileName;
         String target = converted + fileName;
         Files.copy(file.getInputStream(), Paths.get(input + fileName), StandardCopyOption.REPLACE_EXISTING);
         ExtractorModel model = new ExtractorModel();
-        result = model.convert(source, target, language, type, tesseracInstallPath);
+        String result = model.convertDocument(source, target, language, type, tesseracInstallPath);
         return result;
     }
 

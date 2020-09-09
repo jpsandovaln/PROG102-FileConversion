@@ -2,6 +2,8 @@ package org.fundacionjala.converter.model;
 
 import org.fundacionjala.converter.commons.Commons;
 
+import java.io.BufferedReader;
+import java.io.FileReader;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.nio.file.Files;
@@ -24,7 +26,7 @@ public class ExtractorModel {
      * @param exec the paht of the binary
      * @return  if the result was succesfull
      */
-    public String convert(final String source, final String target, final String language, final String type, final String exec) {
+    public String convertDocument(final String source, final String target, final String language, final String type, final String exec) {
         String[] command = {"cmd"};
         String advertaisment = "", result = "";
         try {
@@ -43,7 +45,7 @@ public class ExtractorModel {
             }
             stdin.close();
             process.waitFor();
-            result = new Commons().readAFile(target + ".txt");
+            result = readAFile(target + ".txt");
             switch (type) {
                 case "word":
                     Files.delete(Paths.get(target + ".txt"));
@@ -73,5 +75,32 @@ public class ExtractorModel {
             e.printStackTrace();
         }
         return result;
+    }
+    /**
+     * read a file
+     * @param fileName the path and name of the file
+     * @return the content of the file in a string
+     */
+    public String readAFile(final String fileName) {
+        BufferedReader buffer = null;
+        String readString = "";
+        try {
+            String sCurrentLine;
+            buffer = new BufferedReader(new FileReader(fileName));
+            while ((sCurrentLine = buffer.readLine()) != null) {
+                readString = readString + sCurrentLine;
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                if (buffer != null) {
+                    buffer.close();
+                }
+            } catch (Exception ex) {
+                ex.printStackTrace();
+            }
+        }
+        return readString;
     }
 }
