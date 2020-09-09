@@ -68,7 +68,7 @@ public class AudioController {
     }
 
     private String addProjectDirectory(final String path) {
-        return (System.getProperty("user.dir") + "/").replace("\\", "/") + path;
+        return "\"" + (System.getProperty("user.dir") + "/").replace("\\", "/") + path + "\"";
     }
 
     private String copySourceFile(final AudioParameter param) {
@@ -80,7 +80,7 @@ public class AudioController {
             return source;
         } catch (IOException e) {
             System.out.println(e.getMessage());
-            return "Error when upload file, please try again.";
+            return "Error occurs while uploading file, please try again.";
         }
     }
 
@@ -98,7 +98,9 @@ public class AudioController {
 
     private void saveFile(final String path) {
         String md5 = generateMD5(path);
-        fileService.saveFile(new File(path, md5));
+        if (!md5.contains(" ")) {
+            fileService.saveFile(new File(path, md5));
+        }
     }
 
     private String getTargetFile(final String fileName, final String format) {
@@ -142,7 +144,7 @@ public class AudioController {
         AudioModel converter = new AudioModel();
         String resultPath = converter.convertAudio(commandParameters, addProjectDirectory(source), addProjectDirectory(target), addProjectDirectory(tool));
         if (resultPath.contains("/")) {
-            saveFile(resultPath);
+            saveFile(target);
             resultPath = "Your converted audio is located at: " + resultPath;
         }
         return resultPath;
