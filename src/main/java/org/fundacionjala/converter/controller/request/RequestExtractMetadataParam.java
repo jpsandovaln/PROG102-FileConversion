@@ -7,37 +7,33 @@
  * license agreement you entered into with Fundacion Jala
  */
 package org.fundacionjala.converter.controller.request;
+import org.springframework.web.multipart.MultipartFile;
 
 /**
  * @author Angela Martinez
  * @version 0.1
  */
-public class RequestMetadataParam {
-    private String pathFile;
+public class RequestExtractMetadataParam {
+    private MultipartFile file;
     private String exportFormat;
     private String detail;
     private String checksumMD5;
 
     /**
-     * Sets path of file
-     * @param pathFile
+     * Sets file
+     * @param file
      */
-    public void setPathFile(final String pathFile) {
-        this.pathFile = pathFile;
+    public void setFile(final MultipartFile file) {
+        this.file = file;
     }
 
     /**
      * Returns path of file
      * @return path
      */
-
-    public String getPathFile() {
-        return pathFile;
-    }
-    /**
-     * Returns checksumMD5
-     * @return checksumMD5
-     */
+    public MultipartFile getFile() {
+            return file;
+        }
     public String getChecksumMD5() {
         return checksumMD5;
     }

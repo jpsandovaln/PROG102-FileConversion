@@ -1,10 +1,22 @@
+/**
+ * Copyright (c) 2020 Fundacion Jala.
+ *
+ * This software is the confidential and proprietary information of Fundacion Jala
+ * ("Confidential Information"). You shall not disclose such Confidential
+ * Information and shall use it only in accordance with the terms of the
+ * license agreement you entered into with Fundacion Jala
+ */
 package org.fundacionjala.converter.controller.request;
 
-
 import org.apache.commons.io.FilenameUtils;
+import org.springframework.web.multipart.MultipartFile;
+
 import java.util.ArrayList;
 import java.util.List;
-
+/**
+ * @author Angela Martinez
+ * @version 0.1
+ */
 public class RequestMetadataValidator {
     private List<String> validTypes;
     private List<String> validExportFormat;
@@ -34,12 +46,21 @@ public class RequestMetadataValidator {
         validDetailFormat = new ArrayList<String>();
         validDetailFormat.add("c");
         validDetailFormat.add("v");
+        validDetailFormat.add("d");
     }
 
     public boolean isValid(RequestMetadataParam param) {
-        return isValidFile(param.getPathFile()) && isValidExportFormat(param.getExportFormat()) && isValidDetail(param.getDetail());
+        return isValidPathFile(param.getPathFile()) && isValidExportFormat(param.getExportFormat()) && isValidDetail(param.getDetail());
     }
-    public boolean isValidFile(final String filePath) {
+
+    public boolean isValid(RequestExtractMetadataParam param) {
+        return isValidFile(param.getFile()) && isValidExportFormat(param.getExportFormat()) && isValidDetail(param.getDetail());
+    }
+
+    public boolean isValidFile(final MultipartFile file) {
+        return (!file.isEmpty() && !file.equals(null));
+    }
+    public boolean isValidPathFile(final String filePath) {
         String extFile = FilenameUtils.getExtension(filePath);
         return validTypes.contains(extFile);
     }

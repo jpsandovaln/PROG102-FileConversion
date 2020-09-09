@@ -53,11 +53,7 @@ public class MetadataExtractor implements IExtractor {
      * @throws Exception
      */
     public void extract(final Param param) throws Exception {
-        try {
-            commandBuilder.execute(getListParams(param));
-        } catch (Exception e) {
-            throw e;
-        }
+        commandBuilder.execute(getListParams(param));
     }
 }
 
