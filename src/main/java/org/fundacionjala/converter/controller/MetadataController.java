@@ -56,12 +56,11 @@ public class MetadataController {
             metadataParam.setTargetDir(targetDir);
             metadataParam.setToolPath(toolPath);
             try {
-                metadataExtractor.extract(metadataParam);
+                return metadataExtractor.extract(metadataParam);
             } catch (Exception e) {
                 return e.getMessage();
             }
         }
-        return "Extraction successful";
     }
 
     /**
@@ -85,17 +84,17 @@ public class MetadataController {
                 } else {
                     filePath = fileService.getFileByMd5(request.getChecksumMD5()).getPath();
                 }
+                System.out.println(filePath);
                 metadataParam.setFilePath(filePath);
                 metadataParam.setFormatExport(metadataParam.getFormatExport(request.getExportFormat()));
                 metadataParam.setFormatExportCommand(metadataParam.getFormatExportCommand(request.getExportFormat()));
                 metadataParam.setDetail(metadataParam.getDetail(request.getDetail()));
                 metadataParam.setTargetDir(targetDir);
                 metadataParam.setToolPath(toolPath);
-                metadataExtractor.extract(metadataParam);
+                return metadataExtractor.extract(metadataParam);
             } catch (Exception e) {
                 return e.getMessage();
             }
         }
-        return "Extraction successful";
     }
 }
