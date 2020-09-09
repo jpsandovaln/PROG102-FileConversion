@@ -5,7 +5,6 @@ import java.util.List;
 import java.util.concurrent.ExecutionException;
 
 import org.fundacionjala.converter.commons.Commons;
-import org.springframework.web.multipart.MultipartFile;
 
 public class VideoModel {
 
@@ -14,9 +13,8 @@ public class VideoModel {
   private Commons common;
   private VideoParameter parameter;
 
-  public VideoModel(final MultipartFile file) throws IOException {
+  public VideoModel() throws IOException {
     common = new Commons("video");
-    fileName = common.moveFileInputStorage(file);
   }
 
   /**
@@ -75,10 +73,17 @@ public class VideoModel {
   }
 
   /**
-   * This method setOutputFileNmae
+   * This method setOutputFileName
    */
   public void setOutputFileName(final String outputFileName) {
     this.outputFileName = outputFileName;
+  }
+
+  /**
+   * This method setInputFileName
+   */
+  public void setInputFileName(final String inputFileName) {
+    this.fileName = inputFileName;
   }
 
   /**

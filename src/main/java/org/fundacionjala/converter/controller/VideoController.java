@@ -1,5 +1,9 @@
 package org.fundacionjala.converter.controller;
 
+import java.io.IOException;
+import java.security.NoSuchAlgorithmException;
+import java.util.concurrent.ExecutionException;
+
 import org.fundacionjala.converter.model.ChecksumMD5;
 import org.fundacionjala.converter.model.VideoModel;
 import org.fundacionjala.converter.model.entity.File;
@@ -24,15 +28,23 @@ public class VideoController {
 
   /**
    * videoConverter
+   * 
+   * @throws InterruptedException
+   * @throws IOException
+   * @throws ExecutionException
+   * @throws NoSuchAlgorithmException
    */
   @RequestMapping(method = RequestMethod.POST, value = "/video-converter")
-  public ResponseEntity<?> videoConverter(@RequestParam("file") final MultipartFile file, @RequestParam("ext") final String ext) {
+  public ResponseEntity<?> videoConverter(@RequestParam("file") final MultipartFile file,
+      @RequestParam("ext") final String ext) {
     try {
-      VideoModel video = new VideoModel(file);
+      VideoModel video = new VideoModel();
+      String filePath = fileUploadService.saveInputFile(file);
+      video.setInputFileName(filePath);
       String checksum = new ChecksumMD5().getMD5(video.getFileName());
       String path = "";
       if (fileService.getFileByMd5(checksum) == null) {
-        //save in the database the filename and md5
+        // save in the database the filename and md5
         video.videoConverter(ext);
         fileService.saveFile(new File(video.getOutputFileName(), checksum));
         path = video.getOutputFileName();
@@ -41,6 +53,7 @@ public class VideoController {
       }
       return new ResponseEntity<Object>(checksum + "\n" + path, HttpStatus.OK);
     } catch (Exception e) {
+      System.out.println(e.getMessage());
       return new ResponseEntity<Object>("Error" + "\n" + e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
     }
   }
