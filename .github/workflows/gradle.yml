@@ -39,7 +39,7 @@ jobs:
        path: build/distributions/converter-boot-0.0.1-SNAPSHOT.zip
   
   github-package:
-    if: github.event.base_ref == 'refs/heads/master' || github.event.base_ref == 'refs/heads/master/dev' || || github.event.base_ref == 'refs/heads/master/docker'
+    if: github.ref  == 'refs/heads/master' || github.ref  == 'refs/heads/dev' || github.ref  == 'refs/heads/docker'
     needs: build
     runs-on: ubuntu-latest
     steps:
