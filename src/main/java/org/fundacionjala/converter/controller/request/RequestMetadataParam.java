@@ -30,10 +30,10 @@ public class RequestMetadataParam {
      * Returns path of file
      * @return path
      */
-
     public String getPathFile() {
         return pathFile;
     }
+
     /**
      * Returns checksumMD5
      * @return checksumMD5
