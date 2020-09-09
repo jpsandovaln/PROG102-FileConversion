@@ -1,7 +1,11 @@
 package org.fundacionjala.converter.controller;
 
 import org.fundacionjala.converter.model.AudioModel;
+import org.fundacionjala.converter.model.ChecksumMD5;
+import org.fundacionjala.converter.model.entity.File;
+import org.fundacionjala.converter.model.service.FileService;
 import org.fundacionjala.converter.params.AudioParameter;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -13,7 +17,12 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
+import java.security.NoSuchAlgorithmException;
 
+/**
+ * @author Mirko Romay
+ * @version 0.1
+ */
 @RestController
 public class AudioController {
 
@@ -34,6 +43,9 @@ public class AudioController {
 
     @Value("${audio.video.path}")
     private String tool;
+
+    @Autowired
+    private FileService fileService;
 
     private String verifyEmptyParam(final String param, final String value) {
 
@@ -64,11 +76,29 @@ public class AudioController {
             String fileName = param.getFile().getOriginalFilename();
             String source = input + fileName;
             Files.copy(param.getFile().getInputStream(), Paths.get(source), StandardCopyOption.REPLACE_EXISTING);
+            saveFile(source);
             return source;
         } catch (IOException e) {
             System.out.println(e.getMessage());
             return "Error al cargar el archivo";
         }
+    }
+
+    private String generateMD5(final String filePath) {
+        try {
+            String checksum = "";
+            ChecksumMD5 checksumMD5 = new ChecksumMD5();
+            checksum = checksumMD5.getMD5(filePath);
+            return checksum;
+        } catch (NoSuchAlgorithmException | IOException e) {
+            e.getMessage();
+            return "No se pudo obtener el MD5";
+        }
+    }
+
+    private void saveFile(final String path) {
+        String md5 = generateMD5(path);
+        fileService.saveFile(new File(path, md5));
     }
 
     private String getTargetFile(final String fileName, final String format) {
@@ -110,6 +140,10 @@ public class AudioController {
         String target = getTargetFile(source, parameter.getFormat());
         String commandParameters = getCommandParameters(parameter);
         AudioModel converter = new AudioModel();
-        return converter.convertAudio(commandParameters, addProjectDirectory(source), addProjectDirectory(target), addProjectDirectory(tool));
+        String resultPath = converter.convertAudio(commandParameters, addProjectDirectory(source), addProjectDirectory(target), addProjectDirectory(tool));
+        if (!resultPath.contains("/")) {
+            saveFile(resultPath);
+        }
+        return "Your converted audio is located at: " + resultPath;
     }
 }

@@ -2,6 +2,10 @@ package org.fundacionjala.converter.model;
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 
+/**
+ * @author Mirko Romay
+ * @version 0.1
+ */
 public class AudioModel {
 
     private String buildCommand(final String params, final String source, final String target, final String tool) {
@@ -30,7 +34,7 @@ public class AudioModel {
                 result.append((char) reader.read());
             }
             System.out.println(result.toString());
-            return "Your converted audio is located at: " + target;
+            return target;
         } catch (java.io.IOException e) {
             return e.getMessage();
         } catch (java.lang.InterruptedException e) {
