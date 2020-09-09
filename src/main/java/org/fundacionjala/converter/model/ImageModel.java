@@ -18,7 +18,7 @@ public class ImageModel {
      * @param forceResize
      * @return
      */
-    public String execute(final MultipartFile file, final String newName, final int height, final int weight, final String extension, final int thumbnail, final int forceResize) {
+    public String convert(final MultipartFile file, final String newName, final int height, final int weight, final String extension, final int thumbnail, final int forceResize) {
         try {
             String path = "C:\\Users\\Administrator\\Desktop";
             String fileName = file.getOriginalFilename();
