@@ -15,11 +15,11 @@
         <div class="card-body">
             <form method="post" th:action="@{/metadata_file}" enctype="multipart/form-data">
                 <div class="form-row">
-                    <div class="col-md-5">
+                    <div class="col-md-6 p-3">
                         <div class="form-row">
                             <label for="file">File</label>
                             <div class="custom-file">
-                                <input type="file" class="form-control" id="file" lang="es" name="file">
+                                <input type="file" class="form-control" id="" lang="es" name="file">
                             </div>
                         </div>
                         <div class="form-row">
@@ -46,8 +46,8 @@
                                             </label>
                                         </div>
                                         <div class="form-check disabled">
-                                            <input class="form-check-input" type="radio" name="gridRadios" id="gridRadios4" value="option3">
-                                            <label class="form-check-label" for="gridRadios4">
+                                            <input class="form-check-input" type="radio" name="gridRadios" id="gridRadios3" value="option3">
+                                            <label class="form-check-label" for="gridRadios3">
                                                 Json
                                             </label>
                                         </div>
@@ -61,10 +61,12 @@
                             </div>
                         </dic>
                     </div>
-                    <div class="col-md-7">
-                        <div class="form-row ml-2">
-                            <label>Preview</label>
-                            <textarea class="form-control" id="textarea_preview" rows="12" disabled></textarea>
+                    <div class="col-md-6 p-3">
+                        <div class="form-row">
+                            <button class="btn btn-link" type="submit">Ver Metadata</button>
+                        </div>
+                        <div class="form-row">
+                            <textarea class="form-control" id="textarea_metadata" rows="15" disabled></textarea>
                         </div>
                     </div>
                 </div>
