@@ -43,11 +43,9 @@ public class ConvertDoc {
         } finally {
             try {
                 out.close();
-
             } catch (IOException e) {
-
+                e.printStackTrace();
             }
-
         }
         return pathCreated;
     }
