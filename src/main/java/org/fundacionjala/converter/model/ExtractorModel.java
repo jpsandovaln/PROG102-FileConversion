@@ -1,7 +1,5 @@
 package org.fundacionjala.converter.model;
 
-import org.fundacionjala.converter.commons.Commons;
-
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
