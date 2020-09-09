@@ -20,19 +20,35 @@ public class VideoModel {
   }
 
   /**
+   * videoConverter
+   *
+   * @throws ExecutionException
+   * @throws InterruptedException
+   * @throws IOException
+   */
+  public void videoConverter(final String ext) throws ExecutionException, IOException, InterruptedException {
+    if (ext.equals("mp4")) {
+      this.compressToMp4();
+    } else if (ext.equals("gif")) {
+      this.gif();
+    }
+  }
+
+  /**
    * videoModel Compres to mp4
    *
    * @throws ExecutionException
    * @throws InterruptedException
    * @throws IOException
    */
-  public void compressToMp4() throws ExecutionException, IOException, InterruptedException {
+  private void compressToMp4() throws ExecutionException, IOException, InterruptedException {
     String output = common.getStorageConvertedPath() + "demo2.mp4";
     List<String> command = parameter.COMPRESS.getParameter();
     command.add(0, common.videoExecutable());
     command.add(fileName);
     command.add(output);
     common.execute(command);
+    setOutputFileName(output);
   }
 
   /**
@@ -42,7 +58,7 @@ public class VideoModel {
    * @throws InterruptedException
    * @throws IOException
    */
-  public void gif() throws ExecutionException, IOException, InterruptedException {
+  private void gif() throws ExecutionException, IOException, InterruptedException {
     String output = common.getStorageConvertedPath() + "demo2.gif";
     List<String> command = parameter.GIF.getParameter();
     command.add(0, common.videoExecutable());
@@ -68,7 +84,7 @@ public class VideoModel {
   /**
    * This method returns getOutputFileNmae
    */
-  public String getOutputFileNmae() {
+  public String getOutputFileName() {
     return outputFileName;
   }
 }
