@@ -1,12 +1,22 @@
 package org.fundacionjala.converter.model;
-
+/**
+ * Copyright (c) 2020 Fundacion Jala.
+ *
+ * This software is the confidential and proprietary information of Fundacion Jala
+ * ("Confidential Information"). You shall not disclose such Confidential
+ * Information and shall use it only in accordance with the terms of the
+ * license agreement you entered into with Fundacion Jala
+ */
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.nio.file.Files;
 import java.nio.file.Paths;
-
+/**
+ * @author Jhordan Soto
+ * @version 1.0
+ */
 public class ExtractorModel {
     /**
      * created by default
@@ -47,20 +57,18 @@ public class ExtractorModel {
             switch (type) {
                 case "word":
                     Files.delete(Paths.get(target + ".txt"));
-                    new ConvertDoc().createDocumentWord(target, result);
-                    result = advertaisment + "\n created succesfull";
+                    result = new ConvertDoc().createDocumentWord(target, result);
                     break;
                 case "pdf":
                     Files.delete(Paths.get(target + ".txt"));
-                    new ConvertDoc().createDocumentPdf(target, result);
-                    result = advertaisment + "\n created succesfull";
+                    result = new ConvertDoc().createDocumentPdf(target, result);
                     break;
                 case "SS":
                     Files.delete(Paths.get(target + ".txt"));
                     result += advertaisment;
                     break;
                 case "text":
-                    result = advertaisment + "\n created succesfull txt";
+                    result = target + ".txt";
                     break;
                 default:
                     Files.delete(Paths.get(target + ".txt"));
