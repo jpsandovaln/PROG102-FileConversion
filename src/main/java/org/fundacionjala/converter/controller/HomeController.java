@@ -12,7 +12,7 @@ public class HomeController {
     * displays home view
     * @return home view
     */
-    @GetMapping(value = {"/","home"})
+    @GetMapping(value = {"/", "home"})
     public String home() {
         return "home";
     }
