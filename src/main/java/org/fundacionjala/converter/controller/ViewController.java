@@ -30,7 +30,7 @@ public class ViewController {
     * @return docs view
     */
     @GetMapping("/file_docs")
-    public String converertDocs(){
+    public String converertDocs() {
         return "docs/docs";
     }
     /**
@@ -38,7 +38,7 @@ public class ViewController {
     * @return image view
     */
     @GetMapping("/file_img")
-    public String converertImg(){
+    public String converertImg() {
         return "img/image";
     }
     /**
@@ -46,7 +46,7 @@ public class ViewController {
     * @return metadata view
     */
     @GetMapping("/file_metadata")
-    public String viewMetadata(){
+    public String viewMetadata() {
         return "metadata/metadata";
     }
 }
