@@ -34,6 +34,11 @@ public class RequestExtractMetadataParam {
     public MultipartFile getFile() {
             return file;
         }
+
+    /**
+     * Returns checksumMD5
+     * @return checksumMD5
+     */
     public String getChecksumMD5() {
         return checksumMD5;
     }

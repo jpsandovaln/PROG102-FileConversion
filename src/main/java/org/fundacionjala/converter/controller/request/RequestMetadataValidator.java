@@ -49,24 +49,57 @@ public class RequestMetadataValidator {
         validDetailFormat.add("d");
     }
 
-    public boolean isValid(RequestMetadataParam param) {
+    /**
+     * Returns if the RequestMetadataParam's fields are valid
+     * @param param
+     * @return
+     */
+    public boolean isValid(final RequestMetadataParam param) {
         return isValidPathFile(param.getPathFile()) && isValidExportFormat(param.getExportFormat()) && isValidDetail(param.getDetail());
     }
 
-    public boolean isValid(RequestExtractMetadataParam param) {
+    /**
+     * Returns if the RequestExtractMetadataParam's fields are valid
+     * @param param
+     * @return
+     */
+    public boolean isValid(final RequestExtractMetadataParam param) {
         return isValidFile(param.getFile()) && isValidExportFormat(param.getExportFormat()) && isValidDetail(param.getDetail());
     }
 
+    /**
+     * Returns if the file is valid
+     * @param file
+     * @return
+     */
     public boolean isValidFile(final MultipartFile file) {
         return (!file.isEmpty() && !file.equals(null));
     }
+
+    /**
+     * Returns if the filePath is valid
+     * @param filePath
+     * @return
+     */
     public boolean isValidPathFile(final String filePath) {
         String extFile = FilenameUtils.getExtension(filePath);
         return validTypes.contains(extFile);
     }
+
+    /**
+     * Returns if the export Format is valid
+     * @param exportFormat
+     * @return
+     */
     public boolean isValidExportFormat(final String exportFormat) {
         return validExportFormat.contains(exportFormat);
     }
+
+    /**
+     * Returns if the detail is valid
+     * @param detail
+     * @return
+     */
     public boolean isValidDetail(final String detail) {
         return validDetailFormat.contains(detail);
     }
