@@ -26,6 +26,8 @@ public class RequestMetadataValidator {
         validTypes = new ArrayList<String>();
         validTypes.add("mp4");
         validTypes.add("MP4");
+        validTypes.add("mp3");
+        validTypes.add("MP3");
         validTypes.add("avi");
         validTypes.add("AVI");
         validTypes.add("jpeg");
@@ -35,8 +37,12 @@ public class RequestMetadataValidator {
         validTypes.add("jpg");
         validTypes.add("JPG");
         validTypes.add("wav");
+        validTypes.add("WAV");
         validTypes.add("ogg");
         validTypes.add("mkv");
+        validTypes.add("MKV");
+        validTypes.add("mov");
+        validTypes.add("MOV");
         validExportFormat = new ArrayList<String>();
         validExportFormat.add("j");
         validExportFormat.add("t");
