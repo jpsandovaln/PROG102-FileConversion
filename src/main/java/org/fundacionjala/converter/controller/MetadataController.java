@@ -75,16 +75,18 @@ public class MetadataController {
         } else {
             String filePath;
             try {
-                ChecksumMD5 checksum = new ChecksumMD5();
-                String check = "";
                 if (fileService.getFileByMd5(request.getChecksumMD5()) == null) {
                     filePath = fileUploadService.saveInputFile(request.getFile());
-                    check = checksum.getMD5(filePath);
-                    fileService.saveFile(new File(filePath, check));
+                    String check = new ChecksumMD5().getMD5(filePath);
+                    if (check.equals(request.getChecksumMD5())) {
+                        fileService.saveFile(new File(filePath, check));
+                    } else {
+                        return "Invalid checksumMD5";
+                    }
+
                 } else {
                     filePath = fileService.getFileByMd5(request.getChecksumMD5()).getPath();
                 }
-                System.out.println(filePath);
                 metadataParam.setFilePath(filePath);
                 metadataParam.setFormatExport(metadataParam.getFormatExport(request.getExportFormat()));
                 metadataParam.setFormatExportCommand(metadataParam.getFormatExportCommand(request.getExportFormat()));
