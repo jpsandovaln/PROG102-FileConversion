@@ -8,7 +8,6 @@
  */
 package org.fundacionjala.converter.model;
 
-import java.io.IOException;
 import java.util.List;
 
 /**
@@ -38,14 +37,7 @@ public class CommandBuilder {
     public void execute(final List<String> listParams) throws Exception {
         buildCommand(listParams);
         ProcessBuilder processBuilder = new ProcessBuilder("powershell", "/c", "\"" + command + "\"");
-        try {
             process = processBuilder.start();
             process.waitFor();
-
-        } catch (IOException e) {
-            throw e;
-        } catch (InterruptedException e) {
-            throw e;
-        }
     }
 }
