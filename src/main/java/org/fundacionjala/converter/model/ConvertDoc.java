@@ -39,7 +39,6 @@ public class ConvertDoc {
 
         }
     }
-
     /**
      * Create a document pdf
      * @param docName the path and the name that it will have
