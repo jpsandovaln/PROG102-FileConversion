@@ -24,7 +24,7 @@ public class ImageController {
     @RequestMapping(value = "/image/resize", method = RequestMethod.POST)
     public String convert(@RequestParam("file") final MultipartFile file, @RequestParam("newName") final String newName, @RequestParam("Extension") final String extension, @RequestParam("height") final int height, @RequestParam("weight") final int weight, @RequestParam("thumbnail") final int thumbnail, @RequestParam("forceResize") final int forceResize) {
         ImageModel img =  new ImageModel();
-        return img.execute(file, newName, height, weight, extension, thumbnail, forceResize);
+        return img.convert(file, newName, height, weight, extension, thumbnail, forceResize);
     }
 
     /**
