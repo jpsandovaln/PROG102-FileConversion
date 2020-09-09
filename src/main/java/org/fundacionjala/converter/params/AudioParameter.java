@@ -1,5 +1,9 @@
 package org.fundacionjala.converter.params;
 
+/**
+ * @author Mirko Romay
+ * @version 0.1
+ */
 public class AudioParameter extends Parameter {
 
     /**
