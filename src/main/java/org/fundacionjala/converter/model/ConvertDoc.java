@@ -17,16 +17,24 @@ public class ConvertDoc {
      * @param content the content that will have the word
      */
     public void createDocumentWord(final String docName, final String content) {
+        FileOutputStream out = null;
         try {
             XWPFDocument doc = new XWPFDocument();
-            FileOutputStream out = new FileOutputStream(docName + ".docx");
+            out = new FileOutputStream(docName + ".docx");
             XWPFParagraph paragraph = doc.createParagraph();
             XWPFRun run = paragraph.createRun();
             run.setText(content);
             doc.write(out);
-            out.close();
+
         } catch (IOException e) {
             e.printStackTrace();
+        } finally {
+            try {
+                out.close();
+            } catch (IOException e) {
+
+            }
+
         }
     }
 
@@ -36,15 +44,18 @@ public class ConvertDoc {
      * @param content the content of the document
      */
     public void createDocumentPdf(final String docName, final String content) {
+        Document doc = null;
         try {
-            Document doc = new Document(PageSize.A4);
+            doc = new Document(PageSize.A4);
             PdfWriter.getInstance(doc, new FileOutputStream(docName + ".pdf"));
             doc.open();
             Paragraph paragraph = new Paragraph(content);
             doc.add(paragraph);
-            doc.close();
+
         } catch (Exception e) {
             e.printStackTrace();
+        } finally {
+            doc.close();
         }
     }
 }
