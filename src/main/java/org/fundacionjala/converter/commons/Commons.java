@@ -5,14 +5,9 @@ import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.nio.file.Files;
-import java.nio.file.Paths;
-import java.nio.file.StandardCopyOption;
 import java.util.List;
 import java.util.Properties;
 import java.util.concurrent.ExecutionException;
-
-import org.springframework.web.multipart.MultipartFile;
 
 public class Commons {
 
@@ -60,21 +55,6 @@ public class Commons {
   }
 
   /**
-   * This method move the file to user storage
-   *
-   * @param file the file to move
-   * @return the file location
-   * @throws IOException
-   */
-  public String moveFileInputStorage(final MultipartFile file) throws IOException {
-    String pathFile = getStoragePath() + file.getOriginalFilename();
-      Files.createDirectories(Paths.get(getStoragePath())); //remove
-      Files.createDirectories(Paths.get(getStorageConvertedPath())); // remove
-      Files.copy(file.getInputStream(), Paths.get(pathFile), StandardCopyOption.REPLACE_EXISTING);
-      return pathFile;
-  }
-
-  /**
    * This method execute the command.
    *
    * @param command list of the commands
@@ -84,7 +64,6 @@ public class Commons {
    * @throws InterruptedException
    */
   public void execute(final List<String> command) throws ExecutionException, IOException, InterruptedException {
-
       Process processDuration = new ProcessBuilder(command).redirectErrorStream(true).start();
       StringBuilder outPut = new StringBuilder();
       BufferedReader processOutputReader = new BufferedReader(new InputStreamReader(processDuration.getInputStream()));
