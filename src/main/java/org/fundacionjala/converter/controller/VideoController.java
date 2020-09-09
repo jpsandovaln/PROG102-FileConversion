@@ -1,9 +1,5 @@
 package org.fundacionjala.converter.controller;
 
-import java.io.IOException;
-import java.security.NoSuchAlgorithmException;
-import java.util.concurrent.ExecutionException;
-
 import org.fundacionjala.converter.model.ChecksumMD5;
 import org.fundacionjala.converter.model.VideoModel;
 import org.fundacionjala.converter.model.entity.File;
@@ -28,7 +24,7 @@ public class VideoController {
 
   /**
    * videoConverter
-   * 
+   *
    * @throws InterruptedException
    * @throws IOException
    * @throws ExecutionException
