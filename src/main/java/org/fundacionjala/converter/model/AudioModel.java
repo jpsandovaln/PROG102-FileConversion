@@ -37,7 +37,7 @@ public class AudioModel {
             return target;
         } catch (java.io.IOException | java.lang.InterruptedException e) {
             System.out.println(e.getMessage());
-            return "An error occurs when converting file, please try again.";
+            return "An error occurs while converting file, please try again.";
         }
     }
 }
