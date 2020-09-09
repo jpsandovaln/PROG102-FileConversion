@@ -7,11 +7,15 @@ import java.io.InputStreamReader;
 
 public class ImageModel {
 
-    public String execute(MultipartFile file , String newName , int height , int weight , String extension, int thumbnail) {
+    public String execute(MultipartFile file , String newName , int height , int weight , String extension, int thumbnail, int forceResize) {
         try {
             String path = "C:\\Users\\Administrator\\Desktop";
             String fileName = file.getOriginalFilename();
-            String cmd = "cd " + path + " && magick " + fileName + " -resize " + height + "x" + weight + " " + newName + "." + extension;
+            String force = "";
+            if(forceResize == 1) {
+                force = "!";
+            }
+            String cmd = "cd " + path + " && magick " + fileName + " -resize " + height + "x" + weight + force + " " + newName + "." + extension;
             String thumbnailCmd = "cd " + path + " && magick " + fileName + " -resize 128x128 thumbnail-" + newName + "." + extension;
             readCmdCommand(cmd);
             if(thumbnail == 1) {
