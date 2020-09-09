@@ -1,12 +1,23 @@
+/**
+ * Copyright (c) 2020 Fundacion Jala.
+ *
+ * This software is the confidential and proprietary information of Fundacion Jala
+ * ("Confidential Information"). You shall not disclose such Confidential
+ * Information and shall use it only in accordance with the terms of the
+ * license agreement you entered into with Fundacion Jala
+ */
 package org.fundacionjala.converter.model.service;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+import javax.persistence.NonUniqueResultException;
+
 import org.fundacionjala.converter.model.entity.File;
 import org.fundacionjala.converter.model.repository.FileRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.IncorrectResultSizeDataAccessException;
 import org.springframework.stereotype.Service;
 
 /**
@@ -59,10 +70,17 @@ public class FileService {
      * @param file - the reference to the object File to save
      */
     public void saveFile(final File file) {
-        File fileTemp = new File();
-        fileTemp.setPath(file.getPath());
-        fileTemp.setMd5(file.getMd5());
-        fileRepository.save(fileTemp);
+    File fileTemp = new File();
+    try {
+        if (file.getMd5() != null && file.getPath() != null) {
+            fileTemp.setPath(file.getPath());
+            fileTemp.setMd5(file.getMd5());
+            fileRepository.save(fileTemp);
+        }
+    } catch (NullPointerException e) {
+        e.printStackTrace();
+        System.out.println("NullPointerException ocurred");
+    }
     }
 
     /**
@@ -70,10 +88,17 @@ public class FileService {
      * @param file - the reference to the object File to update
      */
     public void updateFile(final File file) {
-        File fileTemp = fileRepository.findByMd5(file.getMd5());
-        fileTemp.setPath(file.getPath());
-        fileTemp.setMd5(file.getMd5());
-        fileRepository.save(fileTemp);
+    try {
+        if (file.getMd5() != null && file.getPath() != null) {
+            File fileTemp = fileRepository.findByMd5(file.getMd5());
+            fileTemp.setPath(file.getPath());
+            fileTemp.setMd5(file.getMd5());
+            fileRepository.save(fileTemp);
+        }
+    } catch (NullPointerException | NonUniqueResultException | IncorrectResultSizeDataAccessException e) {
+        e.printStackTrace();
+        System.out.println("Error ocurred");
+    }
     }
 
     /**
