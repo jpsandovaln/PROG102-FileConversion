@@ -9,9 +9,7 @@ on:
 
 jobs:
   build:
-
     runs-on: ubuntu-latest
-
     steps:
     - uses: actions/checkout@v2
     - name: Set up JDK 11
@@ -30,13 +28,31 @@ jobs:
         path: build/reports/checkstyle/
     - name: Building the project
       run: ./gradlew build
-    - name: Artifact Uploading
+    - uses: actions/upload-artifact@master
+      with:
+       name: Caching the artifact
+       path: build/distributions/
+    - name: Artifact lite
       uses: actions/upload-artifact@v2
       with:
        name: artifact
        path: build/distributions/converter-boot-0.0.1-SNAPSHOT.zip
-    - name: Test Coverage Uploading
-      uses: actions/upload-artifact@v2
+  
+  github-package:
+    if: github.event.base_ref == 'refs/heads/master' || github.event.base_ref == 'refs/heads/master/dev' || || github.event.base_ref == 'refs/heads/master/docker'
+    needs: build
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+    - uses: actions/download-artifact@master
+      with:       
+       name: Caching the artifact
+       path: build/distributions/
+    - name: Push to GitHub Packages
+      uses: docker/build-push-action@v1
       with:
-       name: TestCoverage
-       path: build/reports/jacoco/test/html/
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+          registry: docker.pkg.github.com
+          repository: jpsandovaln/prog102-fileconversion/fileconversion-image
+          tag_with_ref: true
