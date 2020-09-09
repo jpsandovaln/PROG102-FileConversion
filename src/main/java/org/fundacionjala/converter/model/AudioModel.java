@@ -20,7 +20,7 @@ public class AudioModel {
      * @param tool string
      * @return path of audio file converted
      */
-    public String convertAudio(final String params, final String source, final String target, final String tool)  {
+    public String convertAudio(final String params, final String source, final String target, final String tool) {
         try {
             String command = buildCommand(params, source, target, tool);
             ProcessBuilder builder = new ProcessBuilder("cmd", "/c", "\"" + command + "\"");
@@ -35,12 +35,9 @@ public class AudioModel {
             }
             System.out.println(result.toString());
             return target;
-        } catch (java.io.IOException e) {
-            return e.getMessage();
-        } catch (java.lang.InterruptedException e) {
-            return e.getMessage();
+        } catch (java.io.IOException | java.lang.InterruptedException e) {
+            System.out.println(e.getMessage());
+            return "An error occurs when converting file, please try again.";
         }
     }
-
-
 }

@@ -80,7 +80,7 @@ public class AudioController {
             return source;
         } catch (IOException e) {
             System.out.println(e.getMessage());
-            return "Error al cargar el archivo";
+            return "Error when upload file, please try again.";
         }
     }
 
@@ -92,7 +92,7 @@ public class AudioController {
             return checksum;
         } catch (NoSuchAlgorithmException | IOException e) {
             e.getMessage();
-            return "No se pudo obtener el MD5";
+            return "Could not get MD5 from input file.";
         }
     }
 
@@ -141,9 +141,10 @@ public class AudioController {
         String commandParameters = getCommandParameters(parameter);
         AudioModel converter = new AudioModel();
         String resultPath = converter.convertAudio(commandParameters, addProjectDirectory(source), addProjectDirectory(target), addProjectDirectory(tool));
-        if (!resultPath.contains("/")) {
+        if (resultPath.contains("/")) {
             saveFile(resultPath);
+            resultPath = "Your converted audio is located at: " + resultPath;
         }
-        return "Your converted audio is located at: " + resultPath;
+        return resultPath;
     }
 }
