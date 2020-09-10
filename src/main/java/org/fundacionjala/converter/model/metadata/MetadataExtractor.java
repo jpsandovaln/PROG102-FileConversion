@@ -22,6 +22,7 @@ public class MetadataExtractor implements IExtractor {
     private Process process;
     private List<String> listParams;
     private CommandBuilder commandBuilder;
+    private MetadataParam metadataParam;
 
     public MetadataExtractor() {
         listParams = new ArrayList<String>();
@@ -35,7 +36,7 @@ public class MetadataExtractor implements IExtractor {
      */
     public List<String> getListParams(final Param param) {
         listParams.clear();
-        MetadataParam metadataParam = (MetadataParam) param;
+        metadataParam = (MetadataParam) param;
         listParams.add(metadataParam.getToolPath());
         listParams.add(metadataParam.getFormatExportCommand());
         listParams.add(metadataParam.getDetail());
@@ -52,12 +53,9 @@ public class MetadataExtractor implements IExtractor {
      * @param param
      * @throws Exception
      */
-    public void extract(final Param param) throws Exception {
-        try {
-            commandBuilder.execute(getListParams(param));
-        } catch (Exception e) {
-            throw e;
-        }
+    public String extract(final Param param) throws Exception {
+        commandBuilder.execute(getListParams(param));
+        return metadataParam.getTargetDir() + metadataParam.getFileName() + metadataParam.getFormatExport();
     }
 }
 
