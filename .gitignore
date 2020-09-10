@@ -37,3 +37,5 @@ out/
 /storage/*
 /thirdParty/*
 /src/main/resources/application.properties
+application.properties
+bin/
