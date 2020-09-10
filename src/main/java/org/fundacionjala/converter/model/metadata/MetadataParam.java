@@ -120,7 +120,7 @@ public class MetadataParam extends Param {
             case "T":
                 return ".csv";
             default:
-                return ".xmp";
+                return ".XMP";
         }
     }
 
@@ -155,7 +155,7 @@ public class MetadataParam extends Param {
     /**
      * Returns the parameter for detail
      * @param detail amount of information to extract
-     * @return the commando for detail
+     * @return the command for detail
      */
     public String getDetail(final String detail) {
         switch (detail) {
