@@ -11,7 +11,11 @@ import org.springframework.core.io.Resource;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
+
 /**
  * @author Elizabeth Bravo Flores
  * @version 0.1
@@ -25,7 +29,7 @@ public class DownloadFileController {
      * @throws Exception
      */
     @RequestMapping(path = "/download", method = RequestMethod.GET)
-    public ResponseEntity<Resource> download(@RequestParam("path") String path) throws IOException {
+    public ResponseEntity<Resource> download(final @RequestParam("path") String path) throws IOException {
         File file = new File(path);
         HttpHeaders header = new HttpHeaders();
         String ext = FilenameUtils.getExtension(path);
