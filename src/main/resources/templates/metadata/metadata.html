@@ -13,9 +13,9 @@
     </div>
     <div class="card">
         <div class="card-body">
-            <form method="post" th:action="@{/metadata_file}" enctype="multipart/form-data">
-                <div class="form-row">
-                    <div class="col-md-5">
+            <div class="form-row">
+                <div class="col-md-5">
+                    <form method="post" th:action="@{/extractMetadata}" enctype="multipart/form-data" id="form-MT">
                         <div class="form-row">
                             <label for="file">File</label>
                             <div class="custom-file">
@@ -25,28 +25,28 @@
                         <div class="form-row">
                             <fieldset class="form-group p-3">
                                 <div class="row">
-                                    <label for="file">Format</label>
-                                    <div class="col-sm-10">
+                                    <label for="gridRadios1">Format</label>
+                                    <div class="col-md-10">
                                         <div class="form-check">
-                                            <input class="form-check-input" type="radio" name="gridRadios" id="gridRadios1" value="option1" checked>
+                                            <input class="form-check-input" type="radio" name="exportFormat" id="gridRadios1" value="t" checked>
                                             <label class="form-check-label" for="gridRadios1">
                                                 txt
                                             </label>
                                         </div>
                                         <div class="form-check">
-                                            <input class="form-check-input" type="radio" name="gridRadios" id="gridRadios2" value="option2">
+                                            <input class="form-check-input" type="radio" name="exportFormat" id="gridRadios2" value="T">
                                             <label class="form-check-label" for="gridRadios2">
                                                 csv
                                             </label>
                                         </div>
                                         <div class="form-check disabled">
-                                            <input class="form-check-input" type="radio" name="gridRadios" id="gridRadios3" value="option3">
+                                            <input class="form-check-input" type="radio" name="exportFormat" id="gridRadios3" value="h">
                                             <label class="form-check-label" for="gridRadios3">
                                                 html
                                             </label>
                                         </div>
                                         <div class="form-check disabled">
-                                            <input class="form-check-input" type="radio" name="gridRadios" id="gridRadios4" value="option3">
+                                            <input class="form-check-input" type="radio" name="exportFormat" id="gridRadios4" value="j">
                                             <label class="form-check-label" for="gridRadios4">
                                                 Json
                                             </label>
@@ -55,25 +55,44 @@
                                 </div>
                             </fieldset>
                         </div>
-                        <dic class="form-row">
-                            <div class="col-md-6">
-                                <button class="btn btn-primary btn-block" type="submit">Download</button>
+                        <div class="form-row">
+                            <div class="col-md-12 mb-3">
+                                <label for="detail">Detail</label>
+                                <select class="custom-select" id="detail"  name = "detail" required>
+                                    <option value="v">verboso</option>
+                                    <option value="c">common</option>
+                                    <option value="d">default</option>
+                                </select>
                             </div>
-                        </dic>
-                    </div>
-                    <div class="col-md-7">
-                        <div class="form-row ml-2">
-                            <label>Preview</label>
-                            <textarea class="form-control" id="textarea_preview" rows="12" disabled></textarea>
                         </div>
+                        <div class="form-row">
+                            <label for="md5">Md5</label>
+                            <input class="form-control" type="text" name="md5" id="md5">
+                        </div>
+                        <div class="">
+                            <div class="col-md-6 mb-3 float-left">
+                                <button id="submit" class="btn btn-primary btn-block mt-2">Extract</button>
+                            </div>
+                        </div>
+                    </form>
+                    <div class="col-md-6 mb-3 float-left">
+                        <form method="get" th:action="@{/download}">
+                            <input type="text" name="path" id="path" value="" style="display:none">
+                            <button id="submitd" class="btn btn-success btn-block mt-2" disabled>Download</button>
+                        </form>
                     </div>
                 </div>
-            </form>
+                <div class="col-md-7">
+                    <div class="form-row ml-2">
+                        <label>Preview</label>
+                        <textarea class="form-control" id="textarea_preview" rows="12" disabled></textarea>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 </div>
 <footer th:replace="main/template :: footer">
-    </footer>
+</footer>
 </body>
-
 </html>
