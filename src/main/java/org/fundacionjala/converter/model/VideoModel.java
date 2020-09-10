@@ -40,15 +40,30 @@ public class VideoModel {
    * @throws IOException
    */
   private void compressToMp4() throws ExecutionException, IOException, InterruptedException {
-    String output = common.getStorageConvertedPath() + "demo2.mp4";
+    String output = common.getStorageConvertedPath() + "/demo.mp4";
     List<String> command = parameter.COMPRESS.getParameter();
     command.add(0, common.videoExecutable());
     command.add(fileName);
     command.add(output);
+    System.out.println(command);
     common.execute(command);
     setOutputFileName(output);
   }
 
+  public void extractThumbnail() throws ExecutionException, IOException, InterruptedException {
+    String output = common.getStorageConvertedPath() + "/thumbnail.gif";
+    List<String> command = parameter.TIME.getParameter();
+    command.add(0, common.videoExecutable());
+    command.add(fileName);
+    for (String param: parameter.PALETTE.getParameter()) {
+      command.add(param);
+    }
+    //command.add(parameter.PALETTE.getParameter());
+    System.out.println(command);
+    command.add(output);
+    common.execute(command);
+    setOutputFileName(output);
+  }
   /**
    * videoModel convert to gif
    *
@@ -57,7 +72,7 @@ public class VideoModel {
    * @throws IOException
    */
   private void gif() throws ExecutionException, IOException, InterruptedException {
-    String output = common.getStorageConvertedPath() + "demo2.gif";
+    String output = common.getStorageConvertedPath() + "/demo.gif";
     List<String> command = parameter.GIF.getParameter();
     command.add(0, common.videoExecutable());
     command.add(fileName);
@@ -91,5 +106,14 @@ public class VideoModel {
    */
   public String getOutputFileName() {
     return outputFileName;
+  }
+  public static void main(String []args) {
+    try {
+      VideoModel video = new VideoModel();
+      video.setInputFileName("storage/inputFiles/lesson-2a-medium.mov");
+      video.extractThumbnail();
+    } catch (Exception e) {
+      e.printStackTrace();
+    }
   }
 }

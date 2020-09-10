@@ -16,7 +16,8 @@ public class Commons {
   private Properties properties;
 
   public Commons(final String folder) {
-    this.folder = folder + File.separator;
+    //this.folder = folder + File.separator;
+    this.folder = folder;
     loadConfiguration();
   }
 
@@ -70,6 +71,8 @@ public class Commons {
       String line;
       while ((line = processOutputReader.readLine()) != null) {
         outPut.append(line + System.lineSeparator());
+        //cambiado
+        //outPut.append(line + "/");
       }
       processDuration.waitFor();
   }
