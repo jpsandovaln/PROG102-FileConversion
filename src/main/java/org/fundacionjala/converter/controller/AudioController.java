@@ -1,6 +1,6 @@
 package org.fundacionjala.converter.controller;
 
-import org.fundacionjala.converter.model.AudioModel;
+import org.fundacionjala.converter.model.command.AudioModel;
 import org.fundacionjala.converter.model.ChecksumMD5;
 import org.fundacionjala.converter.model.entity.File;
 import org.fundacionjala.converter.model.service.FileService;
