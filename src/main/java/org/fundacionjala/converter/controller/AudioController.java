@@ -3,7 +3,7 @@ package org.fundacionjala.converter.controller;
 import org.fundacionjala.converter.controller.request.RequestAudioParameter;
 import org.fundacionjala.converter.model.entity.File;
 import org.fundacionjala.converter.model.service.FileService;
-import org.fundacionjala.converter.params.AudioParameter;
+//import org.fundacionjala.converter.params.AudioParameter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.RestController;
@@ -36,14 +36,14 @@ public class AudioController {
     @RequestMapping(method = RequestMethod.POST, value = "convertAudio")
     public String convertAudio(final RequestAudioParameter requestAudioParameter) throws IOException {
 
-        AudioParameter audioParameter;
+        //AudioParameter audioParameter;
         String result = "Error";
        // Executor exec;
         String path = temporal + requestAudioParameter.getFile().getOriginalFilename();
         Files.copy(requestAudioParameter.getFile().getInputStream(), Paths.get(path));
         if (requestAudioParameter.validate()) {
             fileService.saveFile(new File(path, requestAudioParameter.generateMD5(path)));
-            audioParameter = new AudioParameter();
+            //audioParameter = new AudioParameter();
        //     result = exec.executer(audioParameter);
         }
         Files.delete(Paths.get(path));

@@ -1,4 +1,3 @@
-package org.fundacionjala.converter.controller;
 /**
  * Copyright (c) 2020 Fundacion Jala.
  *
@@ -7,6 +6,7 @@ package org.fundacionjala.converter.controller;
  * Information and shall use it only in accordance with the terms of the
  * license agreement you entered into with Fundacion Jala
  */
+package org.fundacionjala.converter.controller;
 
 import org.fundacionjala.converter.controller.request.RequestExtractTextParameter;
 import org.fundacionjala.converter.model.entity.File;
