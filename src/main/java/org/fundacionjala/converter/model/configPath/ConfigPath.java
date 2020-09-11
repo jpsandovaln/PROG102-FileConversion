@@ -25,16 +25,9 @@ public class ConfigPath {
   }
 
   /**
-   * Returns executable video path.
+   * Returns executable video and audio path.
    */
-  public String getToolVideo() {
-    return properties.getProperty("audio.video.path");
-  }
-
-   /**
-   * Returns executable audio path.
-  */
-  public String getToolAudio() {
+  public String getVideoAudioTool() {
     return properties.getProperty("audio.video.path");
   }
 
@@ -48,7 +41,7 @@ public class ConfigPath {
   /**
    * Returns executable meta data extractor path.
    */
-  public String getToolMetaDataExtractor() {
+  public String getMetaDataExtractorTool() {
     return properties.getProperty("exiftool.path");
   }
 }
