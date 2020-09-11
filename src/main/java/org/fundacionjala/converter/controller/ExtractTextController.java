@@ -9,7 +9,7 @@ package org.fundacionjala.converter.controller;
  */
 
 import org.fundacionjala.converter.model.ChecksumMD5;
-import org.fundacionjala.converter.model.ExtractorModel;
+import org.fundacionjala.converter.model.command.ExtractorModel;
 import org.fundacionjala.converter.model.entity.File;
 import org.fundacionjala.converter.model.service.FileService;
 import org.springframework.beans.factory.annotation.Autowired;

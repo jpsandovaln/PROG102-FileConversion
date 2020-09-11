@@ -1,4 +1,4 @@
-package org.fundacionjala.converter.model;
+package org.fundacionjala.converter.model.command;
 
 /**
  * @author Angela Martinez

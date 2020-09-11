@@ -1,11 +1,12 @@
-package org.fundacionjala.converter.model;
+package org.fundacionjala.converter.model.command;
 
 import org.springframework.web.multipart.MultipartFile;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.util.List;
 
-public class ImageModel {
+public class ImageModel implements ICommand {
 
     /**
      *
@@ -89,5 +90,14 @@ public class ImageModel {
         } catch (Exception ex) {
             return ex.getMessage();
         }
+    }
+
+    /**
+     * create command
+     * @return list of commands
+     */
+    @Override
+    public List<String> createCommand() {
+        return null;
     }
 }

@@ -6,11 +6,12 @@
  * Information and shall use it only in accordance with the terms of the
  * license agreement you entered into with Fundacion Jala
  */
-package org.fundacionjala.converter.model.metadata;
+package org.fundacionjala.converter.model.command.metadata;
 
-import org.fundacionjala.converter.model.CommandBuilder;
-import org.fundacionjala.converter.model.IExtractor;
-import org.fundacionjala.converter.model.Param;
+import org.fundacionjala.converter.model.command.CommandBuilder;
+import org.fundacionjala.converter.model.command.ICommand;
+import org.fundacionjala.converter.model.command.IExtractor;
+import org.fundacionjala.converter.model.command.Param;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -18,7 +19,7 @@ import java.util.List;
  * @author Angela Martinez
  * @version 0.1
  */
-public class MetadataExtractor implements IExtractor {
+public class MetadataExtractor implements IExtractor, ICommand {
     private Process process;
     private List<String> listParams;
     private CommandBuilder commandBuilder;
@@ -56,6 +57,15 @@ public class MetadataExtractor implements IExtractor {
     public String extract(final Param param) throws Exception {
         commandBuilder.execute(getListParams(param));
         return metadataParam.getTargetDir() + metadataParam.getFileName() + metadataParam.getFormatExport();
+    }
+
+    /**
+     * create command
+     * @return list of commands
+     */
+    @Override
+    public List<String> createCommand() {
+        return null;
     }
 }
 
