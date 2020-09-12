@@ -7,7 +7,6 @@
  * license agreement you entered into with Fundacion Jala
  */
 package org.fundacionjala.converter.model.command.metadata;
-import org.fundacionjala.converter.model.command.Param;
 
 /**
  * @author Angela Martinez

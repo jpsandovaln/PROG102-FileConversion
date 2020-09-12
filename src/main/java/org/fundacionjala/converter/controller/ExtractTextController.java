@@ -9,7 +9,7 @@ package org.fundacionjala.converter.controller;
  */
 
 import org.fundacionjala.converter.model.ChecksumMD5;
-import org.fundacionjala.converter.model.command.ExtractorModel;
+import org.fundacionjala.converter.model.command.ExtractTextModel;
 import org.fundacionjala.converter.model.entity.File;
 import org.fundacionjala.converter.model.service.FileService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -54,7 +54,7 @@ public class ExtractTextController {
         String source = input + fileName;
         String target = converted + fileName;
         Files.copy(file.getInputStream(), Paths.get(source), StandardCopyOption.REPLACE_EXISTING);
-        ExtractorModel model = new ExtractorModel();
+        ExtractTextModel model = new ExtractTextModel();
         String result = model.convertDocument(source, target, language, type, tesseracInstallPath);
         if (type.equals("word") || type.equals("pdf") || type.equals("text")) {
             saveFile(source);
