@@ -1,5 +1,5 @@
 package org.fundacionjala.converter.controller;
-import org.fundacionjala.converter.model.ImageModel;
+import org.fundacionjala.converter.model.command.ImageModel;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;

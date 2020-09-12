@@ -1,4 +1,4 @@
-package org.fundacionjala.converter.commons;
+package org.fundacionjala.converter.model.commons;
 
 import java.io.BufferedReader;
 import java.io.File;
