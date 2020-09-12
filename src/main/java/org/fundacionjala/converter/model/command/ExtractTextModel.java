@@ -19,11 +19,11 @@ import java.util.List;
  * @author Jhordan Soto
  * @version 1.0
  */
-public class ExtractorModel implements ICommand {
+public class ExtractTextModel implements ICommand {
     /**
      * created by default
      */
-    public ExtractorModel() {
+    public ExtractTextModel() {
 
     }
 
