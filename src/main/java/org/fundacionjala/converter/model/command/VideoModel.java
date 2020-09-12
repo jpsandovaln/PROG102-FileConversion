@@ -1,12 +1,12 @@
-package org.fundacionjala.converter.model;
+package org.fundacionjala.converter.model.command;
 
 import java.io.IOException;
 import java.util.List;
 import java.util.concurrent.ExecutionException;
 
-import org.fundacionjala.converter.commons.Commons;
+import org.fundacionjala.converter.model.commons.Commons;
 
-public class VideoModel {
+public class VideoModel implements ICommand {
 
   private String fileName;
   private String outputFileName;
@@ -91,5 +91,14 @@ public class VideoModel {
    */
   public String getOutputFileName() {
     return outputFileName;
+  }
+
+  /**
+   * create command
+   * @return list of commands
+   */
+  @Override
+  public List<String> createCommand() {
+    return null;
   }
 }

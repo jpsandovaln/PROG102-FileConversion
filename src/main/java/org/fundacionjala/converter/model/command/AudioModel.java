@@ -1,12 +1,13 @@
-package org.fundacionjala.converter.model;
+package org.fundacionjala.converter.model.command;
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
+import java.util.List;
 
 /**
  * @author Mirko Romay
  * @version 0.1
  */
-public class AudioModel {
+public class AudioModel implements ICommand {
 
     private String buildCommand(final String params, final String source, final String target, final String tool) {
         return tool + " -y -i "  + source + params  + target;
@@ -39,5 +40,14 @@ public class AudioModel {
             System.out.println(e.getMessage());
             return "An error occurs while converting file, please try again.";
         }
+    }
+
+    /**
+     * create command
+     * @return list of commands
+     */
+    @Override
+    public List<String> createCommand() {
+        return null;
     }
 }
