@@ -9,7 +9,7 @@
 package org.fundacionjala.converter.controller;
 
 import org.fundacionjala.converter.model.ChecksumMD5;
-import org.fundacionjala.converter.model.VideoModel;
+import org.fundacionjala.converter.model.command.VideoModel;
 import org.fundacionjala.converter.model.entity.File;
 import org.fundacionjala.converter.model.service.FileUploadService;
 import org.fundacionjala.converter.model.service.FileService;
