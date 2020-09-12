@@ -1,4 +1,4 @@
-package org.fundacionjala.converter.model;
+package org.fundacionjala.converter.model.command;
 /**
  * Copyright (c) 2020 Fundacion Jala.
  *
@@ -13,15 +13,17 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import java.util.List;
+
 /**
  * @author Jhordan Soto
  * @version 1.0
  */
-public class ExtractorModel {
+public class ExtractTextModel implements ICommand {
     /**
      * created by default
      */
-    public ExtractorModel() {
+    public ExtractTextModel() {
 
     }
 
@@ -108,5 +110,14 @@ public class ExtractorModel {
             }
         }
         return readString;
+    }
+
+    /**
+     * create command
+     * @return list of commands
+     */
+    @Override
+    public List<String> createCommand() {
+        return null;
     }
 }

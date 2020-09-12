@@ -38,7 +38,6 @@ public class ExtractTextController {
      */
     @RequestMapping(method = RequestMethod.POST, value = "convertExtractText")
     public String convertExtractText(final RequestExtractTextParameter requestExtractTextParameter) throws IOException {
-
         //ExtractTextParameter extractTextParameter;
         String result = "Error";
       //  Executor exec;
