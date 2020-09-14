@@ -7,20 +7,19 @@
  * license agreement you entered into with Fundacion Jala
  */
 package org.fundacionjala.converter.controller;
-import org.fundacionjala.converter.controller.request.RequestExtractMetadataParam;
-import org.fundacionjala.converter.controller.request.RequestMetadataParam;
-import org.fundacionjala.converter.controller.request.RequestMetadataValidator;
-import org.fundacionjala.converter.model.ChecksumMD5;
 import org.fundacionjala.converter.model.entity.File;
-import org.fundacionjala.converter.model.metadata.MetadataExtractor;
-import org.fundacionjala.converter.model.metadata.MetadataParam;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 import org.fundacionjala.converter.model.service.FileService;
-import org.fundacionjala.converter.model.service.FileUploadService;
+import org.fundacionjala.converter.controller.request.RequestMetadataParameter;
+
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 
 /**
  * @author Angela Martinez
@@ -28,7 +27,7 @@ import org.fundacionjala.converter.model.service.FileUploadService;
  */
 @RestController
 public class MetadataController {
-    private MetadataExtractor metadataExtractor = new MetadataExtractor();
+   /* private MetadataExtractor metadataExtractor = new MetadataExtractor();
     private MetadataParam metadataParam = new MetadataParam();
     private RequestMetadataValidator requestMetadataValidator = new RequestMetadataValidator();
     @Value("${filesMetadataPath}")
@@ -44,7 +43,7 @@ public class MetadataController {
      * @param request requestMetadataParam object
      * @return a message
      */
-    @RequestMapping(value = "getMetadata", method = RequestMethod.POST)
+ /*   @RequestMapping(value = "getMetadata", method = RequestMethod.POST)
     public String getMetadata(final RequestMetadataParam request) {
         if (!requestMetadataValidator.isValid(request)) {
             return "Error: invalid values";
@@ -68,7 +67,7 @@ public class MetadataController {
      * @param request requestMetadataParam object
      * @return a message
      */
-    @RequestMapping(value = "extractMetadata", method = RequestMethod.POST)
+  /*  @RequestMapping(value = "extractMetadata", method = RequestMethod.POST)
     public String extractMetadata(final RequestExtractMetadataParam request) {
         if (!requestMetadataValidator.isValid(request)) {
             return "Error: invalid values";
@@ -98,5 +97,32 @@ public class MetadataController {
                 return e.getMessage();
             }
         }
+    }*/
+   @Autowired
+   private FileService fileService;
+    @Value("${tempFiles.path}")
+    private String temporal;
+
+    /**
+     *
+     * @param requestMetadataParameter
+     * @return
+     * @throws IOException
+     */
+    @RequestMapping(method = RequestMethod.POST, value = "extractMetadata")
+    public String extractMetadata(final RequestMetadataParameter requestMetadataParameter) throws IOException {
+
+     //   MetadataParameter metadataParameter;
+        String result = "Error";
+       // Executor exec;
+        String path = temporal + requestMetadataParameter.getFile().getOriginalFilename();
+        Files.copy(requestMetadataParameter.getFile().getInputStream(), Paths.get(path));
+        if (requestMetadataParameter.validate()) {
+            fileService.saveFile(new File(path, requestMetadataParameter.generateMD5(path)));
+         //   metadataParameter = new MetadataParameter();
+          //  result = exec.executer(metadataParameter);
+        }
+        Files.delete(Paths.get(path));
+        return result;
     }
 }

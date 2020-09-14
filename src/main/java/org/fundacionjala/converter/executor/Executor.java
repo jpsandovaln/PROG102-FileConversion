@@ -15,9 +15,9 @@ public class Executor {
     }
 
     /**
-     * setDebugOutPut
+     * setDebugOutput
      */
-    public void setDebugOutPut(final boolean debugOutPut) {
+    public void setDebugOutput(final boolean debugOutPut) {
         this.debugOutPut = debugOutPut;
     }
     /**
@@ -31,17 +31,17 @@ public class Executor {
      */
     public void execute(final List<String> command) throws ExecutionException, IOException, InterruptedException {
         Process processDuration = new ProcessBuilder(command).redirectErrorStream(true).start();
-        StringBuilder outPut = new StringBuilder();
+        StringBuilder output = new StringBuilder();
         BufferedReader processOutputReader = new BufferedReader(new InputStreamReader(processDuration.getInputStream()));
         String line;
         while ((line = processOutputReader.readLine()) != null) {
-            outPut.append(line + System.lineSeparator());
+            output.append(line + System.lineSeparator());
         }
         processDuration.waitFor();
 
         if (debugOutPut) {
             System.out.println("BEGIN DEBUG");
-            System.out.println(outPut.toString());
+            System.out.println(output.toString());
             System.out.println("END DEBUG");
         }
     }
