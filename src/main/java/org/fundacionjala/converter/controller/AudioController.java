@@ -1,14 +1,13 @@
 package org.fundacionjala.converter.controller;
 
-import org.fundacionjala.converter.model.command.AudioModel;
-import org.fundacionjala.converter.model.ChecksumMD5;
-import org.fundacionjala.converter.model.entity.File;
-import org.fundacionjala.converter.model.service.FileService;
-import org.fundacionjala.converter.params.AudioParameter;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
+//import org.fundacionjala.converter.model.command.AudioModel;
+//import org.fundacionjala.converter.model.ChecksumMD5;
+//import org.fundacionjala.converter.model.entity.File;
+//import org.fundacionjala.converter.model.service.FileService;
+//import org.springframework.beans.factory.annotation.Autowired;
+//import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.bind.annotation.RequestMapping;
+/**import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.multipart.MultipartFile;
@@ -17,15 +16,16 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
-import java.security.NoSuchAlgorithmException;
+import java.security.NoSuchAlgorithmException;**/
 
 /**
  * @author Mirko Romay
  * @version 0.1
  */
+
 @RestController
 public class AudioController {
-
+/*
     static final int FORMAT_INDEX = 0;
     static final int CODEC_INDEX = 1;
     static final int BITRATE_INDEX = 2;
@@ -123,7 +123,7 @@ public class AudioController {
         param.setDuration(paramPart[DURATION_INDEX]);
         param.setVol(paramPart[VOL_INDEX]);
         return param;
-    }
+    }*/
 
     /**
      * Show all output of audio file conversion
@@ -132,7 +132,7 @@ public class AudioController {
      * @return all output path or error message of audio file conversion
      */
 
-    @RequestMapping(method = RequestMethod.POST, value = "convertAudio")
+  /**  @RequestMapping(method = RequestMethod.POST, value = "convertAudio")
     public String convertAudio(@RequestParam final MultipartFile file, @RequestParam final String params) {
         AudioParameter parameter = createAudioParameter(file, params);
         String source = copySourceFile(parameter);
@@ -148,5 +148,5 @@ public class AudioController {
             resultPath = "Your converted audio is located at: " + resultPath;
         }
         return resultPath;
-    }
+    }*/
 }
