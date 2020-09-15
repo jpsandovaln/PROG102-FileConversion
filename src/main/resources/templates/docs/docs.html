@@ -2,59 +2,59 @@
 <html xmlns:th="http://www.thymeLeaf.org" lang="en">
 <head th:replace = "main/template :: head"></head>
 <body>
-<header th:replace = "main/template :: header"></header>
-<div class="container col-md-10">
-    <div class="row m-3">
-        <img class="rounded float-left img-icon" th:src="@{/images/docs.png}">
-        <div class="float-left">
-            <h6 class="m-3 align-bottom">Convert documents</h6>
+    `<header th:replace = "main/template :: header"></header>
+    <div class="container col-md-10">
+        <div class="row m-3">
+            <img class="rounded float-left img-icon" th:src="@{/images/docs.png}">
+            <div class="float-left">
+                <h6 class="m-3 align-bottom">Convert documents</h6>
+            </div>
         </div>
-    </div>
-    <div class="card">
-        <div class="card-body">
-            <form method="post" th:action="@{/extractText}" enctype="multipart/form-data">
-                <div class="form-row">
-                    <div class="col-md-4">
-                        <div class="mb-3">
-                            <label for="file">File</label>
-                            <div class="custom-file">
-                                <input name="file" type="file" class="form-control" id="file" lang="es">
+        <div class="card">
+            <div class="card-body">
+                <form method="post" th:action="@{/extractText}" enctype="multipart/form-data">
+                    <div class="form-row">
+                        <div class="col-md-4">
+                            <div class="mb-3">
+                                <label for="file">File</label>
+                                <div class="custom-file">
+                                    <input name="file" type="file" class="form-control" id="file" lang="es">
+                                </div>
+                            </div>
+                            <div class="mb-3">
+                                <label for="language">Language</label>
+                                <select class="custom-select" id="language"  name = "language" required>
+                                    <option value="'español'">Espanol</option>
+                                    <option value="'english'">English</option>
+                                </select>
+                            </div>
+                            <div class="mb-3">
+                                <label for="format">Format</label>
+                                <select class="custom-select" id="format"  name = "format" required>
+                                    <option value="'screenShot'">ScreenShot</option>
+                                    <option value="'txt'">Txt</option>
+                                    <option value="'docx'">Docx</option>
+                                    <option value="'pdf'">PDF</option>
+
+                                </select>
+                            </div>
+                            <dic class="col-md-3 mb-3">
+                                <label></label>
+                                <button class="btn btn-primary btn-block mt-2" type="submit">Extract</button>
+                            </dic>
+                        </div>
+                        <div class="col-md-8">
+                            <div class="form-row ml-2">
+                                <label for="format">Text:</label>
+                                <textarea class="form-control" id="textarea_preview" rows="12" disabled></textarea>
                             </div>
                         </div>
-                        <div class="mb-3">
-                            <label for="language">Language</label>
-                            <select class="custom-select" id="language"  name = "language" required>
-                                <option value="'español'">Espanol</option>
-                                <option value="'english'">English</option>
-                            </select>
-                        </div>
-                        <div class="mb-3">
-                            <label for="format">Format</label>
-                            <select class="custom-select" id="format"  name = "format" required>
-                                <option value="'screenShot'">ScreenShot</option>
-                                <option value="'txt'">Txt</option>
-                                <option value="'docx'">Docx</option>
-                                <option value="'pdf'">PDF</option>
-    
-                            </select>
-                        </div>
-                        <dic class="col-md-3 mb-3">
-                            <label></label>
-                            <button class="btn btn-primary btn-block mt-2" type="submit">Extract</button>
-                        </dic>
                     </div>
-                    <div class="col-md-8">
-                        <div class="form-row ml-2">
-                            <label for="format">Text:</label>
-                            <textarea class="form-control" id="textarea_preview" rows="12" disabled></textarea>
-                        </div>
-                    </div>
-                </div>
-            </form>
+                </form>
+            </div>
         </div>
-    </div>
-</div>
-<footer th:replace = "main/template :: footer"></footer>
-<script th:src="@{/js/docs/doc.js}"></script>
+    </div>`
+    <footer th:replace = "main/template :: footer"></footer>
+    <script th:src="@{/js/docs/doc.js}"></script>
 </body>
 </html>
