@@ -29,8 +29,8 @@ public class Executor {
    * @throws IOException
    * @throws InterruptedException
    */
-  public void execute(final List<String> command) throws ExecutionException, IOException, InterruptedException {
-    Process processDuration = new ProcessBuilder(command).redirectErrorStream(true).start();
+  public void execute(final List<List<String>>  command) throws ExecutionException, IOException, InterruptedException {
+    Process processDuration = new ProcessBuilder(command.get(0)).redirectErrorStream(true).start();
     StringBuilder output = new StringBuilder();
     BufferedReader processOutputReader = new BufferedReader(new InputStreamReader(processDuration.getInputStream()));
     String line;
@@ -38,7 +38,6 @@ public class Executor {
       output.append(line + System.lineSeparator());
     }
     processDuration.waitFor();
-
     if (debugOutPut) {
       System.out.println("BEGIN DEBUG");
       System.out.println(output.toString());
