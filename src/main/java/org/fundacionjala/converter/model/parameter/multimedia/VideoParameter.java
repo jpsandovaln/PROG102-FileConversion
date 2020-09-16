@@ -23,43 +23,73 @@ public class VideoParameter extends MultimediaParameter {
     public static final String START_TIME = "10";
     public static final String TIME = "-t";
     public static final String DURATION = "5";
-    //private String palette = "-vf \"fps=10,scale=320:-1:flags=lanczos,split[s0][s1];[s0]palettegen[p];[s1][p]paletteuse\" -loop 0";
     public static final String VF = "-vf";
     public static final String PALETTE = "\"fps=10,scale=320:-1:flags=lanczos,split[s0][s1];[s0]palettegen[p];[s1][p]paletteuse\"";
     public static final String LOOP = "-loop";
     public static final String ZERO = "0";
     private boolean extractMetadata;
     private boolean extractThumbnail;
-    //perhaps the pathTool will be here
-    public VideoParameter(String toolPath, String pathConvertedFile) {
+
+    public VideoParameter(final String toolPath, final String pathConvertedFile) {
         this.toolPath = toolPath;
         this.pathConvertedFile = pathConvertedFile;
         extractMetadata = false;
         extractThumbnail = false;
     }
+
+    /**
+     * Returns extractMetadata value
+     * @return boolean
+     */
     public boolean isExtractMetadata() {
         return extractMetadata;
     }
 
+    /**
+     * Sets extractMetadata value
+     * @param extractThumbnail
+     */
     public void setExtractMetadata(final boolean extractThumbnail) {
         this.extractMetadata = extractMetadata;
     }
+
+    /**
+     * Returns extractThumbnail value
+     * @return extractThumbnail
+     */
     public boolean isExtractThumbnail() {
         return extractThumbnail;
     }
 
+    /**
+     * Sets extractThumbnail value
+     * @param extractThumbnail
+     */
     public void setExtractThumbnail(final boolean extractThumbnail) {
         this.extractThumbnail = extractThumbnail;
     }
+
+    /**
+     * Returns the path of tool to convert video
+     * @return toolPath
+     */
     public String getToolPath() {
         return toolPath;
     }
 
+    /**
+     * Returns the extension to convert the video
+     * @return extension
+     */
     public String getExtension() {
         return extension;
     }
 
-    public void setExtension(String extension) {
+    /**
+     * Sets the extension to convert the video
+     * @param extension
+     */
+    public void setExtension(final String extension) {
         this.extension = extension;
     }
 

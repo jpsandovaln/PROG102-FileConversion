@@ -22,13 +22,20 @@ public class Executor {
         this.debugOutPut = debugOutPut;
     }
 
+    /**
+     *
+     * @param commands
+     * @return
+     * @throws ExecutionException
+     * @throws IOException
+     * @throws InterruptedException
+     */
     public List<String> executeList(final List<List<String>> commands) throws ExecutionException, IOException, InterruptedException {
         List<String> outputList = new ArrayList();
-        for(List<String> command : commands) {
+        for (List<String> command : commands) {
             outputList.add(execute(command));
 
         }
-
         return outputList;
     }
 
