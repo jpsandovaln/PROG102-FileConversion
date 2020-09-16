@@ -16,6 +16,7 @@ import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.fundacionjala.converter.executor.Executor;
 import org.fundacionjala.converter.model.configPath.ConfigPath;
 import org.fundacionjala.converter.model.parameter.ModelParameter;
 import org.fundacionjala.converter.model.parameter.extractText.ExtractTextParameter;
@@ -26,19 +27,55 @@ import org.fundacionjala.converter.model.parameter.extractText.ExtractTextParame
  */
 public class ExtractTextModel implements ICommand {
 
-    /*public void convertDocument(){
-        ConvertDoc cDoc = new ConvertDoc();
+    /**
+     * create command
+     * 
+     * @return list of commands
+     */
+    @Override
+    public List<List<String>> createCommand(final ModelParameter modelParameter) {
+        List<List<String>> listCommands = new ArrayList<>();
+        ConfigPath cPath = new ConfigPath();
+        List<String> command = new ArrayList<String>();
+        command.add(cPath.getExtractTextTool());
+        command.add(modelParameter.getInputFile());    //add source
+        command.add(modelParameter.getOutputFile());   //add target
+        command.add(((ExtractTextParameter) modelParameter).getLanguage()); // add language
+        listCommands.add(command);
+        return listCommands;
+    }
+
+    public void createDocument(final ModelParameter modelParameter) {
+        List<List<String>> commandList = createCommand(modelParameter);
+        List<String> commandToEx = commandList.get(0); 
+        Executor executor = new Executor();
+        try {
+            executor.execute(commandToEx);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        ConvertDoc documConvertDoc = new ConvertDoc();
+        String type = ((ExtractTextParameter) modelParameter).getType();
+        String outputFile = modelParameter.getOutputFile();
         String result;
-        result = readAFile(eTextParameter.getOutputFile() + ".txt");
-        if (type == "word" || type == "pdf"|| type == "SS") {
+        result = readAFile(outputFile + ".txt");
+        eraseDocument(type, outputFile);
+        if (type == ".docx") {
+            documConvertDoc.createDocumentWord(outputFile, result);
+        } else if (type == ".pdf") {
+            documConvertDoc.createDocumentPdf(outputFile, result);
+        }
+    }
+
+    public void eraseDocument(final String type, String outputFile) {
+        if (type == ".docx" || type == ".pdf"|| type == ".txt"){
             try {
-                Files.delete(Paths.get(eTextParameter.getOutputFile() + ".txt"));
+                Files.delete(Paths.get(outputFile + ".txt"));
             } catch (IOException e) {
                 e.printStackTrace();
             }
         }
-        cDoc.createDocumentWord(eTextParameter.getOutputFile(), result);
-    }*/
+    }
 
     /**
      * read a file
@@ -66,22 +103,5 @@ public class ExtractTextModel implements ICommand {
             }
         }
         return readString;
-    }
-
-    /**
-     * create command
-     * @return list of commands
-     */
-    @Override
-    public List<List<String>> createCommand(final ModelParameter modelParameter) {
-        List<List<String>> listCommands = new ArrayList<>();
-        ConfigPath cPath = new ConfigPath();
-        List<String> command = new ArrayList<String>();
-        command.add(cPath.getExtractTextTool());
-        command.add(modelParameter.getInputFile());    //add source
-        command.add(modelParameter.getOutputFile());   //add target
-        command.add(((ExtractTextParameter) modelParameter).getLanguage()); // add language
-        listCommands.add(command);
-        return listCommands;
     }
 }

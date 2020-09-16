@@ -1,7 +1,6 @@
 package org.fundacionjala.converter.model.parameter.extractText;
 
 import java.util.List;
-
 import org.fundacionjala.converter.model.parameter.ModelParameter;
 
 public class ExtractTextParameter extends ModelParameter {
