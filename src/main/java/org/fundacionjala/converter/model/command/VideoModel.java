@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.concurrent.ExecutionException;
 
 import org.fundacionjala.converter.model.commons.Commons;
+import org.fundacionjala.converter.model.parameter.ModelParameter;
 
 public class VideoModel implements ICommand {
 
@@ -96,9 +97,10 @@ public class VideoModel implements ICommand {
   /**
    * create command
    * @return list of commands
+   * @param modelParameter
    */
   @Override
-  public List<String> createCommand() {
+  public List<List<String>>  createCommand(final ModelParameter modelParameter) {
     return null;
   }
 }

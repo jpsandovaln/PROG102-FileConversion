@@ -1,4 +1,4 @@
-package org.fundacionjala.converter.model.parameter.extractTextParameter;
+package org.fundacionjala.converter.model.parameter.extractText;
 
 import org.fundacionjala.converter.model.parameter.ModelParameter;
 
@@ -9,8 +9,7 @@ public class ExtractTextParameter extends ModelParameter {
     /**
      * List<String> getParameter()
      */
-    @Override
-    protected List<String> getParameter() {
+    public List<String> getParameter() {
         return null;
     }
 }
