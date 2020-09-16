@@ -1,7 +1,6 @@
 package org.fundacionjala.converter.model.command;
 
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.ExecutionException;
 
@@ -98,11 +97,11 @@ public class VideoModel implements ICommand {
 
   /**
    * create command
-   * 
+   *
    * @return list of commands
    */
   @Override
-  public List<List<String>> createCommand(ModelParameter modelParameter) {
+  public List<List<String>> createCommand(final ModelParameter modelParameter) {
     // TODO Auto-generated method stub
     return null;
   }

@@ -33,7 +33,7 @@ public class MetadataExtractor implements IExtractor, ICommand {
 
     /**
      * Returns a list with the parameters
-     * 
+     *
      * @param param object with the parameters
      * @return List<String>
      */
@@ -53,7 +53,7 @@ public class MetadataExtractor implements IExtractor, ICommand {
 
     /**
      * Extract file's metadata
-     * 
+     *
      * @param param
      * @throws Exception
      */
@@ -64,11 +64,11 @@ public class MetadataExtractor implements IExtractor, ICommand {
 
     /**
      * create command
-     * 
+     *
      * @return list of commands
      */
     @Override
-    public List<List<String>> createCommand(ModelParameter modelParameter) {
+    public List<List<String>> createCommand(final ModelParameter modelParameter) {
         // TODO Auto-generated method stub
         return null;
     }

@@ -32,12 +32,20 @@ public class Executor {
    */
   public List<String> executeCommandsList(final List<List<String>> commandsList) throws InterruptedException, ExecutionException, IOException {
     List<String> outputList = new ArrayList<>();
-    for(List<String> command : commandsList) {
+    for (List<String> command : commandsList) {
       outputList.add(execute(command));
     }
     return outputList;
   }
 
+  /**
+   *
+   * @param command
+   * @return
+   * @throws ExecutionException
+   * @throws IOException
+   * @throws InterruptedException
+   */
   public String execute(final List<String> command) throws ExecutionException, IOException, InterruptedException {
     String commandToExecute = "";
     StringBuilder output = new StringBuilder();

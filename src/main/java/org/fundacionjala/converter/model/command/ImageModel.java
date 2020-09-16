@@ -5,7 +5,6 @@ import org.springframework.web.multipart.MultipartFile;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.util.ArrayList;
 import java.util.List;
 
 public class ImageModel implements ICommand {
@@ -103,11 +102,11 @@ public class ImageModel implements ICommand {
 
     /**
      * create command
-     * 
+     *
      * @return list of commands
      */
     @Override
-    public List<List<String>> createCommand(ModelParameter modelParameter) {
+    public List<List<String>> createCommand(final ModelParameter modelParameter) {
         // TODO Auto-generated method stub
         return null;
     }

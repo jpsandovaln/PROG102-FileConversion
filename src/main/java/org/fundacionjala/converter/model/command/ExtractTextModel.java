@@ -29,7 +29,7 @@ public class ExtractTextModel implements ICommand {
 
     /**
      * create command
-     * 
+     *
      * @return list of commands
      */
     @Override
@@ -45,9 +45,13 @@ public class ExtractTextModel implements ICommand {
         return listCommands;
     }
 
+    /**
+     * Create a document
+     * @param modelParameter - the parameter to execute the conversion using tesseract
+     */
     public void createDocument(final ModelParameter modelParameter) {
         List<List<String>> commandList = createCommand(modelParameter);
-        List<String> commandToEx = commandList.get(0); 
+        List<String> commandToEx = commandList.get(0);
         Executor executor = new Executor();
         try {
             executor.execute(commandToEx);
@@ -67,8 +71,13 @@ public class ExtractTextModel implements ICommand {
         }
     }
 
-    public void eraseDocument(final String type, String outputFile) {
-        if (type == ".docx" || type == ".pdf"|| type == ".txt"){
+    /**
+     * Erase the txt when the type is word or pdf
+     * @param type
+     * @param outputFile
+     */
+    public void eraseDocument(final String type, final String outputFile) {
+        if (type == ".docx" || type == ".pdf" || type == ".txt") {
             try {
                 Files.delete(Paths.get(outputFile + ".txt"));
             } catch (IOException e) {
