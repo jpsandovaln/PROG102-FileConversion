@@ -53,13 +53,4 @@ public abstract class ModelParameter {
   public void setOutputFile(final String outputFile) {
     this.outputFile = outputFile;
   }
-
-  /**
-   *
-   * @param md5
-   */
-  public void setMd5(final String md5) {
-    this.md5 = md5;
-  }
-
 }
