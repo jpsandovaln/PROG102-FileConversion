@@ -19,49 +19,13 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import java.nio.file.StandardCopyOption;
 
 @RestController
 public class VideoController {
 
- /* @Autowired
-  private FileUploadService fileUploadService;
-  @Autowired
-  private FileService fileService;
-
-  /**
-   * videoConverter
-   *
-   * @throws InterruptedException
-   * @throws IOException
-   * @throws ExecutionException
-   * @throws NoSuchAlgorithmException
-   */
-/*  @RequestMapping(method = RequestMethod.POST, value = "/video-converter")
-  public ResponseEntity<?> videoConverter(@RequestParam("file") final MultipartFile file,
-      @RequestParam("ext") final String ext) {
-    try {
-      VideoModel video = new VideoModel();
-      String filePath = fileUploadService.saveInputFile(file);
-      video.setInputFileName(filePath);
-      String checksum = new ChecksumMD5().getMD5(video.getFileName());
-      String path = "";
-      if (fileService.getFileByMd5(checksum) == null) {
-        // save in the database the filename and md5
-        video.videoConverter(ext);
-        fileService.saveFile(new File(video.getOutputFileName(), checksum));
-        path = video.getOutputFileName();
-      } else {
-        path = fileService.getFileByMd5(checksum).getPath();
-      }
-      return new ResponseEntity<Object>(checksum + "\n" + path, HttpStatus.OK);
-    } catch (Exception e) {
-      System.out.println(e.getMessage());
-      return new ResponseEntity<Object>("Error" + "\n" + e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
-    }
-  }*/
  @Autowired
  private FileService fileService;
   @Value("${tempFiles.path}")
@@ -71,22 +35,19 @@ public class VideoController {
      *
      * @param requestVideoParameter
      * @return
-     * @throws IOException
      */
   @RequestMapping(method = RequestMethod.POST, value = "convertVideo")
-  public String convertVideo(final RequestVideoParameter requestVideoParameter) throws IOException {
-
-   // VideoParameter videoParameter;
-    String result = "Error";
-   // Executor exec;
-    String path = temporal + requestVideoParameter.getFile().getOriginalFilename();
-    Files.copy(requestVideoParameter.getFile().getInputStream(), Paths.get(path));
-    if (requestVideoParameter.validate()) {
-      fileService.saveFile(new File(path, requestVideoParameter.generateMD5(path)));
-    //  videoParameter = new VideoParameter();
-     // result = exec.executer(videoParameter);
-    }
-    Files.delete(Paths.get(path));
-    return result;
+  public String convertVideo(final RequestVideoParameter requestVideoParameter) throws Exception {
+      requestVideoParameter.validate();
+      String result = "exist";
+      String path = temporal + requestVideoParameter.getFile().getOriginalFilename();
+      Files.copy(requestVideoParameter.getFile().getInputStream(), Paths.get(path), StandardCopyOption.REPLACE_EXISTING);
+      String md5 = requestVideoParameter.generateMD5(path);
+      if (!requestVideoParameter.isInDataBase(md5, fileService)) {
+          fileService.saveFile(new File(path, md5));
+          result = "saved in database";
+      }
+      Files.delete(Paths.get(path));
+      return result;
   }
 }
