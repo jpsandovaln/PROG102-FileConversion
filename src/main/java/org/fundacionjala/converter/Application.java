@@ -47,7 +47,8 @@ public class Application {
         eTextParameter.setOutputFile(outputFile);
         //((ExtractTextParameter) eTextParameter).setLanguage(languageSp);
         ((ExtractTextParameter) eTextParameter).setLanguage(languageEn);
-        List<List<String>> commandList = eTextModelEn.createCommand(eTextParameter);
+        ((ExtractTextParameter) eTextParameter).setType(type);
+        /*List<List<String>> commandList = eTextModelEn.createCommand(eTextParameter);
         List<String> commandToEx = commandList.get(0); 
         Executor executor = new Executor();
         try {
@@ -55,6 +56,7 @@ public class Application {
         } catch (Exception e) {
             // TODO Auto-generated catch block
             e.printStackTrace();
-        }
+        }*/
+        eTextModelEn.createDocument(eTextParameter);
     }
 }
