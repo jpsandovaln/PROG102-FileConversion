@@ -1,5 +1,6 @@
 package org.fundacionjala.converter.model.command;
 
+import org.fundacionjala.converter.model.parameter.ModelParameter;
 import org.springframework.web.multipart.MultipartFile;
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -95,9 +96,10 @@ public class ImageModel implements ICommand {
     /**
      * create command
      * @return list of commands
+     * @param modelParameter
      */
     @Override
-    public List<String> createCommand() {
+    public List<List<String>>  createCommand(final ModelParameter modelParameter) {
         return null;
     }
 }

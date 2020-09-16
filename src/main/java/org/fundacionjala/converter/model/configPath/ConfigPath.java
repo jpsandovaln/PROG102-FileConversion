@@ -11,6 +11,10 @@ public class ConfigPath {
     loadConfiguration();
   }
 
+  public ConfigPath() {
+    loadConfiguration();
+  }
+
   /**
    * Loads the application.properties configurations.
    */
