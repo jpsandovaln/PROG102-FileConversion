@@ -1,10 +1,12 @@
 package org.fundacionjala.converter.model.command;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.ExecutionException;
 
 import org.fundacionjala.converter.model.commons.Commons;
+import org.fundacionjala.converter.model.parameter.ModelParameter;
 
 public class VideoModel implements ICommand {
 
@@ -65,6 +67,7 @@ public class VideoModel implements ICommand {
     common.execute(command);
     setOutputFileName(output);
   }
+
   /**
    * This method return the file name
    */
@@ -95,10 +98,12 @@ public class VideoModel implements ICommand {
 
   /**
    * create command
+   * 
    * @return list of commands
    */
   @Override
-  public List<String> createCommand() {
+  public List<List<String>> createCommand(ModelParameter modelParameter) {
+    // TODO Auto-generated method stub
     return null;
   }
 }

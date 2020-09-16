@@ -9,17 +9,17 @@ import java.util.concurrent.ExecutionException;
 
 public class Executor {
 
-  private boolean debugOutPut;
+  private boolean debugOutput;
 
   public Executor() {
-    debugOutPut = false;
+    debugOutput = false;
   }
 
   /**
    * setDebugOutput
    */
-  public void setDebugOutput(final boolean debugOutPut) {
-    this.debugOutPut = debugOutPut;
+  public void setDebugOutput(final boolean debugOutput) {
+    this.debugOutput = debugOutput;
   }
   /**
    * This method execute the command.
@@ -30,29 +30,33 @@ public class Executor {
    * @throws IOException
    * @throws InterruptedException
    */
-  public List<String> executeList(final List<List<String>> lista) throws InterruptedException, ExecutionException, IOException {
+  public List<String> executeCommandsList(final List<List<String>> commandsList) throws InterruptedException, ExecutionException, IOException {
     List<String> outputList = new ArrayList<>();
-    for(List<String> l : lista) {
-      outputList.add(execute(l));
+    for(List<String> command : commandsList) {
+      outputList.add(execute(command));
     }
     return outputList;
   }
 
-  private String execute(final List<String> command) throws ExecutionException, IOException, InterruptedException {
-    Process processDuration = new ProcessBuilder(command).redirectErrorStream(true).start();
+  public String execute(final List<String> command) throws ExecutionException, IOException, InterruptedException {
+    String commandToExecute = "";
     StringBuilder output = new StringBuilder();
-    BufferedReader processOutputReader = new BufferedReader(new InputStreamReader(processDuration.getInputStream()));
     String line;
+    Process process = new ProcessBuilder(command).redirectErrorStream(true).start();
+    BufferedReader processOutputReader = new BufferedReader(new InputStreamReader(process.getInputStream()));
     while ((line = processOutputReader.readLine()) != null) {
       output.append(line + System.lineSeparator());
     }
-    processDuration.waitFor();
-
-    if (debugOutPut) {
+    process.waitFor();
+    if (debugOutput) {
       System.out.println("BEGIN DEBUG");
       System.out.println(output.toString());
       System.out.println("END DEBUG");
     }
-    return command.get(command.size() - 1);
+    for (int i = 0; i < command.size(); i++) {
+      commandToExecute += command.get(i) + " ";
+    }
+    System.out.println(commandToExecute);
+    return commandToExecute;
   }
 }
