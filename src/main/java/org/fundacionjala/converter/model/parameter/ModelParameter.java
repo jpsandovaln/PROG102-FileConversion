@@ -1,12 +1,9 @@
 package org.fundacionjala.converter.model.parameter;
 
-import java.util.List;
-
 public abstract class ModelParameter {
   private String inputFile;
   private String outputFile;
   private String md5;
-
 
   public ModelParameter() {
   }
@@ -38,8 +35,4 @@ public abstract class ModelParameter {
     return md5;
   }
 
-  /**
-   * List<String>
-   */
-  protected abstract List<String> getParameter();
 }

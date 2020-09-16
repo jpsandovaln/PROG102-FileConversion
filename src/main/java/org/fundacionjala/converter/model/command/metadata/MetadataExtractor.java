@@ -9,7 +9,6 @@
 package org.fundacionjala.converter.model.command.metadata;
 
 import org.fundacionjala.converter.model.command.CommandBuilder;
-import org.fundacionjala.converter.model.command.ICommand;
 import org.fundacionjala.converter.model.command.IExtractor;
 
 import java.util.ArrayList;
@@ -19,7 +18,7 @@ import java.util.List;
  * @author Angela Martinez
  * @version 0.1
  */
-public class MetadataExtractor implements IExtractor, ICommand {
+public class MetadataExtractor implements IExtractor {
     private Process process;
     private List<String> listParams;
     private CommandBuilder commandBuilder;
@@ -57,15 +56,6 @@ public class MetadataExtractor implements IExtractor, ICommand {
     public String extract(final Param param) throws Exception {
         commandBuilder.execute(getListParams(param));
         return metadataParam.getTargetDir() + metadataParam.getFileName() + metadataParam.getFormatExport();
-    }
-
-    /**
-     * create command
-     * @return list of commands
-     */
-    @Override
-    public List<String> createCommand() {
-        return null;
     }
 }
 
