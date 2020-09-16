@@ -1,57 +1,68 @@
 package org.fundacionjala.converter.model.command;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.ExecutionException;
 
-import org.fundacionjala.converter.model.commons.Commons;
+import org.fundacionjala.converter.model.parameter.ModelParameter;
+import org.fundacionjala.converter.model.parameter.multimedia.VideoParameter;
 
 public class VideoModel implements ICommand {
+    private List<String> listParams;
+    private CommandBuilder commandBuilder;
+    List<List<String>> list;
+    public VideoModel() throws IOException {
+        listParams = new ArrayList<String>();
+        commandBuilder = new CommandBuilder();
+        list = new ArrayList<>();
+    }
 
-  private String fileName;
-  private String outputFileName;
-  private Commons common;
-  private VideoParameter parameter;
-
-  public VideoModel() throws IOException {
-    common = new Commons("video");
-  }
-
-  /**
+    /**
    * videoConverter
    *
    * @throws ExecutionException
    * @throws InterruptedException
    * @throws IOException
    */
-  public void videoConverter(final String ext) throws ExecutionException, IOException, InterruptedException {
-    if (ext.equals("mp4")) {
-      this.compressToMp4();
-    } else if (ext.equals("gif")) {
-      this.gif();
+    public List<String> convert(final VideoParameter parameter) {
+        if (parameter.getExtension().equals("mp4")) {
+            return compressToMp4(parameter);
+        } else if (parameter.getExtension().equals("gif")) {
+            return gif(parameter);
+        }
+        return null;
     }
-  }
 
   /**
-   * videoModel Compres to mp4
+   * videoModel Compress to mp4
    *
    * @throws ExecutionException
    * @throws InterruptedException
    * @throws IOException
    */
-  private void compressToMp4() throws ExecutionException, IOException, InterruptedException {
-    String output = common.getStorageConvertedPath() + "/demo.mp4";
-    List<String> command = parameter.COMPRESS.getParameter();
-    command.add(0, common.videoExecutable());
-    command.add(fileName);
-    command.add(output);
-    System.out.println(command);
-    common.execute(command);
-    setOutputFileName(output);
-  }
+    private List<String> compressToMp4(final VideoParameter parameter) {
+        listParams.clear();
+        listParams.add(parameter.getToolPath());
+        listParams.add(VideoParameter.VCODEC_COMMAND);
+        listParams.add(VideoParameter.VCODEC_H264);
+        listParams.add(VideoParameter.ACODEC_COMMAND);
+        listParams.add(VideoParameter.ACODEC_AAC);
+        listParams.add(VideoParameter.INPUT_COMMAND);
+        listParams.add(parameter.getFilePath());
+        listParams.add(parameter.getPathConvertedFile() + "demo.mp4");
+        return listParams;
+    }
 
-  public void extractThumbnail() throws ExecutionException, IOException, InterruptedException {
-    String output = common.getStorageConvertedPath() + "/thumbnail.gif";
+    public List<String> extractThumbnail(final VideoParameter parameter) {
+        listParams.clear();
+        listParams.add(parameter.getToolPath());
+        listParams.add(parameter.getTime());
+        listParams.add(parameter.getFilePath());
+        listParams.add(parameter.getPalette());
+        listParams.add(parameter.getPathConvertedFile() + "demo.gif");
+        return listParams;
+    /*String output = common.getStorageConvertedPath() + "/thumbnail.gif";
     List<String> command = parameter.TIME.getParameter();
     command.add(0, common.videoExecutable());
     command.add(fileName);
@@ -62,68 +73,38 @@ public class VideoModel implements ICommand {
     System.out.println(command);
     command.add(output);
     common.execute(command);
-    setOutputFileName(output);
-  }
-  /**
-   * videoModel convert to gif
-   *
-   * @throws ExecutionException
-   * @throws InterruptedException
-   * @throws IOException
-   */
-  private void gif() throws ExecutionException, IOException, InterruptedException {
-    String output = common.getStorageConvertedPath() + "/demo.gif";
-    List<String> command = parameter.GIF.getParameter();
-    command.add(0, common.videoExecutable());
-    command.add(fileName);
-    command.add(output);
-    common.execute(command);
-    setOutputFileName(output);
-  }
-  /**
-   * This method return the file name
-   */
-  public String getFileName() {
-    return fileName;
-  }
-
-  /**
-   * This method setOutputFileName
-   */
-  public void setOutputFileName(final String outputFileName) {
-    this.outputFileName = outputFileName;
-  }
-
-  /**
-   * This method setInputFileName
-   */
-  public void setInputFileName(final String inputFileName) {
-    this.fileName = inputFileName;
-  }
-
-  /**
-   * This method returns getOutputFileNmae
-   */
-  public String getOutputFileName() {
-    return outputFileName;
-  }
-
-  public static void main(String []args) {
-    try {
-      VideoModel video = new VideoModel();
-      video.setInputFileName("storage/inputFiles/lesson-2a-medium.mov");
-      video.extractThumbnail();
-    } catch (Exception e) {
-      e.printStackTrace();
+    setOutputFileName(output);*/
     }
-  }
+    /**
+    * videoModel convert to gif
+    *
+    * @throws ExecutionException
+    * @throws InterruptedException
+    * @throws IOException
+    */
+    private List<String> gif(final VideoParameter parameter) {
+        listParams.clear();
+        listParams.add(parameter.getToolPath());
+        listParams.add(VideoParameter.FRAME_RATIO);
+        listParams.add(VideoParameter.CANT_FRAMES);
+        listParams.add(VideoParameter.INPUT_COMMAND);
+        listParams.add(parameter.getFilePath());
+        listParams.add(parameter.getPathConvertedFile() + "demo.gif");
+        return listParams;
+    }
 
-  /**
-   * create command
-   * @return list of commands
-   */
-  @Override
-  public List<String> createCommand() {
-    return null;
-  }
+    /**
+     * create command
+     * @return list of commands
+     */
+    public List<List<String>> createCommand(ModelParameter modelParameter) {
+        list.clear();
+        VideoParameter parameter = (VideoParameter) modelParameter;
+        if (parameter.isExtractMetadata()) {
+            //list.add(convert(parameter));
+        } else {
+            list.add(convert(parameter));
+        }
+        return list;
+    }
 }

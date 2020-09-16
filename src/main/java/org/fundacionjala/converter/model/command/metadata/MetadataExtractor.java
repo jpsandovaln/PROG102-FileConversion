@@ -11,6 +11,7 @@ package org.fundacionjala.converter.model.command.metadata;
 import org.fundacionjala.converter.model.command.CommandBuilder;
 import org.fundacionjala.converter.model.command.ICommand;
 import org.fundacionjala.converter.model.command.IExtractor;
+import org.fundacionjala.converter.model.parameter.ModelParameter;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -64,7 +65,7 @@ public class MetadataExtractor implements IExtractor, ICommand {
      * @return list of commands
      */
     @Override
-    public List<String> createCommand() {
+    public List<List<String>> createCommand(ModelParameter parameter) {
         return null;
     }
 }

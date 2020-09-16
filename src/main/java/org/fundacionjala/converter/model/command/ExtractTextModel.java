@@ -7,6 +7,8 @@ package org.fundacionjala.converter.model.command;
  * Information and shall use it only in accordance with the terms of the
  * license agreement you entered into with Fundacion Jala
  */
+import org.fundacionjala.converter.model.parameter.ModelParameter;
+
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
@@ -117,7 +119,7 @@ public class ExtractTextModel implements ICommand {
      * @return list of commands
      */
     @Override
-    public List<String> createCommand() {
+    public List<List<String>> createCommand(ModelParameter parameter) {
         return null;
     }
 }

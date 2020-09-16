@@ -27,6 +27,7 @@ public class CommandBuilder {
         for (String param: listParams) {
             command += param;
         }
+        System.out.println(command);
     }
 
     /**
