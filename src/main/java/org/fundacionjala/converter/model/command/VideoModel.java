@@ -3,9 +3,6 @@ package org.fundacionjala.converter.model.command;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-
-import org.apache.poi.ss.formula.functions.T;
-import org.fundacionjala.converter.model.parameter.ModelParameter;
 import org.fundacionjala.converter.model.parameter.multimedia.VideoParameter;
 
 public class VideoModel implements ICommand<VideoParameter> {
@@ -24,7 +21,7 @@ public class VideoModel implements ICommand<VideoParameter> {
    * videoConverter
    *
    */
-    public List<String> convert(final VideoParameter parameter) {
+    private List<String> convert(final VideoParameter parameter) {
         if (parameter.getExtension().equals("mp4")) {
             return compressToMp4(parameter);
         } else if (parameter.getExtension().equals("gif")) {
@@ -55,7 +52,7 @@ public class VideoModel implements ICommand<VideoParameter> {
      * @param parameter
      * @return
      */
-    public List<String> extractThumbnail(final VideoParameter parameter) {
+    private List<String> extractThumbnail(final VideoParameter parameter) {
         listThumbnailParams.clear();
         listThumbnailParams.add(parameter.getToolPath());
         listThumbnailParams.add(VideoParameter.START);
@@ -77,7 +74,7 @@ public class VideoModel implements ICommand<VideoParameter> {
      * @param parameter
      * @return
      */
-    public List<String> extractMetadata(final VideoParameter parameter) {
+    private List<String> extractMetadata(final VideoParameter parameter) {
         //do something
         return listParams;
     }
@@ -89,8 +86,8 @@ public class VideoModel implements ICommand<VideoParameter> {
     private List<String> gif(final VideoParameter parameter) {
         listParams.clear();
         listParams.add(parameter.getToolPath());
-        listParams.add(VideoParameter.FRAME_RATIO);
-        listParams.add(VideoParameter.CANT_FRAMES);
+        listParams.add(VideoParameter.FRAME_RATE);
+        listParams.add(parameter.getFrames());
         listParams.add(VideoParameter.INPUT_COMMAND);
         listParams.add(parameter.getFilePath());
         listParams.add(parameter.getPathConvertedFile() + "demo.gif");
@@ -103,7 +100,6 @@ public class VideoModel implements ICommand<VideoParameter> {
      */
     public List<List<String>> createCommand(final VideoParameter parameter) {
         list.clear();
-        //VideoParameter parameter = (VideoParameter) modelParameter;
         list.add(convert(parameter));
         if (parameter.isExtractThumbnail()) {
             list.add(extractThumbnail(parameter));

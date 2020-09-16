@@ -14,8 +14,8 @@ public class VideoParameter extends MultimediaParameter {
     public static final String ACODEC_COMMAND = "-acodec";
     public static final String ACODEC_MP2 = "mp2";
     public static final String ACODEC_AAC = "aac";
-    public static final String FRAME_RATIO = "-r";
-    public static final String CANT_FRAMES = "12";
+    public static final String FRAME_RATE = "-r";
+    private String frames;
     public static final String INPUT_COMMAND = "-i";
     //params for thumbnail
     public static final String START = "-ss";
@@ -34,6 +34,22 @@ public class VideoParameter extends MultimediaParameter {
         this.pathConvertedFile = pathConvertedFile;
         extractMetadata = false;
         extractThumbnail = false;
+    }
+
+    /**
+     * Returns the frames per second
+     * @return String
+     */
+    public String getFrames() {
+        return frames;
+    }
+
+    /**
+     * Sets the frames per second
+     * @param frames
+     */
+    public void setFrames(final String frames) {
+        this.frames = frames;
     }
 
     /**
