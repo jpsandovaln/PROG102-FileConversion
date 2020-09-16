@@ -10,49 +10,141 @@ package org.fundacionjala.converter.controller.request;
 
 import org.springframework.web.multipart.MultipartFile;
 
-public class RequestAudioParameter extends RequestMultimediaParameter {
+public class RequestAudioParameter  {
 
+    private MultipartFile file;
+    private String name;
+    private String format;
+    private String codec;
     private String bitRate;
-    private int channels;
-    public RequestAudioParameter(final MultipartFile file, final String format,
-                                 final String sampleRate, final String audioCodec, final String bitRate, final int channels) {
-        super(file, format, sampleRate, audioCodec);
-        this.bitRate = bitRate;
-        this.channels = channels;
+    private String channel;
+    private String sampleRate;
+    private String start;
+    private String duration;
+    private String volume;
+    private  boolean isMetadata = false;
+    private boolean isCut = false;
+    private String inputFile;
+    private String outputFile;
+    private String md5;
+
+    public MultipartFile getFile() {
+        return file;
     }
 
-    /**
-     *
-     * @throws Exception
-     */
-    @Override
-    public void validate() throws Exception {
-        super.validate();
-        if (this.getBitRate() == null || "".equals(this.getBitRate())) {
-            throw new Exception("failed BitRate Rate empty");
-        }
-        if ("".equals(this.getChannels())) {
-            throw new Exception("failed Channels Rate empty");
-        }
-
+    public void setFile(MultipartFile file) {
+        this.file = file;
     }
 
+    public String getName() {
+        return name;
+    }
 
-    /**
-     *
-     * @return
-     */
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getFormat() {
+        return format;
+    }
+
+    public void setFormat(String format) {
+        this.format = format;
+    }
+
+    public String getCodec() {
+        return codec;
+    }
+
+    public void setCodec(String codec) {
+        this.codec = codec;
+    }
+
     public String getBitRate() {
         return bitRate;
     }
 
-    /**
-     *
-     * @return
-     */
-    public int getChannels() {
-        return channels;
+    public void setBitRate(String bitRate) {
+        this.bitRate = bitRate;
     }
 
+    public String getChannel() {
+        return channel;
+    }
 
+    public void setChannel(String channel) {
+        this.channel = channel;
+    }
+
+    public String getSampleRate() {
+        return sampleRate;
+    }
+
+    public void setSampleRate(String sampleRate) {
+        this.sampleRate = sampleRate;
+    }
+
+    public String getStart() {
+        return start;
+    }
+
+    public void setStart(String start) {
+        this.start = start;
+    }
+
+    public String getDuration() {
+        return duration;
+    }
+
+    public void setDuration(String duration) {
+        this.duration = duration;
+    }
+
+    public String getVolume() {
+        return volume;
+    }
+
+    public void setVolume(String volume) {
+        this.volume = volume;
+    }
+
+    public boolean isMetadata() {
+        return isMetadata;
+    }
+
+    public void setMetadata(boolean metadata) {
+        isMetadata = metadata;
+    }
+
+    public boolean isCut() {
+        return isCut;
+    }
+
+    public void setCut(boolean cut) {
+        isCut = cut;
+    }
+
+    public String getInputFile() {
+        return inputFile;
+    }
+
+    public void setInputFile(String inputFile) {
+        this.inputFile = inputFile;
+    }
+
+    public String getOutputFile() {
+        return outputFile;
+    }
+
+    public void setOutputFile(String outputFile) {
+        this.outputFile = outputFile;
+    }
+
+    public String getMd5() {
+        return md5;
+    }
+
+    public void setMd5(String md5) {
+        this.md5 = md5;
+    }
 }
