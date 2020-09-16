@@ -65,7 +65,7 @@ public class MetadataExtractor implements IExtractor, ICommand {
      * @return list of commands
      */
     @Override
-    public List<List<String>> createCommand(ModelParameter parameter) {
+    public List<List<String>> createCommand(final ModelParameter parameter) {
         return null;
     }
 }

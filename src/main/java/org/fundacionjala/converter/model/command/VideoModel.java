@@ -3,7 +3,6 @@ package org.fundacionjala.converter.model.command;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.ExecutionException;
 
 import org.fundacionjala.converter.model.parameter.ModelParameter;
 import org.fundacionjala.converter.model.parameter.multimedia.VideoParameter;
@@ -12,7 +11,7 @@ public class VideoModel implements ICommand {
     private List<String> listParams;
     private List<String> listThumbnailParams;
     private CommandBuilder commandBuilder;
-    List<List<String>> list;
+    private List<List<String>> list;
     public VideoModel() throws IOException {
         listParams = new ArrayList<String>();
         listThumbnailParams = new ArrayList<String>();
@@ -23,9 +22,6 @@ public class VideoModel implements ICommand {
     /**
    * videoConverter
    *
-   * @throws ExecutionException
-   * @throws InterruptedException
-   * @throws IOException
    */
     public List<String> convert(final VideoParameter parameter) {
         if (parameter.getExtension().equals("mp4")) {
@@ -39,9 +35,6 @@ public class VideoModel implements ICommand {
   /**
    * videoModel Compress to mp4
    *
-   * @throws ExecutionException
-   * @throws InterruptedException
-   * @throws IOException
    */
     private List<String> compressToMp4(final VideoParameter parameter) {
         listParams.clear();
@@ -56,6 +49,11 @@ public class VideoModel implements ICommand {
         return listParams;
     }
 
+    /**
+     * Returns a list with the commands to extract thumbnail
+     * @param parameter
+     * @return
+     */
     public List<String> extractThumbnail(final VideoParameter parameter) {
         listThumbnailParams.clear();
         listThumbnailParams.add(parameter.getToolPath());
@@ -71,25 +69,21 @@ public class VideoModel implements ICommand {
         listThumbnailParams.add(VideoParameter.ZERO);
         listThumbnailParams.add(parameter.getPathConvertedFile() + "thumbnail.gif");
         return listThumbnailParams;
-    /*String output = common.getStorageConvertedPath() + "/thumbnail.gif";
-    List<String> command = parameter.TIME.getParameter();
-    command.add(0, common.videoExecutable());
-    command.add(fileName);
-    for (String param: parameter.PALETTE.getParameter()) {
-      command.add(param);
     }
-    //command.add(parameter.PALETTE.getParameter());
-    System.out.println(command);
-    command.add(output);
-    common.execute(command);
-    setOutputFileName(output);*/
+
+    /**
+     * Returns a list with the commands to extract metadata
+     * @param parameter
+     * @return
+     */
+    public List<String> extractMetadata(final VideoParameter parameter) {
+        //do something
+        return listParams;
     }
+
     /**
     * videoModel convert to gif
     *
-    * @throws ExecutionException
-    * @throws InterruptedException
-    * @throws IOException
     */
     private List<String> gif(final VideoParameter parameter) {
         listParams.clear();
@@ -106,7 +100,7 @@ public class VideoModel implements ICommand {
      * create command
      * @return list of commands
      */
-    public List<List<String>> createCommand(ModelParameter modelParameter) {
+    public List<List<String>> createCommand(final ModelParameter modelParameter) {
         list.clear();
         VideoParameter parameter = (VideoParameter) modelParameter;
         list.add(convert(parameter));
@@ -114,7 +108,7 @@ public class VideoModel implements ICommand {
             list.add(extractThumbnail(parameter));
         }
         if (parameter.isExtractMetadata()) {
-            //list.add(extractMetadata(parameter));
+            list.add(extractMetadata(parameter));
         }
         System.out.println(list);
         return list;
