@@ -25,7 +25,6 @@ public class Executor {
    * @throws IOException
    * @throws InterruptedException
    */
-
   public List<String> executeList(final List<List<String>> list) throws InterruptedException, ExecutionException, IOException {
     List<String> outputList = new ArrayList();
     for (List<String> l : list) {

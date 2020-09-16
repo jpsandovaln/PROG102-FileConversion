@@ -22,22 +22,20 @@ public class AudioModel implements ICommand {
     @Override
     public List<List<String>> createCommand(final ModelParameter modelParameter) {
         List<List<String>> listCommands = new ArrayList<>();
+
         List<String> convert = new ArrayList<>();
-        convert.addAll(initialCommand());
-        convert.addAll(convert(convert, modelParameter));
+        convert = convert(convert, modelParameter);
         listCommands.add(convert);
 
         if (((AudioParameter) modelParameter).getIsMetadata()) {
             List<String> metadata = new ArrayList<>();
-            metadata.addAll(initialCommand());
-            metadata.addAll(metadata(metadata, modelParameter));
+            metadata(metadata, modelParameter);
             listCommands.add(metadata);
         }
 
         if (((AudioParameter) modelParameter).getIsCut()) {
             List<String> cut = new ArrayList<>();
-            cut.addAll(initialCommand());
-            cut.addAll(cut(cut, modelParameter));
+            cut = cut(cut, modelParameter);
             listCommands.add(cut);
         }
 
@@ -45,6 +43,11 @@ public class AudioModel implements ICommand {
     }
 
     private List<String> convert(final List<String> convert, final ModelParameter modelParameter) {
+        ConfigPath configPath = new ConfigPath();
+        File file = new File(configPath.getVideoAudioTool());
+        String fileToolPath = file.getAbsolutePath();
+        convert.add(fileToolPath);
+        convert.add("-i");
         convert.add(modelParameter.getInputFile());
 
         if (((AudioParameter) modelParameter).getCodec() != null) {
@@ -74,6 +77,11 @@ public class AudioModel implements ICommand {
     }
 
     private List<String> cut(final List<String> cut, final ModelParameter modelParameter) {
+        ConfigPath configPath = new ConfigPath();
+        File file = new File(configPath.getVideoAudioTool());
+        String fileToolPath = file.getAbsolutePath();
+        cut.add(fileToolPath);
+        cut.add("-i");
         cut.add(modelParameter.getInputFile());
 
         if (((AudioParameter) modelParameter).getStart() != null) {
@@ -92,20 +100,9 @@ public class AudioModel implements ICommand {
         return cut;
     }
     private List<String> metadata(final List<String> metadata, final ModelParameter modelParameter) {
+        // MetadataModel metadata = new MetadataModel()
+        // return metadata.createCommand(ModelParameter modelParameter);
         return  null;
     }
 
-    private List<String> initialCommand() {
-        ConfigPath configPath = new ConfigPath();
-        File file = new File(configPath.getVideoAudioTool());
-        String fileToolPath = file.getAbsolutePath();
-        List<String> command = new ArrayList<>();
-        if (fileToolPath.charAt(0) != '/') { //windows
-            command.add("cmd");
-            command.add("/c");
-            command.add(fileToolPath);
-            command.add("-i");
-        }
-        return command;
-    }
 }
