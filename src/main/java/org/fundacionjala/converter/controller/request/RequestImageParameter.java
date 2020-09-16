@@ -8,14 +8,46 @@
  */
 package org.fundacionjala.converter.controller.request;
 
+import org.springframework.web.multipart.MultipartFile;
+
 public class RequestImageParameter extends RequestParameter {
 
     private int height;
     private int width;
-    private int positionX;
-    private int positionY;
+    private int positionXAndPositionY;
     private int forceResize;
     private int thumbnail;
+
+    public RequestImageParameter(final MultipartFile file, final String format, final int height,
+                                 final int width, final int positionXAndPositionY, final int forceResize, final int thumbnail) {
+        super(file, format);
+        this.height = height;
+        this.width = width;
+        this.positionXAndPositionY = positionXAndPositionY;
+        this.forceResize = forceResize;
+        this.thumbnail = thumbnail;
+    }
+
+    /**
+     *
+     * @throws Exception
+     */
+    @Override
+    public void validate() throws Exception {
+        super.validate();
+        if ("".equals(this.getHeight())) {
+            throw new Exception("failed Height empty");
+        }
+        if ("".equals(this.getWidth())) {
+            throw new Exception("failed Width empty");
+        }
+        if ("".equals(this.getForceResize())) {
+            throw new Exception("failed Force Resize empty");
+        }
+        if ("".equals(this.getThumbnail())) {
+            throw new Exception("failed Thumbnail empty");
+        }
+    }
 
     /**
      *
@@ -48,39 +80,6 @@ public class RequestImageParameter extends RequestParameter {
     public void setWidth(final int width) {
         this.width = width;
     }
-
-    /**
-     *
-     * @return
-     */
-    public int getPositionX() {
-        return positionX;
-    }
-
-    /**
-     *
-     * @param positionX
-     */
-    public void setPositionX(final int positionX) {
-        this.positionX = positionX;
-    }
-
-    /**
-     *
-     * @return
-     */
-    public int getPositionY() {
-        return positionY;
-    }
-
-    /**
-     *
-     * @param positionY
-     */
-    public void setPositionY(final int positionY) {
-        this.positionY = positionY;
-    }
-
     /**
      *
      * @return
@@ -113,12 +112,4 @@ public class RequestImageParameter extends RequestParameter {
         this.thumbnail = thumbnail;
     }
 
-    /**
-     *
-     * @return
-     */
-    @Override
-    public boolean validate() {
-        return false;
-    }
 }

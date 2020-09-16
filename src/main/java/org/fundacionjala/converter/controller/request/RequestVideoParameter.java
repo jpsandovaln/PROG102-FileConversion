@@ -8,9 +8,27 @@
  */
 package org.fundacionjala.converter.controller.request;
 
+import org.springframework.web.multipart.MultipartFile;
+
 public class RequestVideoParameter extends RequestMultimediaParameter {
 
     private String videoCodec;
+    public RequestVideoParameter(final MultipartFile file, final String format, final String sampleRate, final String audioCodec, final String videoCodec) {
+        super(file, format, sampleRate, audioCodec);
+        this.videoCodec = videoCodec;
+    }
+
+    /**
+     *
+     * @throws Exception
+     */
+    @Override
+    public void validate() throws Exception {
+        super.validate();
+        if (this.getVideoCodec() == null || "".equals(this.getVideoCodec())) {
+            throw new Exception("failed Channels Rate empty");
+        }
+    }
 
     /**
      *
@@ -20,12 +38,5 @@ public class RequestVideoParameter extends RequestMultimediaParameter {
         return videoCodec;
     }
 
-    /**
-     *
-     * @return
-     */
-    @Override
-    public boolean validate() {
-        return false;
-    }
+
 }
