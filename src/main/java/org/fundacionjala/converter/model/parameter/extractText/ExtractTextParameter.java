@@ -8,16 +8,62 @@ public class ExtractTextParameter extends ModelParameter {
     private String language;
     private String type;
 
-    public ExtractTextParameter(String inputFile, String outputFile, String md5) {
-        super(inputFile, outputFile, md5);
-    }
-
 	/**
      * List<String> getParameter()
      */
     @Override
 	public List<String> getParameter() {
         return null;
+    }
+
+    /**
+     * @return the language
+     */
+    public String getLanguage() {
+        return language;
+    }
+
+    /**
+     * @param language the language to set
+     */
+    public void setLanguage(String language) {
+        //this.language = language;
+        if (language.equals("español")) {
+            this.language = "-l spa";
+        } else {
+            this.language = "";
+        }
+    }
+
+    /**
+     * @return the type
+     */
+    public String getType() {
+        return type;
+    }
+
+    /**
+     * @param type the type to set
+     */
+    public void setType(String type) {
+        switch (type) {
+            case "word":
+                this.type = ".docx";
+                break;
+            case "pdf":
+                this.type = ".pdf";
+                break;
+            case "SS":
+                this.type = ".txt";
+                break;
+            case "text":
+                this.type = ".txt";
+                break;
+            default:
+                this.type = ".txt";
+                System.out.println("Format not supported please insert a valid format");
+                break;
+        }
     }
 
     /*
@@ -28,6 +74,6 @@ public class ExtractTextParameter extends ModelParameter {
 
     @Override
     public String toString() {
-        return "ExtractTextParameter []";
+        return "ExtractTextParameter [language=" + language + ", type=" + type + "]";
     }
 }

@@ -18,6 +18,7 @@ import java.util.List;
 
 import org.fundacionjala.converter.model.configPath.ConfigPath;
 import org.fundacionjala.converter.model.parameter.ModelParameter;
+import org.fundacionjala.converter.model.parameter.extractText.ExtractTextParameter;
 
 /**
  * @author Jhordan Soto
@@ -25,17 +26,7 @@ import org.fundacionjala.converter.model.parameter.ModelParameter;
  */
 public class ExtractTextModel implements ICommand {
 
-    private String language;
-    private String type;
-    private ModelParameter eTextParameter;
-
-    public ExtractTextModel(String language, String type, ModelParameter modelParameter) {
-        this.language = language;
-        this.type = type;
-        this.eTextParameter = modelParameter;
-    }
-
-    public void convertDocument(){
+    /*public void convertDocument(){
         ConvertDoc cDoc = new ConvertDoc();
         String result;
         result = readAFile(eTextParameter.getOutputFile() + ".txt");
@@ -47,47 +38,7 @@ public class ExtractTextModel implements ICommand {
             }
         }
         cDoc.createDocumentWord(eTextParameter.getOutputFile(), result);
-    }
-
-    public String selectLanguage(final String language) {
-        String result;
-        switch (language) {
-            case "español":
-                result = "-l spa";
-                break;
-            case "english":
-                result = "";
-                break;
-            default:
-                String advertisement = "Sorry language not supported we are going to do it in english";
-                System.out.println(advertisement);
-                result = "";
-        }
-        return result;
-    }
-
-    public String selectExtension(final String type) {
-        String result;
-        switch (type) {
-            case "word":
-                result = ".docx";
-                break;
-            case "pdf":
-                result = ".pdf";
-                break;
-            case "SS":
-                result = ".txt";
-                break;
-            case "text":
-                result = ".txt";
-                break;
-            default:
-                result = ".txt";
-                result = "Format not supported please insert a valid format";
-                break;
-        }
-        return result;
-    }
+    }*/
 
     /**
      * read a file
@@ -127,9 +78,9 @@ public class ExtractTextModel implements ICommand {
         ConfigPath cPath = new ConfigPath();
         List<String> command = new ArrayList<String>();
         command.add(cPath.getExtractTextTool());
-        command.add(eTextParameter.getInputFile());    //add source
-        command.add(eTextParameter.getOutputFile());   //add target
-        command.add(selectLanguage(language));   //add language
+        command.add(modelParameter.getInputFile());    //add source
+        command.add(modelParameter.getOutputFile());   //add target
+        command.add(((ExtractTextParameter) modelParameter).getLanguage()); // add language
         listCommands.add(command);
         return listCommands;
     }

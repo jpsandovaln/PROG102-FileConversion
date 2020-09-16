@@ -34,14 +34,20 @@ public class Application {
 
     public static void main(final String[] args) {
         // SpringApplication.run(Application.class, args);
-        String iFile = "D:\\AT\\PROG102\\code\\PROG102-FileConversion\\storage\\inputFiles\\image.png";
-        String oFile = "D:\\AT\\PROG102\\code\\PROG102-FileConversion\\storage\\outputFiles\\image-txt";
+        String inputFile = "D:\\AT\\PROG102\\code\\PROG102-FileConversion\\storage\\inputFiles\\image.png";
+        //String inputFile = "D:\\AT\\PROG102\\code\\PROG102-FileConversion\\storage\\inputFiles\\imageEnglish.jpg";
+        //String inputFile = "D:\\AT\\PROG102\\code\\PROG102-FileConversion\\storage\\inputFiles\\imageSpanish.jpg";
+        String outputFile = "D:\\AT\\PROG102\\code\\PROG102-FileConversion\\storage\\outputFiles\\image-txt";
         String languageSp = "español";
         String languageEn = "english";
         String type = "word";
-        ModelParameter eTextParameter = new ExtractTextParameter(iFile, oFile, "md5");
-        ExtractTextModel eTextModelSp = new ExtractTextModel (languageEn, type, eTextParameter);
-        List<List<String>> commandList = eTextModelSp.createCommand(eTextParameter);
+        ModelParameter eTextParameter = new ExtractTextParameter();
+        ExtractTextModel eTextModelEn = new ExtractTextModel();
+        eTextParameter.setInputFile(inputFile);
+        eTextParameter.setOutputFile(outputFile);
+        //((ExtractTextParameter) eTextParameter).setLanguage(languageSp);
+        ((ExtractTextParameter) eTextParameter).setLanguage(languageEn);
+        List<List<String>> commandList = eTextModelEn.createCommand(eTextParameter);
         List<String> commandToEx = commandList.get(0); 
         Executor executor = new Executor();
         try {
