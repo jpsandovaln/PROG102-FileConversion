@@ -7,10 +7,8 @@ import java.util.List;
 public class VideoParameter extends MultimediaParameter {
     private String extension;
     private String filePath;
-    //private String outputFileName;
     private String pathConvertedFile;
     private String toolPath;
-    private String audio = "-vn";
     public static final String VCODEC_COMMAND = "-vcodec";
     public static final String VCODEC_H264 = "h264";
     public static final String ACODEC_COMMAND = "-acodec";
@@ -21,21 +19,37 @@ public class VideoParameter extends MultimediaParameter {
     public static final String CANT_FRAMES = "12";
     public static final String INPUT_COMMAND = "-i";
     //params for thumbnail
-    private String time = "-ss 10 -t 5 -i ";
-    private String palette = "-vf \"fps=10,scale=320:-1:flags=lanczos,split[s0][s1];[s0]palettegen[p];[s1][p]paletteuse\" -loop 0";
+    public static final String START = "-ss";
+    public static final String START_TIME = "10";
+    public static final String TIME = "-t";
+    public static final String DURATION = "5";
+    //private String palette = "-vf \"fps=10,scale=320:-1:flags=lanczos,split[s0][s1];[s0]palettegen[p];[s1][p]paletteuse\" -loop 0";
+    public static final String VF = "-vf";
+    public static final String PALETTE = "\"fps=10,scale=320:-1:flags=lanczos,split[s0][s1];[s0]palettegen[p];[s1][p]paletteuse\"";
+    public static final String LOOP = "-loop";
+    public static final String ZERO = "0";
     private boolean extractMetadata;
+    private boolean extractThumbnail;
     //perhaps the pathTool will be here
     public VideoParameter(String toolPath, String pathConvertedFile) {
         this.toolPath = toolPath;
         this.pathConvertedFile = pathConvertedFile;
         extractMetadata = false;
+        extractThumbnail = false;
     }
     public boolean isExtractMetadata() {
         return extractMetadata;
     }
 
-    public void setExtractMetadata(final boolean extractMetadata) {
+    public void setExtractMetadata(final boolean extractThumbnail) {
         this.extractMetadata = extractMetadata;
+    }
+    public boolean isExtractThumbnail() {
+        return extractThumbnail;
+    }
+
+    public void setExtractThumbnail(final boolean extractThumbnail) {
+        this.extractThumbnail = extractThumbnail;
     }
     public String getToolPath() {
         return toolPath;
@@ -49,30 +63,6 @@ public class VideoParameter extends MultimediaParameter {
         this.extension = extension;
     }
 
-    public void setAudio(String audio) {
-        this.audio = audio;
-    }
-
-    public void setTime(String time) {
-        this.time = time;
-    }
-
-    public void setPalette(String palette) {
-        this.palette = palette;
-    }
-
-    public String getAudio() {
-        return audio;
-    }
-
-
-    public String getTime() {
-        return time;
-    }
-
-    public String getPalette() {
-        return palette;
-    }
 
     /**
      * This method return the file name

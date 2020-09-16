@@ -26,9 +26,10 @@ public class Executor {
         List<String> outputList = new ArrayList();
         for(List<String> command : commands) {
             outputList.add(execute(command));
-        }
-        return outputList;
 
+        }
+
+        return outputList;
     }
 
     /**
