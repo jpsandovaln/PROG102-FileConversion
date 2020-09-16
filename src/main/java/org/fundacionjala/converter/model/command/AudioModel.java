@@ -1,7 +1,10 @@
 package org.fundacionjala.converter.model.command;
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
+import java.util.ArrayList;
 import java.util.List;
+
+import org.fundacionjala.converter.model.parameter.ModelParameter;
 
 /**
  * @author Mirko Romay
@@ -10,15 +13,16 @@ import java.util.List;
 public class AudioModel implements ICommand {
 
     private String buildCommand(final String params, final String source, final String target, final String tool) {
-        return tool + " -y -i "  + source + params  + target;
+        return tool + " -y -i " + source + params + target;
     }
 
     /**
      * Show all output of audio file conversion
+     * 
      * @param params string
      * @param source string
      * @param target string
-     * @param tool string
+     * @param tool   string
      * @return path of audio file converted
      */
     public String convertAudio(final String params, final String source, final String target, final String tool) {
@@ -44,10 +48,12 @@ public class AudioModel implements ICommand {
 
     /**
      * create command
+     * 
      * @return list of commands
      */
     @Override
-    public List<String> createCommand() {
+    public List<List<String>> createCommand(ModelParameter modelParameter) {
+        // TODO Auto-generated method stub
         return null;
     }
 }

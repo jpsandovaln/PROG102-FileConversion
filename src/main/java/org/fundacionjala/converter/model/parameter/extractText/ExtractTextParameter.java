@@ -1,16 +1,33 @@
-package org.fundacionjala.converter.model.parameter.extractTextParameter;
-
-import org.fundacionjala.converter.model.parameter.ModelParameter;
+package org.fundacionjala.converter.model.parameter.extractText;
 
 import java.util.List;
 
-public class ExtractTextParameter extends ModelParameter {
+import org.fundacionjala.converter.model.parameter.ModelParameter;
 
-    /**
+public class ExtractTextParameter extends ModelParameter {
+    private String language;
+    private String type;
+
+    public ExtractTextParameter(String inputFile, String outputFile, String md5) {
+        super(inputFile, outputFile, md5);
+    }
+
+	/**
      * List<String> getParameter()
      */
     @Override
-    protected List<String> getParameter() {
+	public List<String> getParameter() {
         return null;
+    }
+
+    /*
+     * (non-Javadoc)
+     * 
+     * @see java.lang.Object#toString()
+     */
+
+    @Override
+    public String toString() {
+        return "ExtractTextParameter []";
     }
 }
