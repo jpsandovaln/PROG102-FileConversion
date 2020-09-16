@@ -24,53 +24,51 @@ public class AudioModel implements ICommand {
         ConfigPath configPath = new ConfigPath();
         File file = new File(configPath.getVideoAudioTool());
         String fileToolPath = file.getAbsolutePath();
+
         List<List<String>> listCommands = new ArrayList<>();
-        List<String> commandsConvert = new ArrayList<>();
-        if (fileToolPath.charAt(0) != '/') { //windows
-            commandsConvert.add("cmd");
-            commandsConvert.add("/c");
-            commandsConvert.add(fileToolPath);
-            commandsConvert.add("-i");
-            createCommandConvert(commandsConvert, modelParameter);
-        }
-        listCommands.add(commandsConvert);
+        List<String> convert = new ArrayList<>();
+        convert = convert(convert, fileToolPath, modelParameter);
+        listCommands.add(convert);
         return listCommands;
     }
 
-    private List createCommandConvert(final List<String> commandsConvert, final ModelParameter modelParameter) {
-        commandsConvert.add(modelParameter.getInputFile());
+    private List convert(final List<String> convert, final String fileToolPath, final ModelParameter modelParameter) {
+        if (fileToolPath.charAt(0) != '/') { //windows
+            convert.add("cmd");
+            convert.add("/c");
+            convert.add(fileToolPath);
+            convert.add("-i");
+        }
+        return convert(convert, modelParameter);
+    }
 
-        if (((AudioParameter) modelParameter).getAudioCodec() != null) {
-            commandsConvert.add("-codec:a");
-            commandsConvert.add(((AudioParameter) modelParameter).getAudioCodec());
+    private List<String> convert(final List<String> convert, final ModelParameter modelParameter) {
+        convert.add(modelParameter.getInputFile());
+
+        if (((AudioParameter) modelParameter).getCodec() != null) {
+            convert.add("-codec:a");
+            convert.add(((AudioParameter) modelParameter).getCodec());
         }
-        if (((AudioParameter) modelParameter).getAudioBitRate() != null) {
-            commandsConvert.add("-b:a");
-            commandsConvert.add(((AudioParameter) modelParameter).getAudioBitRate());
+        if (((AudioParameter) modelParameter).getBitRate() != null) {
+            convert.add("-b:a");
+            convert.add(((AudioParameter) modelParameter).getBitRate());
         }
-        if (((AudioParameter) modelParameter).getAudioChannel() != null) {
-            commandsConvert.add("-ac");
-            commandsConvert.add(((AudioParameter) modelParameter).getAudioChannel());
+        if (((AudioParameter) modelParameter).getChannel() != null) {
+            convert.add("-ac");
+            convert.add(((AudioParameter) modelParameter).getChannel());
         }
-        if (((AudioParameter) modelParameter).getAudioSampleRate() != null) {
-            commandsConvert.add("-ar");
-            commandsConvert.add(((AudioParameter) modelParameter).getAudioSampleRate());
+        if (((AudioParameter) modelParameter).getSampleRate() != null) {
+            convert.add("-ar");
+            convert.add(((AudioParameter) modelParameter).getSampleRate());
         }
-        if (((AudioParameter) modelParameter).getAudioStart() != null) {
-            commandsConvert.add("-ss");
-            commandsConvert.add(((AudioParameter) modelParameter).getAudioStart());
+
+        if (((AudioParameter) modelParameter).getVolume() != null) {
+            convert.add("-vol");
+            convert.add(((AudioParameter) modelParameter).getVolume());
         }
-        if (((AudioParameter) modelParameter).getAudioDuration() != null) {
-            commandsConvert.add("-t");
-            commandsConvert.add(((AudioParameter) modelParameter).getAudioDuration());
-        }
-        if (((AudioParameter) modelParameter).getAudioVolume() != null) {
-            commandsConvert.add("-vol");
-            commandsConvert.add(((AudioParameter) modelParameter).getAudioVolume());
-        }
-        String nameFile = ((AudioParameter) modelParameter).getAudioName();
-        String formatFile = ((AudioParameter) modelParameter).getAudioFormat();
-        commandsConvert.add(modelParameter.getOutputFile() + nameFile + formatFile);
-        return commandsConvert;
+        String nameFile = ((AudioParameter) modelParameter).getName();
+        String formatFile = ((AudioParameter) modelParameter).getFormat();
+        convert.add(modelParameter.getOutputFile() + nameFile + formatFile);
+        return convert;
     }
 }

@@ -4,87 +4,87 @@ import java.io.IOException;
 
 public class AudioParameter extends MultimediaParameter {
 
-    private String audioName;
-    private String audioFormat;
-    private String audioCodec;
-    private String audioBitRate;
-    private String audioChannel;
-    private String audioSampleRate;
-    private String audioStart;
-    private String audioDuration;
-    private String audioVolume;
+    private String name;
+    private String format;
+    private String codec;
+    private String bitRate;
+    private String channel;
+    private String sampleRate;
+    private String start;
+    private String duration;
+    private String volume;
     private AudioParameterValidation audioValidation = new AudioParameterValidation();
 
     /**
      *
      * @return new name file
      */
-    public String getAudioName() {
-        return audioName;
+    public String getName() {
+        return name;
     }
 
     /**
      *
      * @return audio format
      */
-    public String getAudioFormat() {
-        return audioFormat;
+    public String getFormat() {
+        return format;
     }
 
     /**
      *
      * @return audio codec
      */
-    public String getAudioCodec() {
-        return audioCodec;
+    public String getCodec() {
+        return codec;
     }
 
     /**
      *
      * @return audio bit rate
      */
-    public String getAudioBitRate() {
-        return audioBitRate;
+    public String getBitRate() {
+        return bitRate;
     }
 
     /**
      *
      * @return audio channel
      */
-    public String getAudioChannel() {
-        return audioChannel;
+    public String getChannel() {
+        return channel;
     }
 
     /**
      *
      * @return audio sample rate
      */
-    public String getAudioSampleRate() {
-        return audioSampleRate;
+    public String getSampleRate() {
+        return sampleRate;
     }
 
     /**
      *
      * @return audio start
      */
-    public String getAudioStart() {
-        return audioStart;
+    public String getStart() {
+        return start;
     }
 
     /**
      *
      * @return audio duration
      */
-    public String getAudioDuration() {
-        return audioDuration;
+    public String getDuration() {
+        return duration;
     }
 
     /**
      *
      * @return audio volume
      */
-    public String getAudioVolume() {
-        return audioVolume;
+    public String getVolume() {
+        return volume;
     }
 
     /**
@@ -106,76 +106,76 @@ public class AudioParameter extends MultimediaParameter {
      *
      * @param name
      */
-    public void setAudioName(final String name) {
-         this.audioName = audioValidation.validateAudioName(name);
+    public void setName(final String name) {
+         this.name = audioValidation.validateAudioName(name);
     }
 
     /**
      *
-     * @param audioFormat
+     * @param format
      */
-    public void setAudioFormat(final String audioFormat) {
-        if (audioValidation.validateAudioFormat(audioFormat)) {
-            this.audioFormat = audioFormat;
+    public void setFormat(final String format) {
+        if (audioValidation.validateAudioFormat(format)) {
+            this.format = format;
         } else {
             // exception the format does not belong to audio +audioFormat
-            System.out.println("the format does not belong to audio" + audioFormat);
+            System.out.println("the format does not belong to audio" + format);
         }
     }
 
     /**
      *
-     * @param audioCodec
+     * @param codec
      */
-    public void setAudioCodec(final String audioCodec) {
-        this.audioCodec = audioCodec;
+    public void setCodec(final String codec) {
+        this.codec = codec;
     }
 
     /**
      *
-     * @param audioBitRate
+     * @param bitRate
      */
-    public void setAudioBitRate(final String audioBitRate) {
-        this.audioBitRate = audioBitRate;
+    public void setBitRate(final String bitRate) {
+        this.bitRate = bitRate;
     }
 
     /**
      *
-     * @param audioChannel
+     * @param channel
      */
-    public void setAudioChannel(final String audioChannel) {
-        this.audioChannel = audioChannel;
+    public void setChannel(final String channel) {
+        this.channel = channel;
     }
 
     /**
      *
-     * @param audioSampleRate
+     * @param sampleRate
      */
-    public void setAudioSampleRate(final String audioSampleRate) {
-        this.audioSampleRate = audioSampleRate;
+    public void setSampleRate(final String sampleRate) {
+        this.sampleRate = sampleRate;
     }
 
     /**
      *
-     * @param audioStart
+     * @param start
      */
-    public void setAudioStart(final String audioStart) {
-        this.audioStart = audioStart;
+    public void setStart(final String start) {
+        this.start = start;
     }
 
     /**
      *
-     * @param audioDuration
+     * @param duration
      */
-    public void setAudioDuration(final String audioDuration) {
-        this.audioDuration = audioDuration;
+    public void setDuration(final String duration) {
+        this.duration = duration;
     }
 
     /**
      *
-     * @param audioVolume
+     * @param volume
      */
-    public void setAudioVolume(final String audioVolume) {
-        this.audioVolume = audioVolume;
+    public void setVolume(final String volume) {
+        this.volume = volume;
     }
 }
