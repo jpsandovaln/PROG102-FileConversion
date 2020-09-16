@@ -4,10 +4,11 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.poi.ss.formula.functions.T;
 import org.fundacionjala.converter.model.parameter.ModelParameter;
 import org.fundacionjala.converter.model.parameter.multimedia.VideoParameter;
 
-public class VideoModel implements ICommand {
+public class VideoModel implements ICommand<VideoParameter> {
     private List<String> listParams;
     private List<String> listThumbnailParams;
     private CommandBuilder commandBuilder;
@@ -100,9 +101,9 @@ public class VideoModel implements ICommand {
      * create command
      * @return list of commands
      */
-    public List<List<String>> createCommand(final ModelParameter modelParameter) {
+    public List<List<String>> createCommand(final VideoParameter parameter) {
         list.clear();
-        VideoParameter parameter = (VideoParameter) modelParameter;
+        //VideoParameter parameter = (VideoParameter) modelParameter;
         list.add(convert(parameter));
         if (parameter.isExtractThumbnail()) {
             list.add(extractThumbnail(parameter));
@@ -110,7 +111,6 @@ public class VideoModel implements ICommand {
         if (parameter.isExtractMetadata()) {
             list.add(extractMetadata(parameter));
         }
-        System.out.println(list);
         return list;
     }
 }

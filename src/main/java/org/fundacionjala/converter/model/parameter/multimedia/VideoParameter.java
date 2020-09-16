@@ -14,7 +14,6 @@ public class VideoParameter extends MultimediaParameter {
     public static final String ACODEC_COMMAND = "-acodec";
     public static final String ACODEC_MP2 = "mp2";
     public static final String ACODEC_AAC = "aac";
-    private String gif = "-r 12 -i ";
     public static final String FRAME_RATIO = "-r";
     public static final String CANT_FRAMES = "12";
     public static final String INPUT_COMMAND = "-i";
