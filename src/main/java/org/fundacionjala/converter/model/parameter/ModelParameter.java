@@ -11,12 +11,6 @@ public abstract class ModelParameter {
   public ModelParameter() {
   }
 
-  /*public ModelParameter(final String inputFile, final String outputFile, final String md5) {
-    this.inputFile = inputFile;
-    this.outputFile = outputFile;
-    this.md5 = md5;
-  }*/
-
   /**
    * getInputFile
    */
@@ -45,14 +39,14 @@ public abstract class ModelParameter {
   /**
    * @param inputFile the inputFile to set
    */
-  public void setInputFile(String inputFile) {
+  public void setInputFile(final String inputFile) {
     this.inputFile = inputFile;
   }
 
   /**
    * @param outputFile the outputFile to set
    */
-  public void setOutputFile(String outputFile) {
+  public void setOutputFile(final String outputFile) {
     this.outputFile = outputFile;
   }
 }

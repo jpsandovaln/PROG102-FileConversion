@@ -7,11 +7,11 @@ public class ExtractTextParameter extends ModelParameter {
     private String language;
     private String type;
 
-	/**
+    /**
      * List<String> getParameter()
      */
     @Override
-	public List<String> getParameter() {
+    public List<String> getParameter() {
         return null;
     }
 
@@ -25,7 +25,7 @@ public class ExtractTextParameter extends ModelParameter {
     /**
      * @param language the language to set
      */
-    public void setLanguage(String language) {
+    public void setLanguage(final String language) {
         //this.language = language;
         if (language.equals("español")) {
             this.language = "-l spa";
@@ -44,7 +44,7 @@ public class ExtractTextParameter extends ModelParameter {
     /**
      * @param type the type to set
      */
-    public void setType(String type) {
+    public void setType(final String type) {
         switch (type) {
             case "word":
                 this.type = ".docx";
@@ -65,9 +65,8 @@ public class ExtractTextParameter extends ModelParameter {
         }
     }
 
-    /*
+    /**
      * (non-Javadoc)
-     * 
      * @see java.lang.Object#toString()
      */
 
