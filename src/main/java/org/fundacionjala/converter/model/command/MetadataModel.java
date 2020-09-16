@@ -22,8 +22,8 @@ public class MetadataModel implements ICommand {
         ConfigPath configPath = new ConfigPath("");
         List<String> parameterList = new ArrayList<>();
         String projectPath = System.getProperty("user.dir");
-        parameterList.add("cmd");
-        parameterList.add("/c");
+        /*parameterList.add("cmd"); //You have to uncomment these lines for execute command in WINDOWS
+        parameterList.add("/c");*/
         parameterList.add(new File(configPath.getMetaDataExtractorTool()).getAbsolutePath());
         if (!" ".equals(metadataParameter.getFormat())) {
             parameterList.add("-" + metadataParameter.getFormat());
