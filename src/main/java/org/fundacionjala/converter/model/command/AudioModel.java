@@ -21,25 +21,27 @@ public class AudioModel implements ICommand {
      */
     @Override
     public List<List<String>> createCommand(final ModelParameter modelParameter) {
-        ConfigPath configPath = new ConfigPath();
-        File file = new File(configPath.getVideoAudioTool());
-        String fileToolPath = file.getAbsolutePath();
-
         List<List<String>> listCommands = new ArrayList<>();
         List<String> convert = new ArrayList<>();
-        convert = convert(convert, fileToolPath, modelParameter);
+        convert.addAll(initialCommand());
+        convert.addAll(convert(convert, modelParameter));
         listCommands.add(convert);
-        return listCommands;
-    }
 
-    private List convert(final List<String> convert, final String fileToolPath, final ModelParameter modelParameter) {
-        if (fileToolPath.charAt(0) != '/') { //windows
-            convert.add("cmd");
-            convert.add("/c");
-            convert.add(fileToolPath);
-            convert.add("-i");
+        if (((AudioParameter) modelParameter).getIsMetadata()) {
+            List<String> metadata = new ArrayList<>();
+            metadata.addAll(initialCommand());
+            metadata.addAll(metadata(metadata, modelParameter));
+            listCommands.add(metadata);
         }
-        return convert(convert, modelParameter);
+
+        if (((AudioParameter) modelParameter).getIsCut()) {
+            List<String> cut = new ArrayList<>();
+            cut.addAll(initialCommand());
+            cut.addAll(cut(cut, modelParameter));
+            listCommands.add(cut);
+        }
+
+        return listCommands;
     }
 
     private List<String> convert(final List<String> convert, final ModelParameter modelParameter) {
@@ -61,7 +63,6 @@ public class AudioModel implements ICommand {
             convert.add("-ar");
             convert.add(((AudioParameter) modelParameter).getSampleRate());
         }
-
         if (((AudioParameter) modelParameter).getVolume() != null) {
             convert.add("-vol");
             convert.add(((AudioParameter) modelParameter).getVolume());
@@ -70,5 +71,41 @@ public class AudioModel implements ICommand {
         String formatFile = ((AudioParameter) modelParameter).getFormat();
         convert.add(modelParameter.getOutputFile() + nameFile + formatFile);
         return convert;
+    }
+
+    private List<String> cut(final List<String> cut, final ModelParameter modelParameter) {
+        cut.add(modelParameter.getInputFile());
+
+        if (((AudioParameter) modelParameter).getStart() != null) {
+            cut.add("-ss");
+            cut.add(((AudioParameter) modelParameter).getStart());
+        }
+
+        if (((AudioParameter) modelParameter).getDuration() != null) {
+            cut.add("-t");
+            cut.add(((AudioParameter) modelParameter).getDuration());
+        }
+
+        String nameFile = ((AudioParameter) modelParameter).getName();
+        String formatFile = ((AudioParameter) modelParameter).getFormat();
+        cut.add(modelParameter.getOutputFile() + nameFile + "cut" + formatFile);
+        return cut;
+    }
+    private List<String> metadata(final List<String> metadata, final ModelParameter modelParameter) {
+        return  null;
+    }
+
+    private List<String> initialCommand() {
+        ConfigPath configPath = new ConfigPath();
+        File file = new File(configPath.getVideoAudioTool());
+        String fileToolPath = file.getAbsolutePath();
+        List<String> command = new ArrayList<>();
+        if (fileToolPath.charAt(0) != '/') { //windows
+            command.add("cmd");
+            command.add("/c");
+            command.add(fileToolPath);
+            command.add("-i");
+        }
+        return command;
     }
 }

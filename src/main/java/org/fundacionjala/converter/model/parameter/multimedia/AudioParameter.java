@@ -13,6 +13,8 @@ public class AudioParameter extends MultimediaParameter {
     private String start;
     private String duration;
     private String volume;
+    private  boolean isMetadata = false;
+    private boolean isCut = false;
     private AudioParameterValidation audioValidation = new AudioParameterValidation();
 
     /**
@@ -86,6 +88,23 @@ public class AudioParameter extends MultimediaParameter {
     public String getVolume() {
         return volume;
     }
+
+    /**
+     *
+     * @return if is metadata
+     */
+    public boolean getIsMetadata() {
+        return isMetadata;
+    }
+
+    /**
+     *
+     * @return if is cut
+     */
+    public boolean getIsCut() {
+        return isCut;
+    }
+
 
     /**
      *
@@ -177,5 +196,21 @@ public class AudioParameter extends MultimediaParameter {
      */
     public void setVolume(final String volume) {
         this.volume = volume;
+    }
+
+    /**
+     *
+     * @param metadata
+     */
+    public void setMetadata(final boolean metadata) {
+        isMetadata = metadata;
+    }
+
+    /**
+     *
+     * @param cut
+     */
+    public void setCut(final boolean cut) {
+        isCut = cut;
     }
 }
