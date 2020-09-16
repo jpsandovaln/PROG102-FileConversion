@@ -5,10 +5,10 @@ import java.io.InputStream;
 import java.util.Properties;
 
 public class ConfigPath {
-  private Properties properties;
+  private static Properties properties;
 
   public ConfigPath(final String folder) {
-    loadConfiguration();
+      loadConfiguration();
   }
 
   /**
@@ -42,6 +42,13 @@ public class ConfigPath {
    * Returns executable meta data extractor path.
    */
   public String getMetaDataExtractorTool() {
-    return properties.getProperty("exiftool.path");
+    return properties.getProperty("metadata.path");
+  }
+
+  /**
+   * Returns Converted Files storage path.
+   */
+  public String getConvertedFilesPath() {
+    return properties.getProperty("convertedFiles.path");
   }
 }

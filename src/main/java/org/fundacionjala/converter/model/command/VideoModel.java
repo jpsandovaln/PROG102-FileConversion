@@ -5,8 +5,19 @@ import java.util.List;
 import java.util.concurrent.ExecutionException;
 
 import org.fundacionjala.converter.model.commons.Commons;
+import org.fundacionjala.converter.model.parameter.ModelParameter;
 
 public class VideoModel implements ICommand {
+
+  /**
+   *
+   * @param modelParameter
+   * @return
+   */
+  @Override
+  public List<List<String>> createCommand(final ModelParameter modelParameter) {
+    return null;
+  }
 
   private String fileName;
   private String outputFileName;
@@ -97,8 +108,4 @@ public class VideoModel implements ICommand {
    * create command
    * @return list of commands
    */
-  @Override
-  public List<String> createCommand() {
-    return null;
-  }
 }
