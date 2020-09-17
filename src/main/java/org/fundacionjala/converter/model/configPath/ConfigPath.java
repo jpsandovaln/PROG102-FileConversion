@@ -10,6 +10,7 @@ public class ConfigPath {
   public ConfigPath(final String folder) {
     loadConfiguration();
   }
+
   public ConfigPath() {
     loadConfiguration();
   }
