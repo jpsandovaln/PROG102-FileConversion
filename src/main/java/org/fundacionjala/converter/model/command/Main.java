@@ -33,13 +33,13 @@ public class Main {
         modelParameter.setOutputFile(outputFile);
         ((AudioParameter) modelParameter).setName(name);
         ((AudioParameter) modelParameter).setFormat(format);
-        //((AudioParameter) modelParameter).setCodec(codec);
-        //((AudioParameter) modelParameter).setBitRate(bitRate); // -b:a
-        //((AudioParameter) modelParameter).setChannel(channel); // stereo
-        //((AudioParameter) modelParameter).setSampleRate(sampleRate); //-ar
-        //((AudioParameter) modelParameter).setStart(start); //-ss
-        //((AudioParameter) modelParameter).setDuration(duration); //-t
-        //((AudioParameter) modelParameter).setCut(cut); //
+        ((AudioParameter) modelParameter).setCodec(codec);
+        ((AudioParameter) modelParameter).setBitRate(bitRate); // -b:a
+        ((AudioParameter) modelParameter).setChannel(channel); // stereo
+        ((AudioParameter) modelParameter).setSampleRate(sampleRate); //-ar
+        ((AudioParameter) modelParameter).setStart(start); //-ss
+        ((AudioParameter) modelParameter).setDuration(duration); //-t
+        ((AudioParameter) modelParameter).setCut(cut); //
 
         Executor executor = new Executor();
         ICommand audioModel = new AudioModel();
@@ -49,7 +49,9 @@ public class Main {
         for (String command:list.get(0)) {
             System.out.println(command);
         }
-
+        for (String command:list.get(1)) {
+            System.out.println(command);
+        }
         executor.executeList(audioModel.createCommand(modelParameter));
 
     }

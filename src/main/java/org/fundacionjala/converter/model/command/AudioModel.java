@@ -46,9 +46,10 @@ public class AudioModel implements ICommand {
         ConfigPath configPath = new ConfigPath();
         File file = new File(configPath.getVideoAudioTool());
         String fileToolPath = file.getAbsolutePath();
-        convert.add(fileToolPath);
+        convert.add("\"" + fileToolPath + "\"");
+        convert.add("-y");
         convert.add("-i");
-        convert.add(modelParameter.getInputFile());
+        convert.add("\"" + modelParameter.getInputFile() + "\"");
 
         if (((AudioParameter) modelParameter).getCodec() != null) {
             convert.add("-codec:a");
@@ -72,7 +73,7 @@ public class AudioModel implements ICommand {
         }
         String nameFile = ((AudioParameter) modelParameter).getName();
         String formatFile = ((AudioParameter) modelParameter).getFormat();
-        convert.add(modelParameter.getOutputFile() + nameFile + formatFile);
+        convert.add("\"" + modelParameter.getOutputFile() + nameFile + formatFile + "\"");
         return convert;
     }
 
@@ -81,8 +82,9 @@ public class AudioModel implements ICommand {
         File file = new File(configPath.getVideoAudioTool());
         String fileToolPath = file.getAbsolutePath();
         cut.add(fileToolPath);
+        cut.add("-y");
         cut.add("-i");
-        cut.add(modelParameter.getInputFile());
+        cut.add("\"" + modelParameter.getInputFile() + "\"");
 
         if (((AudioParameter) modelParameter).getStart() != null) {
             cut.add("-ss");
@@ -96,7 +98,7 @@ public class AudioModel implements ICommand {
 
         String nameFile = ((AudioParameter) modelParameter).getName();
         String formatFile = ((AudioParameter) modelParameter).getFormat();
-        cut.add(modelParameter.getOutputFile() + nameFile + "cut" + formatFile);
+        cut.add("\"" + modelParameter.getOutputFile() + nameFile + "cut" + formatFile + "\"");
         return cut;
     }
     private List<String> metadata(final List<String> metadata, final ModelParameter modelParameter) {
