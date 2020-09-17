@@ -46,8 +46,7 @@ public class ImageController {
         String md5 = requestImageParameter.generateMD5(filePath);
         ImageParameter imageParameter = new ImageParameter();
         imageParameter.setInputFile(filePath);
-        imageParameter.setOutputFile("storage/convertedFiles");
-        imageParameter.setIsGray(false);
+        imageParameter.setIsGray(requestImageParameter.getGray());
         imageParameter.setIsThumbnail(requestImageParameter.getThumbnail());
         imageParameter.setOutputFile(output + md5 + ".jpg");
 
