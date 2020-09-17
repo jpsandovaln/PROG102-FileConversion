@@ -6,10 +6,10 @@ public class VideoParameter extends MultimediaParameter {
     private String pathConvertedFile;
     private String toolPath;
     public static final String VCODEC_COMMAND = "-vcodec";
-    public static final String VCODEC_H264 = "h264";
+    private String vCodec;
     public static final String ACODEC_COMMAND = "-acodec";
     public static final String ACODEC_MP2 = "mp2";
-    public static final String ACODEC_AAC = "aac";
+    private String aCodec;
     public static final String FRAME_RATE = "-r";
     private String frames;
     public static final String INPUT_COMMAND = "-i";
@@ -30,6 +30,38 @@ public class VideoParameter extends MultimediaParameter {
         this.pathConvertedFile = pathConvertedFile;
         extractMetadata = false;
         extractThumbnail = false;
+    }
+
+    /**
+     *
+     * @param vCodec
+     */
+    public void setVCodec(final String vCodec) {
+        this.vCodec = vCodec;
+    }
+
+    /**
+     *
+     * @param aCodec
+     */
+    public void setACodec(final String aCodec) {
+        this.aCodec = aCodec;
+    }
+
+    /**
+     *
+     * @return
+     */
+    public String getVCodec() {
+        return vCodec;
+    }
+
+    /**
+     *
+     * @return
+     */
+    public String getACodec() {
+        return aCodec;
     }
 
     /**
