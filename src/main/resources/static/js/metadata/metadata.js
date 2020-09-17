@@ -1,15 +1,4 @@
 $(document).ready(function () {
-    $('#form-MTd').submit(function( event ) {
-        // Stop form from submitting normally
-        event.preventDefault();
-                            Swal.fire({
-                            icon: 'error',
-                            title: 'Error de deteni',
-                            showConfirmButton: false,
-                            timer: 1500
-                          })
-    });
-
     $( "#form-MT" ).validate( {
         rules: {
             md5: {
@@ -59,9 +48,8 @@ $(document).ready(function () {
                  console.log('ERROR : ', e);
                  Swal.fire({
                     icon: 'error',
-                    title: 'Error de servidor',
-                    showConfirmButton: false,
-                    timer: 1500
+                    title: e.responseJSON.error,
+                    showConfirmButton: true
                   })
             }
         });

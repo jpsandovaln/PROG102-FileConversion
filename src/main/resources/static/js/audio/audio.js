@@ -12,6 +12,8 @@ $(document).ready(function () {
             cache: false,
             success: function (data) {
                 console.log('SUCCESS : ', data);
+                 $('#path').attr('value', data);
+                 $('#submitd').prop('disabled', false);
             },
             error: function (e) {
                     console.log('ERROR : ', e);
