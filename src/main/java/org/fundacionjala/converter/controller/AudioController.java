@@ -32,6 +32,8 @@ public class AudioController {
     private FileService fileService;
     @Value("${tempFiles.path}")
     private String temporal;
+    @Value("${convertedFiles.path}")
+    private String output;
     @Autowired
     private FileUploadService fileUploadService;
 
@@ -71,7 +73,7 @@ public class AudioController {
     private void setAudioParameterValues(final ModelParameter modelParameter, final RequestAudioParameter requestAudioParameter, final String filePath) throws IOException {
         boolean cut = true;
         modelParameter.setInputFile(filePath);
-        modelParameter.setOutputFile("storage/convertedFiles");
+        modelParameter.setOutputFile(output);
         ((AudioParameter) modelParameter).setName(requestAudioParameter.getName());
         ((AudioParameter) modelParameter).setFormat(requestAudioParameter.getFormat());
         ((AudioParameter) modelParameter).setCodec(requestAudioParameter.getCodec());
