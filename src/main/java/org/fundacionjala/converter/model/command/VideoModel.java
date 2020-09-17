@@ -40,9 +40,9 @@ public class VideoModel implements ICommand {
         listParams.clear();
         listParams.add(parameter.getToolPath());
         listParams.add(VideoParameter.VCODEC_COMMAND);
-        listParams.add(VideoParameter.VCODEC_H264);
+        listParams.add(parameter.getVCodec());
         listParams.add(VideoParameter.ACODEC_COMMAND);
-        listParams.add(VideoParameter.ACODEC_AAC);
+        listParams.add(parameter.getACodec());
         listParams.add(VideoParameter.INPUT_COMMAND);
         listParams.add(parameter.getFilePath());
         listParams.add(parameter.getPathConvertedFile() + "demo.mp4");
@@ -110,7 +110,6 @@ public class VideoModel implements ICommand {
         if (parameter.isExtractMetadata()) {
             list.add(extractMetadata(parameter));
         }
-        System.out.println(list);
         return list;
     }
 }
