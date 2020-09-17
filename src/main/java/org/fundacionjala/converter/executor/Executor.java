@@ -34,8 +34,10 @@ public class Executor {
   }
 
   private String execute(final List<String> command) throws ExecutionException, IOException, InterruptedException {
+    System.out.println(command);
     Process processDuration = new ProcessBuilder(command).redirectErrorStream(true).start();
     StringBuilder output = new StringBuilder();
+    System.out.println(output);
     BufferedReader processOutputReader = new BufferedReader(new InputStreamReader(processDuration.getInputStream()));
     String line;
     while ((line = processOutputReader.readLine()) != null) {
