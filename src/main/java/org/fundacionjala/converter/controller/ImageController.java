@@ -9,27 +9,29 @@
 package org.fundacionjala.converter.controller;
 
 import org.fundacionjala.converter.controller.request.RequestImageParameter;
-import org.fundacionjala.converter.model.entity.File;
+import org.fundacionjala.converter.executor.Executor;
+import org.fundacionjala.converter.model.command.AudioModel;
+import org.fundacionjala.converter.model.parameter.image.ImageParameter;
 import org.fundacionjala.converter.model.service.FileService;
+import org.fundacionjala.converter.model.service.FileUploadService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
-import java.nio.file.Files;
-import java.nio.file.Paths;
-import java.nio.file.StandardCopyOption;
+import java.util.List;
 
 @RestController
 public class ImageController {
 
 
-  @Autowired
-  private FileService fileService;
+    @Autowired
+    private FileService fileService;
     @Value("${tempFiles.path}")
     private String temporal;
-
+    @Autowired
+    private FileUploadService fileUploadService;
     /**
      *
      * @param requestImageParameter
@@ -37,17 +39,18 @@ public class ImageController {
      */
     @RequestMapping(method = RequestMethod.POST, value = "convertImage")
     public String convertImage(final RequestImageParameter requestImageParameter) throws Exception {
-
         requestImageParameter.validate();
-        String result = "exist";
-        String path = temporal + requestImageParameter.getFile().getOriginalFilename();
-        Files.copy(requestImageParameter.getFile().getInputStream(), Paths.get(path), StandardCopyOption.REPLACE_EXISTING);
-        String md5 = requestImageParameter.generateMD5(path);
-        if (!requestImageParameter.isInDataBase(md5, fileService)) {
-            fileService.saveFile(new File(path, md5));
-            result = "saved in database";
-        }
-        Files.delete(Paths.get(path));
-        return result;
+        String filePath = fileUploadService.saveInputFile(requestImageParameter.getFile());
+        String md5 = requestImageParameter.generateMD5(filePath);
+        ImageParameter imageParameter = new ImageParameter();
+        imageParameter.setInputFile(filePath);
+        imageParameter.setOutputFile("storage/convertedFiles");
+        imageParameter.setIsGray(false);
+        imageParameter.setIsThumbnail(requestImageParameter.getThumbnail());
+
+        Executor executor = new Executor();
+        AudioModel audioModel = new AudioModel();
+        List<String> response = executor.executeList(audioModel.createCommand(imageParameter));
+        return response.toString();
     }
 }

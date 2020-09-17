@@ -1,113 +1,83 @@
 package org.fundacionjala.converter.model.command;
 
+import org.fundacionjala.converter.model.configPath.ConfigPath;
 import org.fundacionjala.converter.model.parameter.ModelParameter;
-import org.springframework.web.multipart.MultipartFile;
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
+import org.fundacionjala.converter.model.parameter.image.ImageParameter;
+import java.util.ArrayList;
 import java.util.List;
 
 public class ImageModel implements ICommand {
 
-    /**
-     *
-     * @param file
-     * @param newName
-     * @param height
-     * @param weight
-     * @param extension
-     * @param thumbnail
-     * @param forceResize
-     * @return
-     */
-    public String convert(final MultipartFile file, final String newName, final int height, final int weight,
-            final String extension, final int thumbnail, final int forceResize) {
-        try {
-            String path = "C:\\Users\\Administrator\\Desktop";
-            String fileName = file.getOriginalFilename();
-            String force = "";
-            if (forceResize == 1) {
-                force = "!";
-            }
-            String cmd = "cd " + path + " && magick " + fileName + " -resize " + height + "x" + weight + force + " "
-                    + newName + "." + extension;
-            String thumbnailCmd = "cd " + path + " && magick " + fileName + " -resize 128x128 thumbnail-" + newName
-                    + "." + extension;
-            readCmdCommand(cmd);
-            if (thumbnail == 1) {
-                readCmdCommand(thumbnailCmd);
-            }
-            return "successfully";
-        } catch (Exception ex) {
-            return ex.getMessage();
-        }
+    private ConfigPath config;
+
+    public ImageModel() {
+        config = new ConfigPath();
     }
 
-    /**
-     *
-     * @param file
-     * @param newName
-     * @param height
-     * @param weight
-     * @param startPositionX
-     * @param startPositionY
-     * @param extension
-     * @return
-     */
-    public String selectingImageRegion(final MultipartFile file, final String newName, final int height,
-            final int weight, final int startPositionX, final int startPositionY, final String extension) {
-        try {
-            String path = "C:\\Users\\Administrator\\Desktop";
-            String fileName = file.getOriginalFilename();
-            String cmd = "cd " + path + " && magick " + fileName + " -crop " + height + "x" + weight + "+"
-                    + startPositionX + "+" + startPositionY + " " + newName + "." + extension;
-            readCmdCommand(cmd);
-            return "successfully";
-        } catch (Exception ex) {
-            return ex.getMessage();
-        }
+    private List<String> resize(final ImageParameter imageParameter) {
+        List<String> command = new ArrayList<String>();
+        command.add(config.getImageTool());
+        command.add(imageParameter.getInputFile());
+        command.add("-resize " + imageParameter.getHeight() + "x" + imageParameter.getWidth());
+        command.add("!");
+        command.add(imageParameter.getOutputFile());
+        return command;
     }
 
-    public static String readCmdCommand(final String cmd) {
-        try {
-            ProcessBuilder builder = new ProcessBuilder("cmd", "/c", "\"" + cmd + "\"");
-            builder.redirectErrorStream(true);
-            Process process = builder.start();
-            InputStreamReader streamReader = new InputStreamReader(process.getInputStream());
-            BufferedReader reader = new BufferedReader(streamReader);
-            return "successfully";
-        } catch (IOException ex) {
-            return ex.getMessage();
-        }
+    private List<String> thumbnail(final ImageParameter imageParameter) {
+        List<String> command = new ArrayList<String>();
+        command.add(config.getImageTool());
+        command.add(imageParameter.getInputFile());
+        command.add("-resize 128x128");
+        command.add("thumbnail-" + imageParameter.getOutputFile());
+        return command;
     }
 
-    /**
-     *
-     * @param file
-     * @param newName
-     * @param extension
-     * @return
-     */
-    public String grayScale(final MultipartFile file, final String newName, final String extension) {
-        try {
-            String path = "C:\\Users\\Administrator\\Desktop";
-            String fileName = file.getOriginalFilename();
-            String cmd = "cd " + path + " && magick " + fileName + " -colorspace Gray " + newName + "." + extension;
-            readCmdCommand(cmd);
-            return "successfully";
-        } catch (Exception ex) {
-            return ex.getMessage();
-        }
+    private List<String> selectingImageRegion(final ImageParameter imageParameter) {
+        ConfigPath config = new ConfigPath();
+        List<String> command = new ArrayList<String>();
+        command.add(config.getImageTool());
+        command.add(imageParameter.getInputFile());
+        command.add("-crop");
+        command.add(imageParameter.getCrop());
+        command.add(imageParameter.getOutputFile());
+        return command;
+    }
+
+    private List<String> grayScale(final ImageParameter imageParameter) {
+        List<String> command = new ArrayList<String>();
+        command.add(config.getImageTool());
+        command.add(imageParameter.getInputFile());
+        command.add("-colorspace Gray");
+        command.add(imageParameter.getOutputFile());
+        return command;
     }
 
     /**
      * create command
      *
      * @return list of commands
-     * @param modelParameter
      */
     @Override
     public List<List<String>> createCommand(final ModelParameter modelParameter) {
-        return null;
+        List<List<String>> listCommands = new ArrayList<List<String>>();
+        ImageParameter imageParameter = (ImageParameter) modelParameter;
+
+        if (imageParameter.getIsGray()) {
+            listCommands.add(grayScale(imageParameter));
+        }
+
+        if (imageParameter.getSelectingImageRegion()) {
+            listCommands.add(selectingImageRegion(imageParameter));
+        }
+
+        if (imageParameter.getIsThumbnail()) {
+            listCommands.add(thumbnail(imageParameter));
+        }
+
+        if (imageParameter.getIsResize()) {
+            listCommands.add(resize(imageParameter));
+        }
+        return listCommands;
     }
 }
