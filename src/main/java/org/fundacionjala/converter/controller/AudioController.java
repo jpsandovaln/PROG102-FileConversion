@@ -6,22 +6,18 @@ import org.fundacionjala.converter.model.ChecksumMD5;
 import org.fundacionjala.converter.model.command.AudioModel;
 import org.fundacionjala.converter.model.command.ICommand;
 import org.fundacionjala.converter.model.entity.File;
+import org.fundacionjala.converter.model.parameter.ModelParameter;
 import org.fundacionjala.converter.model.parameter.multimedia.AudioParameter;
 import org.fundacionjala.converter.model.service.FileService;
 import org.fundacionjala.converter.model.service.FileUploadService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
-import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RestController;
 
 
-import java.nio.file.Files;
-import java.nio.file.Paths;
-import java.nio.file.StandardCopyOption;
 import java.util.List;
-
 /**
  * @author Mirko Romay
  * @version 0.1
@@ -56,8 +52,9 @@ public class AudioController {
         return result;
     }**/
 
-   @PostMapping("/audiosss")
-   public String audio(RequestAudioParameter requestAudioParameter) throws Exception {
+   @RequestMapping(value = "/convertAudio", method = RequestMethod.POST)
+   public String audio(final RequestAudioParameter requestAudioParameter) throws Exception {
+       System.out.println(requestAudioParameter.isCut());
        if (requestAudioParameter.getFile() == null || requestAudioParameter.getFile().isEmpty()) {
            return "Select a file";
        }
@@ -67,40 +64,38 @@ public class AudioController {
        checksum = checksumMD5.getMD5(filePath);
        if (fileService.getFileByMd5(checksum) == null) {
            fileService.saveFile(new File(filePath, checksum));
-           AudioParameter audioParameter = new AudioParameter();
-           audioParameter.setInputFile(filePath);
-           audioParameter.setOutputFile("storage/convertedFiles");
-           audioParameter.setName(requestAudioParameter.getName());
-           audioParameter.setFormat(requestAudioParameter.getFormat());
-           audioParameter.setCodec(requestAudioParameter.getCodec());
-           audioParameter.setBitRate(requestAudioParameter.getBitRate());
-           audioParameter.setChannel(requestAudioParameter.getChannel());
-           audioParameter.setSampleRate(requestAudioParameter.getSampleRate());
-           audioParameter.setStart(requestAudioParameter.getStart());
-           audioParameter.setDuration(requestAudioParameter.getDuration());
-           audioParameter.setCut(requestAudioParameter.isCut());
+           ModelParameter modelParameter = new AudioParameter();
+           modelParameter.setInputFile(filePath);
+           setAudioParameterValues(modelParameter, requestAudioParameter);
            Executor executor = new Executor();
            ICommand audioModel = new AudioModel();
-           executor.executeList(audioModel.createCommand(audioParameter));
+           List<List<String>> list = audioModel.createCommand(modelParameter);
+           executor.executeList(list);
 
            return "successfully";
        } else {
-           AudioParameter audioParameter = new AudioParameter();
-           audioParameter.setInputFile(filePath);
-           audioParameter.setOutputFile("storage/convertedFiles");
-           audioParameter.setName(requestAudioParameter.getName());
-           audioParameter.setFormat(requestAudioParameter.getFormat());
-           audioParameter.setCodec(requestAudioParameter.getCodec());
-           audioParameter.setBitRate(requestAudioParameter.getBitRate());
-           audioParameter.setChannel(requestAudioParameter.getChannel());
-           audioParameter.setSampleRate(requestAudioParameter.getSampleRate());
-           audioParameter.setStart(requestAudioParameter.getStart());
-           audioParameter.setDuration(requestAudioParameter.getDuration());
-           audioParameter.setCut(requestAudioParameter.isCut());
+           ModelParameter modelParameter = new AudioParameter();
+           modelParameter.setInputFile(filePath);
+           setAudioParameterValues(modelParameter, requestAudioParameter);
            Executor executor = new Executor();
            ICommand audioModel = new AudioModel();
-           executor.executeList(audioModel.createCommand(audioParameter));
+           List<List<String>> list = audioModel.createCommand(modelParameter);
+           executor.executeList(list);
            return "the file already exists";
        }
    }
+
+    private void setAudioParameterValues(final ModelParameter modelParameter, final RequestAudioParameter requestAudioParameter) {
+        boolean cut = true;
+        modelParameter.setOutputFile("storage/convertedFiles");
+        ((AudioParameter) modelParameter).setName(requestAudioParameter.getName());
+        ((AudioParameter) modelParameter).setFormat(requestAudioParameter.getFormat());
+        ((AudioParameter) modelParameter).setCodec(requestAudioParameter.getCodec());
+        ((AudioParameter) modelParameter).setBitRate(requestAudioParameter.getBitRate()); // -b:a
+        ((AudioParameter) modelParameter).setChannel(requestAudioParameter.getChannel()); // stereo
+        ((AudioParameter) modelParameter).setSampleRate(requestAudioParameter.getSampleRate()); //-ar
+        ((AudioParameter) modelParameter).setStart(requestAudioParameter.getStart()); //-ss
+        ((AudioParameter) modelParameter).setDuration(requestAudioParameter.getDuration()); //-t
+        ((AudioParameter) modelParameter).setCut(cut); //
+    }
 }

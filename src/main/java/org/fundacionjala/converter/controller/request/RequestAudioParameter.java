@@ -28,123 +28,219 @@ public class RequestAudioParameter  {
     private String outputFile;
     private String md5;
 
+    /**
+     *
+     * @return
+     */
     public MultipartFile getFile() {
         return file;
     }
 
-    public void setFile(MultipartFile file) {
+    /**
+     *
+     * @param file
+     */
+    public void setFile(final MultipartFile file) {
         this.file = file;
     }
 
+    /**
+     *
+     * @return
+     */
     public String getName() {
         return name;
     }
 
-    public void setName(String name) {
+    /**
+     *
+     * @param name
+     */
+    public void setName(final String name) {
         this.name = name;
     }
 
+    /**
+     *
+     * @return
+     */
     public String getFormat() {
         return format;
     }
 
-    public void setFormat(String format) {
+    /**
+     *
+     * @param format
+     */
+    public void setFormat(final String format) {
         this.format = format;
     }
 
+    /**
+     *
+     * @return
+     */
     public String getCodec() {
         return codec;
     }
 
-    public void setCodec(String codec) {
+    /**
+     *
+     * @param codec
+     */
+    public void setCodec(final String codec) {
         this.codec = codec;
     }
 
+    /**
+     *
+     * @return
+     */
     public String getBitRate() {
         return bitRate;
     }
 
-    public void setBitRate(String bitRate) {
-        this.bitRate = bitRate;
-    }
-
+    /**
+     *
+     * @return
+     */
     public String getChannel() {
         return channel;
     }
 
-    public void setChannel(String channel) {
-        this.channel = channel;
-    }
-
+    /**
+     *
+     * @return
+     */
     public String getSampleRate() {
         return sampleRate;
     }
 
-    public void setSampleRate(String sampleRate) {
+    /**
+     *
+     * @param sampleRate
+     */
+    public void setSampleRate(final String sampleRate) {
         this.sampleRate = sampleRate;
     }
 
+    /**
+     *
+     * @return
+     */
     public String getStart() {
         return start;
     }
 
-    public void setStart(String start) {
+    /**
+     *
+     * @param start
+     */
+    public void setStart(final String start) {
         this.start = start;
     }
 
+    /**
+     *
+     * @return
+     */
     public String getDuration() {
         return duration;
     }
 
-    public void setDuration(String duration) {
-        this.duration = duration;
-    }
-
-    public String getVolume() {
-        return volume;
-    }
-
-    public void setVolume(String volume) {
-        this.volume = volume;
-    }
-
+    /**
+     *
+     * @return
+     */
     public boolean isMetadata() {
         return isMetadata;
     }
 
-    public void setMetadata(boolean metadata) {
+    /**
+     *
+     * @param metadata
+     */
+    public void setMetadata(final boolean metadata) {
         isMetadata = metadata;
     }
 
+    /**
+     *
+     * @return
+     */
     public boolean isCut() {
         return isCut;
     }
 
-    public void setCut(boolean cut) {
+    /**
+     *
+     * @param cut
+     */
+    public void setCut(final boolean cut) {
         isCut = cut;
     }
 
-    public String getInputFile() {
-        return inputFile;
-    }
-
-    public void setInputFile(String inputFile) {
-        this.inputFile = inputFile;
-    }
-
-    public String getOutputFile() {
-        return outputFile;
-    }
-
-    public void setOutputFile(String outputFile) {
+    /**
+     *
+     * @param outputFile
+     */
+    public void setOutputFile(final String outputFile) {
         this.outputFile = outputFile;
     }
 
+    /**
+     *
+     * @return
+     */
     public String getMd5() {
         return md5;
     }
 
-    public void setMd5(String md5) {
+    /**
+     *
+     * @param md5
+     */
+    public void setMd5(final String md5) {
         this.md5 = md5;
+    }
+
+    /**
+     *
+     * @param bitRate
+     */
+    public void setBitRate(final String bitRate) {
+        this.bitRate = bitRate;
+    }
+
+    /**
+     *
+     * @param channel
+     */
+    public void setChannel(final String channel) {
+        this.channel = channel;
+    }
+
+    /**
+     *
+     * @param duration
+     */
+    public void setDuration(final String duration) {
+        this.duration = duration;
+    }
+
+    /**
+     *
+     * @param volume
+     */
+    public void setVolume(final String volume) {
+        this.volume = volume;
+    }
+
+    /**
+     *
+     * @param inputFile
+     */
+    public void setInputFile(final String inputFile) {
+        this.inputFile = inputFile;
     }
 }
