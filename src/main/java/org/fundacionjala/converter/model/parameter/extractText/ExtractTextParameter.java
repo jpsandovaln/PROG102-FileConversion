@@ -1,19 +1,18 @@
+/**
+ * Copyright (c) 2020 Fundacion Jala.
+ *
+ * This software is the confidential and proprietary information of Fundacion Jala
+ * ("Confidential Information"). You shall not disclose such Confidential
+ * Information and shall use it only in accordance with the terms of the
+ * license agreement you entered into with Fundacion Jala
+ */
 package org.fundacionjala.converter.model.parameter.extractText;
 
-import java.util.List;
 import org.fundacionjala.converter.model.parameter.ModelParameter;
 
 public class ExtractTextParameter extends ModelParameter {
     private String language;
     private String type;
-
-    /**
-     * List<String> getParameter()
-     */
-    @Override
-    public List<String> getParameter() {
-        return null;
-    }
 
     /**
      * @return the language

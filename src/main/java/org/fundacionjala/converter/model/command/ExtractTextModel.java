@@ -1,5 +1,3 @@
-package org.fundacionjala.converter.model.command;
-
 /**
  * Copyright (c) 2020 Fundacion Jala.
  *
@@ -8,7 +6,7 @@ package org.fundacionjala.converter.model.command;
  * Information and shall use it only in accordance with the terms of the
  * license agreement you entered into with Fundacion Jala
  */
-import org.fundacionjala.converter.model.parameter.ModelParameter;
+package org.fundacionjala.converter.model.command;
 
 import java.io.BufferedReader;
 import java.io.FileReader;

@@ -1,13 +1,11 @@
 package org.fundacionjala.converter.model.parameter;
 
 import java.io.IOException;
-import java.util.List;
 
 public abstract class ModelParameter {
   private String inputFile;
   private String outputFile;
   private String md5;
-
 
   public ModelParameter() {
   }
@@ -38,11 +36,6 @@ public abstract class ModelParameter {
   public String getMd5() {
     return md5;
   }
-  /**
-   *
-   * @param inputFile
-   */
-  protected abstract List<String> getParameter();
 
   /**
    * @param inputFile the inputFile to set
