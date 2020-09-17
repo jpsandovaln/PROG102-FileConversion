@@ -14,12 +14,12 @@ public class RequestImageParameter extends RequestParameter {
 
     private int height;
     private int width;
-    private int positionXAndPositionY;
-    private int forceResize;
-    private int thumbnail;
+    private String positionXAndPositionY;
+    private boolean forceResize;
+    private boolean thumbnail;
 
     public RequestImageParameter(final MultipartFile file, final String format, final int height,
-                                 final int width, final int positionXAndPositionY, final int forceResize, final int thumbnail) {
+                                 final int width, final String positionXAndPositionY, final boolean forceResize, final boolean thumbnail) {
         super(file, format);
         this.height = height;
         this.width = width;
@@ -84,7 +84,7 @@ public class RequestImageParameter extends RequestParameter {
      *
      * @return
      */
-    public int getForceResize() {
+    public boolean getForceResize() {
         return forceResize;
     }
 
@@ -92,7 +92,7 @@ public class RequestImageParameter extends RequestParameter {
      *
      * @param forceResize
      */
-    public void setForceResize(final int forceResize) {
+    public void setForceResize(final boolean forceResize) {
         this.forceResize = forceResize;
     }
 
@@ -100,7 +100,7 @@ public class RequestImageParameter extends RequestParameter {
      *
      * @return
      */
-    public int getThumbnail() {
+    public boolean getThumbnail() {
         return thumbnail;
     }
 
@@ -108,7 +108,7 @@ public class RequestImageParameter extends RequestParameter {
      *
      * @param thumbnail
      */
-    public void setThumbnail(final int thumbnail) {
+    public void setThumbnail(final boolean thumbnail) {
         this.thumbnail = thumbnail;
     }
 

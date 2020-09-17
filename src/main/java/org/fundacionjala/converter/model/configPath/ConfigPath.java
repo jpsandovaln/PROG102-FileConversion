@@ -48,4 +48,11 @@ public class ConfigPath {
   public String getMetaDataExtractorTool() {
     return properties.getProperty("exiftool.path");
   }
+
+  /**
+   * Returns executable image tool.
+   */
+  public String getImageTool() {
+    return properties.getProperty("image.path");
+  }
 }
