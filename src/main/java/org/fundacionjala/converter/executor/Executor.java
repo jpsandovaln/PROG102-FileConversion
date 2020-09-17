@@ -18,7 +18,7 @@ public class Executor {
   /**
    * This method execute the command.
    *
-   * @param list list of the commands
+   * @param commandsList list of the commands
    * @return list of the paths
    * @throws ExecutionException
    * @throws IOException
