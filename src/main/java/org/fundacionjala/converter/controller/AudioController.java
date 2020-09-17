@@ -17,7 +17,10 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 
+import java.io.IOException;
 import java.util.List;
+import java.util.concurrent.ExecutionException;
+
 /**
  * @author Mirko Romay
  * @version 0.1
@@ -65,28 +68,20 @@ public class AudioController {
        if (fileService.getFileByMd5(checksum) == null) {
            fileService.saveFile(new File(filePath, checksum));
            ModelParameter modelParameter = new AudioParameter();
-           modelParameter.setInputFile(filePath);
-           setAudioParameterValues(modelParameter, requestAudioParameter);
-           Executor executor = new Executor();
-           ICommand audioModel = new AudioModel();
-           List<List<String>> list = audioModel.createCommand(modelParameter);
-           executor.executeList(list);
-
+           setAudioParameterValues(modelParameter, requestAudioParameter, filePath);
+           execute(modelParameter);
            return "successfully";
        } else {
            ModelParameter modelParameter = new AudioParameter();
-           modelParameter.setInputFile(filePath);
-           setAudioParameterValues(modelParameter, requestAudioParameter);
-           Executor executor = new Executor();
-           ICommand audioModel = new AudioModel();
-           List<List<String>> list = audioModel.createCommand(modelParameter);
-           executor.executeList(list);
+           setAudioParameterValues(modelParameter, requestAudioParameter, filePath);
+           execute(modelParameter);
            return "the file already exists";
        }
    }
 
-    private void setAudioParameterValues(final ModelParameter modelParameter, final RequestAudioParameter requestAudioParameter) {
+    private void setAudioParameterValues(final ModelParameter modelParameter, final RequestAudioParameter requestAudioParameter, final String filePath) throws IOException {
         boolean cut = true;
+        modelParameter.setInputFile(filePath);
         modelParameter.setOutputFile("storage/convertedFiles");
         ((AudioParameter) modelParameter).setName(requestAudioParameter.getName());
         ((AudioParameter) modelParameter).setFormat(requestAudioParameter.getFormat());
@@ -97,5 +92,12 @@ public class AudioController {
         ((AudioParameter) modelParameter).setStart(requestAudioParameter.getStart()); //-ss
         ((AudioParameter) modelParameter).setDuration(requestAudioParameter.getDuration()); //-t
         ((AudioParameter) modelParameter).setCut(cut); //
+    }
+
+    private void execute(final ModelParameter modelParameter) throws InterruptedException, ExecutionException, IOException {
+        Executor executor = new Executor();
+        ICommand audioModel = new AudioModel();
+        List<List<String>> list = audioModel.createCommand(modelParameter);
+        executor.executeList(list);
     }
 }
