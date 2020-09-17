@@ -10,7 +10,6 @@ package org.fundacionjala.converter.controller;
 
 import org.fundacionjala.converter.controller.request.RequestImageParameter;
 import org.fundacionjala.converter.executor.Executor;
-import org.fundacionjala.converter.model.command.AudioModel;
 import org.fundacionjala.converter.model.command.ImageModel;
 import org.fundacionjala.converter.model.parameter.image.ImageParameter;
 import org.fundacionjala.converter.model.service.FileService;
@@ -31,6 +30,8 @@ public class ImageController {
     private FileService fileService;
     @Value("${tempFiles.path}")
     private String temporal;
+    @Value("${convertedFiles.path}")
+    private String output;
     @Autowired
     private FileUploadService fileUploadService;
     /**
@@ -48,6 +49,7 @@ public class ImageController {
         imageParameter.setOutputFile("storage/convertedFiles");
         imageParameter.setIsGray(false);
         imageParameter.setIsThumbnail(requestImageParameter.getThumbnail());
+        imageParameter.setOutputFile(output + md5 + ".jpg");
 
         Executor executor = new Executor();
         ImageModel imageModel = new ImageModel();
