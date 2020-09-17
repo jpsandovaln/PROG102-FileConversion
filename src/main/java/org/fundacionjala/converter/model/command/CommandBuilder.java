@@ -6,7 +6,7 @@
  * Information and shall use it only in accordance with the terms of the
  * license agreement you entered into with Fundacion Jala
  */
-package org.fundacionjala.converter.model;
+package org.fundacionjala.converter.model.command;
 
 import java.util.List;
 
@@ -37,7 +37,7 @@ public class CommandBuilder {
     public void execute(final List<String> listParams) throws Exception {
         buildCommand(listParams);
         ProcessBuilder processBuilder = new ProcessBuilder("powershell", "/c", "\"" + command + "\"");
-            process = processBuilder.start();
-            process.waitFor();
+        process = processBuilder.start();
+        process.waitFor();
     }
 }

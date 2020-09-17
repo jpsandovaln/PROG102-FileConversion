@@ -6,8 +6,7 @@
  * Information and shall use it only in accordance with the terms of the
  * license agreement you entered into with Fundacion Jala
  */
-package org.fundacionjala.converter.model.metadata;
-import org.fundacionjala.converter.model.Param;
+package org.fundacionjala.converter.model.command.metadata;
 
 /**
  * @author Angela Martinez
