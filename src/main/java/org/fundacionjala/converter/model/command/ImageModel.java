@@ -20,7 +20,8 @@ public class ImageModel implements ICommand {
      * @param forceResize
      * @return
      */
-    public String convert(final MultipartFile file, final String newName, final int height, final int weight, final String extension, final int thumbnail, final int forceResize) {
+    public String convert(final MultipartFile file, final String newName, final int height, final int weight,
+            final String extension, final int thumbnail, final int forceResize) {
         try {
             String path = "C:\\Users\\Administrator\\Desktop";
             String fileName = file.getOriginalFilename();
@@ -28,8 +29,10 @@ public class ImageModel implements ICommand {
             if (forceResize == 1) {
                 force = "!";
             }
-            String cmd = "cd " + path + " && magick " + fileName + " -resize " + height + "x" + weight + force + " " + newName + "." + extension;
-            String thumbnailCmd = "cd " + path + " && magick " + fileName + " -resize 128x128 thumbnail-" + newName + "." + extension;
+            String cmd = "cd " + path + " && magick " + fileName + " -resize " + height + "x" + weight + force + " "
+                    + newName + "." + extension;
+            String thumbnailCmd = "cd " + path + " && magick " + fileName + " -resize 128x128 thumbnail-" + newName
+                    + "." + extension;
             readCmdCommand(cmd);
             if (thumbnail == 1) {
                 readCmdCommand(thumbnailCmd);
@@ -51,22 +54,25 @@ public class ImageModel implements ICommand {
      * @param extension
      * @return
      */
-    public String selectingImageRegion(final MultipartFile file, final String newName, final int height, final int weight, final int startPositionX, final int startPositionY, final String extension) {
+    public String selectingImageRegion(final MultipartFile file, final String newName, final int height,
+            final int weight, final int startPositionX, final int startPositionY, final String extension) {
         try {
             String path = "C:\\Users\\Administrator\\Desktop";
             String fileName = file.getOriginalFilename();
-            String cmd = "cd " + path + " && magick " + fileName + " -crop " + height + "x" + weight + "+" + startPositionX + "+" + startPositionY + " " + newName + "." + extension;
+            String cmd = "cd " + path + " && magick " + fileName + " -crop " + height + "x" + weight + "+"
+                    + startPositionX + "+" + startPositionY + " " + newName + "." + extension;
             readCmdCommand(cmd);
             return "successfully";
         } catch (Exception ex) {
             return ex.getMessage();
         }
     }
+
     public static String readCmdCommand(final String cmd) {
         try {
-            ProcessBuilder builder = new ProcessBuilder("cmd", "/c", "\"" +  cmd + "\"");
+            ProcessBuilder builder = new ProcessBuilder("cmd", "/c", "\"" + cmd + "\"");
             builder.redirectErrorStream(true);
-            Process process =  builder.start();
+            Process process = builder.start();
             InputStreamReader streamReader = new InputStreamReader(process.getInputStream());
             BufferedReader reader = new BufferedReader(streamReader);
             return "successfully";
@@ -74,6 +80,7 @@ public class ImageModel implements ICommand {
             return ex.getMessage();
         }
     }
+
     /**
      *
      * @param file
@@ -95,10 +102,12 @@ public class ImageModel implements ICommand {
 
     /**
      * create command
+     *
      * @return list of commands
+     * @param modelParameter
      */
     @Override
-    public List<List<String>> createCommand(final ModelParameter parameter) {
+    public List<List<String>> createCommand(final ModelParameter modelParameter) {
         return null;
     }
 }

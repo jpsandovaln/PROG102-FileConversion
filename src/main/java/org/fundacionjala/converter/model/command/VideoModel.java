@@ -88,8 +88,8 @@ public class VideoModel implements ICommand {
     private List<String> gif(final VideoParameter parameter) {
         listParams.clear();
         listParams.add(parameter.getToolPath());
-        listParams.add(VideoParameter.FRAME_RATIO);
-        listParams.add(VideoParameter.CANT_FRAMES);
+        listParams.add(VideoParameter.FRAME_RATE);
+        listParams.add(parameter.getFrames());
         listParams.add(VideoParameter.INPUT_COMMAND);
         listParams.add(parameter.getFilePath());
         listParams.add(parameter.getPathConvertedFile() + "demo.gif");

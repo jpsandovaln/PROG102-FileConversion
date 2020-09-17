@@ -11,6 +11,10 @@ public class ConfigPath {
     loadConfiguration();
   }
 
+  public ConfigPath() {
+    loadConfiguration();
+  }
+
   /**
    * Loads the application.properties configurations.
    */
@@ -34,7 +38,7 @@ public class ConfigPath {
   /**
    * Returns executable ocr path.
    */
-  public String getToolExtactor() {
+  public String getExtractTextTool() {
     return properties.getProperty("ocr.path");
   }
 

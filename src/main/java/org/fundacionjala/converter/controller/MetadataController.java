@@ -17,9 +17,9 @@ import org.springframework.web.bind.annotation.RestController;
 import org.fundacionjala.converter.model.service.FileService;
 import org.fundacionjala.converter.controller.request.RequestMetadataParameter;
 
-import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import java.nio.file.StandardCopyOption;
 
 /**
  * @author Angela Martinez
@@ -27,77 +27,7 @@ import java.nio.file.Paths;
  */
 @RestController
 public class MetadataController {
-   /* private MetadataExtractor metadataExtractor = new MetadataExtractor();
-    private MetadataParam metadataParam = new MetadataParam();
-    private RequestMetadataValidator requestMetadataValidator = new RequestMetadataValidator();
-    @Value("${filesMetadataPath}")
-    private String targetDir;
-    @Value("${metadata.path}")
-    private String toolPath;
-    @Autowired
-    private FileUploadService fileUploadService;
-    @Autowired
-    private FileService fileService;
-    /**
-     * Receives a request and extracts its metadata
-     * @param request requestMetadataParam object
-     * @return a message
-     */
- /*   @RequestMapping(value = "getMetadata", method = RequestMethod.POST)
-    public String getMetadata(final RequestMetadataParam request) {
-        if (!requestMetadataValidator.isValid(request)) {
-            return "Error: invalid values";
-        } else {
-            metadataParam.setFilePath(request.getPathFile());
-            metadataParam.setFormatExport(metadataParam.getFormatExport(request.getExportFormat()));
-            metadataParam.setFormatExportCommand(metadataParam.getFormatExportCommand(request.getExportFormat()));
-            metadataParam.setDetail(metadataParam.getDetail(request.getDetail()));
-            metadataParam.setTargetDir(targetDir);
-            metadataParam.setToolPath(toolPath);
-            try {
-                return metadataExtractor.extract(metadataParam);
-            } catch (Exception e) {
-                return e.getMessage();
-            }
-        }
-    }
 
-    /**
-     * Receives a request and extracts its metadata
-     * @param request requestMetadataParam object
-     * @return a message
-     */
-  /*  @RequestMapping(value = "extractMetadata", method = RequestMethod.POST)
-    public String extractMetadata(final RequestExtractMetadataParam request) {
-        if (!requestMetadataValidator.isValid(request)) {
-            return "Error: invalid values";
-        } else {
-            String filePath;
-            try {
-                if (fileService.getFileByMd5(request.getChecksumMD5()) == null) {
-                    filePath = fileUploadService.saveInputFile(request.getFile());
-                    String check = new ChecksumMD5().getMD5(filePath);
-                    if (check.equals(request.getChecksumMD5())) {
-                        fileService.saveFile(new File(filePath, check));
-                    } else {
-                        return "Invalid checksumMD5";
-                    }
-
-                } else {
-                    filePath = fileService.getFileByMd5(request.getChecksumMD5()).getPath();
-                }
-                metadataParam.setFilePath(filePath);
-                metadataParam.setFormatExport(metadataParam.getFormatExport(request.getExportFormat()));
-                metadataParam.setFormatExportCommand(metadataParam.getFormatExportCommand(request.getExportFormat()));
-                metadataParam.setDetail(metadataParam.getDetail(request.getDetail()));
-                metadataParam.setTargetDir(targetDir);
-                metadataParam.setToolPath(toolPath);
-                return metadataExtractor.extract(metadataParam);
-            } catch (Exception e) {
-                return e.getMessage();
-            }
-        }
-    }*/
    @Autowired
    private FileService fileService;
     @Value("${tempFiles.path}")
@@ -107,20 +37,17 @@ public class MetadataController {
      *
      * @param requestMetadataParameter
      * @return
-     * @throws IOException
      */
     @RequestMapping(method = RequestMethod.POST, value = "extractMetadata")
-    public String extractMetadata(final RequestMetadataParameter requestMetadataParameter) throws IOException {
-
-     //   MetadataParameter metadataParameter;
-        String result = "Error";
-       // Executor exec;
+    public String extractMetadata(final RequestMetadataParameter requestMetadataParameter) throws Exception {
+        requestMetadataParameter.validate();
+        String result = "exist";
         String path = temporal + requestMetadataParameter.getFile().getOriginalFilename();
-        Files.copy(requestMetadataParameter.getFile().getInputStream(), Paths.get(path));
-        if (requestMetadataParameter.validate()) {
-            fileService.saveFile(new File(path, requestMetadataParameter.generateMD5(path)));
-         //   metadataParameter = new MetadataParameter();
-          //  result = exec.executer(metadataParameter);
+        Files.copy(requestMetadataParameter.getFile().getInputStream(), Paths.get(path), StandardCopyOption.REPLACE_EXISTING);
+        String md5 = requestMetadataParameter.generateMD5(path);
+        if (!requestMetadataParameter.isInDataBase(md5, fileService)) {
+            fileService.saveFile(new File(path, md5));
+            result = "saved in database";
         }
         Files.delete(Paths.get(path));
         return result;
