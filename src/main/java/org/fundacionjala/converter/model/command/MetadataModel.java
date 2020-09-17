@@ -3,7 +3,6 @@ package org.fundacionjala.converter.model.command;
 import org.fundacionjala.converter.model.configPath.ConfigPath;
 import org.fundacionjala.converter.model.parameter.ModelParameter;
 import org.fundacionjala.converter.model.parameter.metadata.MetadataParameter;
-
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
