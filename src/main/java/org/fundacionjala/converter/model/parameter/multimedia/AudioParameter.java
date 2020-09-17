@@ -13,7 +13,7 @@ public class AudioParameter extends MultimediaParameter {
     private String start;
     private String duration;
     private String volume;
-    private  boolean isMetadata = false;
+    private boolean isMetadata = false;
     private boolean isCut = false;
     private AudioParameterValidation audioValidation = new AudioParameterValidation();
 

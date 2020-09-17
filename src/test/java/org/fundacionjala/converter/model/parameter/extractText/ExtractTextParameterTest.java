@@ -3,6 +3,7 @@ package org.fundacionjala.converter.model.parameter.extractText;
 import org.junit.Test;
 import static org.junit.Assert.assertEquals;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -27,15 +28,17 @@ public class ExtractTextParameterTest {
         ((ExtractTextParameter) eTextParameter).setLanguage(languageSp);
         String expected = "-l spa";
         String actual = ((ExtractTextParameter) eTextParameter).getLanguage();
-        assertEquals (expected, actual);
+        assertEquals(expected, actual);
     }
+
     @Test
     public void selectTypeWord() {
         ((ExtractTextParameter) eTextParameter).setType(type);
         String expected = ".docx";
         String actual = ((ExtractTextParameter) eTextParameter).getType();
-        assertEquals (expected, actual);
+        assertEquals(expected, actual);
     }
+
     @Test
     public void createExTextParameterWithInitialParameters() {
         ((ExtractTextParameter) eTextParameter).setLanguage(languageSp);
@@ -44,8 +47,9 @@ public class ExtractTextParameterTest {
         String actual = eTextParameter.toString();
         assertEquals(expected, actual);
     }
+
     @Test
-    public void createCommandWhenLanguageisSpanishAndDocumentIsWord(){
+    public void createCommandWhenLanguageisSpanishAndDocumentIsWord() throws IOException {
         String expected = toolPath + " " + inputFile + " " + outputFile + " " + "-l spa";
         eTextParameter.setInputFile(inputFile);
         eTextParameter.setOutputFile(outputFile);
