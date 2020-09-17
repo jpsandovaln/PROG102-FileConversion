@@ -34,17 +34,14 @@ public class Executor {
   }
 
   private String execute(final List<String> command) throws ExecutionException, IOException, InterruptedException {
-    System.out.println(command);
     Process processDuration = new ProcessBuilder(command).redirectErrorStream(true).start();
     StringBuilder output = new StringBuilder();
-    System.out.println(output);
     BufferedReader processOutputReader = new BufferedReader(new InputStreamReader(processDuration.getInputStream()));
     String line;
     while ((line = processOutputReader.readLine()) != null) {
       output.append(line + System.lineSeparator());
     }
     processDuration.waitFor();
-    //System.out.println(command.get(command.size() - 1));
     return command.get(command.size() - 1);
   }
 }
