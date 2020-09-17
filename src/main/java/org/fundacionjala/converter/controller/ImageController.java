@@ -11,6 +11,7 @@ package org.fundacionjala.converter.controller;
 import org.fundacionjala.converter.controller.request.RequestImageParameter;
 import org.fundacionjala.converter.executor.Executor;
 import org.fundacionjala.converter.model.command.AudioModel;
+import org.fundacionjala.converter.model.command.ImageModel;
 import org.fundacionjala.converter.model.parameter.image.ImageParameter;
 import org.fundacionjala.converter.model.service.FileService;
 import org.fundacionjala.converter.model.service.FileUploadService;
@@ -49,8 +50,8 @@ public class ImageController {
         imageParameter.setIsThumbnail(requestImageParameter.getThumbnail());
 
         Executor executor = new Executor();
-        AudioModel audioModel = new AudioModel();
-        List<String> response = executor.executeCommandsList(audioModel.createCommand(imageParameter));
+        ImageModel imageModel = new ImageModel();
+        List<String> response = executor.executeCommandsList(imageModel.createCommand(imageParameter));
         return response.toString();
     }
 }
