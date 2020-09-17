@@ -50,7 +50,7 @@ public class ImageController {
 
         Executor executor = new Executor();
         AudioModel audioModel = new AudioModel();
-        List<String> response = executor.executeList(audioModel.createCommand(imageParameter));
+        List<String> response = executor.executeCommandsList(audioModel.createCommand(imageParameter));
         return response.toString();
     }
 }
