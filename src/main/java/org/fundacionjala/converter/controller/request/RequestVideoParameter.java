@@ -11,41 +11,56 @@ package org.fundacionjala.converter.controller.request;
 import org.springframework.web.multipart.MultipartFile;
 
 public class RequestVideoParameter extends RequestMultimediaParameter {
-
     private String videoCodec;
-
-    public void setVideoCodec(String videoCodec) {
-        this.videoCodec = videoCodec;
-    }
-
-    public String getFrames() {
-        return frames;
-    }
-
-    public void setFrames(String frames) {
-        this.frames = frames;
-    }
-
-    public int getExtractThumbnail() {
-        return extractThumbnail;
-    }
-
-    public void setExtractThumbnai(int extractFrame) {
-        this.extractThumbnail = extractFrame;
-    }
-
     private String frames;
     private int extractThumbnail;
 
-
-    public RequestVideoParameter(MultipartFile file, String format, String sampleRate, String audioCodec, String videoCodec, String frames, int extractThumbnail) {
+    public RequestVideoParameter(final MultipartFile file, final String format, final String sampleRate, final String audioCodec, final String videoCodec, final String frames, final int extractThumbnail) {
         super(file, format, sampleRate, audioCodec);
         this.videoCodec = videoCodec;
         this.frames = frames;
         this.extractThumbnail = extractThumbnail;
     }
 
+    /**
+     *
+     * @param videoCodec
+     */
+    public void setVideoCodec(final String videoCodec) {
+        this.videoCodec = videoCodec;
+    }
 
+    /**
+     *
+     * @return
+     */
+    public String getFrames() {
+        return frames;
+    }
+
+    /**
+     *
+     * @param frames
+     */
+    public void setFrames(final String frames) {
+        this.frames = frames;
+    }
+
+    /**
+     *
+     * @return
+     */
+    public int getExtractThumbnail() {
+        return extractThumbnail;
+    }
+
+    /**
+     *
+     * @param extractThumbnail
+     */
+    public void setExtractThumbnail(final int extractThumbnail) {
+        this.extractThumbnail = extractThumbnail;
+    }
 
     /**
      *
@@ -66,6 +81,4 @@ public class RequestVideoParameter extends RequestMultimediaParameter {
     public String getVideoCodec() {
         return videoCodec;
     }
-
-
 }
