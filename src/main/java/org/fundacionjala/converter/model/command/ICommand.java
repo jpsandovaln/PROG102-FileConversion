@@ -1,8 +1,8 @@
 package org.fundacionjala.converter.model.command;
 
-import java.util.List;
-
 import org.fundacionjala.converter.model.parameter.ModelParameter;
+
+import java.util.List;
 
 public interface ICommand {
 

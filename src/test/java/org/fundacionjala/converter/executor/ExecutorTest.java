@@ -10,7 +10,8 @@ import java.util.concurrent.ExecutionException;
 import org.junit.Test;
 
 public class ExecutorTest {
-    List<String> list = new ArrayList<String>();
+    List<List<String>> list = new ArrayList<>();
+    List<String> command = new ArrayList<String>();
     Executor executor = new Executor();
 
     @Test
@@ -19,8 +20,9 @@ public class ExecutorTest {
         expected.add("cmd.exe");
         expected.add("/c");
         expected.add("subcommand1");
-        list.add("subcommand1");
-        executor.execute(list);
-        assertEquals(expected, list);
+        command.add("subcommand1");
+        executor.executeCommandsList(list);
+        List<String> actual = list.get(0);
+        assertEquals(expected, actual);
     }
 }

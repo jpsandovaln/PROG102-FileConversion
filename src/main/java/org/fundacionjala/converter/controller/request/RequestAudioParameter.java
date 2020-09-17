@@ -8,12 +8,35 @@
  */
 package org.fundacionjala.converter.controller.request;
 
+import org.springframework.web.multipart.MultipartFile;
+
 public class RequestAudioParameter extends RequestMultimediaParameter {
 
     private String bitRate;
     private int channels;
-    private String sampleRate;
-    private int vol;
+    public RequestAudioParameter(final MultipartFile file, final String format,
+                                 final String sampleRate, final String audioCodec, final String bitRate, final int channels) {
+        super(file, format, sampleRate, audioCodec);
+        this.bitRate = bitRate;
+        this.channels = channels;
+    }
+
+    /**
+     *
+     * @throws Exception
+     */
+    @Override
+    public void validate() throws Exception {
+        super.validate();
+        if (this.getBitRate() == null || "".equals(this.getBitRate())) {
+            throw new Exception("failed BitRate Rate empty");
+        }
+        if ("".equals(this.getChannels())) {
+            throw new Exception("failed Channels Rate empty");
+        }
+
+    }
+
 
     /**
      *
@@ -31,28 +54,5 @@ public class RequestAudioParameter extends RequestMultimediaParameter {
         return channels;
     }
 
-    /**
-     *
-     * @return
-     */
-    public String getSampleRate() {
-        return sampleRate;
-    }
 
-    /**
-     *
-     * @return
-     */
-    public int getVol() {
-        return vol;
-    }
-
-    /**
-     *
-     * @return
-     */
-    @Override
-    public boolean validate() {
-        return false;
-    }
 }

@@ -99,10 +99,10 @@ public class VideoModel implements ICommand {
    * create command
    *
    * @return list of commands
+   * @param modelParameter
    */
   @Override
-  public List<List<String>> createCommand(final ModelParameter modelParameter) {
-    // TODO Auto-generated method stub
+  public List<List<String>>  createCommand(final ModelParameter modelParameter) {
     return null;
   }
 }
