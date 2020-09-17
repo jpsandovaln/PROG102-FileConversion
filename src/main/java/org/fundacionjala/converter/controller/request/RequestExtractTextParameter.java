@@ -8,16 +8,41 @@
  */
 package org.fundacionjala.converter.controller.request;
 
-public class RequestExtractTextParameter extends RequestParameter {
+import org.springframework.web.multipart.MultipartFile;
 
+public class RequestExtractTextParameter extends RequestParameter {
     private String language;
+    public RequestExtractTextParameter(final MultipartFile file, final String format, final String language) {
+        super(file, format);
+        this.language = language;
+    }
+
+    /**
+     *
+     * @throws Exception
+     */
+    @Override
+    public void validate() throws Exception {
+        super.validate();
+        if (this.getLanguage() == null || "".equals(this.getLanguage())) {
+            throw new Exception("failed Language empty");
+        }
+    }
 
     /**
      *
      * @return
      */
-    @Override
-    public boolean validate() {
-        return false;
+    public String getLanguage() {
+        return language;
     }
+
+    /**
+     *
+     * @param language
+     */
+    public void setLanguage(final String language) {
+        this.language = language;
+    }
+
 }

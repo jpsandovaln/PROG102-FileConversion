@@ -33,6 +33,7 @@ public class MetadataExtractor implements IExtractor, ICommand {
 
     /**
      * Returns a list with the parameters
+     *
      * @param param object with the parameters
      * @return List<String>
      */
@@ -52,20 +53,22 @@ public class MetadataExtractor implements IExtractor, ICommand {
 
     /**
      * Extract file's metadata
+     *
      * @param param
      * @throws Exception
      */
     public String extract(final Param param) throws Exception {
-        commandBuilder.execute(getListParams(param));
+        // commandBuilder.execute(getListParams(param));
         return metadataParam.getTargetDir() + metadataParam.getFileName() + metadataParam.getFormatExport();
     }
 
     /**
      * create command
      * @return list of commands
+     * @param modelParameter
      */
     @Override
-    public List<List<String>> createCommand(final ModelParameter parameter) {
+    public List<List<String>>  createCommand(final ModelParameter modelParameter) {
         return null;
     }
 }

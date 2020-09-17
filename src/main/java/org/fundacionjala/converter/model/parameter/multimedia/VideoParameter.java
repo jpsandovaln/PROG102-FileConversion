@@ -1,9 +1,5 @@
 package org.fundacionjala.converter.model.parameter.multimedia;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-
 public class VideoParameter extends MultimediaParameter {
     private String extension;
     private String filePath;
@@ -14,9 +10,8 @@ public class VideoParameter extends MultimediaParameter {
     public static final String ACODEC_COMMAND = "-acodec";
     public static final String ACODEC_MP2 = "mp2";
     public static final String ACODEC_AAC = "aac";
-    private String gif = "-r 12 -i ";
-    public static final String FRAME_RATIO = "-r";
-    public static final String CANT_FRAMES = "12";
+    public static final String FRAME_RATE = "-r";
+    private String frames;
     public static final String INPUT_COMMAND = "-i";
     //params for thumbnail
     public static final String START = "-ss";
@@ -35,6 +30,22 @@ public class VideoParameter extends MultimediaParameter {
         this.pathConvertedFile = pathConvertedFile;
         extractMetadata = false;
         extractThumbnail = false;
+    }
+
+    /**
+     * Returns the frames per second
+     * @return String
+     */
+    public String getFrames() {
+        return frames;
+    }
+
+    /**
+     * Sets the frames per second
+     * @param frames
+     */
+    public void setFrames(final String frames) {
+        this.frames = frames;
     }
 
     /**
@@ -120,18 +131,5 @@ public class VideoParameter extends MultimediaParameter {
      */
     public String getPathConvertedFile() {
         return pathConvertedFile;
-    }
-    //no usado
-    private String[] parameter;
-    VideoParameter(final String... parameter) {
-        this.parameter = parameter;
-    }
-
-    /**
-     * List<String> getParameter()
-     */
-    @Override
-    protected List<String> getParameter() {
-        return new ArrayList<String>(Arrays.asList(parameter));
     }
 }

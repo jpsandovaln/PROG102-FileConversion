@@ -12,7 +12,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 
 /**
- * @author Julia Escalante
+ * @author Elizabeth Bravo Flores
  * @version 0.1
  */
 @Controller

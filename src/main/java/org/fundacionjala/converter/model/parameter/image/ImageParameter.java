@@ -9,8 +9,7 @@ public class ImageParameter extends ModelParameter {
   /**
     * List<String> getParameter()
    */
-    @Override
-    protected List<String> getParameter() {
+    public List<String> getParameter() {
         return null;
     }
 }

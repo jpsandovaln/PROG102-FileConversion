@@ -9,60 +9,39 @@ import java.util.concurrent.ExecutionException;
 
 public class Executor {
 
-    private boolean debugOutPut;
+  private boolean debugOutput;
 
-    public Executor() {
-        debugOutPut = false;
+  public Executor() {
+    debugOutput = false;
+  }
+
+  /**
+   * This method execute the command.
+   *
+   * @param list list of the commands
+   * @return list of the paths
+   * @throws ExecutionException
+   * @throws IOException
+   * @throws InterruptedException
+   */
+  public List<String> executeCommandsList(final List<List<String>> commandsList) throws InterruptedException, ExecutionException, IOException {
+    List<String> outputList = new ArrayList();
+    for (List<String> command : commandsList) {
+      outputList.add(execute(command));
     }
+    return outputList;
+  }
 
-    /**
-     * setDebugOutput
-     */
-    public void setDebugOutput(final boolean debugOutPut) {
-        this.debugOutPut = debugOutPut;
+  private String execute(final List<String> command) throws ExecutionException, IOException, InterruptedException {
+    Process processDuration = new ProcessBuilder(command).redirectErrorStream(true).start();
+    StringBuilder output = new StringBuilder();
+    BufferedReader processOutputReader = new BufferedReader(new InputStreamReader(processDuration.getInputStream()));
+    String line;
+    while ((line = processOutputReader.readLine()) != null) {
+      output.append(line + System.lineSeparator());
     }
-
-    /**
-     *
-     * @param commands
-     * @return
-     * @throws ExecutionException
-     * @throws IOException
-     * @throws InterruptedException
-     */
-    public List<String> executeList(final List<List<String>> commands) throws ExecutionException, IOException, InterruptedException {
-        List<String> outputList = new ArrayList();
-        for (List<String> command : commands) {
-            outputList.add(execute(command));
-
-        }
-        return outputList;
-    }
-
-    /**
-     * This method execute the command.
-     *
-     * @param command list of the commands
-     * @return status of the execution
-     * @throws ExecutionException
-     * @throws IOException
-     * @throws InterruptedException
-     */
-    private String execute(final List<String> command) throws ExecutionException, IOException, InterruptedException {
-        Process processDuration = new ProcessBuilder(command).redirectErrorStream(true).start();
-        StringBuilder output = new StringBuilder();
-        BufferedReader processOutputReader = new BufferedReader(new InputStreamReader(processDuration.getInputStream()));
-        String line;
-        while ((line = processOutputReader.readLine()) != null) {
-            output.append(line + System.lineSeparator());
-        }
-        processDuration.waitFor();
-
-        if (debugOutPut) {
-            System.out.println("BEGIN DEBUG");
-            System.out.println(output.toString());
-            System.out.println("END DEBUG");
-        }
-        return command.get(command.size() - 1);
-    }
+    processDuration.waitFor();
+    System.out.println(command.get(command.size() - 1));
+    return command.get(command.size() - 1);
+  }
 }
