@@ -8,8 +8,6 @@
  */
 package org.fundacionjala.converter.controller;
 
-
-
 import org.fundacionjala.converter.controller.request.RequestVideoParameter;
 import org.fundacionjala.converter.executor.Executor;
 import org.fundacionjala.converter.model.ChecksumMD5;
@@ -23,10 +21,6 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
-
-import java.nio.file.Files;
-import java.nio.file.Paths;
-import java.nio.file.StandardCopyOption;
 
 @RestController
 public class VideoController {
@@ -55,23 +49,24 @@ public class VideoController {
       checksum = checksumMD5.getMD5(filePath);
       if (fileService.getFileByMd5(checksum) == null) {
           fileService.saveFile(new File(filePath, checksum));
-          result ="saved en data base";
+          result = "saved en data base";
       }
-      try{
+      try {
       VideoModel video = new VideoModel();
       VideoParameter videoParameter = new VideoParameter("thirdParty/ffmpeg/bin/ffmpeg.exe", "storage/convertedFiles/");
       videoParameter.setFilePath(filePath);
       videoParameter.setFrames(requestVideoParameter.getFrames());
       videoParameter.setExtension(requestVideoParameter.getFormat());
-      if (requestVideoParameter.getExtractThumbnail() == 1){
-      videoParameter.setExtractThumbnail(true);
+      videoParameter.setVCodec(requestVideoParameter.getVideoCodec());
+      videoParameter.setACodec(requestVideoParameter.getAudioCodec());
+      if (requestVideoParameter.getExtractThumbnail() == 1) {
+          videoParameter.setExtractThumbnail(true);
       }
       Executor executor = new Executor();
       executor.executeCommandsList(video.createCommand(videoParameter));
       } catch (Exception e) {
-      e.printStackTrace();
-  }
-      //Files.delete(Paths.get(path));
+        e.printStackTrace();
+      }
       return result;
-  }
+    }
 }
