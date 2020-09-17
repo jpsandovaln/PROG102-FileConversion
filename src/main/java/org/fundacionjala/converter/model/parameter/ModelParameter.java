@@ -7,7 +7,6 @@ public abstract class ModelParameter {
   private String outputFile;
   private String md5;
 
-
   public ModelParameter() {
   }
 
@@ -39,16 +38,14 @@ public abstract class ModelParameter {
   }
 
   /**
-   *
-   * @param inputFile
+   * @param inputFile the inputFile to set
    */
   public void setInputFile(final String inputFile) throws IOException {
     this.inputFile = inputFile;
   }
 
   /**
-   *
-   * @param outputFile
+   * @param outputFile the outputFile to set
    */
   public void setOutputFile(final String outputFile) {
     this.outputFile = outputFile;

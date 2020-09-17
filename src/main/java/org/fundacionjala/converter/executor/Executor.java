@@ -9,12 +9,11 @@ import java.util.concurrent.ExecutionException;
 
 public class Executor {
 
-  private boolean debugOutPut;
+  private boolean debugOutput;
 
   public Executor() {
-    debugOutPut = false;
+    debugOutput = false;
   }
-
 
   /**
    * This method execute the command.
@@ -25,10 +24,10 @@ public class Executor {
    * @throws IOException
    * @throws InterruptedException
    */
-  public List<String> executeList(final List<List<String>> list) throws InterruptedException, ExecutionException, IOException {
+  public List<String> executeCommandsList(final List<List<String>> commandsList) throws InterruptedException, ExecutionException, IOException {
     List<String> outputList = new ArrayList();
-    for (List<String> l : list) {
-      outputList.add(execute(l));
+    for (List<String> command : commandsList) {
+      outputList.add(execute(command));
     }
     return outputList;
   }
