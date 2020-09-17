@@ -41,7 +41,6 @@ public class Executor {
       output.append(line + System.lineSeparator());
     }
     processDuration.waitFor();
-    System.out.println(command.get(command.size() - 1));
     return command.get(command.size() - 1);
   }
 }
