@@ -49,7 +49,8 @@ public class ImageModel implements ICommand {
         List<String> command = new ArrayList<String>();
         command.add(config.getImageTool());
         command.add(imageParameter.getInputFile());
-        command.add("-colorspace Gray");
+        command.add("-colorspace");
+        command.add("gray");
         command.add(imageParameter.getOutputFile());
         return command;
     }
