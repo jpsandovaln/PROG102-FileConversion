@@ -28,8 +28,9 @@ public class ImageModel implements ICommand {
         List<String> command = new ArrayList<String>();
         command.add(config.getImageTool());
         command.add(imageParameter.getInputFile());
-        command.add("-resize 128x128");
-        command.add("thumbnail-" + imageParameter.getOutputFile());
+        command.add("-resize");
+        command.add("128x128");
+        command.add(imageParameter.getOutputFile());
         return command;
     }
 
