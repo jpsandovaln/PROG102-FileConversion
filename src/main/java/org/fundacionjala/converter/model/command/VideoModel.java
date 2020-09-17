@@ -66,6 +66,7 @@ public class VideoModel implements ICommand {
     common.execute(command);
     setOutputFileName(output);
   }
+
   /**
    * This method return the file name
    */
@@ -96,6 +97,7 @@ public class VideoModel implements ICommand {
 
   /**
    * create command
+   *
    * @return list of commands
    * @param modelParameter
    */
