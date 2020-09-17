@@ -36,28 +36,14 @@ public class AudioController {
     private FileUploadService fileUploadService;
 
     /**
-     * Controller of audio
+     *
      * @param requestAudioParameter
      * @return
+     * @throws Exception
      */
-   /** @RequestMapping(value = "/convertAudio", method = RequestMethod.POST)
-    public String convertAudio(final RequestAudioParameter requestAudioParameter) throws Exception {
-        requestAudioParameter.validate();
-        String result = "exist";
-        String path = temporal + requestAudioParameter.getFile().getOriginalFilename();
-        Files.copy(requestAudioParameter.getFile().getInputStream(), Paths.get(path), StandardCopyOption.REPLACE_EXISTING);
-        String md5 = requestAudioParameter.generateMD5(path);
-        if (!requestAudioParameter.isInDataBase(md5, fileService)) {
-            fileService.saveFile(new File(path, md5));
-            result = "saved in database";
-        }
-        Files.delete(Paths.get(path));
-        return result;
-    }**/
 
    @RequestMapping(value = "/convertAudio", method = RequestMethod.POST)
    public String audio(final RequestAudioParameter requestAudioParameter) throws Exception {
-       System.out.println(requestAudioParameter.isCut());
        if (requestAudioParameter.getFile() == null || requestAudioParameter.getFile().isEmpty()) {
            return "Select a file";
        }
@@ -67,18 +53,21 @@ public class AudioController {
        checksum = checksumMD5.getMD5(filePath);
        if (fileService.getFileByMd5(checksum) == null) {
            fileService.saveFile(new File(filePath, checksum));
-           ModelParameter modelParameter = new AudioParameter();
-           setAudioParameterValues(modelParameter, requestAudioParameter, filePath);
-           execute(modelParameter);
-           return "successfully";
-       } else {
-           ModelParameter modelParameter = new AudioParameter();
-           setAudioParameterValues(modelParameter, requestAudioParameter, filePath);
-           execute(modelParameter);
-           return "the file already exists";
+
        }
+       ModelParameter modelParameter = new AudioParameter();
+       setAudioParameterValues(modelParameter, requestAudioParameter, filePath);
+       execute(modelParameter);
+       return "successfully";
    }
 
+    /**
+     *
+     * @param modelParameter
+     * @param requestAudioParameter
+     * @param filePath
+     * @throws IOException
+     */
     private void setAudioParameterValues(final ModelParameter modelParameter, final RequestAudioParameter requestAudioParameter, final String filePath) throws IOException {
         boolean cut = true;
         modelParameter.setInputFile(filePath);
@@ -94,6 +83,13 @@ public class AudioController {
         ((AudioParameter) modelParameter).setCut(cut); //
     }
 
+    /**
+     *
+     * @param modelParameter
+     * @throws InterruptedException
+     * @throws ExecutionException
+     * @throws IOException
+     */
     private void execute(final ModelParameter modelParameter) throws InterruptedException, ExecutionException, IOException {
         Executor executor = new Executor();
         ICommand audioModel = new AudioModel();
