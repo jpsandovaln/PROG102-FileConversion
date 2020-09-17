@@ -96,6 +96,6 @@ public class AudioController {
         Executor executor = new Executor();
         ICommand audioModel = new AudioModel();
         List<List<String>> list = audioModel.createCommand(modelParameter);
-        executor.executeList(list);
+        executor.executeCommandsList(list);
     }
 }
