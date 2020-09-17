@@ -5,7 +5,6 @@ import org.fundacionjala.converter.model.command.MetadataModel;
 import org.fundacionjala.converter.model.parameter.metadata.MetadataParameter;
 import org.junit.jupiter.api.Test;
 import org.junit.Assert;
-import org.springframework.boot.test.context.SpringBootTest;
 
 import java.io.IOException;
 import java.util.concurrent.ExecutionException;

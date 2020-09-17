@@ -9,17 +9,17 @@ import java.util.concurrent.ExecutionException;
 
 public class Executor {
 
-    private boolean debugOutPut;
+    private boolean debugOutput;
 
     public Executor() {
-    debugOutPut = false;
+    debugOutput = false;
   }
 
     /**
      * setDebugOutput
      */
-    public void setDebugOutput(final boolean debugOutPut) {
-    this.debugOutPut = debugOutPut;
+    public void setDebugOutput(final boolean debugOutput) {
+    this.debugOutput = debugOutput;
   }
 
 
@@ -57,7 +57,7 @@ public class Executor {
         }
         processDuration.waitFor();
 
-        if (debugOutPut) {
+        if (debugOutput) {
             System.out.println("BEGIN DEBUG");
             System.out.println(output.toString());
             System.out.println("END DEBUG");
