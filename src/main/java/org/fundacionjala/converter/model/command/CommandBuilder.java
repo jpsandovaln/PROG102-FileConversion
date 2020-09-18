@@ -37,7 +37,7 @@ public class CommandBuilder {
     public void execute(final List<String> listParams) throws Exception {
         buildCommand(listParams);
         ProcessBuilder processBuilder = new ProcessBuilder("powershell", "/c", "\"" + command + "\"");
-            process = processBuilder.start();
-            process.waitFor();
+        process = processBuilder.start();
+        process.waitFor();
     }
 }
