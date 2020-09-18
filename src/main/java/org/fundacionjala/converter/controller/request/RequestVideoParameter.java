@@ -8,9 +8,71 @@
  */
 package org.fundacionjala.converter.controller.request;
 
-public class RequestVideoParameter extends RequestMultimediaParameter {
+import org.springframework.web.multipart.MultipartFile;
 
+public class RequestVideoParameter extends RequestMultimediaParameter {
     private String videoCodec;
+    private String frames;
+    private int extractThumbnail;
+
+    public RequestVideoParameter(final MultipartFile file, final String format, final String sampleRate, final String audioCodec, final String videoCodec, final String frames, final int extractThumbnail) {
+        super(file, format, sampleRate, audioCodec);
+        this.videoCodec = videoCodec;
+        this.frames = frames;
+        this.extractThumbnail = extractThumbnail;
+    }
+
+    /**
+     *
+     * @param videoCodec
+     */
+    public void setVideoCodec(final String videoCodec) {
+        this.videoCodec = videoCodec;
+    }
+
+    /**
+     *
+     * @return
+     */
+    public String getFrames() {
+        return frames;
+    }
+
+    /**
+     *
+     * @param frames
+     */
+    public void setFrames(final String frames) {
+        this.frames = frames;
+    }
+
+    /**
+     *
+     * @return
+     */
+    public int getExtractThumbnail() {
+        return extractThumbnail;
+    }
+
+    /**
+     *
+     * @param extractThumbnail
+     */
+    public void setExtractThumbnail(final int extractThumbnail) {
+        this.extractThumbnail = extractThumbnail;
+    }
+
+    /**
+     *
+     * @throws Exception
+     */
+    @Override
+    public void validate() throws Exception {
+        super.validate();
+        if (this.getVideoCodec() == null || "".equals(this.getVideoCodec())) {
+            throw new Exception("failed Channels Rate empty");
+        }
+    }
 
     /**
      *
@@ -18,14 +80,5 @@ public class RequestVideoParameter extends RequestMultimediaParameter {
      */
     public String getVideoCodec() {
         return videoCodec;
-    }
-
-    /**
-     *
-     * @return
-     */
-    @Override
-    public boolean validate() {
-        return false;
     }
 }

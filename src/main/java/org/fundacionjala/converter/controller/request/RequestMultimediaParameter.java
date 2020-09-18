@@ -8,12 +8,37 @@
  */
 package org.fundacionjala.converter.controller.request;
 
+import org.springframework.web.multipart.MultipartFile;
+
 public class RequestMultimediaParameter extends RequestParameter {
 
     private String sampleRate;
     private String audioCodec;
-    private String start;
-    private int duration;
+
+
+
+    public RequestMultimediaParameter(final MultipartFile file, final String format, final String sampleRate, final String audioCodec) {
+        super(file, format);
+        this.sampleRate = sampleRate;
+        this.audioCodec = audioCodec;
+    }
+
+    /**
+     *
+     * @throws Exception
+     */
+    @Override
+    public void validate() throws Exception {
+        super.validate();
+        if (this.getSampleRate() == null || "".equals(this.getSampleRate())) {
+            throw new Exception("failed Sample Rate empty");
+        }
+
+        if (this.getAudioCodec() == null || "".equals(this.getAudioCodec())) {
+            throw new Exception("failed audiocodec empty");
+        }
+
+    }
 
     /**
      *
@@ -47,44 +72,4 @@ public class RequestMultimediaParameter extends RequestParameter {
         this.audioCodec = audioCodec;
     }
 
-    /**
-     *
-     * @return
-     */
-    public String getStart() {
-        return start;
-    }
-
-    /**
-     *
-     * @param start
-     */
-    public void setStart(final String start) {
-        this.start = start;
-    }
-
-    /**
-     *
-     * @return
-     */
-    public int getDuration() {
-        return duration;
-    }
-
-    /**
-     *
-     * @param duration
-     */
-    public void setDuration(final int duration) {
-        this.duration = duration;
-    }
-
-    /**
-     *
-     * @return
-     */
-    @Override
-    public boolean validate() {
-        return false;
-    }
 }

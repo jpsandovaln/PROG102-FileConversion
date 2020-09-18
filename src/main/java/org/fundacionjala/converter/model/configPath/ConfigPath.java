@@ -50,16 +50,16 @@ public class ConfigPath {
   }
 
   /**
-   * Returns executable image tool.
-   */
-  public String getImageTool() {
-    return properties.getProperty("image.path");
-  }
-
-  /**
    * Returns path of the folder that stores converted files
    */
   public String getConvertedFilesPath() {
     return properties.getProperty("convertedFiles.path");
+  }
+
+  /**
+   * Returns executable image tool.
+   */
+  public String getImageTool() {
+    return properties.getProperty("image.path");
   }
 }
