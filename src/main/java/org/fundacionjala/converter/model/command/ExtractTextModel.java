@@ -62,11 +62,20 @@ public class ExtractTextModel implements ICommand {
         String outputFile = modelParameter.getOutputFile();
         String result;
         result = readAFile(outputFile + ".txt");
-        eraseDocument(type, outputFile);
-        if (type == ".docx") {
-            documConvertDoc.createDocumentWord(outputFile, result);
-        } else if (type == ".pdf") {
-            documConvertDoc.createDocumentPdf(outputFile, result);
+        if (type != ".txt") {
+            eraseDocument(type, outputFile);
+        }
+        switch (type) {
+            case ".pdf":
+                documConvertDoc.createDocumentPdf(outputFile, result);
+                break;
+            case ".docx":
+                documConvertDoc.createDocumentWord(outputFile, result);
+                break;
+            case ".txt":
+                break;
+            default :
+                break;
         }
     }
 
