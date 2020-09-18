@@ -1,4 +1,3 @@
-package org.fundacionjala.converter.model.command;
 /**
  * Copyright (c) 2020 Fundacion Jala.
  *
@@ -7,85 +6,85 @@ package org.fundacionjala.converter.model.command;
  * Information and shall use it only in accordance with the terms of the
  * license agreement you entered into with Fundacion Jala
  */
-import org.fundacionjala.converter.model.parameter.ModelParameter;
+package org.fundacionjala.converter.model.command;
 
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import java.util.ArrayList;
 import java.util.List;
+
+import org.fundacionjala.converter.executor.Executor;
+import org.fundacionjala.converter.model.configPath.ConfigPath;
+import org.fundacionjala.converter.model.parameter.ModelParameter;
+import org.fundacionjala.converter.model.parameter.extractText.ExtractTextParameter;
 
 /**
  * @author Jhordan Soto
  * @version 1.0
  */
 public class ExtractTextModel implements ICommand {
-    /**
-     * created by default
-     */
-    public ExtractTextModel() {
 
+    /**
+     * create command
+     *
+     * @return list of commands
+     */
+    @Override
+    public List<List<String>> createCommand(final ModelParameter modelParameter) {
+        List<List<String>> listCommands = new ArrayList<>();
+        ConfigPath cPath = new ConfigPath();
+        List<String> command = new ArrayList<String>();
+        command.add(cPath.getExtractTextTool());
+        command.add(modelParameter.getInputFile());    //add source
+        command.add(modelParameter.getOutputFile());   //add target
+        command.add(((ExtractTextParameter) modelParameter).getLanguage()); // add language
+        listCommands.add(command);
+        return listCommands;
     }
 
     /**
-     * choose the format of the document
-     * @param source the path of the initial
-     * @param target the path that will be crated
-     * @param language the language that will be created
-     * @param type the type of format
-     * @param exec the paht of the binary
-     * @return  if the result was succesfull
+     * Create a document
+     * @param modelParameter - the parameter to execute the conversion using tesseract
      */
-    public String convertDocument(final String source, final String target, final String language, final String type, final String exec) {
-        String[] command = {"cmd"};
-        String advertaisment = "", result = "";
+    public void createDocument(final ModelParameter modelParameter) {
+        List<List<String>> commandList = createCommand(modelParameter);
+        Executor executor = new Executor();
         try {
-            Process process = Runtime.getRuntime().exec(command);
-            PrintWriter stdin = new PrintWriter(process.getOutputStream());
-            switch (language) {
-                case "español":
-                    stdin.println("\"" + exec + "\" \"" + source + "\" \"" + target + "\" -l spa");
-                    break;
-                case "english":
-                    stdin.println("\"" + exec + "\" \"" + source + "\" \"" + target + "\"");
-                    break;
-                default:
-                    stdin.println("\"" + exec + "\" \"" + source + "\" \"" + target + "\"");
-                    advertaisment = "Sorry language not supported we are going to do it in english";
-            }
-            stdin.close();
-            process.waitFor();
-            result = readAFile(target + ".txt");
-            switch (type) {
-                case "word":
-                    Files.delete(Paths.get(target + ".txt"));
-                    result = new ConvertDoc().createDocumentWord(target, result);
-                    break;
-                case "pdf":
-                    Files.delete(Paths.get(target + ".txt"));
-                    result = new ConvertDoc().createDocumentPdf(target, result);
-                    break;
-                case "SS":
-                    Files.delete(Paths.get(target + ".txt"));
-                    result += advertaisment;
-                    break;
-                case "text":
-                    result = target + ".txt";
-                    break;
-                default:
-                    Files.delete(Paths.get(target + ".txt"));
-                    result = "format not supported please insert a valid format";
-                    break;
-            }
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
+            executor.executeCommandsList(commandList);
+        } catch (Exception e) {
             e.printStackTrace();
         }
-        return result;
+        ConvertDoc documConvertDoc = new ConvertDoc();
+        String type = ((ExtractTextParameter) modelParameter).getType();
+        String outputFile = modelParameter.getOutputFile();
+        String result;
+        result = readAFile(outputFile + ".txt");
+        eraseDocument(type, outputFile);
+        if (type == ".docx") {
+            documConvertDoc.createDocumentWord(outputFile, result);
+        } else if (type == ".pdf") {
+            documConvertDoc.createDocumentPdf(outputFile, result);
+        }
     }
+
+    /**
+     * Erase the txt when the type is word or pdf
+     * @param type
+     * @param outputFile
+     */
+    public void eraseDocument(final String type, final String outputFile) {
+        if (type == ".docx" || type == ".pdf" || type == ".txt") {
+            try {
+                Files.delete(Paths.get(outputFile + ".txt"));
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
     /**
      * read a file
      * @param fileName the path and name of the file
@@ -112,14 +111,5 @@ public class ExtractTextModel implements ICommand {
             }
         }
         return readString;
-    }
-
-    /**
-     * create command
-     * @return list of commands
-     */
-    @Override
-    public List<List<String>> createCommand(final ModelParameter modelParameter) {
-        return null;
     }
 }
