@@ -25,8 +25,7 @@ public class ExtractTextParameter extends ModelParameter {
      * @param language the language to set
      */
     public void setLanguage(final String language) {
-        //this.language = language;
-        if (language.equals("español")) {
+        if ("español".equals(language)) {
             this.language = "-l spa";
         } else {
             this.language = "";
