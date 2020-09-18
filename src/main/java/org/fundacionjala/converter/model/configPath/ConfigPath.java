@@ -46,7 +46,14 @@ public class ConfigPath {
    * Returns executable meta data extractor path.
    */
   public String getMetaDataExtractorTool() {
-    return properties.getProperty("exiftool.path");
+    return properties.getProperty("metadata.path");
+  }
+
+  /**
+   * Returns path of the folder that stores converted files
+   */
+  public String getConvertedFilesPath() {
+    return properties.getProperty("convertedFiles.path");
   }
 
   /**
