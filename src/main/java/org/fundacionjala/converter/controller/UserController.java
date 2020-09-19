@@ -3,6 +3,7 @@ package org.fundacionjala.converter.controller;
 import org.fundacionjala.converter.model.entity.User;
 import org.fundacionjala.converter.model.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -20,6 +21,7 @@ import java.util.List;
 public class UserController {
     @Autowired
     private UserService userService;
+
 
     /**
      * displays list of users
@@ -40,6 +42,7 @@ public class UserController {
      */
     @PostMapping(value = "/add")
     public String saveUser(final User user, final Model model) {
+
         userService.saveUser(user);
         return "save";
     }
@@ -49,9 +52,9 @@ public class UserController {
      * @param user to edit
      * @return view
      */
-    @PostMapping(value = "/edit")
-    public String editUser(final User user, final Model model) {
-        userService.updateUser(user);
+    @PostMapping(value = "/edit/{id}")
+    public String editUser(@PathVariable("id") final Long id, final User user, final Model model) {
+        userService.updateUser(user,id);
         return "edit";
     }
     /**
