@@ -15,15 +15,10 @@ import org.springframework.web.multipart.MultipartFile;
 import java.io.IOException;
 import java.security.NoSuchAlgorithmException;
 
-public abstract class  RequestParameter {
+public abstract class RequestParameter {
 
     private MultipartFile file;
-    private String format;
-
-    public RequestParameter(final MultipartFile file, final String format) {
-        this.file = file;
-        this.format = format;
-    }
+    private String exportFormat;
 
     /**
      *
@@ -37,16 +32,16 @@ public abstract class  RequestParameter {
      *
      * @param format
      */
-    public void setFormat(final String format) {
-        this.format = format;
+    public void setFormat(final String exportFormat) {
+        this.exportFormat = exportFormat;
     }
 
     /**
      * @return
      */
 
-    public String getFormat() {
-        return format;
+    public String getExportFormat() {
+        return exportFormat;
     }
 
     /**
@@ -78,7 +73,8 @@ public abstract class  RequestParameter {
      */
     public void validate() throws Exception {
 
-        if (this.getFormat() == null || "".equals(this.getFormat())) {
+        if (this.getExportFormat() == null || "".equals(this.getExportFormat())) {
+           System.out.println(this.getExportFormat() + "-----------------");
             throw new Exception("failed format empty");
         }
 

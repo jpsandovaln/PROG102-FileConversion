@@ -8,19 +8,10 @@
  */
 package org.fundacionjala.converter.controller.request;
 
-import org.springframework.web.multipart.MultipartFile;
-
 public class RequestVideoParameter extends RequestMultimediaParameter {
     private String videoCodec;
     private String frames;
     private int extractThumbnail;
-
-    public RequestVideoParameter(final MultipartFile file, final String format, final String sampleRate, final String audioCodec, final String videoCodec, final String frames, final int extractThumbnail) {
-        super(file, format, sampleRate, audioCodec);
-        this.videoCodec = videoCodec;
-        this.frames = frames;
-        this.extractThumbnail = extractThumbnail;
-    }
 
     /**
      *
