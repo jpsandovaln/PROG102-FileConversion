@@ -8,14 +8,8 @@
  */
 package org.fundacionjala.converter.controller.request;
 
-import org.springframework.web.multipart.MultipartFile;
-
 public class RequestExtractTextParameter extends RequestParameter {
     private String language;
-    public RequestExtractTextParameter(final MultipartFile file, final String format, final String language) {
-        super(file, format);
-        this.language = language;
-    }
 
     /**
      *

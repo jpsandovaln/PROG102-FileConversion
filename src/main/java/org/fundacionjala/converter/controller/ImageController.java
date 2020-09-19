@@ -48,7 +48,7 @@ public class ImageController {
         imageParameter.setInputFile(filePath);
         imageParameter.setIsGray(requestImageParameter.getGray());
         imageParameter.setIsThumbnail(requestImageParameter.getThumbnail());
-        imageParameter.setOutputFile(output + md5 + ".jpg");
+        imageParameter.setOutputFile(output + md5 + requestImageParameter.getExportFormat());
 
         Executor executor = new Executor();
         ImageModel imageModel = new ImageModel();
