@@ -17,7 +17,8 @@ public class WebSecurity extends WebSecurityConfigurerAdapter {
     @Autowired
     private UserService userDetailsService;
     private BCryptPasswordEncoder bCryptPasswordEncoder;
-    String[] resources = new String[]{
+    private static final int LEVEL_ENCRYPT = 4;
+    private static final String[] RESOURCES = new String[]{
             "/login",
             "/home",
             "/",
@@ -33,7 +34,7 @@ public class WebSecurity extends WebSecurityConfigurerAdapter {
      * @param auth
      */
     @Override
-    protected void configure(AuthenticationManagerBuilder auth) throws Exception {
+    protected void configure(final AuthenticationManagerBuilder auth) throws Exception {
         auth.userDetailsService(userDetailsService);
     }
 
@@ -42,9 +43,9 @@ public class WebSecurity extends WebSecurityConfigurerAdapter {
      * @param http
      */
     @Override
-    protected void configure(HttpSecurity http) throws Exception {
+    protected void configure(final HttpSecurity http) throws Exception {
         http.csrf().disable().authorizeRequests()
-                .antMatchers(resources).permitAll()
+                .antMatchers(RESOURCES).permitAll()
                 .antMatchers("/admin*").access("hasRole('ADMIN')")
                 .anyRequest().authenticated()
                 .and()
@@ -67,7 +68,7 @@ public class WebSecurity extends WebSecurityConfigurerAdapter {
      */
     @Bean
     public BCryptPasswordEncoder passwordEncoder() {
-        bCryptPasswordEncoder = new BCryptPasswordEncoder(4);
+        bCryptPasswordEncoder = new BCryptPasswordEncoder(LEVEL_ENCRYPT);
         return bCryptPasswordEncoder;
     }
 
@@ -77,7 +78,7 @@ public class WebSecurity extends WebSecurityConfigurerAdapter {
      * And Setting PassswordEncoder
      * @return bCryptPasswordEncoder
      */
-    public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
+    public void configureGlobal(final AuthenticationManagerBuilder auth) throws Exception {
         auth.userDetailsService(userDetailsService).passwordEncoder(passwordEncoder());
     }
 }

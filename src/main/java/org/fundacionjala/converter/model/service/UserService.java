@@ -23,7 +23,8 @@ import java.util.Optional;
 public class UserService implements UserDetailsService {
     @Autowired
     private UserRepository userRepository;
-    private BCryptPasswordEncoder bCryptPasswordEncoder = new BCryptPasswordEncoder(4);
+    private BCryptPasswordEncoder bCryptPasswordEncoder;
+    private static final int LEVEL_ENCRYPT = 4;
 
     /**
      * Returns all the elements in the table users
@@ -47,6 +48,7 @@ public class UserService implements UserDetailsService {
      * @param user - the reference to the User to save
      */
     public void saveUser(final User user) {
+        bCryptPasswordEncoder = new BCryptPasswordEncoder(LEVEL_ENCRYPT);
         try {
             if (user.getPassword() != null) {
                 String passCrypt = bCryptPasswordEncoder.encode(user.getPassword());
@@ -65,7 +67,7 @@ public class UserService implements UserDetailsService {
      * Updates a user in the table "users"
      * @param user - the reference to the User to update
      */
-    public void updateUser(final User user,final Long id) {
+    public void updateUser(final User user, final Long id) {
         try {
             User userTemp = userRepository.getUserById(id);
             userTemp.setName(user.getName());
@@ -99,7 +101,7 @@ public class UserService implements UserDetailsService {
      * @param username- the reference to the user authenticate
      */
     @Override
-    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+    public UserDetails loadUserByUsername(final String username) throws UsernameNotFoundException {
         UserDetails userDetails = null;
         try {
             User user = userRepository.findUserByUsername(username);
@@ -107,7 +109,7 @@ public class UserService implements UserDetailsService {
                     user.getPassword(),
                     buildGranted(user.getRol()));
 
-        } catch (UsernameNotFoundException e){
+        } catch (UsernameNotFoundException e) {
             System.out.println("Error: Does not existe users." + e.getMessage());
         }
 
@@ -119,7 +121,7 @@ public class UserService implements UserDetailsService {
      * @param rol- the reference to the user authenticate
      * @return auths, a list<GrantedAuthority>
      */
-    public List<GrantedAuthority> buildGranted(String rol) {
+    public List<GrantedAuthority> buildGranted(final String rol) {
         List<GrantedAuthority> auths = new ArrayList<>();
         auths.add(new SimpleGrantedAuthority(rol));
         return auths;
