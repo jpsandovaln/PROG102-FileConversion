@@ -1,4 +1,4 @@
-package org.fundacionjala.converter.model.entity;
+package org.fundacionjala.converter.database.entity;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;

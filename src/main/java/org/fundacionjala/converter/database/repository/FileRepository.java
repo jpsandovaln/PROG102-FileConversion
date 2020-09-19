@@ -6,9 +6,9 @@
  * Information and shall use it only in accordance with the terms of the
  * license agreement you entered into with Fundacion Jala
  */
-package org.fundacionjala.converter.model.repository;
+package org.fundacionjala.converter.database.repository;
 
-import org.fundacionjala.converter.model.entity.File;
+import org.fundacionjala.converter.database.entity.File;
 import org.springframework.data.repository.CrudRepository;
 
 /**

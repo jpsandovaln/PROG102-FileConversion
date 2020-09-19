@@ -1,6 +1,6 @@
-package org.fundacionjala.converter.model.repository;
+package org.fundacionjala.converter.database.repository;
 
-import org.fundacionjala.converter.model.entity.User;
+import org.fundacionjala.converter.database.entity.User;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 
