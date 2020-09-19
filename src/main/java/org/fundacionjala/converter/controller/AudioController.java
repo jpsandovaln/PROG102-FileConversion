@@ -75,7 +75,7 @@ public class AudioController {
         modelParameter.setInputFile(filePath);
         modelParameter.setOutputFile(output);
         ((AudioParameter) modelParameter).setName(requestAudioParameter.getName());
-        ((AudioParameter) modelParameter).setFormat(requestAudioParameter.getFormat());
+        ((AudioParameter) modelParameter).setFormat(requestAudioParameter.getExportFormat());
         ((AudioParameter) modelParameter).setCodec(requestAudioParameter.getCodec());
         ((AudioParameter) modelParameter).setBitRate(requestAudioParameter.getBitRate()); // -b:a
         ((AudioParameter) modelParameter).setChannel(requestAudioParameter.getChannel()); // stereo

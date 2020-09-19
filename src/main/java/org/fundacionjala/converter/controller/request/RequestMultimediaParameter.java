@@ -8,20 +8,10 @@
  */
 package org.fundacionjala.converter.controller.request;
 
-import org.springframework.web.multipart.MultipartFile;
-
 public class RequestMultimediaParameter extends RequestParameter {
 
     private String sampleRate;
     private String audioCodec;
-
-
-
-    public RequestMultimediaParameter(final MultipartFile file, final String format, final String sampleRate, final String audioCodec) {
-        super(file, format);
-        this.sampleRate = sampleRate;
-        this.audioCodec = audioCodec;
-    }
 
     /**
      *

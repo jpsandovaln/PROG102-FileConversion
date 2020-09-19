@@ -53,10 +53,10 @@ public class VideoController {
       }
       try {
       VideoModel video = new VideoModel();
-      VideoParameter videoParameter = new VideoParameter("thirdParty/ffmpeg/bin/ffmpeg.exe", "storage/convertedFiles/");
+      VideoParameter videoParameter = new VideoParameter("thirdParty/ffmpeg/ffmpeg", "storage/convertedFiles/");
       videoParameter.setFilePath(filePath);
       videoParameter.setFrames(requestVideoParameter.getFrames());
-      videoParameter.setExtension(requestVideoParameter.getFormat());
+      videoParameter.setExtension(requestVideoParameter.getExportFormat());
       videoParameter.setVCodec(requestVideoParameter.getVideoCodec());
       videoParameter.setACodec(requestVideoParameter.getAudioCodec());
       if (requestVideoParameter.getExtractThumbnail() == 1) {
