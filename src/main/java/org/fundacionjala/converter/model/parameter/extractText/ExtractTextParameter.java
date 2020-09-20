@@ -8,11 +8,13 @@
  */
 package org.fundacionjala.converter.model.parameter.extractText;
 
+import org.fundacionjala.converter.model.command.extractText.DocType;
 import org.fundacionjala.converter.model.parameter.ModelParameter;
 
 public class ExtractTextParameter extends ModelParameter {
     private String language;
-    private String type;
+    private DocType type;
+    public static final String LANG_COMAND = "-l";
 
     /**
      * @return the language
@@ -25,8 +27,8 @@ public class ExtractTextParameter extends ModelParameter {
      * @param language the language to set
      */
     public void setLanguage(final String language) {
-        if ("español".equals(language)) {
-            this.language = "-l spa";
+        if ("es".equals(language)) {
+            this.language = "spa";
         } else {
             this.language = "";
         }
@@ -35,39 +37,21 @@ public class ExtractTextParameter extends ModelParameter {
     /**
      * @return the type
      */
-    public String getType() {
+    public DocType getType() {
         return type;
     }
 
     /**
      * @param type the type to set
      */
-    public void setType(final String type) {
-        switch (type) {
-            case "word":
-                this.type = ".docx";
-                break;
-            case "pdf":
-                this.type = ".pdf";
-                break;
-            case "SS":
-                this.type = ".txt";
-                break;
-            case "text":
-                this.type = ".txt";
-                break;
-            default:
-                this.type = ".txt";
-                System.out.println("Format not supported please insert a valid format");
-                break;
-        }
+    public void setType(final DocType type) {
+        this.type = type;
     }
 
     /**
      * (non-Javadoc)
      * @see java.lang.Object#toString()
      */
-
     @Override
     public String toString() {
         return "ExtractTextParameter [language=" + language + ", type=" + type + "]";
