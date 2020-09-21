@@ -13,8 +13,25 @@ import org.fundacionjala.converter.model.parameter.ModelParameter;
 
 public class ExtractTextParameter extends ModelParameter {
     private String language;
+    private String fileName;
     private DocType type;
-    public static final String LANG_COMAND = "-l";
+    public static final String LANG_COMMAND = "-l";
+
+    /**
+     * Returns name of generated file
+     * @return fileName
+     */
+    public String getFileName() {
+        return fileName;
+    }
+
+    /**
+     * Sets fileName
+     * @param fileName
+     */
+    public void setFileName(final String fileName) {
+        this.fileName = fileName;
+    }
 
     /**
      * @return the language

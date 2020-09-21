@@ -28,10 +28,8 @@ public class ChecksumMD5 {
      * @return md5 of the file
      */
     public String getMD5(final String file) throws IOException, NoSuchAlgorithmException {
-
         File files = new File(file);
         String filePath = files.getAbsolutePath();
-
         MessageDigest md = MessageDigest.getInstance("MD5");
         String hex = checksum(filePath, md);
         return hex;
