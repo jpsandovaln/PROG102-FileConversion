@@ -1,9 +1,11 @@
 package org.fundacionjala.converter.model.entity;
+
 import javax.persistence.Entity;
+import javax.persistence.Table;
+import javax.persistence.Id;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.Column;
 
 /**
  * @author Elizabeth Bravo Flores
@@ -15,14 +17,20 @@ public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    @Column(unique = true, nullable = false)
     private String username;
+    @Column(nullable = false)
     private String name;
+    @Column(nullable = false)
     private String lastName;
+    @Column(nullable = false)
     private String password;
+    @Column(nullable = false)
+    private String rol;
 
     public User() {
     }
-    public User(final Long id, final String name, final String lastName, final String password) {
+    public User(final Long id, final String username, final String name, final String lastName, final String password, final String rol) {
     }
     /**
      * @return the id
@@ -55,10 +63,10 @@ public class User {
         return username;
     }
     /**
-     * @param id the id to set
+     * @return the rol
      */
-    public void setId(final Long id) {
-        this.id = id;
+    public String getRol() {
+        return rol;
     }
     /**
      * @param name the name to set
@@ -83,6 +91,12 @@ public class User {
      */
     public void setUsername(final String username) {
         this.username = username;
+    }
+    /**
+     * @param rol the username to set
+     */
+    public void setRol(final String rol) {
+        this.rol = rol;
     }
     /**
      * method toString
