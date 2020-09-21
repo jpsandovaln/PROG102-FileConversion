@@ -21,6 +21,7 @@ public class UserController {
     @Autowired
     private UserService userService;
 
+
     /**
      * displays list of users
      * @param model
@@ -40,6 +41,7 @@ public class UserController {
      */
     @PostMapping(value = "/add")
     public String saveUser(final User user, final Model model) {
+
         userService.saveUser(user);
         return "save";
     }
@@ -49,9 +51,9 @@ public class UserController {
      * @param user to edit
      * @return view
      */
-    @PostMapping(value = "/edit")
-    public String editUser(final User user, final Model model) {
-        userService.updateUser(user);
+    @PostMapping(value = "/edit/{id}")
+    public String editUser(@PathVariable("id") final Long id, final User user, final Model model) {
+        userService.updateUser(user, id);
         return "edit";
     }
     /**
