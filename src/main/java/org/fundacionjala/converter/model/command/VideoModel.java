@@ -1,28 +1,22 @@
 package org.fundacionjala.converter.model.command;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
 import org.fundacionjala.converter.model.parameter.ModelParameter;
 import org.fundacionjala.converter.model.parameter.multimedia.VideoParameter;
+import org.fundacionjala.converter.model.configPath.ConfigPath;
 
 public class VideoModel implements ICommand {
     private List<String> listParams;
     private List<String> listThumbnailParams;
-    private CommandBuilder commandBuilder;
     private List<List<String>> list;
-    public VideoModel() throws IOException {
-        listParams = new ArrayList<String>();
-        listThumbnailParams = new ArrayList<String>();
-        commandBuilder = new CommandBuilder();
-        list = new ArrayList<>();
-    }
 
     /**
-   * videoConverter
-   *
-   */
+     * Returns list of commands to convert the video to mp4 or gif
+     * @param parameter - the reference to Video Parameter
+     * @return List<String> - list of commands to convert
+     */
     public List<String> convert(final VideoParameter parameter) {
         if (parameter.getExtension().equals("mp4")) {
             return compressToMp4(parameter);
@@ -32,76 +26,81 @@ public class VideoModel implements ICommand {
         return null;
     }
 
-  /**
-   * videoModel Compress to mp4
-   *
-   */
+    /**
+     * Compress video to mp4
+     * @param parameter
+     * @return List<String> - list of commands to convert
+     */
     private List<String> compressToMp4(final VideoParameter parameter) {
-        listParams.clear();
-        listParams.add(parameter.getToolPath());
+        ConfigPath cPath = new ConfigPath();
+        listParams = new ArrayList<String>();
+        listParams.add(cPath.getVideoAudioTool());
         listParams.add(VideoParameter.VCODEC_COMMAND);
         listParams.add(parameter.getVCodec());
         listParams.add(VideoParameter.ACODEC_COMMAND);
         listParams.add(parameter.getACodec());
         listParams.add(VideoParameter.INPUT_COMMAND);
-        listParams.add(parameter.getFilePath());
-        listParams.add(parameter.getPathConvertedFile() + "demo.mp4");
+        listParams.add(parameter.getInputFile());
+        listParams.add(parameter.getOutputFile() + "demo.mp4");
         return listParams;
     }
 
     /**
-     * Returns a list with the commands to extract thumbnail
-     * @param parameter
-     * @return
+     * Returns a list of commands to extract thumbnail
+     * @param parameter - the reference to Video Parameter
+     * @return List<String> - list of commands
      */
-    public List<String> extractThumbnail(final VideoParameter parameter) {
-        listThumbnailParams.clear();
-        listThumbnailParams.add(parameter.getToolPath());
+    private List<String> extractThumbnail(final VideoParameter parameter) {
+        listThumbnailParams = new ArrayList<>();
+        ConfigPath cPath = new ConfigPath();
+        listThumbnailParams.add(cPath.getVideoAudioTool());
         listThumbnailParams.add(VideoParameter.START);
         listThumbnailParams.add(VideoParameter.START_TIME);
         listThumbnailParams.add(VideoParameter.TIME);
         listThumbnailParams.add(VideoParameter.DURATION);
         listThumbnailParams.add(VideoParameter.INPUT_COMMAND);
-        listThumbnailParams.add(parameter.getFilePath());
+        listThumbnailParams.add(parameter.getInputFile());
         listThumbnailParams.add(VideoParameter.VF);
         listThumbnailParams.add(VideoParameter.PALETTE);
         listThumbnailParams.add(VideoParameter.LOOP);
         listThumbnailParams.add(VideoParameter.ZERO);
-        listThumbnailParams.add(parameter.getPathConvertedFile() + "thumbnail.gif");
+        listThumbnailParams.add(parameter.getOutputFile() + "thumbnail.gif");
         return listThumbnailParams;
     }
 
     /**
-     * Returns a list with the commands to extract metadata
-     * @param parameter
-     * @return
+     * Returns list of commands to extract metadata
+     * @param parameter - the reference to Video Parameter
+     * @return List<String> - list of commands
      */
-    public List<String> extractMetadata(final VideoParameter parameter) {
+    private List<String> extractMetadata(final VideoParameter parameter) {
         //do something
         return listParams;
     }
 
     /**
-    * videoModel convert to gif
-    *
-    */
+     * Returns list of parameters to convert file to gif
+     * @param parameter - the reference to Video Parameter
+     * @return List<String> - list of commands
+     */
     private List<String> gif(final VideoParameter parameter) {
-        listParams.clear();
-        listParams.add(parameter.getToolPath());
+        List<String> listParams = new ArrayList<>();
+        ConfigPath cPath = new ConfigPath();
+        listParams.add(cPath.getVideoAudioTool());
         listParams.add(VideoParameter.FRAME_RATE);
         listParams.add(parameter.getFrames());
         listParams.add(VideoParameter.INPUT_COMMAND);
-        listParams.add(parameter.getFilePath());
-        listParams.add(parameter.getPathConvertedFile() + "demo.gif");
+        listParams.add(parameter.getInputFile());
+        listParams.add(parameter.getOutputFile() + "demo.gif");
         return listParams;
     }
 
     /**
-     * create command
+     * Creates command
      * @return list of commands
      */
     public List<List<String>> createCommand(final ModelParameter modelParameter) {
-        list.clear();
+        list = new ArrayList<>();
         VideoParameter parameter = (VideoParameter) modelParameter;
         list.add(convert(parameter));
         if (parameter.isExtractThumbnail()) {
