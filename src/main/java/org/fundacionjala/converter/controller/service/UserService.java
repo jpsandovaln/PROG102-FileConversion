@@ -1,7 +1,7 @@
-package org.fundacionjala.converter.model.service;
+package org.fundacionjala.converter.controller.service;
 
-import org.fundacionjala.converter.model.entity.User;
-import org.fundacionjala.converter.model.repository.UserRepository;
+import org.fundacionjala.converter.database.entity.User;
+import org.fundacionjala.converter.database.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;

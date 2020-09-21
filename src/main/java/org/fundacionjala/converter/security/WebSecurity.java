@@ -1,6 +1,6 @@
 package org.fundacionjala.converter.security;
 
-import org.fundacionjala.converter.model.service.UserService;
+import org.fundacionjala.converter.controller.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

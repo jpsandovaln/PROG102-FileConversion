@@ -1,7 +1,7 @@
 package org.fundacionjala.converter.controller;
 
-import org.fundacionjala.converter.model.entity.User;
-import org.fundacionjala.converter.model.service.UserService;
+import org.fundacionjala.converter.database.entity.User;
+import org.fundacionjala.converter.controller.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RestController;
