@@ -55,4 +55,11 @@ public class ConfigPath {
     public String getConvertedFilesPath() {
         return properties.getProperty("convertedFiles.path");
     }
+
+    /**
+     * Returns executable image tool.
+     */
+    public String getImageTool() {
+        return properties.getProperty("image.path");
+    }
 }

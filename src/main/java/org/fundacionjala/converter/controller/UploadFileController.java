@@ -9,9 +9,9 @@
 package org.fundacionjala.converter.controller;
 
 import org.fundacionjala.converter.model.ChecksumMD5;
-import org.fundacionjala.converter.model.entity.File;
-import org.fundacionjala.converter.model.service.FileService;
-import org.fundacionjala.converter.model.service.FileUploadService;
+import org.fundacionjala.converter.database.entity.File;
+import org.fundacionjala.converter.controller.service.FileService;
+import org.fundacionjala.converter.controller.service.FileUploadService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

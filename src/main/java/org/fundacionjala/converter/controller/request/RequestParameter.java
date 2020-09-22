@@ -9,8 +9,8 @@
 package org.fundacionjala.converter.controller.request;
 
 import org.fundacionjala.converter.model.ChecksumMD5;
-import org.fundacionjala.converter.model.entity.File;
-import org.fundacionjala.converter.model.service.FileService;
+import org.fundacionjala.converter.database.entity.File;
+import org.fundacionjala.converter.controller.service.FileService;
 import org.springframework.web.multipart.MultipartFile;
 import java.io.IOException;
 import java.security.NoSuchAlgorithmException;

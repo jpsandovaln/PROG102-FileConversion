@@ -57,4 +57,22 @@ public class ViewController {
     public String viewMetadata() {
         return "metadata/metadata";
     }
+
+    /**
+     * displays login view
+     * @return login view
+     */
+    @GetMapping("/login")
+    public String login() {
+        return "auth/login";
+    }
+
+    /**
+     * displays view user logged
+     * @return user view
+     */
+    @GetMapping("/welcome")
+    public String homeUser() {
+        return "auth/welcome";
+    }
 }

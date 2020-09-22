@@ -18,7 +18,7 @@ public class Executor {
   /**
    * This method execute the command.
    *
-   * @param list list of the commands
+   * @param commandsList list of the commands
    * @return list of the paths
    * @throws ExecutionException
    * @throws IOException
@@ -41,7 +41,6 @@ public class Executor {
       output.append(line + System.lineSeparator());
     }
     processDuration.waitFor();
-    System.out.println(command.get(command.size() - 1));
     return command.get(command.size() - 1);
   }
 }
