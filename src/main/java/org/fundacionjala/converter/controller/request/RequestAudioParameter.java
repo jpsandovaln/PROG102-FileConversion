@@ -18,8 +18,8 @@ public class RequestAudioParameter extends RequestParameter {
     private String start;
     private String duration;
     private String volume;
-    private  boolean isMetadata = false;
-    private boolean isCut = false;
+    private boolean isMetadata = false;
+    private boolean isCut;
     private String inputFile;
     private String outputFile;
     private String md5;

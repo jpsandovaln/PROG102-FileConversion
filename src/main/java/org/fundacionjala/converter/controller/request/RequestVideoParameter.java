@@ -11,7 +11,7 @@ package org.fundacionjala.converter.controller.request;
 public class RequestVideoParameter extends RequestMultimediaParameter {
     private String videoCodec;
     private String frames;
-    private int extractThumbnail;
+    private boolean extractThumbnail;
 
     /**
      *
@@ -41,7 +41,7 @@ public class RequestVideoParameter extends RequestMultimediaParameter {
      *
      * @return
      */
-    public int getExtractThumbnail() {
+    public boolean getExtractThumbnail() {
         return extractThumbnail;
     }
 
@@ -49,7 +49,7 @@ public class RequestVideoParameter extends RequestMultimediaParameter {
      *
      * @param extractThumbnail
      */
-    public void setExtractThumbnail(final int extractThumbnail) {
+    public void setExtractThumbnail(final boolean extractThumbnail) {
         this.extractThumbnail = extractThumbnail;
     }
 
