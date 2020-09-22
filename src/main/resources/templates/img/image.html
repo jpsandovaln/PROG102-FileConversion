@@ -14,30 +14,66 @@
     </div>
     <div class="card">
         <div class="card-body">
-            <form method="post" th:action="@{/upload_file}" enctype="multipart/form-data">
-                <div class="form-row">
-                    <div class="col-md-5 mb-3">
-                        <label for="">File</label>
-                        <div class="custom-file">
-                            <input type="file" class="form-control" id="" lang="es" name="file">
+            <div class="form-row">
+                <div class="col-md-5">
+                    <form method="post" th:action="@{/convertImage}" enctype="multipart/form-data" id="form-IM">
+                        <div class="form-row">
+                            <label for="file">File</label>
+                            <div class="custom-file">
+                                <input type="file" class="custom-file-input" id="file" aria-describedby="inputGroupFileAddon04">
+                                <label class="custom-file-label" for="file">select file</label>
+                            </div>
                         </div>
+                        <div class="col-md-4 mb-3">
+                            <label for="format">Format</label>
+                            <select id="format" name="format" class="custom-select" required>
+                                <option selected disabled value="">Choose...</option>
+                                <option value=".png">png</option>
+                                <option value=".jpg">jpg</option>
+                            </select>
+                        </div>
+                        <div class="col-md-4 mb-3">
+                            <label for="height">height</label>
+                            <input type="text" class="form-control" id="height" lang="es" name="height">
+                        </div>
+                        <div class="col-md-4 mb-3">
+                            <label for="width">width</label>
+                            <input type="text" class="form-control" id="width" lang="es" name="width">
+                        </div>
+                        <div class="form-row">
+                            <label for="md5">Md5</label>
+                            <input class="form-control" type="text" name="md5" id="md5">
+                        </div>
+                        <div class="form-check form-check-inline">
+                            <input class="form-check-input" type="checkbox" id="inlineCheckbox0" value="rezise">
+                            <label class="form-check-label" for="inlineCheckbox1">Re-zise</label>
+                        </div>
+                        <div class="form-check form-check-inline">
+                            <input class="form-check-input" type="checkbox" id="inlineCheckbox1" value="gray">
+                            <label class="form-check-label" for="inlineCheckbox1">Gray Scale </label>
+                        </div>
+                        <div class="form-check form-check-inline">
+                            <input class="form-check-input" type="checkbox" id="inlineCheckbox2" value="thumbnail">
+                            <label class="form-check-label" for="inlineCheckbox2">thumbnail</label>
+                        </div>
+                        <div class="form-check form-check-inline">
+                            <input class="form-check-input" type="checkbox" id="inlineCheckbox3" value="metadata">
+                            <label class="form-check-label" for="inlineCheckbox3">metadata</label>
+                        </div>
+                        <div class="">
+                            <div class="col-md-6 mb-3 float-left">
+                                <button type="submit" id="submit" class="btn btn-primary btn-block mt-2">Convert</button>
+                            </div>
+                        </div>
+                    </form>
+                    <div class="col-md-6 mb-3 float-left">
+                        <form method="get" th:action="@{/download}">
+                            <input type="text" name="path" id="path" value="" style="display:none">
+                            <button type="submit" id="submitd" class="btn btn-success btn-block mt-2" disabled>Download</button>
+                        </form>
                     </div>
-                    <div class="col-md-4 mb-3">
-                        <label for="validationDefault04">Format</label>
-                        <select class="custom-select" id="validationDefault04" required>
-                            <option selected disabled value="">Choose...</option>
-                            <option>Mp4</option>
-                            <option>Avi</option>
-                            <option>Flv</option>
-                            <option>Mpg4</option>
-                        </select>
-                    </div>
-                    <dic class="col-md-3 mb-3">
-                        <label for="validationDefault04"></label>
-                        <button class="btn btn-primary btn-block mt-2" type="submit">Convert</button>
-                    </dic>
                 </div>
-            </form>
+            </div>
         </div>
     </div>
 </div>
