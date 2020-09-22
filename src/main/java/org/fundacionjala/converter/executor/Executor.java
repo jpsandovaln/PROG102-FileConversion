@@ -16,8 +16,7 @@ public class Executor {
   }
 
   /**
-   * This method execute the command.
-   *
+   * Executes the list of commands given
    * @param commandsList list of the commands
    * @return list of the paths
    * @throws ExecutionException
@@ -25,13 +24,21 @@ public class Executor {
    * @throws InterruptedException
    */
   public List<String> executeCommandsList(final List<List<String>> commandsList) throws InterruptedException, ExecutionException, IOException {
-    List<String> outputList = new ArrayList();
+    List<String> outputList = new ArrayList<>();
     for (List<String> command : commandsList) {
       outputList.add(execute(command));
     }
     return outputList;
   }
 
+  /**
+   * Executes the list of commands given
+   * @param command
+   * @return String - the reference to the path of converted file
+   * @throws ExecutionException
+   * @throws IOException
+   * @throws InterruptedException
+   */
   private String execute(final List<String> command) throws ExecutionException, IOException, InterruptedException {
     Process processDuration = new ProcessBuilder(command).redirectErrorStream(true).start();
     StringBuilder output = new StringBuilder();
