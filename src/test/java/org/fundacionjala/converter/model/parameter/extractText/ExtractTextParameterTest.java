@@ -7,7 +7,6 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.fundacionjala.converter.model.command.CommandBuilder;
 import org.fundacionjala.converter.model.command.ExtractTextModel;
 import org.fundacionjala.converter.model.parameter.ModelParameter;
 
@@ -20,7 +19,6 @@ public class ExtractTextParameterTest {
     String toolPath = "thirdParty/ocr/tesseract.exe";
     ModelParameter eTextParameter = new ExtractTextParameter();
     ExtractTextModel eTextModelSp = new ExtractTextModel();
-    CommandBuilder cBuilder = new CommandBuilder();
     List<List<String>> listCommands = new ArrayList<>();
 
     @Test
