@@ -7,10 +7,20 @@ public abstract class Response<T> {
         this.status = status;
     }
 
+    /***
+     * getSTatus()
+     *
+     * @return T
+     */
     public T getSTatus() {
       return status;
     }
 
+    /***
+     * setStatus()
+     *
+     * @param status T
+     */
     public void setStatus(final T status) {
         this.status = status;
     }

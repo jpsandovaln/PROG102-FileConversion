@@ -9,6 +9,8 @@
 package org.fundacionjala.converter.controller;
 
 import org.fundacionjala.converter.controller.request.RequestImageParameter;
+import org.fundacionjala.converter.controller.response.ErrorResponse;
+import org.fundacionjala.converter.controller.response.OkResponse;
 import org.fundacionjala.converter.executor.Executor;
 import org.fundacionjala.converter.model.command.ImageModel;
 import org.fundacionjala.converter.model.parameter.image.ImageParameter;
@@ -16,11 +18,16 @@ import org.fundacionjala.converter.controller.service.FileService;
 import org.fundacionjala.converter.controller.service.FileUploadService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+import java.io.IOException;
 import java.util.List;
+import java.util.concurrent.ExecutionException;
+
+import javax.servlet.http.HttpServletResponse;
 
 @RestController
 public class ImageController {
@@ -40,19 +47,29 @@ public class ImageController {
      * @return
      */
     @RequestMapping(method = RequestMethod.POST, value = "convertImage")
-    public String convertImage(final RequestImageParameter requestImageParameter) throws Exception {
-        requestImageParameter.validate();
-        String filePath = fileUploadService.saveInputFile(requestImageParameter.getFile());
-        String md5 = requestImageParameter.generateMD5(filePath);
-        ImageParameter imageParameter = new ImageParameter();
-        imageParameter.setInputFile(filePath);
-        imageParameter.setIsGray(requestImageParameter.getGray());
-        imageParameter.setIsThumbnail(requestImageParameter.getThumbnail());
-        imageParameter.setOutputFile(output + md5 + requestImageParameter.getExportFormat());
+    public ResponseEntity convertImage(final RequestImageParameter requestImageParameter) {
+        try {
+            requestImageParameter.validate();
+            String filePath = fileUploadService.saveInputFile(requestImageParameter.getFile());
+            String md5 = requestImageParameter.generateMD5(filePath);
 
-        Executor executor = new Executor();
-        ImageModel imageModel = new ImageModel();
-        List<String> response = executor.executeCommandsList(imageModel.createCommand(imageParameter));
-        return response.toString();
+            ImageParameter imageParameter = new ImageParameter();
+            imageParameter.setInputFile(filePath);
+            imageParameter.setIsGray(requestImageParameter.getGray());
+            imageParameter.setIsThumbnail(requestImageParameter.getThumbnail());
+            imageParameter.setOutputFile(output + md5 + requestImageParameter.getExportFormat());
+
+            Executor executor = new Executor();
+            ImageModel imageModel = new ImageModel();
+            List<String> result = executor.executeCommandsList(imageModel.createCommand(imageParameter));
+            return ResponseEntity.ok().body(
+                    new OkResponse<Integer>(HttpServletResponse.SC_OK, result.toString()));
+        } catch (IOException | InterruptedException | ExecutionException e) {
+            return ResponseEntity.badRequest()
+                    .body(new ErrorResponse<Integer>(HttpServletResponse.SC_BAD_REQUEST, e.getMessage()));
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().body(
+                    new ErrorResponse<String>(Integer.toString(HttpServletResponse.SC_BAD_REQUEST), e.getMessage()));
+        }
     }
 }
