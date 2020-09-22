@@ -46,8 +46,9 @@ public class ExtractTextParameter extends ModelParameter {
     public void setLanguage(final String language) throws ExtractTextParameterException {
         if (isValid(language)) {
             this.language = language;
+        } else {
+            throw new ExtractTextParameterException("Language not allowed");
         }
-        else throw new ExtractTextParameterException("Language not allowed");
     }
 
     /**

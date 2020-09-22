@@ -1,3 +1,11 @@
+/**
+ * Copyright (c) 2020 Fundacion Jala.
+ *
+ * This software is the confidential and proprietary information of Fundacion Jala
+ * ("Confidential Information"). You shall not disclose such Confidential
+ * Information and shall use it only in accordance with the terms of the
+ * license agreement you entered into with Fundacion Jala
+ */
 package org.fundacionjala.converter.facade;
 
 import org.fundacionjala.converter.executor.Executor;
@@ -8,12 +16,15 @@ import org.fundacionjala.converter.model.command.extractText.ReaderText;
 import org.fundacionjala.converter.model.configPath.ConfigPath;
 import org.fundacionjala.converter.model.parameter.extractText.ExtractTextParameter;
 import org.fundacionjala.converter.model.utility.ConvertDoc;
-
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * @author Angela Martinez
+ * @version 1.0
+ */
 public class ExtractTextFacade {
     private ChecksumMD5 checksumMD5;
     private ReaderText reader;
@@ -37,7 +48,7 @@ public class ExtractTextFacade {
      * Create a document
      * @param parameter - the parameter to execute the conversion using tesseract
      */
-    public List<String> extractText(ExtractTextParameter parameter) throws Exception {
+    public List<String> extractText(final ExtractTextParameter parameter) throws Exception {
         DocType type = parameter.getType();
         parameter.setOutputFile(configPath.getConvertedFilesPath());
         parameter.setFileName(checksumMD5.getMD5(parameter.getInputFile()));

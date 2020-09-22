@@ -4,7 +4,6 @@ import org.fundacionjala.converter.model.parameter.ModelParameter;
 
 import java.util.List;
 
-public interface ICommand <T extends ModelParameter>{
-
+public interface ICommand<T extends ModelParameter> {
     List<List<String>> createCommand(T modelParameter);
 }
