@@ -10,8 +10,6 @@ package org.fundacionjala.converter.model.command.extractText;
 
 import java.util.ArrayList;
 import java.util.List;
-
-import org.fundacionjala.converter.model.utility.ConvertDoc;
 import org.fundacionjala.converter.model.command.ICommand;
 import org.fundacionjala.converter.model.configPath.ConfigPath;
 import org.fundacionjala.converter.model.parameter.extractText.ExtractTextParameter;
