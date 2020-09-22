@@ -43,12 +43,11 @@ public class ExtractTextParameter extends ModelParameter {
     /**
      * @param language the language to set
      */
-    public void setLanguage(final String language) {
-        if ("es".equals(language)) {
-            this.language = "spa";
-        } else {
-            this.language = "";
+    public void setLanguage(final String language) throws ExtractTextParameterException {
+        if (isValid(language)) {
+            this.language = language;
         }
+        else throw new ExtractTextParameterException("Language not allowed");
     }
 
     /**
@@ -63,6 +62,10 @@ public class ExtractTextParameter extends ModelParameter {
      */
     public void setType(final DocType type) {
         this.type = type;
+    }
+
+    private boolean isValid(final String language) {
+        return true;
     }
 
     /**
