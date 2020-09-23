@@ -6,13 +6,11 @@
  * Information and shall use it only in accordance with the terms of the
  * license agreement you entered into with Fundacion Jala
  */
-package org.fundacionjala.converter.facade;
+package org.fundacionjala.converter.model.command.extractText;
 
 import org.fundacionjala.converter.executor.Executor;
 import org.fundacionjala.converter.model.ChecksumMD5;
-import org.fundacionjala.converter.model.command.extractText.DocType;
-import org.fundacionjala.converter.model.command.extractText.ExtractTextModel;
-import org.fundacionjala.converter.model.command.extractText.ReaderText;
+import org.fundacionjala.converter.model.commons.exception.InvalidDataException;
 import org.fundacionjala.converter.model.configPath.ConfigPath;
 import org.fundacionjala.converter.model.parameter.extractText.ExtractTextParameter;
 import org.fundacionjala.converter.model.utility.ConvertDoc;
@@ -48,7 +46,8 @@ public class ExtractTextFacade {
      * Creates a document
      * @param parameter - the parameter to execute the conversion using tesseract
      */
-    public List<String> extractText(final ExtractTextParameter parameter) throws Exception {
+    public List<String> extractText(final ExtractTextParameter parameter) throws InvalidDataException, Exception {
+        parameter.validate();
         DocType type = parameter.getType();
         parameter.setOutputFile(configPath.getConvertedFilesPath());
         parameter.setFileName(checksumMD5.getMD5(parameter.getInputFile()));
