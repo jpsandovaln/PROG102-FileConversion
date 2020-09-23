@@ -6,7 +6,7 @@
  * Information and shall use it only in accordance with the terms of the
  * license agreement you entered into with Fundacion Jala
  */
-package org.fundacionjala.converter.model.service;
+package org.fundacionjala.converter.controller.service;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -14,8 +14,8 @@ import java.util.Optional;
 
 import javax.persistence.NonUniqueResultException;
 
-import org.fundacionjala.converter.model.entity.File;
-import org.fundacionjala.converter.model.repository.FileRepository;
+import org.fundacionjala.converter.database.entity.File;
+import org.fundacionjala.converter.database.repository.FileRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.IncorrectResultSizeDataAccessException;
 import org.springframework.stereotype.Service;
