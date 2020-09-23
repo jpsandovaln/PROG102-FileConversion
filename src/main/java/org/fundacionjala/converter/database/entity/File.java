@@ -6,7 +6,7 @@
  * Information and shall use it only in accordance with the terms of the
  * license agreement you entered into with Fundacion Jala
  */
-package org.fundacionjala.converter.model.entity;
+package org.fundacionjala.converter.database.entity;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;

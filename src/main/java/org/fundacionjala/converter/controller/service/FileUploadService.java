@@ -6,7 +6,7 @@
  * Information and shall use it only in accordance with the terms of the
  * license agreement you entered into with Fundacion Jala
  */
-package org.fundacionjala.converter.model.service;
+package org.fundacionjala.converter.controller.service;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
