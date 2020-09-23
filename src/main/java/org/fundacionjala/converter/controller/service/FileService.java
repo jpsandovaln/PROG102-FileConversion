@@ -21,8 +21,8 @@ import org.springframework.dao.IncorrectResultSizeDataAccessException;
 import org.springframework.stereotype.Service;
 
 /**
- * @author Laura Montaño
- * @version 0.1
+ * @author Laura Montaño, Mirko Romay
+ * @version 0.3
  */
 @Service
 public class FileService {
@@ -75,6 +75,7 @@ public class FileService {
         if (file.getMd5() != null && file.getPath() != null) {
             fileTemp.setPath(file.getPath());
             fileTemp.setMd5(file.getMd5());
+            fileTemp.setUser(file.getUser());
             fileRepository.save(fileTemp);
         }
     } catch (NullPointerException e) {
