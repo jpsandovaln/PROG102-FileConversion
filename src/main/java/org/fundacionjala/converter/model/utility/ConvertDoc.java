@@ -1,4 +1,4 @@
-package org.fundacionjala.converter.model.command;
+package org.fundacionjala.converter.model.utility;
 /**
  * Copyright (c) 2020 Fundacion Jala.
  *
@@ -22,14 +22,17 @@ import java.io.IOException;
  * @version 1.0
  */
 public class ConvertDoc {
+    public static final String DOCX_EXTENSION = ".docx";
+    public static final String PDF_EXTENSION = ".pdf";
+
     /**
-     * crate a document word
+     * Creates a document word
      * @param docName the name of the doc
      * @param content the content that will have the word
      */
     public String createDocumentWord(final String docName, final String content) {
         FileOutputStream out = null;
-        String pathCreated = docName + ".docx";
+        String pathCreated = docName + DOCX_EXTENSION;
         try {
             XWPFDocument doc = new XWPFDocument();
             out = new FileOutputStream(pathCreated);
@@ -50,13 +53,13 @@ public class ConvertDoc {
         return pathCreated;
     }
     /**
-     * Create a document pdf
+     * Creates a document pdf
      * @param docName the path and the name that it will have
      * @param content the content of the document
      */
     public String createDocumentPdf(final String docName, final String content) {
         Document doc = null;
-        String pathCreated = docName + ".pdf";
+        String pathCreated = docName + PDF_EXTENSION;
         try {
             doc = new Document(PageSize.A4);
             PdfWriter.getInstance(doc, new FileOutputStream(pathCreated));
