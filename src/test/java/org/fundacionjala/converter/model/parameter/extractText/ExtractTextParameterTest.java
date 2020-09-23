@@ -1,5 +1,11 @@
 package org.fundacionjala.converter.model.parameter.extractText;
 
+import org.fundacionjala.converter.model.command.extractText.DocType;
+import org.fundacionjala.converter.model.parameter.extractText.ExtractTextParameter;
+import org.junit.Test;
+
+import java.io.IOException;
+
 import static org.junit.Assert.assertEquals;
 
 public class ExtractTextParameterTest {
@@ -49,5 +55,21 @@ public class ExtractTextParameterTest {
         listCommands = eTextModelSp.createCommand(eTextParameter);
         String actual = listCommands.get(0).get(0) + " " + listCommands.get(0).get(1) + " " + listCommands.get(0).get(2) + " " + listCommands.get(0).get(3);
         assertEquals(expected, actual);
+    }
+    @Test
+    public void setLanguage() {
+        try {
+            ExtractTextParameter parameter = new ExtractTextParameter();
+            parameter.setInputFile("storage/inputFiles/imagen6.jpg");
+            parameter.setLanguage("spa");
+            parameter.setType(DocType.PDF);
+        } catch (ExtractTextParameterException | IOException e) {
+
+        }
+    }
+    @Test(expected = ExtractTextParameterException.class)
+    public void setNullIntoLanguage() throws ExtractTextParameterException{
+        ExtractTextParameter parameter = new ExtractTextParameter();
+        parameter.setLanguage("sp");
     }*/
 }
