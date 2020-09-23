@@ -14,7 +14,7 @@ import java.util.List;
  */
 public class AudioModel implements ICommand {
 
-    private final String
+    private static final String
             CODEC = "-codec:a",
             BITRATE = "-b:a",
             CHANNEL = "-ac",
@@ -87,8 +87,8 @@ public class AudioModel implements ICommand {
         return convert;
     }
 
-    private void addCommands(final List<String> list,final String condition,final String command) {
-        if(condition != null) {
+    private void addCommands(final List<String> list, final String condition, final String command) {
+        if (condition != null) {
             list.add(command);
             list.add(condition);
         }
