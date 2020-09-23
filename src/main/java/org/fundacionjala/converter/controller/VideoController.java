@@ -12,12 +12,8 @@ import org.fundacionjala.converter.controller.request.RequestVideoParameter;
 import org.fundacionjala.converter.executor.Executor;
 import org.fundacionjala.converter.model.ChecksumMD5;
 import org.fundacionjala.converter.model.command.VideoModel;
-<<<<<<< HEAD
-import org.fundacionjala.converter.model.entity.File;
 import org.fundacionjala.converter.model.parameter.ModelParameter;
-=======
 import org.fundacionjala.converter.database.entity.File;
->>>>>>> dev
 import org.fundacionjala.converter.model.parameter.multimedia.VideoParameter;
 import org.fundacionjala.converter.controller.service.FileService;
 import org.fundacionjala.converter.controller.service.FileUploadService;
