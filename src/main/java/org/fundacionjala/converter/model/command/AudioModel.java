@@ -56,43 +56,24 @@ public class AudioModel implements ICommand {
         convert.add("-i");
         convert.add("\"" + modelParameter.getInputFile() + "\"");
         AudioParameter param = (AudioParameter) modelParameter;
-        addCommands(convert, param.getCodec(), CODEC);
-        addCommands(convert, param.getBitRate(), BITRATE);
-        addCommands(convert, param.getChannel(), CHANNEL);
-        addCommands(convert, param.getSampleRate(), SAMPLE_RATE);
-        addCommands(convert, param.getVolume(), VOLUME);
-       /* if (param.getCodec() != null) {
-            convert.add(CODEC);
-            convert.add(param.getCodec());
-        }
-        if (param.getBitRate() != null) {
-            convert.add(BITRATE);
-            convert.add(param.getBitRate());
-        }
-        if (param.getChannel() != null) {
-            convert.add(CHANNEL);
-            convert.add(param.getChannel());
-        }
-        if (param.getSampleRate() != null) {
-            convert.add(SAMPLE_RATE);
-            convert.add(param.getSampleRate());
-        }
-        if (param.getVolume() != null) {
-            convert.add(VOLUME);
-            convert.add(param.getVolume());
-        }*/
+        addToList(convert, param.getCodec(), CODEC);
+        addToList(convert, param.getBitRate(), BITRATE);
+        addToList(convert, param.getChannel(), CHANNEL);
+        addToList(convert, param.getSampleRate(), SAMPLE_RATE);
+        addToList(convert, param.getVolume(), VOLUME);
         String nameFile = ((AudioParameter) modelParameter).getName();
         String formatFile = ((AudioParameter) modelParameter).getFormat();
         convert.add("\"" + modelParameter.getOutputFile() + nameFile + formatFile + "\"");
         return convert;
     }
 
-    private void addCommands(final List<String> list, final String condition, final String command) {
+    private void addToList(final List<String> list, final String condition, final String command) {
         if (condition != null) {
             list.add(command);
             list.add(condition);
         }
     }
+
     private List<String> cut(final List<String> cut, final ModelParameter modelParameter) {
         ConfigPath configPath = new ConfigPath();
         File file = new File(configPath.getVideoAudioTool());
@@ -102,14 +83,8 @@ public class AudioModel implements ICommand {
         cut.add("-i");
         cut.add("\"" + modelParameter.getInputFile() + "\"");
         AudioParameter param = (AudioParameter) modelParameter;
-        if (param.getStart() != null) {
-            cut.add(START);
-            cut.add(param.getStart());
-        }
-        if (param.getDuration() != null) {
-            cut.add(DURATION);
-            cut.add(param.getDuration());
-        }
+        addToList(cut, param.getStart(), START);
+        addToList(cut, param.getDuration(), DURATION);
         String nameFile = param.getName();
         String formatFile = param.getFormat();
         cut.add("\"" + modelParameter.getOutputFile() + nameFile + "cut" + formatFile + "\"");
