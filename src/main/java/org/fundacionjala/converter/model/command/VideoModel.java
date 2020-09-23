@@ -50,13 +50,12 @@ public class VideoModel implements ICommand {
         final ConfigPath cPath = new ConfigPath();
         listParameters = new ArrayList<String>();
         listParameters.add(cPath.getVideoAudioTool());
-        //listParameters.add(VideoParameter.INPUT_COMMAND);
+        listParameters.add(VideoParameter.INPUT_COMMAND);
+        listParameters.add(videoParameter.getInputFile());
         listParameters.add(VideoParameter.VCODEC_COMMAND);
         listParameters.add(videoParameter.getVideoCodec());
         listParameters.add(VideoParameter.ACODEC_COMMAND);
         listParameters.add(videoParameter.getAudioCodec());
-        listParameters.add(VideoParameter.INPUT_COMMAND);
-        listParameters.add(videoParameter.getInputFile());
         listParameters.add(videoParameter.getOutputFile() + NAME_OUTPUT_MP4);
         return listParameters;
     }
@@ -71,13 +70,12 @@ public class VideoModel implements ICommand {
         listThumbnailParameters = new ArrayList<>();
         ConfigPath cPath = new ConfigPath();
         listThumbnailParameters.add(cPath.getVideoAudioTool());
-        //listParameters.add(VideoParameter.INPUT_COMMAND);
+        listThumbnailParameters.add(VideoParameter.INPUT_COMMAND);
+        listThumbnailParameters.add(videoParameter.getInputFile());
         listThumbnailParameters.add(VideoParameter.START);
         listThumbnailParameters.add(VideoParameter.START_TIME);
         listThumbnailParameters.add(VideoParameter.TIME);
         listThumbnailParameters.add(VideoParameter.DURATION);
-        listThumbnailParameters.add(VideoParameter.INPUT_COMMAND);
-        listThumbnailParameters.add(videoParameter.getInputFile());
         listThumbnailParameters.add(VideoParameter.VF);
         listThumbnailParameters.add(VideoParameter.PALETTE);
         listThumbnailParameters.add(VideoParameter.LOOP);
@@ -87,10 +85,10 @@ public class VideoModel implements ICommand {
     }
 
     /**
-     * Extracts Metadata
+     * Creates a list of metadata Parameters in json format and detail v
      *
      * @param videoParameter - the reference to Video Parameter
-     * @return List<List<String>> - list of commands
+     * @return List - list of commands
      * @throws IOException
      * @throws NoSuchAlgorithmException
      * @throws ExecutionException
@@ -100,24 +98,32 @@ public class VideoModel implements ICommand {
             throws NoSuchAlgorithmException, IOException, InterruptedException, ExecutionException {
         listMetadataParameters = new ArrayList<>();
         Executor executor = new Executor();
+        ChecksumMD5 checksumMD5 = new ChecksumMD5();
         List<String> outputFiles;
         outputFiles = executor.executeCommandsList(this.list);
-        ChecksumMD5 checksumMD5 = new ChecksumMD5();
-        String outputFile = "storage/convertedFiles/metadata/meta.txt";
+        String inputFileMetadata = "storage//convertedFiles//";
+        String outputFile = "meta";
         String checksum = "";
-        String format = "t";    //txt
+        String format = "j";    //json
         String detail = "v";
+        int name = 0;
         for (String path : outputFiles) {
             checksum = checksumMD5.getMD5(path);
-            listMetadataParameters.add(new MetadataParameter(path, format, detail, outputFile, checksum));
+            listMetadataParameters.add(new MetadataParameter(inputFileMetadata + getNameFile(path, videoParameter), format, detail, outputFile + name + "", checksum));
+            name++;
         }
 
         return listMetadataParameters;
     }
-    private List<List<String>> getListMetadataCommands(final List<MetadataParameter> listMetadataParameters, final MetadataModel metadataModel) {
+    /**
+     * Creates a list of commands for the parameters given
+     * @param listMetadataParameters - the reference to the List of metadatas parameters
+     * @return List - list of commands
+     */
+    private List<List<String>> getListMetadataCommands(final List<MetadataParameter> listMetadataParameters) {
         listMetadataCommands = new ArrayList<>();
         for (MetadataParameter metadataParameter : listMetadataParameters) {
-            listMetadataCommands.addAll(metadataModel.createCommand(metadataParameter));
+            listMetadataCommands.addAll(new MetadataModel().createCommand(metadataParameter));
         }
         return listMetadataCommands;
     }
@@ -127,17 +133,18 @@ public class VideoModel implements ICommand {
      * @param videoParameter - the reference to Video Parameter
      * @return String - name of converted file
      */
-    /*private String getNameFile(VideoParameter videoParameter){
+    private String getNameFile(final String path, final VideoParameter videoParameter) {
         String nameFile;
-        String extension = videoParameter.getExtension();
+        String[] parts = path.split("\\.");
+        String extension = parts[1];
         switch (extension) {
             case MP4:
                 nameFile = NAME_OUTPUT_MP4;
                 break;
-            case GIF:
-                nameFile = NAME_OUTPUT_GIF;
-                break;
             default:
+                if (!videoParameter.isExtractThumbnail()) {
+                    nameFile = NAME_OUTPUT_GIF;
+                }
                 nameFile = NAME_OUTPUT_THUMBNAIL;
                 break;
         }
@@ -179,10 +186,9 @@ public class VideoModel implements ICommand {
             list.add(extractThumbnail(videoParameter));
         }
         if (videoParameter.isExtractMetadata()) {
-            MetadataModel metadataModel = new MetadataModel();
             extractMetadata(videoParameter);
             list.clear();
-            list.addAll(getListMetadataCommands(this.listMetadataParameters, metadataModel));
+            list.addAll(getListMetadataCommands(this.listMetadataParameters));
         }
         return list;
     }
