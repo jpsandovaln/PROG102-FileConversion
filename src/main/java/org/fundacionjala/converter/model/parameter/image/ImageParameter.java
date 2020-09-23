@@ -10,6 +10,87 @@ public class ImageParameter extends ModelParameter {
   private boolean isGrayScale;
   private boolean isThumbnail;
   private boolean isRezise;
+  /**
+   *
+   * @return
+   */
+  public String getPositionXAndPositionY() {
+    return positionXAndPositionY;
+  }
+
+  /**
+   *
+   * @param positionXAndPositionY
+   */
+  public void setPositionXAndPositionY(final String positionXAndPositionY) {
+    this.positionXAndPositionY = positionXAndPositionY;
+  }
+
+  /**
+   *
+   * @return
+   */
+  public boolean isGrayScale() {
+    return isGrayScale;
+  }
+
+  /**
+   *
+   * @param grayScale
+   */
+  public void setGrayScale(final boolean grayScale) {
+    isGrayScale = grayScale;
+  }
+
+  /**
+   *
+   * @return
+   */
+  public boolean isThumbnail() {
+    return isThumbnail;
+  }
+
+  /**
+   *
+   * @param thumbnail
+   */
+  public void setThumbnail(final boolean thumbnail) {
+    isThumbnail = thumbnail;
+  }
+
+  /**
+   *
+   * @return
+   */
+  public boolean isRezise() {
+    return isRezise;
+  }
+
+  /**
+   *
+   * @param rezise
+   */
+  public void setRezise(final boolean rezise) {
+    isRezise = rezise;
+  }
+
+  /**
+   *
+   * @return
+   */
+  public String getName() {
+    return name;
+  }
+
+  /**
+   *
+   * @param name
+   */
+  public void setName(final String name) {
+    this.name = name;
+  }
+
+  private String name;
 
   /**
    * getIsGray()

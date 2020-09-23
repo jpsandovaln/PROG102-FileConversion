@@ -6,6 +6,30 @@ public abstract class ModelParameter {
   private String inputFile;
   private String outputFile;
   private String md5;
+  private String format;
+
+  public ModelParameter(final String inputFile, final String outputFile, final String md5, final String format) {
+    this.inputFile = inputFile;
+    this.outputFile = outputFile;
+    this.md5 = md5;
+    this.format = format;
+  }
+
+  /**
+   *
+   * @return
+   */
+  public String getFormat() {
+    return format;
+  }
+
+  /**
+   *
+   * @param format
+   */
+  public void setFormat(final String format) {
+    this.format = format;
+  }
 
   public ModelParameter() {
   }
