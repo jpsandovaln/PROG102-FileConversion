@@ -15,8 +15,12 @@ public class ExtractTextParameter extends ModelParameter {
     private String language;
     private String fileName;
     private DocType type;
+    private ExtractTextParameterValidator validator;
     public static final String LANG_COMMAND = "-l";
 
+    public ExtractTextParameter() {
+        validator = new ExtractTextParameterValidator();
+    }
     /**
      * Returns name of generated file
      * @return fileName
@@ -27,7 +31,7 @@ public class ExtractTextParameter extends ModelParameter {
 
     /**
      * Sets fileName
-     * @param fileName
+     * @param fileName the name of file
      */
     public void setFileName(final String fileName) {
         this.fileName = fileName;
@@ -44,10 +48,10 @@ public class ExtractTextParameter extends ModelParameter {
      * @param language the language to set
      */
     public void setLanguage(final String language) throws ExtractTextParameterException {
-        if (isValid(language)) {
+        if (validator.isValidLanguage(language)) {
             this.language = language;
         } else {
-            throw new ExtractTextParameterException("Language not allowed");
+            throw new ExtractTextParameterException("Invalid Language");
         }
     }
 
@@ -61,12 +65,13 @@ public class ExtractTextParameter extends ModelParameter {
     /**
      * @param type the type to set
      */
-    public void setType(final DocType type) {
-        this.type = type;
-    }
+    public void setType(final DocType type) throws ExtractTextParameterException {
+        if (validator.isValidType(type)) {
+            this.type = type;
+        } else {
+            throw new ExtractTextParameterException("Invalid Type");
+        }
 
-    private boolean isValid(final String language) {
-        return true;
     }
 
     /**

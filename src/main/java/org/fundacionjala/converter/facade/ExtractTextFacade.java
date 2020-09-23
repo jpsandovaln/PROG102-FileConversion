@@ -45,7 +45,7 @@ public class ExtractTextFacade {
     }
 
     /**
-     * Create a document
+     * Creates a document
      * @param parameter - the parameter to execute the conversion using tesseract
      */
     public List<String> extractText(final ExtractTextParameter parameter) throws Exception {
