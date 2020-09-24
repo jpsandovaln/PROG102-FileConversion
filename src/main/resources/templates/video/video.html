@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+  <html xmlns:th="http://www.thymeLeaf.org" lang="en">
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+        <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0"/>
+      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+      <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+      <link th:href="@{/css/materialize/materialize.css}" href="../static/css/materialize/materialize.css" type="text/css" rel="stylesheet" media="screen,projection"/>
+      <link th:href="@{/css/materialize/style.css}" href="../static/css/materialize/style.css" type="text/css" rel="stylesheet" media="screen,projection"/>
+    </head>
+
+    <!--<body th:background="@{/images/fondo2.jpg}" background="../../static/images/fondo2.jpg">-->
+    <body>
+    <header>
+        <nav th:replace="index :: nav" replace="index :: nav"></nav>
+    </header>
+
+          <!--formularios-->
+        <div class="section container ">
+            <div class="row ">
+                <form class="col s12 " id="form-video" method="post" th:action="@{/convertVideo}">
+                    <div  class="row card-panel z-depth-5">
+                        <div class="file-field input-field col s12 m6">
+                            <div class="btn teal accent-3">
+                                <i class="material-icons right">folder_open</i>
+                              <span> File</span>
+                              <input type="file" id="file" for="file">
+                            </div>
+                            <div class="file-path-wrapper">
+                              <input class="file-path validate" type="text">
+                            </div>
+                          </div>
+                        <div class="input-field col s12 m6">
+                            <input type="text" id="name" name="name" class="validate" required>
+                            <label for="name">Name:</label>
+                        </div>
+                        <div class="input-field col s12 m6">
+                          <select id="format" name="format" class="browser-default">
+                            <option value="" disabled selected>Select format or extension</option>
+                            <option value=".mp4">MP4</option>
+                            <option value=".gif">GIF</option>
+                            <option value=".mp3">MP3</option>
+                          </select>
+                        </div>
+                         <div class="input-field col s12 m6">
+                            <input type="text" id="md5" name="md5" class="validate" >
+                            <label for="md5">MD5:</label>
+                         </div>
+                         <div class="input-field col s12 m6">
+                            <input type="text" id="videoCodec" name="videoCodec" class="validate" required>
+                            <label for="videoCodec">video codec:</label>
+                        </div>
+                        <div class="input-field col s12 m6">
+                            <input type="text" id="audioCodec" name="audioCodec" class="validate" required>
+                            <label for="audioCodec">audio codec:</label>
+                        </div>
+                        <div class="input-field col s12 m12">
+                            <input type="text" id="frames" name="frames" class="validate" required>
+                            <label for="frames">Frame rate:</label>
+                        </div>
+
+                         <div class="input-field col s12 m4">
+                            <label for="thumbnail">
+                              <input id="thumbnail" name="thumbnail" type="checkbox" />
+                              <span>thumbnail</span>
+                            </label>
+                        </div>
+                        <div class="input-field col s12 m4">
+                            <input type="text" id="start" name="start" class="validate">
+                            <label for="start">start:</label>
+                        </div>
+                        <div class="input-field col s12 m4">
+                            <input type="text" id="duration" name="duration" class="validate">
+                            <label for="duration">duration:</label>
+                        </div>                
+                        <div class="input-field col s3">
+                            <label>
+                                <input id="isMetadata" name="isMetadata" type="checkbox"/>
+                                <span>Metadata</span>
+                            </label>
+                        </div>
+                        
+                        <div class="center input-field col s12">
+                            <button class="btn" type="submit">
+                                <i class="material-icons right">track_changes</i>Apply
+                            </button>
+                        </div>
+                    </div>
+                    <div class="col s3 right">
+                        <button class="btn waves-effect waves-light">
+                            <i class="material-icons right">file_download</i>
+                            download file
+                        </button>
+                    </div>
+                </form>
+            </div>
+
+        </div>
+     <main th:replace = "index :: main"></main>
+     <footer th:replace = "index :: footer"></footer>
+      <!-- Compiled and minified JavaScript -->
+    <script src="https://kit.fontawesome.com/35db202371.js" crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+    <script th:src="@{/js/materialize/materialize.js}" src="../static/js/materialize/materialize.js"></script>
+    <script th:src="@{/js/materialize/init.js}" src="../static/js/materialize/init.js"></script>
+    </body>
+  </html>
