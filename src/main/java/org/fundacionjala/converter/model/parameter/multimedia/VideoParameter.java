@@ -1,13 +1,7 @@
 package org.fundacionjala.converter.model.parameter.multimedia;
 
-<<<<<<< HEAD
 public class VideoParameter extends MultimediaParameter {
-=======
-import org.fundacionjala.converter.model.parameter.ModelParameter;
 
-public class VideoParameter extends ModelParameter {
-    private String extension;
->>>>>>> dev
     public static final String VCODEC_COMMAND = "-vcodec";
     private String videoCodec;
     public static final String ACODEC_COMMAND = "-acodec";
@@ -119,7 +113,7 @@ public class VideoParameter extends ModelParameter {
     /**
      * @param fileName the fileName to set
      */
-    public void setFileName(String fileName) {
+    public void setFileName(final String fileName) {
         this.fileName = fileName;
     }
 
@@ -133,7 +127,7 @@ public class VideoParameter extends ModelParameter {
     /**
      * @param extension the extension to set
      */
-    public void setExtension(String extension) {
+    public void setExtension(final String extension) {
         this.extension = extension;
     }
 }
