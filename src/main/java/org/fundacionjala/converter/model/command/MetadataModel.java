@@ -1,14 +1,18 @@
 package org.fundacionjala.converter.model.command;
 
+import org.fundacionjala.converter.executor.Executor;
 import org.fundacionjala.converter.model.configPath.ConfigPath;
 import org.fundacionjala.converter.model.parameter.ModelParameter;
 import org.fundacionjala.converter.model.parameter.metadata.MetadataParameter;
-import java.io.File;
+
+import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
+import java.util.concurrent.ExecutionException;
 
 public class MetadataModel implements ICommand {
-    static final String REDIRECTION = ">";
+    //static final String REDIRECTION = ">";
 
     /**
      *
@@ -18,20 +22,18 @@ public class MetadataModel implements ICommand {
     @Override
     public List<List<String>> createCommand(final ModelParameter modelParameter) {
         MetadataParameter metadataParameter = (MetadataParameter) modelParameter;
-        ConfigPath configPath = new ConfigPath("");
+        ConfigPath configPath = new ConfigPath();
         List<String> parameterList = new ArrayList<>();
-        String projectPath = System.getProperty("user.dir");
-        /*parameterList.add("cmd"); //You have to uncomment these lines for execute command in WINDOWS
-        parameterList.add("/c");*/
-        parameterList.add(new File(configPath.getMetaDataExtractorTool()).getAbsolutePath());
-        if (!" ".equals(metadataParameter.getFormat())) {
-            parameterList.add("-" + metadataParameter.getFormat());
-        }
-        parameterList.add("-" + metadataParameter.getDetail());
-        parameterList.add(projectPath + "\\" + metadataParameter.getInputFile());
-        parameterList.add(REDIRECTION);
-        parameterList.add(new File(configPath.getConvertedFilesPath()).getAbsolutePath() + "\\" + metadataParameter.getOutputFile() + formatSuffix(metadataParameter.getFormat()));
         List<List<String>> finalList = new ArrayList<>();
+        System.out.println(configPath.getMetaDataExtractorTool());
+        parameterList.add("Metadata");
+        parameterList.add(configPath.getMetaDataExtractorTool());
+        parameterList.add("-" + metadataParameter.getFormat());
+        if (!metadataParameter.getDetail().equals(" ") && !metadataParameter.getDetail().equals("d")) {
+            parameterList.add("-" + metadataParameter.getDetail());
+        }
+        parameterList.add(metadataParameter.getInputFile());
+        parameterList.add(metadataParameter.getOutputFile() +"_"+ new Date().getTime() + formatSuffix(metadataParameter.getFormat()));
         finalList.add(parameterList);
         return finalList;
     }
@@ -49,5 +51,13 @@ public class MetadataModel implements ICommand {
             default:
                 return ".XMP";
         }
+    }
+
+    public static void main(String[] args) throws InterruptedException, IOException, ExecutionException {
+        MetadataParameter mp = new MetadataParameter("storage\\inputFiles\\aud.mp3", "t", "d", "storage\\convertedFiles\\meta", "abcabcabc");
+        Executor e = new Executor();
+        MetadataModel mm = new MetadataModel();
+        String result = e.executeCommandsList(mm.createCommand(mp)).toString();
+        System.out.println(result);
     }
 }
