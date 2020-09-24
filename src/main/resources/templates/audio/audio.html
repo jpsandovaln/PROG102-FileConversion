@@ -1,18 +1,8 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeLeaf.org" lang="en">
-<head>
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
-    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0"/>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
-    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-    <link th:href="@{/css/materialize/materialize.css}" href="../static/css/materialize/materialize.css" type="text/css" rel="stylesheet" media="screen,projection"/>
-    <link th:href="@{/css/materialize/style.css}" href="../static/css/materialize/style.css" type="text/css" rel="stylesheet" media="screen,projection"/>
-</head>
-
+<head th:replace="index::head"></head>
 <body>
-<header>
-    <nav th:replace="index :: nav" replace="index :: nav"></nav>
-</header>
+<header><nav th:replace="index :: nav" replace="index :: nav"></nav></header>
 <!--formularios-->
 <div class="section container">
     <div class="row">
@@ -90,10 +80,12 @@
             </div>
         </form>
         <div class="col s3 right">
-            <button class="btn waves-effect waves-light">
-                <i class="material-icons right">file_download</i>
-                download file
-            </button>
+            <form method="get" th:action="@{/download}">
+                <input type="text" name="path" id="path" value="" style="display:none">
+                <button type="submit" id="submit" class="btn waves-effect waves-light" disabled>
+                    <i class="material-icons right">file_download</i>
+                    Download File</button>
+            </form>
         </div>
     </div>
 </div>
