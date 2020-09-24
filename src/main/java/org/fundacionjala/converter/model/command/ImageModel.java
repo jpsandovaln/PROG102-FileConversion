@@ -10,7 +10,13 @@ import java.util.List;
 public class ImageModel implements ICommand {
 
     private ConfigPath config;
-
+    private static final String RESIZE = "-resize";
+    private static final String X = "x";
+    private static final String SIGNOADMIRACION = "!";
+    private static final String SIZETHUMBNAIL = "128X128";
+    private static final String CROP = "-crop";
+    private static final String COLORSPACE = "-colorspace";
+    private static final String GRAY = "gray";
     public ImageModel() {
         config = new ConfigPath();
     }
@@ -19,8 +25,8 @@ public class ImageModel implements ICommand {
         List<String> command = new ArrayList<String>();
         command.add(config.getImageTool());
         command.add(imageParameter.getInputFile());
-        command.add("-resize " + imageParameter.getHeight() + "x" + imageParameter.getWidth());
-        command.add("!");
+        command.add(RESIZE + imageParameter.getHeight() + X + imageParameter.getWidth());
+        command.add(SIGNOADMIRACION);
         name(imageParameter);
         command.add(imageParameter.getOutputFile());
         return command;
@@ -30,10 +36,10 @@ public class ImageModel implements ICommand {
         List<String> command = new ArrayList<String>();
         command.add(config.getImageTool());
         command.add(imageParameter.getInputFile());
-        command.add("-resize");
-        command.add("128x128");
+        command.add(RESIZE);
+        command.add(SIZETHUMBNAIL);
         name(imageParameter);
-        command.add(imageParameter.getOutputFile());
+        command.add(imageParameter.getOutputFile() + "t");
         return command;
     }
 
@@ -42,7 +48,7 @@ public class ImageModel implements ICommand {
         List<String> command = new ArrayList<String>();
         command.add(config.getImageTool());
         command.add(imageParameter.getInputFile());
-        command.add("-crop");
+        command.add(CROP);
         command.add(imageParameter.getCrop());
         name(imageParameter);
         command.add(imageParameter.getOutputFile());
@@ -53,8 +59,8 @@ public class ImageModel implements ICommand {
         List<String> command = new ArrayList<String>();
         command.add(config.getImageTool());
         command.add(imageParameter.getInputFile());
-        command.add("-colorspace");
-        command.add("gray");
+        command.add(COLORSPACE);
+        command.add(GRAY);
         name(imageParameter);
         command.add(imageParameter.getOutputFile());
         return command;
