@@ -123,7 +123,7 @@ public class VideoModel implements ICommand<VideoParameter> {
             String checksum = new ChecksumMD5().getMD5(path);
             String[] parts = file.getName().split(DOT_SEPARATOR);
             String outputFile = parts[0] + parts[1] + DASH + META;
-            listMetadataParameters.add(new MetadataParameter(INPUT_PATH_METADATA + file.getName(), FORMAT, DETAIL, outputFile, checksum));
+            listMetadataParameters.add(new MetadataParameter(INPUT_PATH_METADATA + file.getName(), FORMAT, DETAIL, INPUT_PATH_METADATA + outputFile, checksum));
         }
         return listMetadataParameters;
     }
@@ -191,7 +191,7 @@ public class VideoModel implements ICommand<VideoParameter> {
      * Changes the outputFile
      * @param videoParameter - the reference to the videoParameter given
      */
-    private void changeOutputFile(VideoParameter videoParameter) {
+    private void changeOutputFile(final VideoParameter videoParameter) {
         String path = videoParameter.getOutputFile();
         File file = new File(path);
         File pathFileConverted = file.getParentFile();
