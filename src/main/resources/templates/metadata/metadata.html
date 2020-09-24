@@ -6,7 +6,7 @@
 <!--formularios-->
 <div class="section container">
     <div class="row">
-        <form action="" class="col s12" id="form-metadata" method="post" th:action="@{/extractMetadata}" enctype="multipart/form-data">
+        <form action="" class="col s12" id="form-MT" method="post" th:action="@{/extractMetadata}" enctype="multipart/form-data">
             <div  class="row card-panel z-depth-5">
                 <div class="file-field input-field col s12 m6">
                     <div class="btn teal accent-3">
@@ -19,8 +19,8 @@
                     </div>
                 </div>
                 <div class="input-field col s12 m6">
-                    <input type="text" id="name" name="name" class="validate" required>
-                    <label for="name">Name:</label>
+                    <input type="text" id="fileName" name="fileName" class="validate" required>
+                    <label for="fileName">Name:</label>
                 </div>
                 <div class="input-field col s12 m6">
                     <select name="format" id="format" class="browser-default">
@@ -34,9 +34,9 @@
                 <div class="input-field col s12 m6">
                     <select name="detail" id="detail" class="browser-default">
                         <option value="" disabled selected>Select a detail</option>
-                        <option value="v">default</option>
-                        <option value="c">verboso</option>
-                        <option value="d">common</option>
+                        <option value="d">default</option>
+                        <option value="v">verboso</option>
+                        <option value="common">common</option>
                     </select>
                 </div>
                 <div class="input-field col s12 m6">
@@ -63,6 +63,7 @@
 </div>
 <main th:replace = "index :: main"></main>
 <footer th:replace = "index :: footer"></footer>
+<script th:src="@{/js/metadata/metadata.js}"></script>
 <!-- Compiled and minified JavaScript -->
 <script src="https://kit.fontawesome.com/35db202371.js" crossorigin="anonymous"></script>
 <script src="https://code.jquery.com/jquery-2.1.1.min.js"></script>

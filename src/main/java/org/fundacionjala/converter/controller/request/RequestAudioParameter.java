@@ -18,12 +18,28 @@ public class RequestAudioParameter extends RequestParameter {
     private String start;
     private String duration;
     private String volume;
-    private boolean isMetadata = false;
+    private boolean isMetadata;
     private boolean isCut;
     private String inputFile;
     private String outputFile;
     private String md5;
+    private boolean extractThumbnail;
 
+    /**
+     *
+     * @return
+     */
+    public boolean getExtractThumbnail() {
+        return extractThumbnail;
+    }
+
+    /**
+     *
+     * @param extractThumbnail
+     */
+    public void setExtractThumbnail(final boolean extractThumbnail) {
+        this.extractThumbnail = extractThumbnail;
+    }
     /**
      *
      * @return
@@ -133,7 +149,7 @@ public class RequestAudioParameter extends RequestParameter {
      * @return
      */
     public boolean isCut() {
-        return isCut;
+        return this.isCut;
     }
 
     /**
@@ -141,7 +157,7 @@ public class RequestAudioParameter extends RequestParameter {
      * @param cut
      */
     public void setCut(final boolean cut) {
-        isCut = cut;
+        this.isCut = cut;
     }
 
     /**
