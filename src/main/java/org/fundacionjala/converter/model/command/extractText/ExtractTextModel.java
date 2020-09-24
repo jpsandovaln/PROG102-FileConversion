@@ -11,6 +11,7 @@ package org.fundacionjala.converter.model.command.extractText;
 import java.util.ArrayList;
 import java.util.List;
 import org.fundacionjala.converter.model.command.ICommand;
+import org.fundacionjala.converter.model.commons.validation.FormatValidation;
 import org.fundacionjala.converter.model.configPath.ConfigPath;
 import org.fundacionjala.converter.model.parameter.extractText.ExtractTextParameter;
 
@@ -19,8 +20,8 @@ import org.fundacionjala.converter.model.parameter.extractText.ExtractTextParame
  * @version 1.0
  */
 public class ExtractTextModel implements ICommand<ExtractTextParameter> {
-    public static final String TXT_EXTENSION = ".txt";
     public static final String LANGUAGE_SPA = "spa";
+    public static final String LANGUAGE_EN = "en";
 
     public ExtractTextModel() {
     }
@@ -45,12 +46,13 @@ public class ExtractTextModel implements ICommand<ExtractTextParameter> {
         ConfigPath cPath = new ConfigPath();
         List<String> command = new ArrayList<String>();
         command.add(cPath.getExtractTextTool());
-        if (parameter.getLanguage().equals(LANGUAGE_SPA)) {
+        if (!parameter.getLanguage().equals(LANGUAGE_EN)) {
             command.add(parameter.LANG_COMMAND);
             command.add(parameter.getLanguage());
         }
         command.add(parameter.getInputFile());
-        command.add(parameter.getOutputFile() + parameter.getFileName());
+        //command.add(parameter.getOutputFile() + parameter.getFileName());
+        command.add(parameter.getOutputFile() + changeName(parameter.getOutputFile(), parameter.getFileName(), FormatValidation.FORMAT_TXT));
         return command;
     }
 }
