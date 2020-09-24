@@ -8,25 +8,14 @@
  */
 package org.fundacionjala.converter.controller.request;
 
-import org.springframework.web.multipart.MultipartFile;
-
 public class RequestImageParameter extends RequestParameter {
 
     private int height;
     private int width;
-    private String positionXAndPositionY;
+    private String positionX;
+    private String positionY;
     private boolean gray;
     private boolean thumbnail;
-
-    public RequestImageParameter(final MultipartFile file, final String format, final int height,
-                                 final int width, final String positionXAndPositionY, final boolean gray, final boolean thumbnail) {
-        super(file, format);
-        this.height = height;
-        this.width = width;
-        this.positionXAndPositionY = positionXAndPositionY;
-        this.gray = gray;
-        this.thumbnail = thumbnail;
-    }
 
     /**
      *
