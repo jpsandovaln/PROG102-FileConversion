@@ -12,33 +12,27 @@ public class Executor {
   private boolean debugOutput;
 
   public Executor() {
-    debugOutput = false;
+    debugOutput = true;
   }
 
   /**
-   * Executes the list of commands given
+   * This method execute the command.
+   *
    * @param commandsList list of the commands
    * @return list of the paths
    * @throws ExecutionException
    * @throws IOException
    * @throws InterruptedException
    */
-  public List<String> executeCommandsList(final List<List<String>> commandsList) throws InterruptedException, ExecutionException, IOException {
-    List<String> outputList = new ArrayList<>();
+  public List<String> executeCommandsList(final List<List<String>> commandsList)
+      throws InterruptedException, ExecutionException, IOException {
+    List<String> outputList = new ArrayList();
     for (List<String> command : commandsList) {
       outputList.add(execute(command));
     }
     return outputList;
   }
 
-  /**
-   * Executes the list of commands given
-   * @param command
-   * @return String - the reference to the path of converted file
-   * @throws ExecutionException
-   * @throws IOException
-   * @throws InterruptedException
-   */
   private String execute(final List<String> command) throws ExecutionException, IOException, InterruptedException {
     Process processDuration = new ProcessBuilder(command).redirectErrorStream(true).start();
     StringBuilder output = new StringBuilder();
@@ -47,6 +41,16 @@ public class Executor {
     while ((line = processOutputReader.readLine()) != null) {
       output.append(line + System.lineSeparator());
     }
+
+    if (debugOutput) {
+      System.out.println(".......MODE DEBUNG.......");
+      command.stream().forEach(s -> {
+        System.out.print(s + " ");
+      });
+      System.out.println(output.toString());
+      System.out.println(".......END MODE DEBUNG.......");
+    }
+
     processDuration.waitFor();
     return command.get(command.size() - 1);
   }

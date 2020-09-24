@@ -9,62 +9,70 @@
 package org.fundacionjala.converter.controller;
 
 import org.fundacionjala.converter.controller.request.RequestVideoParameter;
+import org.fundacionjala.converter.controller.response.ErrorResponse;
+import org.fundacionjala.converter.controller.response.OkResponse;
 import org.fundacionjala.converter.executor.Executor;
-import org.fundacionjala.converter.model.ChecksumMD5;
 import org.fundacionjala.converter.model.command.VideoModel;
 import org.fundacionjala.converter.database.entity.File;
 import org.fundacionjala.converter.model.parameter.multimedia.VideoParameter;
 import org.fundacionjala.converter.controller.service.FileService;
 import org.fundacionjala.converter.controller.service.FileUploadService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.io.IOException;
+import java.util.List;
+import java.util.concurrent.ExecutionException;
+
+import javax.servlet.http.HttpServletResponse;
+
 @RestController
 public class VideoController {
+    @Autowired
+    private FileService fileService;
+    @Value("${convertedFiles.path}")
+    private String output;
+    @Autowired
+    private FileUploadService fileUploadService;
 
- @Autowired
- private FileService fileService;
-  @Autowired
-  private FileUploadService fileUploadService;
+    /**
+     *
+     * @param requestVideoParameter
+     * @return
+     */
+    @RequestMapping(method = RequestMethod.POST, value = "convertVideo")
+    public ResponseEntity convertVideo(final RequestVideoParameter requestVideoParameter) {
+        try {
+            requestVideoParameter.validate();
+            String filePath = fileUploadService.saveInputFile(requestVideoParameter.getFile());
+            String md5 = requestVideoParameter.generateMD5(filePath);
+            if (fileService.getFileByMd5(md5) == null) {
+                fileService.saveFile(new File(filePath, md5));
+            }
 
-  /**
-   *
-   * @param requestVideoParameter
-   * @return
-   */
-  @RequestMapping(method = RequestMethod.POST, value = "convertVideo")
-  public String convertVideo(final RequestVideoParameter requestVideoParameter) throws Exception {
-    String result = "exist";
-    if (requestVideoParameter.getFile() == null || requestVideoParameter.getFile().isEmpty()) {
-        return "Select a file";
+            VideoParameter videoParameter = new VideoParameter();
+            videoParameter.setInputFile(filePath);
+            videoParameter.setFrames(requestVideoParameter.getFrames());
+            videoParameter.setExtension(requestVideoParameter.getExportFormat());
+            videoParameter.setAudioCodec(requestVideoParameter.getVideoCodec());
+            videoParameter.setVideoCodec(requestVideoParameter.getAudioCodec());
+            videoParameter.setExtractThumbnail(requestVideoParameter.getExtractThumbnail());
+            videoParameter.setOutputFile(output);
+            Executor executor = new Executor();
+            VideoModel video = new VideoModel();
+            List<String> result = executor.executeCommandsList(video.createCommand(videoParameter));
+            return ResponseEntity.ok().body(
+                    new OkResponse<Integer>(HttpServletResponse.SC_OK, result.toString()));
+        } catch (IOException | InterruptedException | ExecutionException e) {
+              return ResponseEntity.badRequest()
+                      .body(new ErrorResponse<Integer>(HttpServletResponse.SC_BAD_REQUEST, e.getMessage()));
+        } catch (Exception e) {
+              return ResponseEntity.badRequest().body(
+                      new ErrorResponse<String>(Integer.toString(HttpServletResponse.SC_BAD_REQUEST), e.getMessage()));
     }
-    ChecksumMD5 checksumMD5 = new ChecksumMD5();
-    String checksum = "";
-    String filePath = fileUploadService.saveInputFile(requestVideoParameter.getFile());
-    checksum = checksumMD5.getMD5(filePath);
-    if (fileService.getFileByMd5(checksum) == null) {
-        fileService.saveFile(new File(filePath, checksum));
-        result = "saved in data base";
-    }
-    try {
-    String outputFile = "storage/convertedFiles/";
-    VideoModel videoModel = new VideoModel();
-    VideoParameter videoParameter = new VideoParameter();
-        videoParameter.setOutputFile(outputFile);
-        videoParameter.setFrames(requestVideoParameter.getFrames());
-        videoParameter.setExtension(requestVideoParameter.getFormat());
-        videoParameter.setVideoCodec(requestVideoParameter.getVideoCodec());
-        videoParameter.setAudioCodec(requestVideoParameter.getAudioCodec());
-    if (requestVideoParameter.getExtractThumbnail() == 1) {
-        videoParameter.setExtractThumbnail(true);
-    }
-    Executor executor = new Executor();
-    executor.executeCommandsList(videoModel.createCommand(videoParameter));
-    } catch (Exception e) {
-      e.printStackTrace();
-    }
-    return result;
   }
 }
