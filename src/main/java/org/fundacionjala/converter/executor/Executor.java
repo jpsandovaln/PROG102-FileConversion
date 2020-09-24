@@ -1,6 +1,7 @@
 package org.fundacionjala.converter.executor;
 
 import java.io.BufferedReader;
+import java.io.File;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
@@ -28,7 +29,11 @@ public class Executor {
       throws InterruptedException, ExecutionException, IOException {
     List<String> outputList = new ArrayList();
     for (List<String> command : commandsList) {
-      outputList.add(execute(command));
+      if (command.indexOf("Metadata") == -1) {
+        outputList.add(execute(command));
+      } else {
+        outputList.add(executeMetadata(command));
+      }
     }
     return outputList;
   }
@@ -51,6 +56,21 @@ public class Executor {
       System.out.println(".......END MODE DEBUNG.......");
     }
 
+    processDuration.waitFor();
+    return command.get(command.size() - 1);
+  }
+
+  private String executeMetadata(List<String> command) throws ExecutionException, IOException, InterruptedException {
+    List<String> commandMetadata = new ArrayList<String>();
+    for (int i = 1; i < command.size() - 1 ; i++) {
+      commandMetadata.add(command.get(i));
+    }
+    System.out.println(commandMetadata);
+    Process processDuration = new ProcessBuilder(commandMetadata)
+            .redirectErrorStream(true)
+            .redirectOutput(new File(command.get(command.size() - 1))).start();
+    StringBuilder output = new StringBuilder();
+    BufferedReader processOutputReader = new BufferedReader(new InputStreamReader(processDuration.getInputStream()));
     processDuration.waitFor();
     return command.get(command.size() - 1);
   }
