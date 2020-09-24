@@ -21,10 +21,7 @@ public class RequestMetadataParameter extends RequestParameter {
     public void validate() throws Exception {
         super.validate();
         if (this.getFileName() == null || "".equals(this.getFileName())) {
-            throw new Exception("failed Channels Rate empty");
-        }
-        if (this.getDetail() == null || "".equals(this.getDetail())) {
-            throw new Exception("failed Channels Rate empty");
+            throw new Exception("File name error");
         }
     }
 
@@ -59,5 +56,4 @@ public class RequestMetadataParameter extends RequestParameter {
     public void setDetail(final String detail) {
         this.detail = detail;
     }
-
 }

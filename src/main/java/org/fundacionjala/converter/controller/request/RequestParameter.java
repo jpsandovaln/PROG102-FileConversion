@@ -74,7 +74,7 @@ public abstract class RequestParameter {
     public void validate() throws Exception {
 
         if (this.getExportFormat() == null || "".equals(this.getExportFormat())) {
-           System.out.println(this.getExportFormat() + "-----------------");
+            System.out.println(this.getExportFormat() + "-----------------");
             throw new Exception("failed format empty");
         }
 
