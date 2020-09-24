@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeLeaf.org" lang="en">
+<head th:replace="index::head"></head>
+<body>
+<header><nav th:replace="index :: nav" replace="index :: nav"></nav></header>
+<!--formularios-->
+<div class="section container">
+    <div class="row">
+        <form action="" class="col s12" id="form-img" method="post" th:action="@{/convertImage}" enctype="multipart/form-data">
+            <div  class="row card-panel z-depth-5">
+                <div class="file-field input-field col s12 m6">
+                    <div class="btn teal accent-3">
+                        <i class="material-icons right">folder_open</i>
+                        <span> File</span>
+                        <input class="file-path validate" type="text">
+                    </div>
+                    <div class="file-path-wrapper">
+                        <input  name="file" type="file">
+                    </div>
+                </div>
+                <div class="input-field col s12 m6">
+                    <input type="text" id="name" name="name" class="validate" required>
+                    <label for="name">Name:</label>
+                </div>
+                <div class="input-field col s12 m6">
+                    <select name="format" id="format" class="browser-default">
+                        <option value="" disabled selected>Select format or extension</option>
+                        <option value=".jpg">JPG</option>
+                        <option value=".png">PNG</option>
+                    </select>
+                </div>
+                <div class="input-field col s12 m6">
+                    <input type="text" id="md5" name="md5" class="validate" >
+                    <label for="md5">MD5:</label>
+                </div>
+
+                <div class="input-field col s12">
+                    <label for="reSize">
+                        <input id="reSize" name="reSize" type="checkbox" />
+                        <span>Re-size</span>
+                    </label>
+                </div>
+                <div class="input-field col s12 m3">
+                    <input type="text" id="positionX" name="positionX" class="validate">
+                    <label for="positionX">positionX:</label>
+                </div>
+                <div class="input-field col s12 m3">
+                    <input type="text" id="positionY" name="positionY" class="validate">
+                    <label for="positionY">positionY:</label>
+                </div>
+                <div class="input-field col s12 m3">
+                    <input type="text" id="height" name="height" class="validate">
+                    <label for="height">height:</label>
+                </div>
+                <div class="input-field col s12 m3">
+                    <input type="text" id="width" name="width" class="validate">
+                    <label for="width">width:</label>
+                </div>
+                <div class="col s12 container">
+                    <div class="input-field col s3">
+                        <label for="gray">
+                            <input id="gray" name="gray" type="checkbox"/>
+                            <span>Scale Gray</span>
+                        </label>
+                    </div>
+                    <div class="input-field col s3">
+                        <label for="isMetadata">
+                            <input id="isMetadata" name="isMetadata" type="checkbox"/>
+                            <span>Metadata</span>
+                        </label>
+                    </div>
+                    <div class="right input-field col s3">
+                        <label for="thumbnail">
+                            <input id="thumbnail" name="thumbnail" type="checkbox"/>
+                            <span>thumbnail</span>
+                        </label>
+                    </div>
+                </div>
+                <br>
+                <div class="container input-field center col s12">
+                    <button class="btn" type="submit">
+                        <i class="material-icons right">track_changes</i>Apply
+                    </button>
+                </div>
+            </div>
+        </form>
+        <div class="col s3 right">
+            <form method="get" th:action="@{/download}">
+                <input type="text" name="path" id="path" value="" style="display:none">
+                <button type="submit" id="submit" class="btn waves-effect waves-light" disabled>
+                    <i class="material-icons right">file_download</i>
+                    Download File</button>
+            </form>
+        </div>
+    </div>
+</div>
+<main th:replace = "index :: main"></main>
+<footer th:replace = "index :: footer"></footer>
+<script src="https://kit.fontawesome.com/35db202371.js" crossorigin="anonymous"></script>
+<script src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+<script th:src="@{/js/materialize/materialize.js}" src="../static/js/materialize/materialize.js"></script>
+<script th:src="@{/js/materialize/init.js}" src="../static/js/materialize/init.js"></script>
+</body>
+</html>

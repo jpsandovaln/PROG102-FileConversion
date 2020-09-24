@@ -30,23 +30,23 @@ public class ViewController {
     * @return audio view
     */
     @GetMapping("/file_audio")
-    public String converertAudio() {
+    public String convertAudio() {
         return "audio/audio";
     }
     /**
     * displays docs view
     * @return docs view
     */
-    @GetMapping("/file_docs")
-    public String converertDocs() {
-        return "docs/docs";
+    @GetMapping("/file_extractText")
+    public String extractText() {
+        return "extract/extractText";
     }
     /**
     * displays image view
     * @return image view
     */
     @GetMapping("/file_img")
-    public String converertImg() {
+    public String convertImage() {
         return "img/image";
     }
     /**
