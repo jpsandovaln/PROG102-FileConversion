@@ -17,7 +17,6 @@ public class ExtractTextParameterTest {
     String toolPath = "thirdParty/ocr/tesseract.exe";
     ModelParameter eTextParameter = new ExtractTextParameter();
     ExtractTextModel eTextModelSp = new ExtractTextModel();
-    CommandBuilder cBuilder = new CommandBuilder();
     List<List<String>> listCommands = new ArrayList<>();
 
     @Test
