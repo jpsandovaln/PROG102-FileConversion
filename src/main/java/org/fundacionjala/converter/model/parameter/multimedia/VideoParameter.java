@@ -1,6 +1,8 @@
 package org.fundacionjala.converter.model.parameter.multimedia;
 
-public class VideoParameter extends MultimediaParameter {
+import org.fundacionjala.converter.model.parameter.ModelParameter;
+
+public class VideoParameter extends ModelParameter {
     private String extension;
     public static final String VCODEC_COMMAND = "-vcodec";
     private String videoCodec;

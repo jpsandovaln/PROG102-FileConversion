@@ -60,8 +60,8 @@ public class RequestMetadataValidator {
      * @param param
      * @return
      */
-    public boolean isValid(final RequestMetadataParam param) {
-        return isValidPathFile(param.getPathFile()) && isValidExportFormat(param.getExportFormat()) && isValidDetail(param.getDetail());
+    public boolean isValid(final RequestMetadataParameter param) {
+        return isValidFile(param.getFile()) && isValidExportFormat(param.getExportFormat()) && isValidDetail(param.getDetail());
     }
 
     /**
