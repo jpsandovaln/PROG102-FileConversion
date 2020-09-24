@@ -46,7 +46,7 @@ public class ConfigPath {
      * Returns executable meta data extractor path.
      */
     public String getMetaDataExtractorTool() {
-        return properties.getProperty("exiftool.path");
+        return properties.getProperty("metadata.path");
     }
 
     /**
