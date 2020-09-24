@@ -8,16 +8,10 @@
  */
 package org.fundacionjala.converter.controller.request;
 
-import org.springframework.web.multipart.MultipartFile;
-
 public class RequestMetadataParameter extends RequestParameter {
+
     private String fileName;
     private String detail;
-    public RequestMetadataParameter(final MultipartFile file, final String format, final String fileName, final String detail) {
-        super(file, format);
-        this.fileName = fileName;
-        this.detail = detail;
-    }
 
     /**
      *
@@ -27,19 +21,24 @@ public class RequestMetadataParameter extends RequestParameter {
     public void validate() throws Exception {
         super.validate();
         if (this.getFileName() == null || "".equals(this.getFileName())) {
-            throw new Exception("failed Channels Rate empty");
-        }
-        if (this.getDetail() == null || "".equals(this.getDetail())) {
-            throw new Exception("failed Channels Rate empty");
+            throw new Exception("File name error");
         }
     }
 
     /**
      *
-     * @return
+     * @return getFileName
      */
     public String getFileName() {
         return fileName;
+    }
+
+    /**
+     *
+     * @return setFileName
+     */
+    public void setFileName(final String fileName) {
+        this.fileName = fileName;
     }
 
     /**
@@ -50,5 +49,11 @@ public class RequestMetadataParameter extends RequestParameter {
         return detail;
     }
 
-
+    /**
+     *
+     * @return getDetail
+     */
+    public void setDetail(final String detail) {
+        this.detail = detail;
+    }
 }

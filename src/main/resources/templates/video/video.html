@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+  <html xmlns:th="http://www.thymeLeaf.org" lang="en">
+    <head th:replace="index::head"></head>
+    <body>
+    <header><nav th:replace="index :: nav" replace="index :: nav"></nav></header>
+          <!--formularios-->
+        <div class="section container ">
+            <div class="row ">
+                <form class="col s12 " id="form-video" method="post" th:action="@{/convertVideo}" enctype="multipart/form-data">
+                    <div  class="row card-panel z-depth-5">
+                        <div class="file-field input-field col s12 m6">
+                            <div class="btn teal accent-3">
+                                <i class="material-icons right">folder_open</i>
+                                <span> File</span>
+                                <input class="file-path validate" type="text">
+                            </div>
+                            <div class="file-path-wrapper">
+                                <input  name="file" type="file">
+                            </div>
+                        </div>
+                        <div class="input-field col s12 m6">
+                            <input type="text" id="name" name="name" class="validate" required>
+                            <label for="name">Name:</label>
+                        </div>
+                        <div class="input-field col s12 m6">
+                          <select id="format" name="format" class="browser-default">
+                            <option value="" disabled selected>Select format or extension</option>
+                            <option value=".mp4">MP4</option>
+                            <option value=".gif">GIF</option>
+                            <option value=".mp3">MP3</option>
+                          </select>
+                        </div>
+                         <div class="input-field col s12 m6">
+                            <input type="text" id="md5" name="md5" class="validate" >
+                            <label for="md5">MD5:</label>
+                         </div>
+                         <div class="input-field col s12 m6">
+                            <input type="text" id="videoCodec" name="videoCodec" class="validate" required>
+                            <label for="videoCodec">video codec:</label>
+                        </div>
+                        <div class="input-field col s12 m6">
+                            <input type="text" id="audioCodec" name="audioCodec" class="validate" required>
+                            <label for="audioCodec">audio codec:</label>
+                        </div>
+                        <div class="input-field col s12 m12">
+                            <input type="text" id="frames" name="frames" class="validate" required>
+                            <label for="frames">Frame rate:</label>
+                        </div>
+
+                         <div class="input-field col s12 m4">
+                            <label for="thumbnail">
+                              <input id="thumbnail" name="thumbnail" type="checkbox" />
+                              <span>thumbnail</span>
+                            </label>
+                        </div>
+                        <div class="input-field col s12 m4">
+                            <input type="text" id="start" name="start" class="validate">
+                            <label for="start">start:</label>
+                        </div>
+                        <div class="input-field col s12 m4">
+                            <input type="text" id="duration" name="duration" class="validate">
+                            <label for="duration">duration:</label>
+                        </div>                
+                        <div class="input-field col s3">
+                            <label>
+                                <input id="isMetadata" name="isMetadata" type="checkbox"/>
+                                <span>Metadata</span>
+                            </label>
+                        </div>
+                        
+                        <div class="center input-field col s12">
+                            <button class="btn" type="submit">
+                                <i class="material-icons right">track_changes</i>Apply
+                            </button>
+                        </div>
+                    </div>
+                </form>
+                <div class="col s3 right">
+                    <form method="get" th:action="@{/download}">
+                        <input type="text" name="path" id="path" value="" style="display:none">
+                        <button type="submit" id="submit" class="btn waves-effect waves-light" disabled>
+                            <i class="material-icons right">file_download</i>
+                            Download File</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+     <main th:replace = "index :: main"></main>
+     <footer th:replace = "index :: footer"></footer>
+      <!-- Compiled and minified JavaScript -->
+    <script src="https://kit.fontawesome.com/35db202371.js" crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+    <script th:src="@{/js/materialize/materialize.js}" src="../static/js/materialize/materialize.js"></script>
+    <script th:src="@{/js/materialize/init.js}" src="../static/js/materialize/init.js"></script>
+    </body>
+  </html>

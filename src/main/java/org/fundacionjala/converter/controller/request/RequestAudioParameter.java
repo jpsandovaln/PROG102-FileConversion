@@ -8,13 +8,9 @@
  */
 package org.fundacionjala.converter.controller.request;
 
-import org.springframework.web.multipart.MultipartFile;
+public class RequestAudioParameter extends RequestParameter {
 
-public class RequestAudioParameter  {
-
-    private MultipartFile file;
     private String name;
-    private String format;
     private String codec;
     private String bitRate;
     private String channel;
@@ -22,27 +18,11 @@ public class RequestAudioParameter  {
     private String start;
     private String duration;
     private String volume;
-    private  boolean isMetadata = false;
-    private boolean isCut = false;
+    private boolean isMetadata = false;
+    private boolean isCut;
     private String inputFile;
     private String outputFile;
     private String md5;
-
-    /**
-     *
-     * @return
-     */
-    public MultipartFile getFile() {
-        return file;
-    }
-
-    /**
-     *
-     * @param file
-     */
-    public void setFile(final MultipartFile file) {
-        this.file = file;
-    }
 
     /**
      *
@@ -58,22 +38,6 @@ public class RequestAudioParameter  {
      */
     public void setName(final String name) {
         this.name = name;
-    }
-
-    /**
-     *
-     * @return
-     */
-    public String getFormat() {
-        return format;
-    }
-
-    /**
-     *
-     * @param format
-     */
-    public void setFormat(final String format) {
-        this.format = format;
     }
 
     /**

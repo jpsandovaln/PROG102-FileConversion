@@ -29,17 +29,14 @@ public class FileUploadService {
 
     /**
      * save a file in the directory "input files"
+     *
      * @param file to save
      * @return
      * @throws IOException
      */
-    public String saveInputFile(final MultipartFile file) {
+    public String saveInputFile(final MultipartFile file) throws IOException {
         String pathFile = inputFiles + file.getOriginalFilename();
-        try {
-            Files.copy(file.getInputStream(), Paths.get(pathFile), StandardCopyOption.REPLACE_EXISTING);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        Files.copy(file.getInputStream(), Paths.get(pathFile), StandardCopyOption.REPLACE_EXISTING);
         return pathFile;
     }
 }
