@@ -8,6 +8,10 @@ public interface ICommand {
 
     List<List<String>> createCommand(ModelParameter modelParameter);
 
+    /**
+     *
+     * @param modelParameter the parameter that will be added sufix
+     */
     default void name(final ModelParameter modelParameter) {
         String fileName = modelParameter.getOutputFile();
         File aFile = new File(fileName);

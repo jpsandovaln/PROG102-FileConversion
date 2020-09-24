@@ -17,7 +17,7 @@ public abstract class ModelParameter {
 
   /**
    *
-   * @return
+   * @return the format that will be converted
    */
   public String getFormat() {
     return format;
@@ -25,7 +25,7 @@ public abstract class ModelParameter {
 
   /**
    *
-   * @param format
+   * @param format the format that will be seted
    */
   public void setFormat(final String format) {
     this.format = format;
