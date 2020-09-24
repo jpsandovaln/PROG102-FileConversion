@@ -12,26 +12,31 @@
 </head>
 <body>
 <div class="login-form">
-    <form th:action="@{/login}" method="post">
-        <h2 class="text-center">Log in</h2>
+    <form th:action="@{/add}" method="post">
+        <h2 class="text-center">Create Account</h2>
         <div class="form-group">
             <input type="text" class="form-control" placeholder="username" name="username" id="username" required="required">
+        </div>
+        <div class="form-group">
+            <input type="text" class="form-control" placeholder="name" name="name" id="name" required="required">
+        </div>
+        <div class="form-group">
+            <input type="text" class="form-control" placeholder="last name" name="lastName" id="lastName" required="required">
         </div>
         <div class="form-group">
             <input type="password" class="form-control" placeholder="password" name="password" id="password" required="required">
         </div>
         <div class="form-group">
-            <button type="submit" class="btn btn-primary btn-block">Log in</button>
+            <input type="password" class="form-control" placeholder="confirm password" name="confirmPassword" id="confirmPassword" required="required">
         </div>
-        <div class="clearfix">
-            <label class="pull-left checkbox-inline"><input type="checkbox"> Remember me</label>
-            <a href="#" class="pull-right">Forgot Password?</a>
+        <div class="form-group">
+            <button type="submit" class="btn btn-primary btn-block">register now</button>
         </div>
     </form>
     <div th:if="${param.error}" class="alert alert-danger" role="alert">
         Invalid username and password.
     </div>
-    <p class="text-center"><a th:href="@{/createAccount}" >Create an Account</a></p>
+    <p class="text-center"><a th:href="@{/login}" >Sign in</a></p>
 </div>
 </body>
 </html>

@@ -34,8 +34,8 @@ import javax.servlet.http.HttpServletResponse;
 public class VideoController {
     @Autowired
     private FileService fileService;
-    @Value("${tempFiles.path}")
-    private String temporal;
+    @Value("${convertedFiles.path}")
+    private String output;
     @Autowired
     private FileUploadService fileUploadService;
 
@@ -55,12 +55,13 @@ public class VideoController {
             }
 
             VideoParameter videoParameter = new VideoParameter();
-            videoParameter.setFilePath(filePath);
+            videoParameter.setInputFile(filePath);
             videoParameter.setFrames(requestVideoParameter.getFrames());
             videoParameter.setExtension(requestVideoParameter.getExportFormat());
-            videoParameter.setVCodec(requestVideoParameter.getVideoCodec());
-            videoParameter.setACodec(requestVideoParameter.getAudioCodec());
+            videoParameter.setAudioCodec(requestVideoParameter.getVideoCodec());
+            videoParameter.setVideoCodec(requestVideoParameter.getAudioCodec());
             videoParameter.setExtractThumbnail(requestVideoParameter.getExtractThumbnail());
+            videoParameter.setOutputFile(output);
             Executor executor = new Executor();
             VideoModel video = new VideoModel();
             List<String> result = executor.executeCommandsList(video.createCommand(videoParameter));

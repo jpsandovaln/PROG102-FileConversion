@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.io.IOException;
+import java.security.NoSuchAlgorithmException;
 import java.util.List;
 import java.util.concurrent.ExecutionException;
 
@@ -95,11 +96,11 @@ public class AudioController {
      * @throws InterruptedException
      * @throws ExecutionException
      * @throws IOException
+     * @throws NoSuchAlgorithmException
      */
-    private List<String> execute(final AudioParameter audioParameter) throws InterruptedException, ExecutionException, IOException {
+    private List<String> execute(final AudioParameter audioParameter) throws InterruptedException, ExecutionException, IOException, NoSuchAlgorithmException {
         Executor executor = new Executor();
         ICommand audioModel = new AudioModel();
-        List<List<String>> list = audioModel.createCommand(audioParameter);
-        return  executor.executeCommandsList(list);
+        return executor.executeCommandsList(audioModel.createCommand(audioParameter));
     }
 }
