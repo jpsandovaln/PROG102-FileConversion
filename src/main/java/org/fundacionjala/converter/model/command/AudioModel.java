@@ -2,6 +2,7 @@ package org.fundacionjala.converter.model.command;
 
 import org.fundacionjala.converter.model.configPath.ConfigPath;
 import org.fundacionjala.converter.model.parameter.ModelParameter;
+import org.fundacionjala.converter.model.parameter.metadata.MetadataParameter;
 import org.fundacionjala.converter.model.parameter.multimedia.AudioParameter;
 
 import java.io.File;
@@ -34,15 +35,16 @@ public class AudioModel implements ICommand {
         convert = convert(convert, modelParameter);
         listCommands.add(convert);
         AudioParameter param = (AudioParameter) modelParameter;
-        if (param.getIsMetadata()) {
-            List<String> metadata = new ArrayList<>();
-            metadata(metadata, modelParameter);
-            listCommands.add(metadata);
-        }
         if (param.getIsCut()) {
             List<String> cut = new ArrayList<>();
             cut = cut(cut, modelParameter);
             listCommands.add(cut);
+        }
+        if (param.getIsMetadata()) {
+            listCommands.add(extractMetadata(param, ""));
+            if (param.getIsCut()) {
+                listCommands.add(extractMetadata(param, "cut"));
+            }
         }
         return listCommands;
     }
@@ -90,9 +92,11 @@ public class AudioModel implements ICommand {
         cut.add("\"" + modelParameter.getOutputFile() + nameFile + "cut" + formatFile + "\"");
         return cut;
     }
-    private List<String> metadata(final List<String> metadata, final ModelParameter modelParameter) {
-        // MetadataModel metadata = new MetadataModel()
-        // return metadata.createCommand(ModelParameter modelParameter);
-        return  null;
+    private List<String> extractMetadata(final AudioParameter audioParameter, final String suffix) {
+        String input = audioParameter.getOutputFile() + audioParameter.getName() + suffix + audioParameter.getFormat();
+        String output = audioParameter.getName() + suffix + audioParameter.getFormat().substring(1) + "-meta";
+        MetadataParameter metadataParameter = new MetadataParameter(input, "j", "v", output, "");
+        MetadataModel metadataModel = new MetadataModel();
+        return metadataModel.createCommand(metadataParameter).get(0);
     }
 }
