@@ -23,10 +23,10 @@
                     <div class="btn teal accent-3">
                         <i class="material-icons right">folder_open</i>
                         <span> File</span>
-                        <input type="file" for="file">
+                        <input type="file" id="file" for="file">
                     </div>
                     <div class="file-path-wrapper">
-                        <input type="file" id="file" for="file"class="file-path validate" type="text">
+                        <input class="file-path validate" type="text">
                     </div>
                 </div>
                 <div class="input-field col s12 m6">
@@ -67,7 +67,7 @@
                     <input type="text" id="width" name="width" class="validate">
                     <label for="width">width:</label>
                 </div>
-                <div class="col s12">
+                <div class="col s12 container">
                     <div class="input-field col s3">
                         <label for="gray">
                             <input id="gray" name="gray" type="checkbox"/>
@@ -80,7 +80,7 @@
                             <span>Metadata</span>
                         </label>
                     </div>
-                    <div class="container input-field col s3">
+                    <div class="right input-field col s3">
                         <label for="thumbnail">
                             <input id="thumbnail" name="thumbnail" type="checkbox"/>
                             <span>thumbnail</span>
@@ -94,13 +94,13 @@
                     </button>
                 </div>
             </div>
-            <div class="col s3 right">
-                <button class="btn waves-effect waves-light">
-                    <i class="material-icons right">file_download</i>
-                    download file
-                </button>
-            </div>
         </form>
+        <div class="col s3 right">
+            <button class="btn waves-effect waves-light">
+                <i class="material-icons right">file_download</i>
+                download file
+            </button>
+        </div>
     </div>
 </div>
 <main th:replace = "index :: main"></main>

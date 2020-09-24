@@ -18,14 +18,14 @@
     <div class="row">
         <form action="" class="col s12" id="form-audio" method="post" th:action="@{/convertAudio}">
             <div  class="row card-panel z-depth-5">
-                <div class="file-field input-field col s12 m6">
+               <div class="file-field input-field col s12 m6">
                     <div class="btn teal accent-3">
                         <i class="material-icons right">folder_open</i>
                         <span> File</span>
-                        <input type="file">
+                        <input type="file" id="file" for="file">
                     </div>
                     <div class="file-path-wrapper">
-                        <input class="file-path validate" name="file" id="file" type="file" lang="es">
+                        <input class="file-path validate" type="text">
                     </div>
                 </div>
                 <div class="input-field col s12 m6">
@@ -88,13 +88,13 @@
                     </button>
                 </div>
             </div>
-            <div class="col s3 right">
-                <button class="btn waves-effect waves-light">
-                    <i class="material-icons right">file_download</i>
-                    download file
-                </button>
-            </div>
         </form>
+        <div class="col s3 right">
+            <button class="btn waves-effect waves-light">
+                <i class="material-icons right">file_download</i>
+                download file
+            </button>
+        </div>
     </div>
 </div>
 <main th:replace = "index :: main"></main>

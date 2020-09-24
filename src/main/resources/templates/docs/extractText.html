@@ -23,7 +23,7 @@
                     <div class="btn teal accent-3">
                         <i class="material-icons right">folder_open</i>
                         <span> File</span>
-                        <input type="file" id="file" name="file" for="file">
+                        <input type="file" id="file" for="file">
                     </div>
                     <div class="file-path-wrapper">
                         <input class="file-path validate" type="text">
@@ -59,13 +59,13 @@
                     </button>
                 </div>
             </div>
-            <div class="col s3 right">
-                <button class="btn waves-effect waves-light">
-                    <i class="material-icons right">file_download</i>
-                    download file
-                </button>
-            </div>
         </form>
+        <div class="col s3 right">
+            <button class="btn waves-effect waves-light">
+                <i class="material-icons right">file_download</i>
+                download file
+            </button>
+        </div>
     </div>
 </div>
 <main th:replace = "index :: main"></main>
