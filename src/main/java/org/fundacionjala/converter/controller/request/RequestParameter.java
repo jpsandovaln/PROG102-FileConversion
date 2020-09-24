@@ -30,9 +30,9 @@ public abstract class RequestParameter {
 
     /**
      *
-     * @param format
+     * @param exportFormat
      */
-    public void setFormat(final String exportFormat) {
+    public void setExportFormat(final String exportFormat) {
         this.exportFormat = exportFormat;
     }
 
@@ -74,7 +74,6 @@ public abstract class RequestParameter {
     public void validate() throws Exception {
 
         if (this.getExportFormat() == null || "".equals(this.getExportFormat())) {
-            System.out.println(this.getExportFormat() + "-----------------");
             throw new Exception("failed format empty");
         }
 

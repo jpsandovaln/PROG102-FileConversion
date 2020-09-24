@@ -38,5 +38,4 @@ public class RequestExtractTextParameter extends RequestParameter {
     public void setLanguage(final String language) {
         this.language = language;
     }
-
 }

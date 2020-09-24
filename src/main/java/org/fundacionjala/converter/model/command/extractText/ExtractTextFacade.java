@@ -59,10 +59,12 @@ public class ExtractTextFacade {
             String outputFile = parameter.getOutputFile() + parameter.getFileName();
             String result = reader.readFile(outputFile + FormatValidation.FORMAT_TXT);
             if (format.equals(FormatValidation.FORMAT_PDF)) {
-                resultList.add(convertDoc.createDocumentPdf(outputFile, result));
+                String outputFileChanged = extractor.changeName(parameter.getOutputFile(), parameter.getFileName(), FormatValidation.FORMAT_PDF);
+                resultList.add(convertDoc.createDocumentPdf(parameter.getOutputFile() + outputFileChanged, result));
             }
             if (format.equals(FormatValidation.FORMAT_DOCX)) {
-                resultList.add(convertDoc.createDocumentWord(outputFile, result));
+                String outputFileChanged = extractor.changeName(parameter.getOutputFile(), parameter.getFileName(), FormatValidation.FORMAT_DOCX);
+                resultList.add(convertDoc.createDocumentWord(parameter.getOutputFile() + outputFileChanged, result));
             }
             eraseDocument(format, outputFile);
             return resultList;
