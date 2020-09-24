@@ -60,9 +60,9 @@ public class Executor {
     return command.get(command.size() - 1);
   }
 
-  private String executeMetadata(List<String> command) throws ExecutionException, IOException, InterruptedException {
+  private String executeMetadata(final List<String> command) throws ExecutionException, IOException, InterruptedException {
     List<String> commandMetadata = new ArrayList<String>();
-    for (int i = 1; i < command.size() - 1 ; i++) {
+    for (int i = 1; i < command.size() - 1; i++) {
       commandMetadata.add(command.get(i));
     }
     System.out.println(commandMetadata);
