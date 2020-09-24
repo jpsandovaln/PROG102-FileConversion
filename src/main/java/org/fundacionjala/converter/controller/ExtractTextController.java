@@ -9,21 +9,24 @@
 package org.fundacionjala.converter.controller;
 
 import org.fundacionjala.converter.controller.request.RequestExtractTextParameter;
+import org.fundacionjala.converter.controller.response.ErrorResponse;
+import org.fundacionjala.converter.controller.response.OkResponse;
 import org.fundacionjala.converter.controller.service.FileUploadService;
 import org.fundacionjala.converter.database.entity.File;
 import org.fundacionjala.converter.controller.service.FileService;
-import org.fundacionjala.converter.executor.Executor;
-import org.fundacionjala.converter.model.ChecksumMD5;
 import org.fundacionjala.converter.model.command.extractText.ExtractTextFacade;
 import org.fundacionjala.converter.model.parameter.extractText.ExtractTextParameter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
-import java.nio.file.Files;
-import java.nio.file.Paths;
-import java.nio.file.StandardCopyOption;
+
+import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
+import java.util.List;
+import java.util.concurrent.ExecutionException;
 
 /**
  * @author Jhordan Soto
@@ -43,30 +46,28 @@ public class ExtractTextController {
      * @return
      */
     @RequestMapping(method = RequestMethod.POST, value = "/convertExtractText")
-    public String convertExtractText(final RequestExtractTextParameter requestExtractTextParameter) throws Exception {
+    public ResponseEntity convertExtractText(final RequestExtractTextParameter requestExtractTextParameter) throws Exception {
         requestExtractTextParameter.validate();
-        String result = "exist";
-        if (requestExtractTextParameter.getFile() == null || requestExtractTextParameter.getFile().isEmpty()) {
-            return "Select a file";
-        }
-        ChecksumMD5 checksumMD5 = new ChecksumMD5();
-        String checksum = "";
         String filePath = fileUploadService.saveInputFile(requestExtractTextParameter.getFile());
-        checksum = checksumMD5.getMD5(filePath);
-        if (fileService.getFileByMd5(checksum) == null) {
-            fileService.saveFile(new File(filePath, checksum));
-            result = "saved en data base";
+        String md5 = requestExtractTextParameter.generateMD5(filePath);
+        if (fileService.getFileByMd5(md5) == null) {
+            fileService.saveFile(new File(filePath, md5));
         }
         try {
             ExtractTextFacade extractor = new ExtractTextFacade();
             ExtractTextParameter parameter = new ExtractTextParameter();
             parameter.setInputFile(filePath);
             parameter.setLanguage(requestExtractTextParameter.getLanguage());
-            parameter.setFormat(requestExtractTextParameter.getFormat());
-            result = extractor.extractText(parameter).toString();
+            parameter.setFormat(requestExtractTextParameter.getExportFormat());
+            List<String> result = extractor.extractText(parameter);
+            return ResponseEntity.ok().body(
+                new OkResponse<Integer>(HttpServletResponse.SC_OK, result.toString()));
+        } catch (IOException | InterruptedException | ExecutionException e) {
+            return ResponseEntity.badRequest()
+                .body(new ErrorResponse<Integer>(HttpServletResponse.SC_BAD_REQUEST, e.getMessage()));
         } catch (Exception e) {
-            e.printStackTrace();
+            return ResponseEntity.badRequest().body(
+                new ErrorResponse<String>(Integer.toString(HttpServletResponse.SC_BAD_REQUEST), e.getMessage()));
         }
-        return result;
     }
 }
