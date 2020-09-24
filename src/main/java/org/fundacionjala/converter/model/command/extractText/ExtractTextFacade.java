@@ -6,13 +6,12 @@
  * Information and shall use it only in accordance with the terms of the
  * license agreement you entered into with Fundacion Jala
  */
-package org.fundacionjala.converter.facade;
+package org.fundacionjala.converter.model.command.extractText;
 
 import org.fundacionjala.converter.executor.Executor;
 import org.fundacionjala.converter.model.ChecksumMD5;
-import org.fundacionjala.converter.model.command.extractText.DocType;
-import org.fundacionjala.converter.model.command.extractText.ExtractTextModel;
-import org.fundacionjala.converter.model.command.extractText.ReaderText;
+import org.fundacionjala.converter.model.commons.exception.InvalidDataException;
+import org.fundacionjala.converter.model.commons.validation.FormatValidation;
 import org.fundacionjala.converter.model.configPath.ConfigPath;
 import org.fundacionjala.converter.model.parameter.extractText.ExtractTextParameter;
 import org.fundacionjala.converter.model.utility.ConvertDoc;
@@ -48,35 +47,38 @@ public class ExtractTextFacade {
      * Creates a document
      * @param parameter - the parameter to execute the conversion using tesseract
      */
-    public List<String> extractText(final ExtractTextParameter parameter) throws Exception {
-        DocType type = parameter.getType();
+    public List<String> extractText(final ExtractTextParameter parameter) throws InvalidDataException, Exception {
+        parameter.validate();
+        String format = parameter.getFormat();
         parameter.setOutputFile(configPath.getConvertedFilesPath());
         parameter.setFileName(checksumMD5.getMD5(parameter.getInputFile()));
-        if (type.equals(DocType.TXT)) {
+        if (format.equals(FormatValidation.FORMAT_TXT)) {
             return executor.executeCommandsList(extractor.createCommand(parameter));
         } else {
             executor.executeCommandsList(extractor.createCommand(parameter));
             String outputFile = parameter.getOutputFile() + parameter.getFileName();
-            String result = reader.readFile(outputFile + ExtractTextModel.TXT_EXTENSION);
-            if (type.equals(DocType.PDF)) {
-                resultList.add(convertDoc.createDocumentPdf(outputFile, result));
+            String result = reader.readFile(outputFile + FormatValidation.FORMAT_TXT);
+            if (format.equals(FormatValidation.FORMAT_PDF)) {
+                String outputFileChanged = extractor.changeName(parameter.getOutputFile(), parameter.getFileName(), FormatValidation.FORMAT_PDF);
+                resultList.add(convertDoc.createDocumentPdf(parameter.getOutputFile() + outputFileChanged, result));
             }
-            if (type.equals(DocType.DOCX)) {
-                resultList.add(convertDoc.createDocumentWord(outputFile, result));
+            if (format.equals(FormatValidation.FORMAT_DOCX)) {
+                String outputFileChanged = extractor.changeName(parameter.getOutputFile(), parameter.getFileName(), FormatValidation.FORMAT_DOCX);
+                resultList.add(convertDoc.createDocumentWord(parameter.getOutputFile() + outputFileChanged, result));
             }
-            eraseDocument(type, outputFile);
+            eraseDocument(format, outputFile);
             return resultList;
         }
     }
 
     /**
      * Erase the txt when the type is word or pdf
-     * @param type
+     * @param format
      * @param outputFile
      */
-    private void eraseDocument(final DocType type, final String outputFile) throws Exception {
-        if (type.equals(DocType.DOCX) || type.equals(DocType.PDF) || type.equals(DocType.TXT)) {
-            Files.delete(Paths.get(outputFile + ExtractTextModel.TXT_EXTENSION));
+    private void eraseDocument(final String format, final String outputFile) throws Exception {
+        if (format.equals(FormatValidation.FORMAT_DOCX) || format.equals(FormatValidation.FORMAT_PDF) || format.equals(FormatValidation.FORMAT_TXT)) {
+            Files.delete(Paths.get(outputFile + FormatValidation.FORMAT_TXT));
         }
     }
 }
