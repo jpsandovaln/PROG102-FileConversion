@@ -1,7 +1,6 @@
 package org.fundacionjala.converter.model.parameter.multimedia;
 
 public class VideoParameter extends MultimediaParameter {
-    private String extension;
     public static final String VCODEC_COMMAND = "-vcodec";
     private String videoCodec;
     public static final String ACODEC_COMMAND = "-acodec";
@@ -20,6 +19,8 @@ public class VideoParameter extends MultimediaParameter {
     public static final String ZERO = "0";
     private boolean extractMetadata = false;
     private boolean extractThumbnail = false;
+    private String fileName;
+    private String extension;
 
     /**
      * Sets video codec
@@ -102,18 +103,30 @@ public class VideoParameter extends MultimediaParameter {
     }
 
     /**
-     * Returns the extension to convert the video
-     * @return extension
+     * @return the fileName
+     */
+    public String getFileName() {
+        return fileName;
+    }
+
+    /**
+     * @param fileName the fileName to set
+     */
+    public void setFileName(String fileName) {
+        this.fileName = fileName;
+    }
+
+    /**
+     * @return the extension
      */
     public String getExtension() {
         return extension;
     }
 
     /**
-     * Sets the extension to convert the video
-     * @param extension - the extension to set
+     * @param extension the extension to set
      */
-    public void setExtension(final String extension) {
+    public void setExtension(String extension) {
         this.extension = extension;
     }
 }
