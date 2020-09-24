@@ -100,7 +100,7 @@ public class VideoModel implements ICommand<VideoParameter> {
         ChecksumMD5 checksumMD5 = new ChecksumMD5();
         List<String> outputFiles;
         outputFiles = executor.executeCommandsList(this.list);
-        String inputFileMetadata = "storage//convertedFiles//";
+        String inputFileMetadata = "storage\\convertedFiles\\";
         String outputFile = "meta";
         String checksum = "";
         String format = "j";    //json
