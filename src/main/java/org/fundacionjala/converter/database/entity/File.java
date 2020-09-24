@@ -10,13 +10,15 @@ package org.fundacionjala.converter.database.entity;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.persistence.GenerationType;
+import javax.persistence.ManyToOne;
+import javax.persistence.JoinColumn;
 
 /**
- * @author Laura Montaño
- * @version 0.1
+ * @author Laura Montaño, Mirko Romay
+ * @version 0.3
  */
 @Entity
 @Table(name = "files")
@@ -27,12 +29,22 @@ public class File {
     private String path;
     private String md5;
 
+    @ManyToOne
+    @JoinColumn(name = "FK_userId")
+    private User user;
+
     public File() {
     }
 
     public File(final String path, final String md5) {
         this.path = path;
         this.md5 = md5;
+    }
+
+    public File(final String path, final String md5, final User user) {
+        this.path = path;
+        this.md5 = md5;
+        this.user = user;
     }
 
     public File(final Long id, final String path, final String md5) {
@@ -57,6 +69,12 @@ public class File {
         return md5;
     }
     /**
+     * @return the user
+     */
+    public User getUser() {
+        return user;
+    }
+    /**
      * @param path the path to set
      */
     public void setPath(final String path) {
@@ -68,7 +86,12 @@ public class File {
     public void setMd5(final String md5) {
         this.md5 = md5;
     }
-
+    /**
+     * @param user to relate the file
+     */
+    public void setUser(final User user) {
+        this.user = user;
+    }
     /**
      * method toString
      * @see java.lang.Object#toString()

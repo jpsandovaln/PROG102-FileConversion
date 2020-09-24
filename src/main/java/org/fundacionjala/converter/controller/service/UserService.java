@@ -16,8 +16,8 @@ import java.util.List;
 import java.util.Optional;
 
 /**
- * @author Elizabeth Bravo
- * @version 0.2
+ * @author Elizabeth Bravo, Mirko Romay
+ * @version 0.3
  */
 @Service
 public class UserService implements UserDetailsService {
@@ -39,8 +39,13 @@ public class UserService implements UserDetailsService {
      * @param id - the Long id of element to get
      * @return user - a reference to the user from the table users
      */
-    public Optional<User> getUserById(final long id) {
-        return userRepository.findById(id);
+    public User getUserById(final long id) {
+        Optional<User> user = userRepository.findById(id);
+        if (user.isPresent()) {
+            return user.get();
+        } else {
+            return null;
+        }
     }
 
     /**
