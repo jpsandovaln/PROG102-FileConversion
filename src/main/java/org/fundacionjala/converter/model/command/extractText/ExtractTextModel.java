@@ -19,7 +19,6 @@ import org.fundacionjala.converter.model.parameter.extractText.ExtractTextParame
  * @version 1.0
  */
 public class ExtractTextModel implements ICommand<ExtractTextParameter> {
-    public static final String TXT_EXTENSION = ".txt";
     public static final String LANGUAGE_SPA = "spa";
 
     public ExtractTextModel() {

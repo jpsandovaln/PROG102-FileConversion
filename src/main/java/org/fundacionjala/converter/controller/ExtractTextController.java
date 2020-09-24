@@ -9,8 +9,13 @@
 package org.fundacionjala.converter.controller;
 
 import org.fundacionjala.converter.controller.request.RequestExtractTextParameter;
+import org.fundacionjala.converter.controller.service.FileUploadService;
 import org.fundacionjala.converter.database.entity.File;
 import org.fundacionjala.converter.controller.service.FileService;
+import org.fundacionjala.converter.executor.Executor;
+import org.fundacionjala.converter.model.ChecksumMD5;
+import org.fundacionjala.converter.model.command.extractText.ExtractTextFacade;
+import org.fundacionjala.converter.model.parameter.extractText.ExtractTextParameter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -30,24 +35,38 @@ public class ExtractTextController {
     private FileService fileService;
     @Value("${tempFiles.path}")
     private String temporal;
-
+    @Autowired
+    private FileUploadService fileUploadService;
     /**
      *
      * @param requestExtractTextParameter
      * @return
      */
-    @RequestMapping(method = RequestMethod.POST, value = "convertExtractText")
+    @RequestMapping(method = RequestMethod.POST, value = "/convertExtractText")
     public String convertExtractText(final RequestExtractTextParameter requestExtractTextParameter) throws Exception {
-        requestExtractTextParameter.validate();
+        //requestExtractTextParameter.validate();
         String result = "exist";
-        String path = temporal + requestExtractTextParameter.getFile().getOriginalFilename();
-        Files.copy(requestExtractTextParameter.getFile().getInputStream(), Paths.get(path), StandardCopyOption.REPLACE_EXISTING);
-        String md5 = requestExtractTextParameter.generateMD5(path);
-        if (!requestExtractTextParameter.isInDataBase(md5, fileService)) {
-            fileService.saveFile(new File(path, md5));
-            result = "saved in database";
+        if (requestExtractTextParameter.getFile() == null || requestExtractTextParameter.getFile().isEmpty()) {
+            return "Select a file";
         }
-        Files.delete(Paths.get(path));
+        ChecksumMD5 checksumMD5 = new ChecksumMD5();
+        String checksum = "";
+        String filePath = fileUploadService.saveInputFile(requestExtractTextParameter.getFile());
+        checksum = checksumMD5.getMD5(filePath);
+        if (fileService.getFileByMd5(checksum) == null) {
+            fileService.saveFile(new File(filePath, checksum));
+            result = "saved en data base";
+        }
+        try {
+            ExtractTextFacade extractor = new ExtractTextFacade();
+            ExtractTextParameter parameter = new ExtractTextParameter();
+            parameter.setInputFile(filePath);
+            parameter.setLanguage(requestExtractTextParameter.getLanguage());
+            parameter.setFormat(requestExtractTextParameter.getFormat());
+            result = extractor.extractText(parameter).toString();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
         return result;
     }
 }
