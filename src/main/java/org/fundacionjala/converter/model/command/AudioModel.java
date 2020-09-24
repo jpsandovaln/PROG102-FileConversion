@@ -22,7 +22,15 @@ public class AudioModel implements ICommand {
             SAMPLE_RATE = "-ar",
             VOLUME = "-vol",
             START = "-ss",
-            DURATION = "-t";
+            DURATION = "-t",
+            OVERWRITING = "-y",
+            INPUT = "-i",
+            QUOTES = "\"",
+            CUT_SUFFIX = "cut",
+            VOID = "",
+            META_SUFFIX = "-meta",
+            JSON = "j",
+            VERBOSE = "v";
     /**
      * create command
      * @return list of commands
@@ -41,9 +49,9 @@ public class AudioModel implements ICommand {
             listCommands.add(cut);
         }
         if (param.getIsMetadata()) {
-            listCommands.add(extractMetadata(param, ""));
+            listCommands.add(extractMetadata(param, VOID));
             if (param.getIsCut()) {
-                listCommands.add(extractMetadata(param, "cut"));
+                listCommands.add(extractMetadata(param, CUT_SUFFIX));
             }
         }
         return listCommands;
@@ -53,10 +61,10 @@ public class AudioModel implements ICommand {
         ConfigPath configPath = new ConfigPath();
         File file = new File(configPath.getVideoAudioTool());
         String fileToolPath = file.getAbsolutePath();
-        convert.add("\"" + fileToolPath + "\"");
-        convert.add("-y");
-        convert.add("-i");
-        convert.add("\"" + modelParameter.getInputFile() + "\"");
+        convert.add(QUOTES + fileToolPath + QUOTES);
+        convert.add(OVERWRITING);
+        convert.add(INPUT);
+        convert.add(QUOTES + modelParameter.getInputFile() + QUOTES);
         AudioParameter param = (AudioParameter) modelParameter;
         addToList(convert, param.getCodec(), CODEC);
         addToList(convert, param.getBitRate(), BITRATE);
@@ -65,7 +73,7 @@ public class AudioModel implements ICommand {
         addToList(convert, param.getVolume(), VOLUME);
         String nameFile = ((AudioParameter) modelParameter).getName();
         String formatFile = ((AudioParameter) modelParameter).getFormat();
-        convert.add("\"" + modelParameter.getOutputFile() + nameFile + formatFile + "\"");
+        convert.add(QUOTES + modelParameter.getOutputFile() + nameFile + formatFile + QUOTES);
         return convert;
     }
 
@@ -81,21 +89,21 @@ public class AudioModel implements ICommand {
         File file = new File(configPath.getVideoAudioTool());
         String fileToolPath = file.getAbsolutePath();
         cut.add(fileToolPath);
-        cut.add("-y");
-        cut.add("-i");
-        cut.add("\"" + modelParameter.getInputFile() + "\"");
+        cut.add(OVERWRITING);
+        cut.add(INPUT);
+        cut.add(QUOTES + modelParameter.getInputFile() + QUOTES);
         AudioParameter param = (AudioParameter) modelParameter;
         addToList(cut, param.getStart(), START);
         addToList(cut, param.getDuration(), DURATION);
         String nameFile = param.getName();
         String formatFile = param.getFormat();
-        cut.add("\"" + modelParameter.getOutputFile() + nameFile + "cut" + formatFile + "\"");
+        cut.add(QUOTES + modelParameter.getOutputFile() + nameFile + CUT_SUFFIX + formatFile + QUOTES);
         return cut;
     }
     private List<String> extractMetadata(final AudioParameter audioParameter, final String suffix) {
         String input = audioParameter.getOutputFile() + audioParameter.getName() + suffix + audioParameter.getFormat();
-        String output = audioParameter.getName() + suffix + audioParameter.getFormat().substring(1) + "-meta";
-        MetadataParameter metadataParameter = new MetadataParameter(input, "j", "v", output, "");
+        String output = audioParameter.getName() + suffix + audioParameter.getFormat().substring(1) + META_SUFFIX;
+        MetadataParameter metadataParameter = new MetadataParameter(input, JSON, VERBOSE, output, VOID);
         MetadataModel metadataModel = new MetadataModel();
         return metadataModel.createCommand(metadataParameter).get(0);
     }
