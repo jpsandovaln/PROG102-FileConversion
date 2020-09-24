@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 
 import java.io.IOException;
+import java.security.NoSuchAlgorithmException;
 import java.util.List;
 import java.util.concurrent.ExecutionException;
 
@@ -44,24 +45,24 @@ public class AudioController {
      * @throws Exception
      */
 
-   @RequestMapping(value = "/convertAudio", method = RequestMethod.POST)
-   public String audio(final RequestAudioParameter requestAudioParameter) throws Exception {
-       if (requestAudioParameter.getFile() == null || requestAudioParameter.getFile().isEmpty()) {
-           return "Select a file";
-       }
-       ChecksumMD5 checksumMD5 = new ChecksumMD5();
-       String checksum = "";
-       String filePath = fileUploadService.saveInputFile(requestAudioParameter.getFile());
-       checksum = checksumMD5.getMD5(filePath);
-       if (fileService.getFileByMd5(checksum) == null) {
-           fileService.saveFile(new File(filePath, checksum));
+    @RequestMapping(value = "/convertAudio", method = RequestMethod.POST)
+    public String audio(final RequestAudioParameter requestAudioParameter) throws Exception {
+        if (requestAudioParameter.getFile() == null || requestAudioParameter.getFile().isEmpty()) {
+            return "Select a file";
+        }
+        ChecksumMD5 checksumMD5 = new ChecksumMD5();
+        String checksum = "";
+        String filePath = fileUploadService.saveInputFile(requestAudioParameter.getFile());
+        checksum = checksumMD5.getMD5(filePath);
+        if (fileService.getFileByMd5(checksum) == null) {
+            fileService.saveFile(new File(filePath, checksum));
 
-       }
-       ModelParameter modelParameter = new AudioParameter();
-       setAudioParameterValues(modelParameter, requestAudioParameter, filePath);
-       execute(modelParameter);
-       return "successfully";
-   }
+        }
+        ModelParameter modelParameter = new AudioParameter();
+        setAudioParameterValues(modelParameter, requestAudioParameter, filePath);
+        execute(modelParameter);
+        return "successfully";
+    }
 
     /**
      *
@@ -70,7 +71,8 @@ public class AudioController {
      * @param filePath
      * @throws IOException
      */
-    private void setAudioParameterValues(final ModelParameter modelParameter, final RequestAudioParameter requestAudioParameter, final String filePath) throws IOException {
+    private void setAudioParameterValues(final ModelParameter modelParameter,
+            final RequestAudioParameter requestAudioParameter, final String filePath) throws IOException {
         boolean cut = true;
         modelParameter.setInputFile(filePath);
         modelParameter.setOutputFile(output);
@@ -79,9 +81,9 @@ public class AudioController {
         ((AudioParameter) modelParameter).setCodec(requestAudioParameter.getCodec());
         ((AudioParameter) modelParameter).setBitRate(requestAudioParameter.getBitRate()); // -b:a
         ((AudioParameter) modelParameter).setChannel(requestAudioParameter.getChannel()); // stereo
-        ((AudioParameter) modelParameter).setSampleRate(requestAudioParameter.getSampleRate()); //-ar
-        ((AudioParameter) modelParameter).setStart(requestAudioParameter.getStart()); //-ss
-        ((AudioParameter) modelParameter).setDuration(requestAudioParameter.getDuration()); //-t
+        ((AudioParameter) modelParameter).setSampleRate(requestAudioParameter.getSampleRate()); // -ar
+        ((AudioParameter) modelParameter).setStart(requestAudioParameter.getStart()); // -ss
+        ((AudioParameter) modelParameter).setDuration(requestAudioParameter.getDuration()); // -t
         ((AudioParameter) modelParameter).setCut(cut); //
     }
 
@@ -91,8 +93,10 @@ public class AudioController {
      * @throws InterruptedException
      * @throws ExecutionException
      * @throws IOException
+     * @throws NoSuchAlgorithmException
      */
-    private void execute(final ModelParameter modelParameter) throws InterruptedException, ExecutionException, IOException {
+    private void execute(final ModelParameter modelParameter)
+            throws InterruptedException, ExecutionException, IOException, NoSuchAlgorithmException {
         Executor executor = new Executor();
         ICommand audioModel = new AudioModel();
         List<List<String>> list = audioModel.createCommand(modelParameter);

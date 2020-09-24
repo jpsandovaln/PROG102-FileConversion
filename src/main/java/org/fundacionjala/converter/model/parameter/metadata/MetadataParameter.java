@@ -5,6 +5,7 @@ import org.fundacionjala.converter.model.parameter.ModelParameter;
 public class MetadataParameter extends ModelParameter {
 
     private String format;
+    private String detail;
 
     /**
      *
@@ -21,8 +22,6 @@ public class MetadataParameter extends ModelParameter {
     public String getDetail() {
         return detail;
     }
-
-    private String detail;
 
     /**
      * List<String> getParameter()
