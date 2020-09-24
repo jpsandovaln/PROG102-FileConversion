@@ -11,6 +11,7 @@ package org.fundacionjala.converter.model.command.extractText;
 import java.util.ArrayList;
 import java.util.List;
 import org.fundacionjala.converter.model.command.ICommand;
+import org.fundacionjala.converter.model.commons.validation.FormatValidation;
 import org.fundacionjala.converter.model.configPath.ConfigPath;
 import org.fundacionjala.converter.model.parameter.extractText.ExtractTextParameter;
 
@@ -49,7 +50,8 @@ public class ExtractTextModel implements ICommand<ExtractTextParameter> {
             command.add(parameter.getLanguage());
         }
         command.add(parameter.getInputFile());
-        command.add(parameter.getOutputFile() + parameter.getFileName());
+        //command.add(parameter.getOutputFile() + parameter.getFileName());
+        command.add(parameter.getOutputFile() + changeName(parameter.getOutputFile(), parameter.getFileName(), FormatValidation.FORMAT_TXT));
         return command;
     }
 }

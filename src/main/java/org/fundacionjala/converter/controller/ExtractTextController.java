@@ -44,7 +44,7 @@ public class ExtractTextController {
      */
     @RequestMapping(method = RequestMethod.POST, value = "/convertExtractText")
     public String convertExtractText(final RequestExtractTextParameter requestExtractTextParameter) throws Exception {
-        //requestExtractTextParameter.validate();
+        requestExtractTextParameter.validate();
         String result = "exist";
         if (requestExtractTextParameter.getFile() == null || requestExtractTextParameter.getFile().isEmpty()) {
             return "Select a file";

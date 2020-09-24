@@ -25,4 +25,24 @@ public interface ICommand<T extends ModelParameter> {
         }
         modelParameter.setOutputFile(aFile.getAbsolutePath());
     }
+
+    /**
+     * Returns a new file name
+     * @param pathOutputFile
+     * @param fileName
+     * @param format
+     * @return
+     */
+    default String changeName(final String pathOutputFile, final String fileName, final String format) {
+        String file = pathOutputFile + fileName + format;
+        String newName = fileName;
+        File aFile = new File(file);
+        int fileNo = 0;
+        while (aFile.exists() && !aFile.isDirectory()) {
+            fileNo++;
+            newName = fileName + "(" + fileNo + ")";
+            aFile = new File(pathOutputFile + newName + format);
+        }
+        return newName;
+    }
 }
