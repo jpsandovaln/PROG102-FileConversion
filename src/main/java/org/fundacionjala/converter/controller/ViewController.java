@@ -39,7 +39,7 @@ public class ViewController {
     */
     @GetMapping("/file_docs")
     public String converertDocs() {
-        return "docs/docs";
+        return "docs/extractText";
     }
     /**
     * displays image view
