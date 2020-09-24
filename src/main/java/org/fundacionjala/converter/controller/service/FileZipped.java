@@ -12,6 +12,7 @@ import java.util.zip.ZipOutputStream;
 
 public class FileZipped {
     private static final int BYTE = 1024;
+    private static final String FORMATZIP = ".zip";
     private int ex;
     public FileZipped(final int ex) {
      this.ex = ex;
@@ -25,7 +26,7 @@ public class FileZipped {
      * @throws IOException
      */
     public static String zipper(final AudioParameter modelParameter, final List<String> list) throws IOException {
-        ZipOutputStream os = new ZipOutputStream(new FileOutputStream(modelParameter.getOutputFile() + "descarga.zip"));
+        ZipOutputStream os = new ZipOutputStream(new FileOutputStream(modelParameter.getOutputFile() + modelParameter.getName() + FORMATZIP));
         os.setLevel(Deflater.DEFAULT_COMPRESSION);
         os.setMethod(Deflater.DEFLATED);
         int num = 0;
@@ -43,6 +44,6 @@ public class FileZipped {
         }
         os.closeEntry();
         os.close();
-        return modelParameter.getOutputFile() + "descarga.zip"; //modelParameter.getOutputFile() + ".zip";
+        return modelParameter.getOutputFile() + modelParameter.getName() + FORMATZIP; //modelParameter.getOutputFile() + ".zip";
     }
 }
