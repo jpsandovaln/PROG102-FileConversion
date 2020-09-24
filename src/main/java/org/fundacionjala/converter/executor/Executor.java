@@ -12,7 +12,7 @@ public class Executor {
   private boolean debugOutput;
 
   public Executor() {
-    debugOutput = false;
+    debugOutput = true;
   }
 
   /**
@@ -24,7 +24,8 @@ public class Executor {
    * @throws IOException
    * @throws InterruptedException
    */
-  public List<String> executeCommandsList(final List<List<String>> commandsList) throws InterruptedException, ExecutionException, IOException {
+  public List<String> executeCommandsList(final List<List<String>> commandsList)
+      throws InterruptedException, ExecutionException, IOException {
     List<String> outputList = new ArrayList();
     for (List<String> command : commandsList) {
       outputList.add(execute(command));
@@ -40,6 +41,16 @@ public class Executor {
     while ((line = processOutputReader.readLine()) != null) {
       output.append(line + System.lineSeparator());
     }
+
+    if (debugOutput) {
+      System.out.println(".......MODE DEBUNG.......");
+      command.stream().forEach(s -> {
+        System.out.print(s + " ");
+      });
+      System.out.println(output.toString());
+      System.out.println(".......END MODE DEBUNG.......");
+    }
+
     processDuration.waitFor();
     return command.get(command.size() - 1);
   }
