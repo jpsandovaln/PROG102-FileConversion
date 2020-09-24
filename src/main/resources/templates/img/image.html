@@ -1,23 +1,12 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeLeaf.org" lang="en">
-<head>
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
-    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0"/>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
-    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-    <link th:href="@{/css/materialize/materialize.css}" href="../static/css/materialize/materialize.css" type="text/css" rel="stylesheet" media="screen,projection"/>
-    <link th:href="@{/css/materialize/style.css}" href="../static/css/materialize/style.css" type="text/css" rel="stylesheet" media="screen,projection"/>
-</head>
-
-<!--<body th:background="@{/images/fondo2.jpg}" background="../../static/images/fondo2.jpg">-->
+<head th:replace="index::head"></head>
 <body>
-<header>
-    <nav th:replace="index :: nav" replace="index :: nav"></nav>
-</header>
+<header><nav th:replace="index :: nav" replace="index :: nav"></nav></header>
 <!--formularios-->
 <div class="section container">
     <div class="row">
-        <form action="" class="col s12" id="form-img" method="post" th:action="@{/convertImage}">
+        <form action="" class="col s12" id="form-img" method="post" th:action="@{/convertImage}" enctype="multipart/form-data">
             <div  class="row card-panel z-depth-5">
                 <div class="file-field input-field col s12 m6">
                     <div class="btn teal accent-3">
@@ -96,16 +85,17 @@
             </div>
         </form>
         <div class="col s3 right">
-            <button class="btn waves-effect waves-light">
-                <i class="material-icons right">file_download</i>
-                download file
-            </button>
+            <form method="get" th:action="@{/download}">
+                <input type="text" name="path" id="path" value="" style="display:none">
+                <button type="submit" id="submit" class="btn waves-effect waves-light" disabled>
+                    <i class="material-icons right">file_download</i>
+                    Download File</button>
+            </form>
         </div>
     </div>
 </div>
 <main th:replace = "index :: main"></main>
 <footer th:replace = "index :: footer"></footer>
-<!-- Compiled and minified JavaScript -->
 <script src="https://kit.fontawesome.com/35db202371.js" crossorigin="anonymous"></script>
 <script src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
 <script th:src="@{/js/materialize/materialize.js}" src="../static/js/materialize/materialize.js"></script>
