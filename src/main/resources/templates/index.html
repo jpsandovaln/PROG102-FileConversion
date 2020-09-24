@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeLeaf.org" lang="es">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0"/>
+  <title>Convert files</title>
+
+  <!-- CSS  -->
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  <link th:href="@{/css/materialize/materialize.css}" href="../static/css/materialize/materialize.css" type="text/css" rel="stylesheet" media="screen,projection"/>
+  <link th:href="@{/css/materialize/style.css}" href="../static/css/materialize/style.css" type="text/css" rel="stylesheet" media="screen,projection"/>
+  <link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
+
+</head>
+<body>
+
+  <!-- Navegation Menu -->
+  <nav class="black" role="navigation">
+    <div class="nav-wrapper container nav">
+      <a id="logo-container" th:href="@{/}" href="" class="brand-logo">
+        <i class="material-icons">camera</i>
+        Converter
+      </a>
+
+      <a href="#" data-target="nav-mobile" class="sidenav-trigger"><i class="material-icons">menu</i></a>
+
+      <ul class="right hide-on-med-and-down">
+        <li><a th:href="@{/}" href="">Home</a></li>
+        <li><a th:href="@{/file_audio}" href="audio/audio.html">Audio</a></li>
+        <li><a th:href="@{/file_video}" href="video/video.html">Video</a></li>
+        <li><a th:href="@{/file_img}" href="img/image.html">Image</a></li>
+        <li><a th:href="@{/file_metadata}" href="metadata/metadata.html">Metadata</a></li>
+        <li><a th:href="@{/file_extractText}" href="docs/docs.html">Extract</a></li>
+        <li><a th:href="@{/login}" href="auth/login.html" class="btn white black-text waves-effect waves-blue-grey lighten-1">login</a></li>
+      </ul>
+
+      <ul id="nav-mobile" class="sidenav">
+        <li><a th:href="@{/}" href="">Home</a></li>
+        <li><a th:href="@{/file_audio}" href="audio/audio.html">Audio</a></li>
+        <li><a th:href="@{/file_video}" href="video/video.html">Video</a></li>
+        <li><a th:href="@{/file_img}" href="img/image.html">Image</a></li>
+        <li><a th:href="@{/file_metadata}" href="metadata/metadata.html">Metadata</a></li>
+        <li><a th:href="@{/file_extractText}" href="docs/docs.html">Extract</a></li>
+        <li><a th:href="@{/login}" href="auth/login.html" class="btn white black-text waves-effect waves-blue-grey lighten-1">login</a></li>
+      </ul>
+      
+    </div>
+  </nav>
+
+  <!-- Slider -->
+  <section class="slider">
+    <ul class="slides">
+      <li>
+        <img th:src="@{/images/animation-1.jpg}" src="../static/images/animation-1.jpg"  > <!-- random image -->
+        <div class="caption center-align">
+          <h3 class=" text-blue">Audio</h3>
+          <h5 class="light grey-text text-lighten-3">change format, cut, stereo</h5>
+          <a th:href="@{/file_audio}"href="audio/audio.html" class="btn btn-large white black-text waves-effect waves-grey">Go</a>
+        </div>
+      </li>
+      <li>
+        <img th:src="@{/images/animation-2.jpg}" src="../static/images/animation-2.jpg" > <!-- random image -->
+        <div class="caption left-align">
+          <h3>Video</h3>
+          <h5 class="light grey-text text-lighten-3">Gif, thumbnail, extract metadata</h5>
+          <a th:href="@{/file_video}" href="video/video.html" class="btn btn-large white black-text waves-effect waves-grey">Go</a>
+        </div>
+      </li>
+      <li>
+        <img th:src="@{/images/animation-3.jpg}" src="../static/images/animation-3.jpg" > <!-- random image -->
+        <div class="caption right-align">
+          <h3>Image</h3>
+          <h5 class="light grey-text text-lighten-3">re-zise, scala gray, thumbnail</h5>
+          <a th:href="@{/file_img}" href="img/image.html" class="btn btn-large white black-text waves-effect waves-grey">Go</a>
+        </div>
+      </li>
+
+    </ul>
+  </section>
+
+<main>
+
+  <div class="container">
+    <div class="section">
+
+      <!--   Icon Section   -->
+      <div class="row">
+        <div class="col s12 m4">
+          <div class="icon-block">
+            <h2 class="center black-text"><i class="material-icons">flash_on</i></h2>
+            <h5 class="center">what you can do !!</h5>
+            <p class="light">We offer a set of tools for audio video and image manipulation, to convert and transmit
+              multimedia content. It supports almost all known codec and digital formats, from the old and unknown
+              to the most advanced. available in all browsers.</p>
+          </div>
+        </div>
+
+        <div class="col s12 m4">
+          <div class="icon-block">
+            <h2 class="center black-text"><i class="material-icons">group</i></h2>
+            <h5 class="center">User Experience Focused</h5>
+
+            <p class="light">In times like today, where the new goes out of style so quickly,
+              we know that it is very important to have tools within reach of our environment,
+              which is why we offer these useful services online and within the scope of your needs.</p>
+          </div>
+        </div>
+
+        <div class="col s12 m4">
+          <div class="icon-block">
+            <h2 class="center black-text"><i class="material-icons">settings</i></h2>
+            <h5 class="center">Easy to work with</h5>
+
+            <p class="light">We have provided detailed documentation as well as specific examples to help new users get
+              started. We are also always open to comments and can answer any questions a user may have about our services.</p>
+          </div>
+        </div>
+      </div>
+
+    </div>
+    <br><br>
+  </div>
+
+  <!-- services -->
+  <section class="container">
+   <h2 class="center">Our Services</h2>
+
+   <div class="row">
+     
+    <div class="col s12 m12 l6">
+      <div class="card">
+        <div class="card-image waves-effect waves-block waves-light">
+          <img class="activator" th:src="@{/images/scalagray.jpg}" src="../static/images/scalagray.jpg" >
+        </div>
+        <div class="card-content">
+          <span class="card-title activator grey-text text-darken-4">Change your image to scala gray</span>
+        </div>
+      </div>           
+    </div>
+
+    <div class="col s12 m12 l6">
+      <div class="card">
+        <div class="card-image waves-effect waves-block waves-light">
+          <img class="activator" th:src="@{/images/cut.jpg}" src="../static/images/cut.jpg" >
+        </div>
+        <div class="card-content">
+          <span class="card-title activator grey-text text-darken-4">Re-size your file</span>
+        </div>
+      </div>           
+    </div>
+
+    <div class="col s12 m12 l6">
+      <div class="card">
+        <div class="card-image waves-effect waves-block waves-light">
+          <img class="activator" th:src="@{/images/gif.GIF}" src="../static/images/gif.GIF" >
+        </div>
+        <div class="card-content">
+          <span class="card-title activator grey-text text-darken-4">Convert your video to GIF</span>
+        </div>
+      </div>           
+    </div>
+    <div class="col s12 m12 l6">
+      <div class="card">
+        <div class="card-image waves-effect waves-block waves-light">
+          <img class="activator" th:src="@{/images/metadata.jpg}" src="../static/images/metadata.jpg">
+        </div>
+        <div class="card-content">
+          <span class="card-title activator grey-text text-darken-4">Extract the data from your file</span>
+        </div>
+      </div>           
+    </div>
+   </div>
+  </section>
+
+</main>
+
+  <footer class="page-footer black">
+    
+    <div class="social-container">
+      <a href="facebook.com"><i class="fab fa-facebook-square"></i></a>
+      <a href="#"><i class="fab fa-instagram"></i></a>
+      <a href="#"><i class="fab fa-twitter"></i></a>
+      <a href="youtube.com"><i class="fab fa-youtube"></i></a>
+      <a href="#"><i class="fab fa-github"></i></a>
+    </div>
+
+    <div class="footer-copyright">
+      <div class="container center footer-text">
+        © 2020 Copyright AT12 prog102
+      </div>
+    </div>
+  </footer>
+
+
+  <!--  Scripts-->
+  <script src="https://kit.fontawesome.com/35db202371.js" crossorigin="anonymous"></script>
+  <script src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+  <script th:src="@{/js/materialize/materialize.js}" src="../static/js/materialize/materialize.js"></script>
+  <script th:src="@{/js/materialize/init.js}" src="../static/js/materialize/init.js"></script>
+
+  </body>
+</html>
