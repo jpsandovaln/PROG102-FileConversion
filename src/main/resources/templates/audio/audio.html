@@ -52,10 +52,10 @@
                     <input type="text" id="md5" name="md5" class="validate" >
                     <label for="md5">MD5:</label>
                 </div>
-                <div class="input-field col s4">
-                    <label for="isCut">
-                        <input id="isCut" name="isCut" type="checkbox" />
-                        <span>cut</span>
+                <div class="input-field col s12 m4">
+                    <label for="extractThumbnail">
+                        <input id="extractThumbnail" name="extractThumbnail" type="checkbox" />
+                        <span>Cut</span>
                     </label>
                 </div>
                 <div class="input-field col s12 m4">
@@ -91,6 +91,7 @@
 </div>
 <main th:replace = "index :: main"></main>
 <footer th:replace = "index :: footer"></footer>
+<script th:src="@{/js/audio/audio.js}"></script>
 <!-- Compiled and minified JavaScript -->
 <script src="https://kit.fontawesome.com/35db202371.js" crossorigin="anonymous"></script>
 <script src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
