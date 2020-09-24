@@ -6,14 +6,13 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.ExecutionException;
 
-import org.fundacionjala.converter.model.parameter.ModelParameter;
 import org.fundacionjala.converter.model.parameter.metadata.MetadataParameter;
 import org.fundacionjala.converter.model.parameter.multimedia.VideoParameter;
 import org.fundacionjala.converter.executor.Executor;
 import org.fundacionjala.converter.model.commons.ChecksumMD5;
 import org.fundacionjala.converter.model.configPath.ConfigPath;
 
-public class VideoModel implements ICommand {
+public class VideoModel implements ICommand<VideoParameter> {
     private List<String> listParameters;
     private List<String> listThumbnailParameters;
     private List<List<String>> list;
@@ -177,10 +176,9 @@ public class VideoModel implements ICommand {
      * @throws NoSuchAlgorithmException
      */
     @Override
-    public List<List<String>> createCommand(final ModelParameter modelParameter)
+    public List<List<String>> createCommand(final VideoParameter videoParameter)
             throws NoSuchAlgorithmException, IOException, InterruptedException, ExecutionException {
         list = new ArrayList<>();
-        VideoParameter videoParameter = (VideoParameter) modelParameter;
         list.add(convert(videoParameter));
         if (videoParameter.isExtractThumbnail()) {
             list.add(extractThumbnail(videoParameter));

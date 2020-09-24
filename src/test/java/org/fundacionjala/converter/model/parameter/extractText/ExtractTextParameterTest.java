@@ -1,17 +1,15 @@
 package org.fundacionjala.converter.model.parameter.extractText;
 
+import org.fundacionjala.converter.model.command.extractText.DocType;
+import org.fundacionjala.converter.model.parameter.extractText.ExtractTextParameter;
 import org.junit.Test;
-import static org.junit.Assert.assertEquals;
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
 
-import org.fundacionjala.converter.model.command.ExtractTextModel;
-import org.fundacionjala.converter.model.parameter.ModelParameter;
+import static org.junit.Assert.assertEquals;
 
 public class ExtractTextParameterTest {
-    String inputFile = "D:\\AT\\PROG102\\code\\PROG102-FileConversion\\storage\\inputFiles\\image.png";
+    /*String inputFile = "D:\\AT\\PROG102\\code\\PROG102-FileConversion\\storage\\inputFiles\\image.png";
     String outputFile = "D:\\AT\\PROG102\\code\\PROG102-FileConversion\\storage\\outputFiles\\image-txt";
     String languageSp = "español";
     String languageEn = "english";
@@ -51,10 +49,26 @@ public class ExtractTextParameterTest {
         String expected = toolPath + " " + inputFile + " " + outputFile + " " + "-l spa";
         eTextParameter.setInputFile(inputFile);
         eTextParameter.setOutputFile(outputFile);
-        ((ExtractTextParameter) eTextParameter).setLanguage(languageSp);
-        ((ExtractTextParameter) eTextParameter).setType(type);
+        (eTextParameter).setLanguage(languageSp);
+        (eTextParameter).setType(type);
         listCommands = eTextModelSp.createCommand(eTextParameter);
         String actual = listCommands.get(0).get(0) + " " + listCommands.get(0).get(1) + " " + listCommands.get(0).get(2) + " " + listCommands.get(0).get(3);
         assertEquals(expected, actual);
     }
+    @Test
+    public void setLanguage() {
+        try {
+            ExtractTextParameter parameter = new ExtractTextParameter();
+            parameter.setInputFile("storage/inputFiles/imagen6.jpg");
+            parameter.setLanguage("spa");
+            parameter.setType(DocType.PDF);
+        } catch (ExtractTextParameterException | IOException e) {
+
+        }
+    }
+    @Test(expected = ExtractTextParameterException.class)
+    public void setNullIntoLanguage() throws ExtractTextParameterException{
+        ExtractTextParameter parameter = new ExtractTextParameter();
+        parameter.setLanguage("sp");
+    }*/
 }

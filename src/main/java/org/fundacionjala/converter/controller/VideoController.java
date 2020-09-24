@@ -12,7 +12,6 @@ import org.fundacionjala.converter.controller.request.RequestVideoParameter;
 import org.fundacionjala.converter.executor.Executor;
 import org.fundacionjala.converter.model.ChecksumMD5;
 import org.fundacionjala.converter.model.command.VideoModel;
-import org.fundacionjala.converter.model.parameter.ModelParameter;
 import org.fundacionjala.converter.database.entity.File;
 import org.fundacionjala.converter.model.parameter.multimedia.VideoParameter;
 import org.fundacionjala.converter.controller.service.FileService;
@@ -50,19 +49,19 @@ public class VideoController {
         result = "saved in data base";
     }
     try {
-    VideoModel video = new VideoModel();
     String outputFile = "storage/convertedFiles/";
-    ModelParameter videoParameter = new VideoParameter();
-    videoParameter.setOutputFile(outputFile);
-    ((VideoParameter) videoParameter).setFrames(requestVideoParameter.getFrames());
-    ((VideoParameter) videoParameter).setExtension(requestVideoParameter.getFormat());
-    ((VideoParameter) videoParameter).setVideoCodec(requestVideoParameter.getVideoCodec());
-    ((VideoParameter) videoParameter).setAudioCodec(requestVideoParameter.getAudioCodec());
+    VideoModel videoModel = new VideoModel();
+    VideoParameter videoParameter = new VideoParameter();
+        videoParameter.setOutputFile(outputFile);
+        videoParameter.setFrames(requestVideoParameter.getFrames());
+        videoParameter.setExtension(requestVideoParameter.getFormat());
+        videoParameter.setVideoCodec(requestVideoParameter.getVideoCodec());
+        videoParameter.setAudioCodec(requestVideoParameter.getAudioCodec());
     if (requestVideoParameter.getExtractThumbnail() == 1) {
-        ((VideoParameter) videoParameter).setExtractThumbnail(true);
+        videoParameter.setExtractThumbnail(true);
     }
     Executor executor = new Executor();
-    executor.executeCommandsList(video.createCommand(videoParameter));
+    executor.executeCommandsList(videoModel.createCommand(videoParameter));
     } catch (Exception e) {
       e.printStackTrace();
     }
