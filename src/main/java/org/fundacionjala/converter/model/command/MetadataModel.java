@@ -1,18 +1,14 @@
 package org.fundacionjala.converter.model.command;
 
-import org.fundacionjala.converter.executor.Executor;
 import org.fundacionjala.converter.model.configPath.ConfigPath;
 import org.fundacionjala.converter.model.parameter.ModelParameter;
 import org.fundacionjala.converter.model.parameter.metadata.MetadataParameter;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-import java.util.concurrent.ExecutionException;
 
 public class MetadataModel implements ICommand {
-    //static final String REDIRECTION = ">";
 
     /**
      *
@@ -33,7 +29,7 @@ public class MetadataModel implements ICommand {
             parameterList.add("-" + metadataParameter.getDetail());
         }
         parameterList.add(metadataParameter.getInputFile());
-        parameterList.add(metadataParameter.getOutputFile() +"_"+ new Date().getTime() + formatSuffix(metadataParameter.getFormat()));
+        parameterList.add(metadataParameter.getOutputFile() + "_" + new Date().getTime() + formatSuffix(metadataParameter.getFormat()));
         finalList.add(parameterList);
         return finalList;
     }
@@ -51,13 +47,5 @@ public class MetadataModel implements ICommand {
             default:
                 return ".XMP";
         }
-    }
-
-    public static void main(String[] args) throws InterruptedException, IOException, ExecutionException {
-        MetadataParameter mp = new MetadataParameter("storage\\inputFiles\\aud.mp3", "t", "d", "storage\\convertedFiles\\meta", "abcabcabc");
-        Executor e = new Executor();
-        MetadataModel mm = new MetadataModel();
-        String result = e.executeCommandsList(mm.createCommand(mp)).toString();
-        System.out.println(result);
     }
 }
