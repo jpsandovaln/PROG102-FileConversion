@@ -12,8 +12,8 @@ import org.fundacionjala.converter.database.entity.File;
 import org.springframework.data.repository.CrudRepository;
 
 /**
- * @author Laura Montaño
- * @version 0.1
+ * @author Laura Montaño, Mirko Romay R.
+ * @version 0.3
  */
 public interface FileRepository extends CrudRepository<File, Long> {
     File findByMd5(String md5);

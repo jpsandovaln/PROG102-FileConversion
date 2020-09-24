@@ -2,18 +2,14 @@ package org.fundacionjala.converter.model.parameter.multimedia;
 
 public class VideoParameter extends MultimediaParameter {
     private String extension;
-    private String filePath;
-    private String pathConvertedFile;
-    private String toolPath;
     public static final String VCODEC_COMMAND = "-vcodec";
-    private String vCodec;
+    private String videoCodec;
     public static final String ACODEC_COMMAND = "-acodec";
     public static final String ACODEC_MP2 = "mp2";
-    private String aCodec;
+    private String audioCodec;
     public static final String FRAME_RATE = "-r";
     private String frames;
     public static final String INPUT_COMMAND = "-i";
-    //params for thumbnail
     public static final String START = "-ss";
     public static final String START_TIME = "10";
     public static final String TIME = "-t";
@@ -22,51 +18,44 @@ public class VideoParameter extends MultimediaParameter {
     public static final String PALETTE = "\"fps=10,scale=320:-1:flags=lanczos,split[s0][s1];[s0]palettegen[p];[s1][p]paletteuse\"";
     public static final String LOOP = "-loop";
     public static final String ZERO = "0";
-    private boolean extractMetadata;
-    private boolean extractThumbnail;
+    private boolean extractMetadata = false;
+    private boolean extractThumbnail = false;
 
-    public VideoParameter(final String toolPath, final String pathConvertedFile) {
-        this.toolPath = toolPath;
-        this.pathConvertedFile = pathConvertedFile;
-        extractMetadata = false;
-        extractThumbnail = false;
+    /**
+     * Sets video codec
+     * @param videoCodec
+     */
+    public void setVideoCodec(final String videoCodec) {
+        this.videoCodec = videoCodec;
     }
 
     /**
-     *
-     * @param vCodec
+     * Gets audio codec
+     * @param audioCodec
      */
-    public void setVCodec(final String vCodec) {
-        this.vCodec = vCodec;
+    public void setAudioCodec(final String audioCodec) {
+        this.audioCodec = audioCodec;
     }
 
     /**
-     *
-     * @param aCodec
+     * Gets video codec
+     * @return videoCodec
      */
-    public void setACodec(final String aCodec) {
-        this.aCodec = aCodec;
+    public String getVideoCodec() {
+        return videoCodec;
     }
 
     /**
-     *
-     * @return
+     * Gets audio codec
+     * @return audioCodec
      */
-    public String getVCodec() {
-        return vCodec;
-    }
-
-    /**
-     *
-     * @return
-     */
-    public String getACodec() {
-        return aCodec;
+    public String getAudioCodec() {
+        return audioCodec;
     }
 
     /**
      * Returns the frames per second
-     * @return String
+     * @return String - the frames
      */
     public String getFrames() {
         return frames;
@@ -82,7 +71,7 @@ public class VideoParameter extends MultimediaParameter {
 
     /**
      * Returns extractMetadata value
-     * @return boolean
+     * @return boolean - the reference to extractMetadata of this object
      */
     public boolean isExtractMetadata() {
         return extractMetadata;
@@ -90,9 +79,9 @@ public class VideoParameter extends MultimediaParameter {
 
     /**
      * Sets extractMetadata value
-     * @param extractThumbnail
+     * @param extractMetadata
      */
-    public void setExtractMetadata(final boolean extractThumbnail) {
+    public void setExtractMetadata(final boolean extractMetadata) {
         this.extractMetadata = extractMetadata;
     }
 
@@ -113,14 +102,6 @@ public class VideoParameter extends MultimediaParameter {
     }
 
     /**
-     * Returns the path of tool to convert video
-     * @return toolPath
-     */
-    public String getToolPath() {
-        return toolPath;
-    }
-
-    /**
      * Returns the extension to convert the video
      * @return extension
      */
@@ -130,38 +111,9 @@ public class VideoParameter extends MultimediaParameter {
 
     /**
      * Sets the extension to convert the video
-     * @param extension
+     * @param extension - the extension to set
      */
     public void setExtension(final String extension) {
         this.extension = extension;
-    }
-
-
-    /**
-     * This method return the file name
-     */
-    public String getFilePath() {
-        return filePath;
-    }
-
-    /**
-     *
-     * @param filePath
-     */
-    public void setFilePath(final String filePath) {
-        this.filePath = filePath;
-    }
-    /**
-     * This method setOutputFileName
-     */
-    public void setPathConvertedFile(final String pathConvertedFile) {
-        this.pathConvertedFile = pathConvertedFile;
-    }
-
-    /**
-     * This method returns getOutputFileNmae
-     */
-    public String getPathConvertedFile() {
-        return pathConvertedFile;
     }
 }
