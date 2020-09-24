@@ -75,4 +75,13 @@ public class ViewController {
     public String homeUser() {
         return "auth/welcome";
     }
+
+    /**
+     * displays view user logged
+     * @return user view
+     */
+    @GetMapping("/createAccount")
+    public String createAccount() {
+        return "auth/createAccount";
+    }
 }
