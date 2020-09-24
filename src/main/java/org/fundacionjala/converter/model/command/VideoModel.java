@@ -29,6 +29,8 @@ public class VideoModel implements ICommand<VideoParameter> {
     private static final String INPUT_PATH_METADATA = "storage\\convertedFiles\\";
     private static final String FORMAT = "j";    //json
     private static final String DETAIL = "v";
+    private static final int ZERO = 0;
+    private static final int ONE = 1;
 
     /**
      * Returns list of commands to convert the video to mp4 or gif
@@ -122,7 +124,7 @@ public class VideoModel implements ICommand<VideoParameter> {
             File file = new File(path);
             String checksum = new ChecksumMD5().getMD5(path);
             String[] parts = file.getName().split(DOT_SEPARATOR);
-            String outputFile = parts[0] + parts[1] + DASH + META;
+            String outputFile = parts[ZERO] + parts[ONE] + DASH + META;
             listMetadataParameters.add(new MetadataParameter(INPUT_PATH_METADATA + file.getName(), FORMAT, DETAIL, INPUT_PATH_METADATA + outputFile, checksum));
         }
         return listMetadataParameters;
@@ -173,7 +175,7 @@ public class VideoModel implements ICommand<VideoParameter> {
         list.add(convert(videoParameter));
         if (videoParameter.isExtractThumbnail()) {
             String[] parts = videoParameter.getFormat().split(DOT_SEPARATOR);
-            if (!parts[1].equals(GIF)) {
+            if (!parts[ONE].equals(GIF)) {
                 name(videoParameter);
                 changeOutputFile(videoParameter);
                 list.add(extractThumbnail(videoParameter));
@@ -196,7 +198,7 @@ public class VideoModel implements ICommand<VideoParameter> {
         File file = new File(path);
         File pathFileConverted = file.getParentFile();
         String[] parts = file.getName().split(DOT_SEPARATOR);
-        String newName = parts[0] + DOT + GIF;
+        String newName = parts[ZERO] + DOT + GIF;
         String newOutputFile = pathFileConverted.toString() + SEPARATOR + newName;
         videoParameter.setFormat(GIF);
         videoParameter.setOutputFile(newOutputFile);
