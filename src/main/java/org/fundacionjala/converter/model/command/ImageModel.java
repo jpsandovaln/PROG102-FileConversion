@@ -3,6 +3,7 @@ package org.fundacionjala.converter.model.command;
 import org.fundacionjala.converter.model.configPath.ConfigPath;
 import org.fundacionjala.converter.model.parameter.ModelParameter;
 import org.fundacionjala.converter.model.parameter.image.ImageParameter;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -20,6 +21,7 @@ public class ImageModel implements ICommand {
         command.add(imageParameter.getInputFile());
         command.add("-resize " + imageParameter.getHeight() + "x" + imageParameter.getWidth());
         command.add("!");
+        name(imageParameter);
         command.add(imageParameter.getOutputFile());
         return command;
     }
@@ -30,6 +32,7 @@ public class ImageModel implements ICommand {
         command.add(imageParameter.getInputFile());
         command.add("-resize");
         command.add("128x128");
+        name(imageParameter);
         command.add(imageParameter.getOutputFile());
         return command;
     }
@@ -41,6 +44,7 @@ public class ImageModel implements ICommand {
         command.add(imageParameter.getInputFile());
         command.add("-crop");
         command.add(imageParameter.getCrop());
+        name(imageParameter);
         command.add(imageParameter.getOutputFile());
         return command;
     }
@@ -51,6 +55,7 @@ public class ImageModel implements ICommand {
         command.add(imageParameter.getInputFile());
         command.add("-colorspace");
         command.add("gray");
+        name(imageParameter);
         command.add(imageParameter.getOutputFile());
         return command;
     }
