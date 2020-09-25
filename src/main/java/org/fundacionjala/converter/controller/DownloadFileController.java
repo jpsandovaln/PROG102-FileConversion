@@ -33,7 +33,7 @@ public class DownloadFileController {
         File file = new File(path);
         HttpHeaders header = new HttpHeaders();
         String ext = FilenameUtils.getExtension(path);
-        header.add(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=" +filenameDownload + "." + ext);
+        header.add(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=" + filenameDownload + "." + ext);
         header.add("Cache-Control", "no-cache, no-store, must-revalidate");
         header.add("Pragma", "no-cache");
         header.add("Expires", "0");
