@@ -17,6 +17,7 @@ import org.fundacionjala.converter.database.entity.File;
 import org.fundacionjala.converter.model.parameter.multimedia.VideoParameter;
 import org.fundacionjala.converter.controller.service.FileService;
 import org.fundacionjala.converter.controller.service.FileUploadService;
+import org.fundacionjala.converter.controller.service.FileZipped;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseEntity;
@@ -65,9 +66,11 @@ public class VideoController {
             videoParameter.setOutputFile(output);
             Executor executor = new Executor();
             VideoModel video = new VideoModel();
-            List<String> result = executor.executeCommandsList(video.createCommand(videoParameter));
+            System.out.println(video.createCommand(videoParameter));
+            String result = FileZipped.zipper(videoParameter,
+                    executor.executeCommandsList(video.createCommand(videoParameter)));
             return ResponseEntity.ok().body(
-                    new OkResponse<Integer>(HttpServletResponse.SC_OK, result.toString()));
+                    new OkResponse<Integer>(HttpServletResponse.SC_OK, result));
         } catch (IOException | InterruptedException | ExecutionException e) {
               return ResponseEntity.badRequest()
                       .body(new ErrorResponse<Integer>(HttpServletResponse.SC_BAD_REQUEST, e.getMessage()));
