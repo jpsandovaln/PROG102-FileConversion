@@ -5,7 +5,7 @@ $(document).ready(function () {
         event.preventDefault();
         $.ajax({
             type: 'POST',
-            url: '/upload_file',
+            url: '/convertVideo',
             data: new FormData(this),
             enctype: 'multipart/form-data',
             processData: false,
@@ -23,3 +23,4 @@ $(document).ready(function () {
         });
     });
 });
+
