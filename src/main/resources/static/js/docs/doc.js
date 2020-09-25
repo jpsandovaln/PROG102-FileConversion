@@ -1,5 +1,5 @@
 $(document).ready(function () {
-    $('#form-ET').submit(function( event ) {
+    $('#form-extract').submit(function( event ) {
         // Stop form from submitting normally
         event.preventDefault();
         $.ajax({

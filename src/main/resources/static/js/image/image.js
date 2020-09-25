@@ -1,5 +1,5 @@
 $(document).ready(function () {
-    $('#form-img').submit(function( event ) {
+    $('#form-image').submit(function( event ) {
         // Stop form from submitting normally
         event.preventDefault();
         $.ajax({
