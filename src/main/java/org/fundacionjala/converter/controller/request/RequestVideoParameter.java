@@ -73,7 +73,6 @@ public class RequestVideoParameter extends RequestMultimediaParameter {
     public String getVideoCodec() {
         return videoCodec;
     }
-
     /**
      * @return the extractMetadata
      */
