@@ -8,11 +8,16 @@ public abstract class ModelParameter {
   private String md5;
   private String format;
 
+  public ModelParameter() {
+  }
   /**
    *
    * @param md5
    */
   public void setMd5(final String md5) {
+  public ModelParameter(final String inputFile, final String outputFile, final String md5) {
+    this.inputFile = inputFile;
+    this.outputFile = outputFile;
     this.md5 = md5;
   }
 
@@ -37,15 +42,6 @@ public abstract class ModelParameter {
    */
   public void setFormat(final String format) {
     this.format = format;
-  }
-
-  public ModelParameter() {
-  }
-
-  public ModelParameter(final String inputFile, final String outputFile, final String md5) {
-    this.inputFile = inputFile;
-    this.outputFile = outputFile;
-    this.md5 = md5;
   }
 
   /**
