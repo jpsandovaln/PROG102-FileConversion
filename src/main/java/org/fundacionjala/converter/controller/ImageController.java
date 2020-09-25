@@ -11,6 +11,7 @@ package org.fundacionjala.converter.controller;
 import org.fundacionjala.converter.controller.request.RequestImageParameter;
 import org.fundacionjala.converter.controller.response.ErrorResponse;
 import org.fundacionjala.converter.controller.response.OkResponse;
+import org.fundacionjala.converter.controller.service.FileZipped;
 import org.fundacionjala.converter.executor.Executor;
 import org.fundacionjala.converter.model.command.ImageModel;
 import org.fundacionjala.converter.model.parameter.image.ImageParameter;
@@ -57,11 +58,14 @@ public class ImageController {
             imageParameter.setInputFile(filePath);
             imageParameter.setIsGray(requestImageParameter.getGray());
             imageParameter.setIsThumbnail(requestImageParameter.getThumbnail());
+            imageParameter.setName(md5);
+            imageParameter.setFormat(requestImageParameter.getExportFormat());
             imageParameter.setOutputFile(output + md5 + requestImageParameter.getExportFormat());
 
             Executor executor = new Executor();
             ImageModel imageModel = new ImageModel();
             List<String> result = executor.executeCommandsList(imageModel.createCommand(imageParameter));
+            System.out.println(FileZipped.zipper(imageParameter, result));
             return ResponseEntity.ok().body(
                     new OkResponse<Integer>(HttpServletResponse.SC_OK, result.toString()));
         } catch (IOException | InterruptedException | ExecutionException e) {
