@@ -15,6 +15,8 @@ public abstract class ModelParameter {
    * @param md5
    */
   public void setMd5(final String md5) {
+    this.md5 = md5;
+  }
   public ModelParameter(final String inputFile, final String outputFile, final String md5) {
     this.inputFile = inputFile;
     this.outputFile = outputFile;

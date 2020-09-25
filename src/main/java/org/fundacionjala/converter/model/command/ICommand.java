@@ -1,7 +1,6 @@
 package org.fundacionjala.converter.model.command;
 
 import org.fundacionjala.converter.model.parameter.ModelParameter;
-import org.fundacionjala.converter.model.parameter.image.ImageParameter;
 
 import java.io.File;
 import java.util.List;
@@ -16,7 +15,7 @@ public interface ICommand<T extends ModelParameter> {
      *
      * @param modelParameter the parameter that will be added sufix
      */
-    default void name(final ImageParameter modelParameter) {
+    default void name(final ModelParameter modelParameter) {
         String fileName = modelParameter.getOutputFile();
         File aFile = new File(fileName);
         int fileNo = 0;
