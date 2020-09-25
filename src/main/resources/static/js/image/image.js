@@ -4,16 +4,16 @@ $(document).ready(function () {
         rules: {
             file: 'required',
             name: 'required',
-            format: 'required',
+            exportFormat: 'required',
             md5: {
                 required: true,
                 minlength: 32,
             },
-            positionX: {
+            position: {
                 required:{
                 depends:function ()
                     {
-                        if($('#reSize').prop('checked'))
+                        if($('#changeSize').prop('checked'))
                         {
                             return true;
                         }
@@ -22,18 +22,6 @@ $(document).ready(function () {
                     }
                 }
             },
-             positionY: {
-                 required:{
-                 depends:function ()
-                     {
-                         if($('#reSize').prop('checked'))
-                         {
-                             return true;
-                         }
-                         return false;
-                     }
-                 }
-             },
             height: {
                 required:true,
                 number:true
@@ -46,13 +34,12 @@ $(document).ready(function () {
         messages: {
             file: 'please insert the file',
             name: 'please insert the name',
-            format: 'please insert the format',
+            exportFormat: 'please insert the format',
             md5: {
                 required: "Please, insert the md5",
                 minlength: "Your md5 code must consist of at least 32 characters",
             },
-            positionX: 'please insert the channel',
-            positionY: 'please insert if its cut',
+            position: 'please insert the position',
             height: {
                 required:'please, insert the height',
                 number: 'Please, insert just numbers'
