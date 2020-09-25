@@ -51,5 +51,14 @@ nav {
     cursor: pointer;
 }
 .input-field div.error {
-    color: rgb(255, 0, 0);
+    color:red;
+}
+
+.select-validate{
+    border-color:#F44336;
+    border-width:2px;
+}
+.select-was-validate{
+    border-color:green;
+    border-width:2px;
 }
