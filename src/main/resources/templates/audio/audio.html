@@ -6,7 +6,7 @@
 <!--formularios-->
 <div class="section container">
     <div class="row">
-        <form class="col s12" id="form-audio" method="post" th:action="@{convertAudio}" enctype="multipart/form-data">
+        <form action="" class="col s12" id="form-audio" method="post" th:action="@{/convertAudio}" enctype="multipart/form-data">
             <div  class="row card-panel z-depth-5">
                <div class="file-field input-field col s12 m6">
                     <div class="btn teal accent-3">
@@ -15,7 +15,7 @@
                         <input class="file-path validate" type="text">
                     </div>
                     <div class="file-path-wrapper">
-                        <input  name="file" type="file">
+                        <input type="file" id="file" name="file" onchange="calculate()" />
                     </div>
                 </div>
                 <div class="input-field col s12 m6">
@@ -67,8 +67,8 @@
                     <label for="duration">duration:</label>
                 </div>
                 <div class="input-field col s12">
-                    <label for="isMetadata">
-                        <input id="isMetadata" name="isMetadata" type="checkbox" />
+                    <label for="extractMetadata">
+                        <input id="extractMetadata" name="extractMetadata" type="checkbox" />
                         <span>Metadata</span>
                     </label>
                 </div>
@@ -80,9 +80,10 @@
             </div>
         </form>
         <div class="col s3 right">
-            <form method="get" th:action="@{/download}">
+            <form method="get" th:action="@{/download/}">
                 <input type="text" name="path" id="path" value="" style="display:none">
-                <button type="submit" id="submit" class="btn waves-effect waves-light" disabled>
+                <input type="text" name="filenameDownload" id="filenameDownload" value="" style="display:none">
+                <button type="submit" id="submited" class="btn waves-effect waves-light" disabled>
                     <i class="material-icons right">file_download</i>
                     Download File</button>
             </form>
@@ -91,11 +92,6 @@
 </div>
 <main th:replace = "index :: main"></main>
 <footer th:replace = "index :: footer"></footer>
-<!-- Compiled and minified JavaScript -->
-<script src="https://kit.fontawesome.com/35db202371.js" crossorigin="anonymous"></script>
-<script src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
 <script th:src="@{/js/audio/audio.js}"></script>
-<script th:src="@{/js/materialize/materialize.js}" src="../static/js/materialize/materialize.js"></script>
-<script th:src="@{/js/materialize/init.js}" src="../static/js/materialize/init.js"></script>
 </body>
 </html>

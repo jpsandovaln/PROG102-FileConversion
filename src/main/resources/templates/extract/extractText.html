@@ -15,7 +15,7 @@
                         <input class="file-path validate" type="text">
                     </div>
                     <div class="file-path-wrapper">
-                        <input  name="file" type="file">
+                        <input type="file" id="file" name="file" onchange="calculate()" />
                     </div>
                 </div>
                 <div class="input-field col s12 m6">
@@ -62,11 +62,6 @@
 </div>
 <main th:replace = "index :: main"></main>
 <footer th:replace = "index :: footer"></footer>
-<!-- Compiled and minified JavaScript -->
-<script src="https://kit.fontawesome.com/35db202371.js" crossorigin="anonymous"></script>
-<script src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
 <script th:src="@{/js/extractText/extractText.js}"></script>
-<script th:src="@{/js/materialize/materialize.js}" src="../static/js/materialize/materialize.js"></script>
-<script th:src="@{/js/materialize/init.js}" src="../static/js/materialize/init.js"></script>
 </body>
 </html>
