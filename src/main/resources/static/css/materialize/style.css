@@ -50,3 +50,6 @@ nav {
     transition: 0.2s ease-out;
     cursor: pointer;
 }
+.input-field div.error {
+    color: rgb(214, 77, 124);
+}
