@@ -29,11 +29,11 @@ public class DownloadFileController {
      * @throws Exception
      */
     @RequestMapping(path = "/download", method = RequestMethod.GET)
-    public ResponseEntity<Resource> download(final @RequestParam("path") String path) throws IOException {
+    public ResponseEntity<Resource> download(final @RequestParam("path") String path, final @RequestParam("filenameDownload") String filenameDownload) throws IOException {
         File file = new File(path);
         HttpHeaders header = new HttpHeaders();
         String ext = FilenameUtils.getExtension(path);
-        header.add(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=metadata" + "." + ext);
+        header.add(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=" +filenameDownload + "." + ext);
         header.add("Cache-Control", "no-cache, no-store, must-revalidate");
         header.add("Pragma", "no-cache");
         header.add("Expires", "0");
