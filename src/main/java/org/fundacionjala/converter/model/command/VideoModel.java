@@ -9,8 +9,6 @@ import java.util.concurrent.ExecutionException;
 
 import org.fundacionjala.converter.model.parameter.metadata.MetadataParameter;
 import org.fundacionjala.converter.model.parameter.multimedia.VideoParameter;
-import org.fundacionjala.converter.executor.Executor;
-import org.fundacionjala.converter.model.commons.ChecksumMD5;
 import org.fundacionjala.converter.model.configPath.ConfigPath;
 
 public class VideoModel implements ICommand<VideoParameter> {
@@ -19,6 +17,9 @@ public class VideoModel implements ICommand<VideoParameter> {
     private List<List<String>> list;
     private List<List<String>> listMetadataCommands;
     private List<MetadataParameter> listMetadataParameters;
+    private List<String> outputFiles;
+    private boolean convertedGif = false;
+    private boolean convertedMp4 = false;
     private static final String MP4 = "mp4";
     private static final String GIF = "gif";
     private static final String META = "meta";
@@ -26,6 +27,9 @@ public class VideoModel implements ICommand<VideoParameter> {
     private static final String SEPARATOR = "\\";
     private static final String DOT = ".";
     private static final String DASH = "-";
+    private static final String PARENTHESIS_OPEN = "(";
+    private static final String PARENTHESIS_CLOSE_DOT = ").";
+    private static final String NUMBER_ONE = "(1).";
     private static final String INPUT_PATH_METADATA = "storage\\convertedFiles\\";
     private static final String FORMAT = "j";    //json
     private static final String DETAIL = "v";
@@ -44,14 +48,14 @@ public class VideoModel implements ICommand<VideoParameter> {
         String fileName = file.getName();
         videoParameter.setFileName(fileName);
         String[] parts = fileName.split(DOT_SEPARATOR);
-        videoParameter.setFormat(parts[1]);
+        //videoParameter.setFormat(parts[ONE]);
         videoParameter.setFormat(DOT_SEPARATOR + videoParameter.getExtension());
         if (videoParameter.getExtension().equals(MP4)) {
             String fullPathOutputFile = videoParameter.getOutputFile() + videoParameter.getFileName();
             videoParameter.setOutputFile(fullPathOutputFile);
             return compressToMp4(videoParameter);
         } else if (videoParameter.getExtension().equals(GIF)) {
-            String fullPathOutputFile = videoParameter.getOutputFile() + parts[0] + DOT + GIF;
+            String fullPathOutputFile = videoParameter.getOutputFile() + parts[ZERO] + DOT + GIF;
             videoParameter.setOutputFile(fullPathOutputFile);
             return gif(videoParameter);
         }
@@ -65,6 +69,7 @@ public class VideoModel implements ICommand<VideoParameter> {
      * @return List<String> - list of commands to convert
      */
     private List<String> compressToMp4(final VideoParameter videoParameter) {
+        convertedMp4 = true;
         final ConfigPath cPath = new ConfigPath();
         listParameters = new ArrayList<String>();
         listParameters.add(cPath.getVideoAudioTool());
@@ -76,6 +81,7 @@ public class VideoModel implements ICommand<VideoParameter> {
         listParameters.add(videoParameter.getAudioCodec());
         name(videoParameter);
         listParameters.add(videoParameter.getOutputFile());
+        outputFiles.add(videoParameter.getOutputFile());
         return listParameters;
     }
 
@@ -101,6 +107,7 @@ public class VideoModel implements ICommand<VideoParameter> {
         listThumbnailParameters.add(VideoParameter.ZERO);
         name(videoParameter);
         listThumbnailParameters.add(videoParameter.getOutputFile());
+        outputFiles.add(videoParameter.getOutputFile());
         return listThumbnailParameters;
     }
 
@@ -117,12 +124,9 @@ public class VideoModel implements ICommand<VideoParameter> {
     private List<MetadataParameter> extractMetadata(final VideoParameter videoParameter)
             throws NoSuchAlgorithmException, IOException, InterruptedException, ExecutionException {
         listMetadataParameters = new ArrayList<>();
-        Executor executor = new Executor();
-        List<String> outputFiles;
-        outputFiles = executor.executeCommandsList(this.list);
+        String checksum = "";
         for (String path : outputFiles) {
             File file = new File(path);
-            String checksum = new ChecksumMD5().getMD5(path);
             String[] parts = file.getName().split(DOT_SEPARATOR);
             String outputFile = parts[ZERO] + parts[ONE] + DASH + META;
             listMetadataParameters.add(new MetadataParameter(INPUT_PATH_METADATA + file.getName(), FORMAT, DETAIL, INPUT_PATH_METADATA + outputFile, checksum));
@@ -148,6 +152,7 @@ public class VideoModel implements ICommand<VideoParameter> {
      * @return List<String> - list of commands
      */
     private List<String> gif(final VideoParameter videoParameter) {
+        convertedGif = true;
         final List<String> listParameters = new ArrayList<>();
         final ConfigPath cPath = new ConfigPath();
         listParameters.add(cPath.getVideoAudioTool());
@@ -157,6 +162,7 @@ public class VideoModel implements ICommand<VideoParameter> {
         listParameters.add(videoParameter.getFrames());
         name(videoParameter);
         listParameters.add(videoParameter.getOutputFile());
+        outputFiles.add(videoParameter.getOutputFile());
         return listParameters;
     }
 
@@ -172,18 +178,32 @@ public class VideoModel implements ICommand<VideoParameter> {
     public List<List<String>> createCommand(final VideoParameter videoParameter)
             throws NoSuchAlgorithmException, IOException, InterruptedException, ExecutionException {
         list = new ArrayList<>();
+        outputFiles = new ArrayList<String>();
         list.add(convert(videoParameter));
         if (videoParameter.isExtractThumbnail()) {
-            String[] parts = videoParameter.getFormat().split(DOT_SEPARATOR);
-            if (!parts[ONE].equals(GIF)) {
-                name(videoParameter);
+            if (convertedGif) {
                 changeOutputFile(videoParameter);
-                list.add(extractThumbnail(videoParameter));
             }
+            if (convertedMp4) {
+                File file = new File(videoParameter.getOutputFile());
+                videoParameter.setFormat(DOT_SEPARATOR + GIF);
+                String nameFile = file.getName();
+                File pathFile = file.getParentFile();
+                String newName = "";
+                int index = nameFile.lastIndexOf(PARENTHESIS_OPEN);
+                if (index != -ONE) {
+                    nameFile = nameFile.substring(ZERO, index);
+                }
+                newName = pathFile.toString() + SEPARATOR + nameFile + DOT + GIF;
+                videoParameter.setOutputFile(newName);
+            }
+            list.add(extractThumbnail(videoParameter));
         }
         if (videoParameter.isExtractMetadata()) {
+            if (convertedGif) {
+                changeOutputFile(videoParameter);
+            }
             extractMetadata(videoParameter);
-            list.clear();
             list.addAll(getListMetadataCommands(this.listMetadataParameters));
         }
         return list;
@@ -194,14 +214,23 @@ public class VideoModel implements ICommand<VideoParameter> {
      * @param videoParameter - the reference to the videoParameter given
      */
     private void changeOutputFile(final VideoParameter videoParameter) {
-        String path = videoParameter.getOutputFile();
-        File file = new File(path);
-        File pathFileConverted = file.getParentFile();
-        String[] parts = file.getName().split(DOT_SEPARATOR);
-        String newName = parts[ZERO] + DOT + GIF;
-        String newOutputFile = pathFileConverted.toString() + SEPARATOR + newName;
-        videoParameter.setFormat(GIF);
-        videoParameter.setOutputFile(newOutputFile);
-        videoParameter.setFileName(newName);
+        for (String path : outputFiles) {
+            File file = new File(path);
+            File pathFile = file.getParentFile();
+            String name = "";
+            if (path.endsWith(GIF)) {
+                String[] parts = file.getName().split(DOT_SEPARATOR);
+                String nameFile = parts[ZERO];
+                int index = nameFile.lastIndexOf(PARENTHESIS_OPEN);
+                if (index != -ONE) {
+                    int number = Integer.parseInt(nameFile.substring(index + ONE, nameFile.length() - ONE)) + ONE;
+                    String nameWithouthNumber = nameFile.substring(ZERO, index);
+                    name += pathFile.toString() + SEPARATOR + nameWithouthNumber + PARENTHESIS_OPEN + number + "" + PARENTHESIS_CLOSE_DOT + parts[ONE];
+                } else {
+                    name = pathFile.toString() + SEPARATOR + nameFile + NUMBER_ONE + parts[ONE];
+                }
+                videoParameter.setOutputFile(name);
+            }
+        }
     }
 }
