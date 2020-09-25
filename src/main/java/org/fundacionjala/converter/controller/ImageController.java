@@ -25,7 +25,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import java.io.IOException;
-import java.util.List;
 import java.util.concurrent.ExecutionException;
 
 import javax.servlet.http.HttpServletResponse;
@@ -64,8 +63,7 @@ public class ImageController {
 
             Executor executor = new Executor();
             ImageModel imageModel = new ImageModel();
-            List<String> result = executor.executeCommandsList(imageModel.createCommand(imageParameter));
-            System.out.println(FileZipped.zipper(imageParameter, result));
+            String result = FileZipped.zipper(imageParameter, executor.executeCommandsList(imageModel.createCommand(imageParameter)));
             return ResponseEntity.ok().body(
                     new OkResponse<Integer>(HttpServletResponse.SC_OK, result.toString()));
         } catch (IOException | InterruptedException | ExecutionException e) {
