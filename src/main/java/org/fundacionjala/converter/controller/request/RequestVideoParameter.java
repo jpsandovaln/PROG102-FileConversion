@@ -12,6 +12,7 @@ public class RequestVideoParameter extends RequestMultimediaParameter {
     private String videoCodec;
     private String frames;
     private boolean extractThumbnail;
+    private boolean extractMetadata;
 
     /**
      *
@@ -61,7 +62,7 @@ public class RequestVideoParameter extends RequestMultimediaParameter {
     public void validate() throws Exception {
         super.validate();
         if (this.getVideoCodec() == null || "".equals(this.getVideoCodec())) {
-            throw new Exception("failed Channels Rate empty");
+            throw new Exception("failed video Codec empty");
         }
     }
 
@@ -71,5 +72,19 @@ public class RequestVideoParameter extends RequestMultimediaParameter {
      */
     public String getVideoCodec() {
         return videoCodec;
+    }
+
+    /**
+     * @return the extractMetadata
+     */
+    public boolean isExtractMetadata() {
+        return extractMetadata;
+    }
+
+    /**
+     * @param extractMetadata the extractMetadata to set
+     */
+    public void setExtractMetadata(final boolean extractMetadata) {
+        this.extractMetadata = extractMetadata;
     }
 }

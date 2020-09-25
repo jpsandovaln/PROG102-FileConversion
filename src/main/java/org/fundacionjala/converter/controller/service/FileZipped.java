@@ -1,7 +1,8 @@
 package org.fundacionjala.converter.controller.service;
 
-import org.fundacionjala.converter.model.parameter.multimedia.AudioParameter;
+import org.fundacionjala.converter.model.parameter.ModelParameter;
 
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -25,8 +26,8 @@ public class FileZipped {
      * @return the path of the zip
      * @throws IOException
      */
-    public static String zipper(final AudioParameter modelParameter, final List<String> list) throws IOException {
-        ZipOutputStream os = new ZipOutputStream(new FileOutputStream(modelParameter.getOutputFile() + modelParameter.getName() + FORMATZIP));
+    public static String zipper(final ModelParameter modelParameter, final List<String> list) throws IOException {
+        ZipOutputStream os = new ZipOutputStream(new FileOutputStream(modelParameter.getOutputFile() + modelParameter.getMd5() + FORMATZIP));
         os.setLevel(Deflater.DEFAULT_COMPRESSION);
         os.setMethod(Deflater.DEFLATED);
         int num = 0;
@@ -44,6 +45,11 @@ public class FileZipped {
         }
         os.closeEntry();
         os.close();
-        return modelParameter.getOutputFile() + modelParameter.getName() + FORMATZIP; //modelParameter.getOutputFile() + ".zip";
+        File file;
+       for (String path:list) {
+            file = new File(path);
+            file.delete();
+        }
+        return modelParameter.getOutputFile() + modelParameter.getMd5() + FORMATZIP; //modelParameter.getOutputFile() + ".zip";
     }
 }

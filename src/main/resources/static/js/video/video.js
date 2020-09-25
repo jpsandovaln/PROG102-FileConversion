@@ -1,10 +1,11 @@
 $(document).ready(function () {
+  $("#video-nav").addClass("btn white black-text waves-effect waves-blue-grey lighten-1");
     $('#form-video').submit(function( event ) {
         // Stop form from submitting normally
         event.preventDefault();
         $.ajax({
             type: 'POST',
-            url: '/upload_file',
+            url: '/convertVideo',
             data: new FormData(this),
             enctype: 'multipart/form-data',
             processData: false,
@@ -22,3 +23,4 @@ $(document).ready(function () {
         });
     });
 });
+

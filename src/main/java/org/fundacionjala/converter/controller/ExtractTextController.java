@@ -12,6 +12,7 @@ import org.fundacionjala.converter.controller.request.RequestExtractTextParamete
 import org.fundacionjala.converter.controller.response.ErrorResponse;
 import org.fundacionjala.converter.controller.response.OkResponse;
 import org.fundacionjala.converter.controller.service.FileUploadService;
+import org.fundacionjala.converter.controller.service.FileZipped;
 import org.fundacionjala.converter.database.entity.File;
 import org.fundacionjala.converter.controller.service.FileService;
 import org.fundacionjala.converter.model.command.extractText.ExtractTextFacade;
@@ -25,7 +26,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.util.List;
 import java.util.concurrent.ExecutionException;
 
 /**
@@ -57,11 +57,12 @@ public class ExtractTextController {
             ExtractTextFacade extractor = new ExtractTextFacade();
             ExtractTextParameter parameter = new ExtractTextParameter();
             parameter.setInputFile(filePath);
+            parameter.setMd5(md5);
             parameter.setLanguage(requestExtractTextParameter.getLanguage());
             parameter.setFormat(requestExtractTextParameter.getExportFormat());
-            List<String> result = extractor.extractText(parameter);
+            String result = FileZipped.zipper(parameter, extractor.extractText(parameter));
             return ResponseEntity.ok().body(
-                new OkResponse<Integer>(HttpServletResponse.SC_OK, result.get(0)));
+                new OkResponse<Integer>(HttpServletResponse.SC_OK, result));
         } catch (IOException | InterruptedException | ExecutionException e) {
             return ResponseEntity.badRequest()
                 .body(new ErrorResponse<Integer>(HttpServletResponse.SC_BAD_REQUEST, e.getMessage()));
