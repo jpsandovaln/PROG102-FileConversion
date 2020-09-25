@@ -48,7 +48,7 @@ public class AudioController {
      * @throws Exception
      */
 
-   @RequestMapping(value = "/convertAudio", method = RequestMethod.POST)
+   @RequestMapping(value = "convertAudio", method = RequestMethod.POST)
    public ResponseEntity audio(final RequestAudioParameter requestAudioParameter) {
        try {
            String filePath = fileUploadService.saveInputFile(requestAudioParameter.getFile());

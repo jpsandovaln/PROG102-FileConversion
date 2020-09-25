@@ -23,7 +23,7 @@
                             <label for="name">Name:</label>
                         </div>
                         <div class="input-field col s12 m6">
-                          <select id="format" name="format" class="browser-default">
+                          <select id="exportFormat" name="exportFormat" class="browser-default">
                             <option value="" disabled selected>Select format or extension</option>
                             <option value=".mp4">MP4</option>
                             <option value=".gif">GIF</option>
@@ -67,8 +67,14 @@
                         </div>                
                         <div class="input-field col s3">
                             <label>
-                                <input id="isMetadata" name="isMetadata" type="checkbox"/>
+                                <input id="extractMetadata" name="extractMetadata" type="checkbox"/>
                                 <span>Metadata</span>
+                            </label>
+                        </div>
+                        <div class="input-field col s3">
+                            <label>
+                                <input id="extractGif" name="extractGif" type="checkbox"/>
+                                <span>GIF</span>
                             </label>
                         </div>
                         
@@ -80,9 +86,10 @@
                     </div>
                 </form>
                 <div class="col s3 right">
-                    <form method="get" th:action="@{/download}">
+                    <form method="get" th:action="@{/download/}">
                         <input type="text" name="path" id="path" value="" style="display:none">
-                        <button type="submit" id="submit" class="btn waves-effect waves-light" disabled>
+                        <input type="text" name="filenameDownload" id="filenameDownload" value="" style="display:none">
+                        <button type="submit" id="submited" class="btn waves-effect waves-light" disabled>
                             <i class="material-icons right">file_download</i>
                             Download File</button>
                     </form>
