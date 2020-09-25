@@ -58,9 +58,10 @@ public class VideoController {
             videoParameter.setInputFile(filePath);
             videoParameter.setFrames(requestVideoParameter.getFrames());
             videoParameter.setExtension(requestVideoParameter.getExportFormat());
-            videoParameter.setAudioCodec(requestVideoParameter.getVideoCodec());
-            videoParameter.setVideoCodec(requestVideoParameter.getAudioCodec());
+            videoParameter.setAudioCodec(requestVideoParameter.getAudioCodec());
+            videoParameter.setVideoCodec(requestVideoParameter.getVideoCodec());
             videoParameter.setExtractThumbnail(requestVideoParameter.getExtractThumbnail());
+            videoParameter.setExtractMetadata(requestVideoParameter.isExtractMetadata());
             videoParameter.setOutputFile(output);
             Executor executor = new Executor();
             VideoModel video = new VideoModel();

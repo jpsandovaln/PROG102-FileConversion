@@ -1,4 +1,5 @@
 $(document).ready(function () {
+    $("#audio-nav").addClass("btn white black-text waves-effect waves-blue-grey lighten-1");
     $('#form-audio').submit(function( event ) {
         // Stop form from submitting normally
         event.preventDefault();
@@ -12,11 +13,13 @@ $(document).ready(function () {
             cache: false,
             success: function (data) {
                 console.log('SUCCESS : ', data);
-                 $('#path').attr('value', data);
-                 $('#submitd').prop('disabled', false);
+                $('#filenameDownload').attr('value', $('#fileName').val());
+                $('#path').attr('value', data["message"]);
+                $('#submited').prop('disabled', false);
+                console.log(data["message"]);
             },
             error: function (e) {
-                    console.log('ERROR : ', e);
+                console.log('ERROR : ', e);
             }
         });
     });

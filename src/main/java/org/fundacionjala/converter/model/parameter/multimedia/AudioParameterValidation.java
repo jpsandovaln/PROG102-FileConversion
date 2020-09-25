@@ -42,10 +42,10 @@ public class AudioParameterValidation {
      * @return
      */
     public String validateAudioName(final String name) {
-        if (name.charAt(0) != '/') {
+      /*  if (name.charAt(0) != '/') {
             return "/" + name;
-        } else {
+        } else {*/
             return name;
-        }
+       // }
     }
 }

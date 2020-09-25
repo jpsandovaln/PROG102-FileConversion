@@ -11,6 +11,7 @@ package org.fundacionjala.converter.controller;
 import org.fundacionjala.converter.controller.request.RequestImageParameter;
 import org.fundacionjala.converter.controller.response.ErrorResponse;
 import org.fundacionjala.converter.controller.response.OkResponse;
+import org.fundacionjala.converter.controller.service.FileZipped;
 import org.fundacionjala.converter.executor.Executor;
 import org.fundacionjala.converter.model.command.ImageModel;
 import org.fundacionjala.converter.model.parameter.image.ImageParameter;
@@ -24,7 +25,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import java.io.IOException;
-import java.util.List;
 import java.util.concurrent.ExecutionException;
 
 import javax.servlet.http.HttpServletResponse;
@@ -56,12 +56,16 @@ public class ImageController {
             ImageParameter imageParameter = new ImageParameter();
             imageParameter.setInputFile(filePath);
             imageParameter.setIsGray(requestImageParameter.getGray());
-            imageParameter.setIsThumbnail(requestImageParameter.getThumbnail());
+            imageParameter.setIsThumbnail(requestImageParameter.getExtractThumbnail());
+            imageParameter.setIsResize(requestImageParameter.getChangeSize());
+            imageParameter.setPositionXAndPositionY(requestImageParameter.getPosition());
+            imageParameter.setName(md5);
+            imageParameter.setFormat(requestImageParameter.getExportFormat());
             imageParameter.setOutputFile(output + md5 + requestImageParameter.getExportFormat());
 
             Executor executor = new Executor();
             ImageModel imageModel = new ImageModel();
-            List<String> result = executor.executeCommandsList(imageModel.createCommand(imageParameter));
+            String result = FileZipped.zipper(imageParameter, executor.executeCommandsList(imageModel.createCommand(imageParameter)));
             return ResponseEntity.ok().body(
                     new OkResponse<Integer>(HttpServletResponse.SC_OK, result.toString()));
         } catch (IOException | InterruptedException | ExecutionException e) {

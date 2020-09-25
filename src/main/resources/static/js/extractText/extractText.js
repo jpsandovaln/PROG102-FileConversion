@@ -1,4 +1,5 @@
 $(document).ready(function () {
+  $("#extract-nav").addClass("btn white black-text waves-effect waves-blue-grey lighten-1");
     $('#form-extract').submit(function( event ) {
         // Stop form from submitting normally
         event.preventDefault();
