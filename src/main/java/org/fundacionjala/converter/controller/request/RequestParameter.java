@@ -30,9 +30,9 @@ public abstract class RequestParameter {
 
     /**
      *
-     * @param format
+     * @param exportFormat
      */
-    public void setFormat(final String exportFormat) {
+    public void setExportFormat(final String exportFormat) {
         this.exportFormat = exportFormat;
     }
 
