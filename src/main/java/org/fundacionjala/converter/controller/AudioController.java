@@ -90,6 +90,7 @@ public class AudioController {
         audioParameter.setStart(requestAudioParameter.getStart()); //-ss
         audioParameter.setDuration(requestAudioParameter.getDuration()); //-t
         audioParameter.setCut(requestAudioParameter.getExtractThumbnail());
+        audioParameter.setMetadata(requestAudioParameter.getExtractMetadata());
     }
 
     /**

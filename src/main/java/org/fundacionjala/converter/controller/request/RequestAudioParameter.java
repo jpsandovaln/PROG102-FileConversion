@@ -18,12 +18,12 @@ public class RequestAudioParameter extends RequestParameter {
     private String start;
     private String duration;
     private String volume;
-    private boolean isMetadata;
     private boolean isCut;
     private String inputFile;
     private String outputFile;
     private String md5;
     private boolean extractThumbnail;
+    private boolean extractMetadata;
 
     /**
      *
@@ -132,16 +132,16 @@ public class RequestAudioParameter extends RequestParameter {
      *
      * @return
      */
-    public boolean isMetadata() {
-        return isMetadata;
+    public boolean getExtractMetadata() {
+        return extractMetadata;
     }
 
     /**
      *
-     * @param metadata
+     * @param extractMetadata
      */
-    public void setMetadata(final boolean metadata) {
-        isMetadata = metadata;
+    public void setExtractMetadata(final boolean extractMetadata) {
+        this.extractMetadata = extractMetadata;
     }
 
     /**
