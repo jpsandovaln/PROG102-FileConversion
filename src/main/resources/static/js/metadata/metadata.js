@@ -1,4 +1,4 @@
-$(document).ready(function () {
+/*$(document).ready(function () {
     $( "#form-MT" ).validate( {
         rules: {
             md5: {
@@ -55,4 +55,31 @@ $(document).ready(function () {
         });
         }
     } );
+});*/
+$(document).ready(function () {
+    $('#form-MT').submit(function( event ) {
+        // Stop form from submitting normally
+        event.preventDefault();
+        $.ajax({
+            type: 'POST',
+            url: '/extractMetadata',
+            data: new FormData(this),
+            enctype: 'multipart/form-data',
+            processData: false,
+            contentType: false,
+            cache: false,
+            success: function (data) {
+                console.log('SUCCESS : ', data);
+                $('#filenameDownload').attr('value', $('#fileName').val());
+                $('#path').attr('value', data["message"]);
+                $('#submited').prop('disabled', false);
+                console.log(data["message"]);
+            },
+            error: function (e) {
+                console.log('ERROR : ', e);
+            }
+        });
+    });
 });
+
+
