@@ -12,10 +12,11 @@ public class RequestImageParameter extends RequestParameter {
 
     private int height;
     private int width;
-    private String positionX;
-    private String positionY;
+    private String position;
+    private boolean changeSize;
     private boolean gray;
-    private boolean thumbnail;
+    private boolean extractThumbnail;
+    private boolean extractMetadata;
 
     /**
      *
@@ -33,9 +34,73 @@ public class RequestImageParameter extends RequestParameter {
         if ("".equals(this.getGray())) {
             throw new Exception("failed Force Resize empty");
         }
-        if ("".equals(this.getThumbnail())) {
+        if ("".equals(this.getExtractThumbnail())) {
             throw new Exception("failed Thumbnail empty");
         }
+    }
+
+    /**
+     *
+     * @return
+     */
+    public boolean getExtractThumbnail() {
+        return extractThumbnail;
+    }
+
+    /**
+     *
+     * @param extractThumbnail
+     */
+    public void setExtractThumbnail(final boolean extractThumbnail) {
+        this.extractThumbnail = extractThumbnail;
+    }
+
+    /**
+     *
+     * @return
+     */
+    public boolean getExtractMetadata() {
+        return extractMetadata;
+    }
+
+    /**
+     *
+     * @param extractMetadata
+     */
+    public void setExtractMetadata(final boolean extractMetadata) {
+        this.extractMetadata = extractMetadata;
+    }
+
+    /**
+     *
+     * @return
+     */
+    public String getPosition() {
+        return position;
+    }
+
+    /**
+     *
+     * @param position
+     */
+    public void setPosition(final String position) {
+        this.position = position;
+    }
+
+    /**
+     *
+     * @return
+     */
+    public boolean getChangeSize() {
+        return changeSize;
+    }
+
+    /**
+     *
+     * @param changeSize
+     */
+    public void setChangeSize(final boolean changeSize) {
+        this.changeSize = changeSize;
     }
 
     /**
@@ -79,26 +144,10 @@ public class RequestImageParameter extends RequestParameter {
 
     /**
      *
-     * @param forceResize
+     * @param gray
      */
     public void setGray(final boolean gray) {
         this.gray = gray;
-    }
-
-    /**
-     *
-     * @return
-     */
-    public boolean getThumbnail() {
-        return thumbnail;
-    }
-
-    /**
-     *
-     * @param thumbnail
-     */
-    public void setThumbnail(final boolean thumbnail) {
-        this.thumbnail = thumbnail;
     }
 
 }

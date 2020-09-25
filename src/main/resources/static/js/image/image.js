@@ -1,10 +1,10 @@
 $(document).ready(function () {
-    $('#form-image').submit(function( event ) {
+    $('#form-img').submit(function( event ) {
         // Stop form from submitting normally
         event.preventDefault();
         $.ajax({
             type: 'POST',
-            url: 'upload_file',
+            url: '/convertImage',
             data: new FormData(this),
             enctype: 'multipart/form-data',
             processData: false,
@@ -12,9 +12,13 @@ $(document).ready(function () {
             cache: false,
             success: function (data) {
                 console.log('SUCCESS : ', data);
+                $('#filenameDownload').attr('value', $('#fileName').val());
+                $('#path').attr('value', data["message"]);
+                $('#submited').prop('disabled', false);
+                console.log(data["message"]);
             },
             error: function (e) {
-                    console.log('ERROR : ', e);
+                console.log('ERROR : ', e);
             }
         });
     });

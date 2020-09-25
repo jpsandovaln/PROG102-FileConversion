@@ -19,11 +19,11 @@
                     </div>
                 </div>
                 <div class="input-field col s12 m6">
-                    <input type="text" id="name" name="name" class="validate" required>
+                    <input type="text" id="name" name="name" class="validate">
                     <label for="name">Name:</label>
                 </div>
                 <div class="input-field col s12 m6">
-                    <select name="format" id="format" class="browser-default">
+                    <select name="exportFormat" id="exportFormat" class="browser-default">
                         <option value="" disabled selected>Select format or extension</option>
                         <option value=".jpg">JPG</option>
                         <option value=".png">PNG</option>
@@ -34,44 +34,40 @@
                     <label for="md5">MD5:</label>
                 </div>
 
-                <div class="input-field col s12">
-                    <label for="reSize">
-                        <input id="reSize" name="reSize" type="checkbox" />
+                <div class="input-field col s3 m3">
+                    <label for="changeSize">
+                        <input id="changeSize" name="changeSize" type="checkbox" />
                         <span>Re-size</span>
                     </label>
                 </div>
-                <div class="input-field col s12 m3">
-                    <input type="text" id="positionX" name="positionX" class="validate">
-                    <label for="positionX">positionX:</label>
+                <div class="input-field col s4 m3">
+                    <input type="text" id="position" name="position" class="validate">
+                    <label for="position">positionXY example (23,14):</label>
                 </div>
-                <div class="input-field col s12 m3">
-                    <input type="text" id="positionY" name="positionY" class="validate">
-                    <label for="positionY">positionY:</label>
-                </div>
-                <div class="input-field col s12 m3">
+                <div class="input-field col s4 m3">
                     <input type="text" id="height" name="height" class="validate">
                     <label for="height">height:</label>
                 </div>
-                <div class="input-field col s12 m3">
+                <div class="input-field col s4 m3">
                     <input type="text" id="width" name="width" class="validate">
                     <label for="width">width:</label>
                 </div>
                 <div class="col s12 container">
-                    <div class="input-field col s3">
+                    <div class="input-field col s4">
                         <label for="gray">
                             <input id="gray" name="gray" type="checkbox"/>
                             <span>Scale Gray</span>
                         </label>
                     </div>
-                    <div class="input-field col s3">
-                        <label for="isMetadata">
-                            <input id="isMetadata" name="isMetadata" type="checkbox"/>
+                    <div class="input-field col s4">
+                        <label for="extractMetadata">
+                            <input id="extractMetadata" name="extractMetadata" type="checkbox"/>
                             <span>Metadata</span>
                         </label>
                     </div>
-                    <div class="right input-field col s3">
-                        <label for="thumbnail">
-                            <input id="thumbnail" name="thumbnail" type="checkbox"/>
+                    <div class="right input-field col s4">
+                        <label for="extractThumbnail">
+                            <input id="extractThumbnail" name="extractThumbnail" type="checkbox"/>
                             <span>thumbnail</span>
                         </label>
                     </div>
@@ -85,9 +81,10 @@
             </div>
         </form>
         <div class="col s3 right">
-            <form method="get" th:action="@{/download}">
+            <form method="get" th:action="@{/download/}">
                 <input type="text" name="path" id="path" value="" style="display:none">
-                <button type="submit" id="submit" class="btn waves-effect waves-light" disabled>
+                <input type="text" name="filenameDownload" id="filenameDownload" value="" style="display:none">
+                <button type="submit" id="submited" class="btn waves-effect waves-light" disabled>
                     <i class="material-icons right">file_download</i>
                     Download File</button>
             </form>

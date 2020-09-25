@@ -56,7 +56,9 @@ public class ImageController {
             ImageParameter imageParameter = new ImageParameter();
             imageParameter.setInputFile(filePath);
             imageParameter.setIsGray(requestImageParameter.getGray());
-            imageParameter.setIsThumbnail(requestImageParameter.getThumbnail());
+            imageParameter.setIsThumbnail(requestImageParameter.getExtractThumbnail());
+            imageParameter.setIsResize(requestImageParameter.getChangeSize());
+            imageParameter.setPositionXAndPositionY(requestImageParameter.getPosition());
             imageParameter.setName(md5);
             imageParameter.setFormat(requestImageParameter.getExportFormat());
             imageParameter.setOutputFile(output + md5 + requestImageParameter.getExportFormat());
