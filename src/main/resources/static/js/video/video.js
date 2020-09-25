@@ -14,8 +14,9 @@ $(document).ready(function () {
             success: function (data) {
                 console.log('SUCCESS : ', data);
                 $('#textarea_preview').val(data);
-                $('#path').attr('value', data);
-                $('#submitd').prop('disabled', false);
+                $('#path').attr('value', data["message"]);
+                $('#submited').prop('disabled', false);
+                console.log(data["message"]);
             },
             error: function (e) {
                     console.log('ERROR : ', e);
