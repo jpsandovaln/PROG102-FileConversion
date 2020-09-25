@@ -1,5 +1,6 @@
 package org.fundacionjala.converter.model.command;
 
+import java.io.File;
 import java.io.IOException;
 import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
@@ -20,9 +21,16 @@ public class VideoModel implements ICommand<VideoParameter> {
     private List<MetadataParameter> listMetadataParameters;
     private static final String MP4 = "mp4";
     private static final String GIF = "gif";
-    private static final String NAME_OUTPUT_MP4 = "demo.mp4";
-    private static final String NAME_OUTPUT_THUMBNAIL = "thumbnail.gif";
-    private static final String NAME_OUTPUT_GIF = "demo.gif";
+    private static final String META = "meta";
+    private static final String DOT_SEPARATOR = "\\.";
+    private static final String SEPARATOR = "\\";
+    private static final String DOT = ".";
+    private static final String DASH = "-";
+    private static final String INPUT_PATH_METADATA = "storage\\convertedFiles\\";
+    private static final String FORMAT = "j";    //json
+    private static final String DETAIL = "v";
+    private static final int ZERO = 0;
+    private static final int ONE = 1;
 
     /**
      * Returns list of commands to convert the video to mp4 or gif
@@ -31,9 +39,20 @@ public class VideoModel implements ICommand<VideoParameter> {
      * @return List<String> - list of commands to convert
      */
     public List<String> convert(final VideoParameter videoParameter) {
+        String path = videoParameter.getInputFile();
+        File file = new File(path);
+        String fileName = file.getName();
+        videoParameter.setFileName(fileName);
+        String[] parts = fileName.split(DOT_SEPARATOR);
+        videoParameter.setFormat(parts[1]);
+        videoParameter.setFormat(DOT_SEPARATOR + videoParameter.getExtension());
         if (videoParameter.getExtension().equals(MP4)) {
+            String fullPathOutputFile = videoParameter.getOutputFile() + videoParameter.getFileName();
+            videoParameter.setOutputFile(fullPathOutputFile);
             return compressToMp4(videoParameter);
         } else if (videoParameter.getExtension().equals(GIF)) {
+            String fullPathOutputFile = videoParameter.getOutputFile() + parts[0] + DOT + GIF;
+            videoParameter.setOutputFile(fullPathOutputFile);
             return gif(videoParameter);
         }
         return null;
@@ -55,7 +74,8 @@ public class VideoModel implements ICommand<VideoParameter> {
         listParameters.add(videoParameter.getVideoCodec());
         listParameters.add(VideoParameter.ACODEC_COMMAND);
         listParameters.add(videoParameter.getAudioCodec());
-        listParameters.add(videoParameter.getOutputFile() + NAME_OUTPUT_MP4);
+        name(videoParameter);
+        listParameters.add(videoParameter.getOutputFile());
         return listParameters;
     }
 
@@ -79,7 +99,8 @@ public class VideoModel implements ICommand<VideoParameter> {
         listThumbnailParameters.add(VideoParameter.PALETTE);
         listThumbnailParameters.add(VideoParameter.LOOP);
         listThumbnailParameters.add(VideoParameter.ZERO);
-        listThumbnailParameters.add(videoParameter.getOutputFile() + NAME_OUTPUT_THUMBNAIL);
+        name(videoParameter);
+        listThumbnailParameters.add(videoParameter.getOutputFile());
         return listThumbnailParameters;
     }
 
@@ -97,21 +118,15 @@ public class VideoModel implements ICommand<VideoParameter> {
             throws NoSuchAlgorithmException, IOException, InterruptedException, ExecutionException {
         listMetadataParameters = new ArrayList<>();
         Executor executor = new Executor();
-        ChecksumMD5 checksumMD5 = new ChecksumMD5();
         List<String> outputFiles;
         outputFiles = executor.executeCommandsList(this.list);
-        String inputFileMetadata = "storage//convertedFiles//";
-        String outputFile = "meta";
-        String checksum = "";
-        String format = "j";    //json
-        String detail = "v";
-        int name = 0;
         for (String path : outputFiles) {
-            checksum = checksumMD5.getMD5(path);
-            listMetadataParameters.add(new MetadataParameter(inputFileMetadata + getNameFile(path, videoParameter), format, detail, outputFile + name + "", checksum));
-            name++;
+            File file = new File(path);
+            String checksum = new ChecksumMD5().getMD5(path);
+            String[] parts = file.getName().split(DOT_SEPARATOR);
+            String outputFile = parts[ZERO] + parts[ONE] + DASH + META;
+            listMetadataParameters.add(new MetadataParameter(INPUT_PATH_METADATA + file.getName(), FORMAT, DETAIL, INPUT_PATH_METADATA + outputFile, checksum));
         }
-
         return listMetadataParameters;
     }
     /**
@@ -128,29 +143,6 @@ public class VideoModel implements ICommand<VideoParameter> {
     }
 
     /**
-     * Returns the name of file converted
-     * @param videoParameter - the reference to Video Parameter
-     * @return String - name of converted file
-     */
-    private String getNameFile(final String path, final VideoParameter videoParameter) {
-        String nameFile;
-        String[] parts = path.split("\\.");
-        String extension = parts[1];
-        switch (extension) {
-            case MP4:
-                nameFile = NAME_OUTPUT_MP4;
-                break;
-            default:
-                if (!videoParameter.isExtractThumbnail()) {
-                    nameFile = NAME_OUTPUT_GIF;
-                }
-                nameFile = NAME_OUTPUT_THUMBNAIL;
-                break;
-        }
-        return nameFile;
-    }
-
-    /**
      * Returns list of parameters to convert file to gif
      * @param videoParameter - the reference to Video Parameter
      * @return List<String> - list of commands
@@ -159,11 +151,12 @@ public class VideoModel implements ICommand<VideoParameter> {
         final List<String> listParameters = new ArrayList<>();
         final ConfigPath cPath = new ConfigPath();
         listParameters.add(cPath.getVideoAudioTool());
-        listParameters.add(VideoParameter.FRAME_RATE);
-        listParameters.add(videoParameter.getFrames());
         listParameters.add(VideoParameter.INPUT_COMMAND);
         listParameters.add(videoParameter.getInputFile());
-        listParameters.add(videoParameter.getOutputFile() + NAME_OUTPUT_GIF);
+        listParameters.add(VideoParameter.FRAME_RATE);
+        listParameters.add(videoParameter.getFrames());
+        name(videoParameter);
+        listParameters.add(videoParameter.getOutputFile());
         return listParameters;
     }
 
@@ -181,7 +174,12 @@ public class VideoModel implements ICommand<VideoParameter> {
         list = new ArrayList<>();
         list.add(convert(videoParameter));
         if (videoParameter.isExtractThumbnail()) {
-            list.add(extractThumbnail(videoParameter));
+            String[] parts = videoParameter.getFormat().split(DOT_SEPARATOR);
+            if (!parts[ONE].equals(GIF)) {
+                name(videoParameter);
+                changeOutputFile(videoParameter);
+                list.add(extractThumbnail(videoParameter));
+            }
         }
         if (videoParameter.isExtractMetadata()) {
             extractMetadata(videoParameter);
@@ -189,5 +187,21 @@ public class VideoModel implements ICommand<VideoParameter> {
             list.addAll(getListMetadataCommands(this.listMetadataParameters));
         }
         return list;
+    }
+
+    /**
+     * Changes the outputFile
+     * @param videoParameter - the reference to the videoParameter given
+     */
+    private void changeOutputFile(final VideoParameter videoParameter) {
+        String path = videoParameter.getOutputFile();
+        File file = new File(path);
+        File pathFileConverted = file.getParentFile();
+        String[] parts = file.getName().split(DOT_SEPARATOR);
+        String newName = parts[ZERO] + DOT + GIF;
+        String newOutputFile = pathFileConverted.toString() + SEPARATOR + newName;
+        videoParameter.setFormat(GIF);
+        videoParameter.setOutputFile(newOutputFile);
+        videoParameter.setFileName(newName);
     }
 }
