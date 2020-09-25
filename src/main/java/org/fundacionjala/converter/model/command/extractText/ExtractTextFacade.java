@@ -53,7 +53,10 @@ public class ExtractTextFacade {
         parameter.setOutputFile(configPath.getConvertedFilesPath());
         parameter.setFileName(checksumMD5.getMD5(parameter.getInputFile()));
         if (format.equals(FormatValidation.FORMAT_TXT)) {
-            return executor.executeCommandsList(extractor.createCommand(parameter));
+            String newName = executor.executeCommandsList(extractor.createCommand(parameter)).get(0) + FormatValidation.FORMAT_TXT;
+            List<String> listResult = new ArrayList<String>();
+            listResult.add(newName);
+            return listResult;
         } else {
             executor.executeCommandsList(extractor.createCommand(parameter));
             String outputFile = parameter.getOutputFile() + parameter.getFileName();
