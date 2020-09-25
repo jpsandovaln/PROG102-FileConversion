@@ -62,7 +62,7 @@ public class ExtractTextController {
             parameter.setFormat(requestExtractTextParameter.getExportFormat());
             String result = FileZipped.zipper(parameter, extractor.extractText(parameter));
             return ResponseEntity.ok().body(
-                new OkResponse<Integer>(HttpServletResponse.SC_OK, result.toString()));
+                new OkResponse<Integer>(HttpServletResponse.SC_OK, result.get(0)));
         } catch (IOException | InterruptedException | ExecutionException e) {
             return ResponseEntity.badRequest()
                 .body(new ErrorResponse<Integer>(HttpServletResponse.SC_BAD_REQUEST, e.getMessage()));
