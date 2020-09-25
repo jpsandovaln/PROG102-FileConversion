@@ -25,16 +25,16 @@
                 <div class="input-field col s12 m6">
                     <select id="language" name="language" class="browser-default">
                         <option value="" disabled selected>Select language</option>
-                        <option value="-l spa">Spanish</option>
-                        <option value="">English</option>
+                        <option value="spa">Spanish</option>
+                        <option value="en">English</option>
                     </select>
                 </div>
                 <div class="input-field col s12 m6">
-                    <select id="format" name="format" class="browser-default">
+                    <select id="format" name="exportFormat" class="browser-default">
                         <option value="" disabled selected>Select format to export</option>
-                        <option value=".word">Word</option>
+                        <option value=".docx">Word</option>
                         <option value=".pdf">PDF</option>
-                        <option value=".txt">txt</option>
+                        <option value=".txt">Txt</option>
                     </select>
                 </div>
                 <div class="input-field col s12 m6">
@@ -52,7 +52,8 @@
         <div class="col s3 right">
             <form method="get" th:action="@{/download}">
                 <input type="text" name="path" id="path" value="" style="display:none">
-                <button type="submit" id="submit" class="btn waves-effect waves-light" disabled>
+                <button type="submit" id="submited" class="btn waves-effect waves-light" disabled>
+                    <input type="text" name="filenameDownload" id="filenameDownload" value="" style="display:none">
                     <i class="material-icons right">file_download</i>
                     Download File</button>
             </form>
@@ -64,6 +65,7 @@
 <!-- Compiled and minified JavaScript -->
 <script src="https://kit.fontawesome.com/35db202371.js" crossorigin="anonymous"></script>
 <script src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+<script th:src="@{/js/extractText/extractText.js}"></script>
 <script th:src="@{/js/materialize/materialize.js}" src="../static/js/materialize/materialize.js"></script>
 <script th:src="@{/js/materialize/init.js}" src="../static/js/materialize/init.js"></script>
 </body>
