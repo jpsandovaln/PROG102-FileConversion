@@ -3,6 +3,7 @@ package org.fundacionjala.converter.controller;
 import org.fundacionjala.converter.controller.request.RequestAudioParameter;
 import org.fundacionjala.converter.controller.response.ErrorResponse;
 import org.fundacionjala.converter.controller.response.OkResponse;
+import org.fundacionjala.converter.controller.service.FileZipped;
 import org.fundacionjala.converter.executor.Executor;
 import org.fundacionjala.converter.model.command.AudioModel;
 import org.fundacionjala.converter.model.command.ICommand;
@@ -57,7 +58,7 @@ public class AudioController {
             }
             AudioParameter audioParameter = new AudioParameter();
             setAudioParameterValues(audioParameter, requestAudioParameter, filePath);
-            List<String> result = execute(audioParameter);
+            String result = FileZipped.zipper(audioParameter, execute(audioParameter));
             return ResponseEntity.ok().body(
                     new OkResponse<Integer>(HttpServletResponse.SC_OK, result.toString()));
         } catch (IOException | InterruptedException | ExecutionException e) {
@@ -79,6 +80,7 @@ public class AudioController {
     private void setAudioParameterValues(final AudioParameter audioParameter, final RequestAudioParameter requestAudioParameter, final String filePath) throws IOException {
         audioParameter.setInputFile(filePath);
         audioParameter.setOutputFile(output);
+        audioParameter.setMd5(requestAudioParameter.generateMD5(filePath));
         audioParameter.setName(requestAudioParameter.getName());
         audioParameter.setFormat(requestAudioParameter.getExportFormat());
         audioParameter.setCodec(requestAudioParameter.getCodec());
