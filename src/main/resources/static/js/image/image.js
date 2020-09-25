@@ -1,4 +1,5 @@
 $(document).ready(function () {
+  $("#image-nav").addClass("btn white black-text waves-effect waves-blue-grey lighten-1");
     $('#form-image').submit(function( event ) {
         // Stop form from submitting normally
         event.preventDefault();

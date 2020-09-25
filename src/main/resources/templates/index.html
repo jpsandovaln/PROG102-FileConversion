@@ -25,13 +25,13 @@
       <a href="#" data-target="nav-mobile" class="sidenav-trigger"><i class="material-icons">menu</i></a>
 
       <ul class="right hide-on-med-and-down">
-        <li><a th:href="@{/}" href="">Home</a></li>
-        <li><a th:href="@{/file_audio}" href="audio/audio.html">Audio</a></li>
-        <li><a th:href="@{/file_video}" href="video/video.html">Video</a></li>
-        <li><a th:href="@{/file_img}" href="img/image.html">Image</a></li>
-        <li><a th:href="@{/file_metadata}" href="metadata/metadata.html">Metadata</a></li>
-        <li><a th:href="@{/file_extractText}" href="docs/docs.html">Extract</a></li>
-        <li><a th:href="@{/login}" href="auth/login.html" class="btn white black-text waves-effect waves-blue-grey lighten-1">login</a></li>
+        <li><a th:href="@{/}" id="home-nav" href="">Home</a></li>
+        <li><a th:href="@{/file_audio}" id="audio-nav" href="audio/audio.html">Audio</a></li>
+        <li><a th:href="@{/file_video}" id="video-nav" href="video/video.html">Video</a></li>
+        <li><a th:href="@{/file_img}" id="image-nav" href="img/image.html">Image</a></li>
+        <li><a th:href="@{/file_metadata}" id="metadata-nav" href="metadata/metadata.html">Metadata</a></li>
+        <li><a th:href="@{/file_extractText}" id="extract-nav" href="docs/docs.html">Extract</a></li>
+        <li><a th:href="@{/login}" id="login-nav" href="auth/login.html" class="">login</a></li>
       </ul>
 
       <ul id="nav-mobile" class="sidenav">
@@ -195,8 +195,8 @@
   <!--  Scripts-->
   <script src="https://kit.fontawesome.com/35db202371.js" crossorigin="anonymous"></script>
   <script src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+  <script th:src="@{/js/home/home.js}"></script>
   <script th:src="@{/js/materialize/materialize.js}" src="../static/js/materialize/materialize.js"></script>
   <script th:src="@{/js/materialize/init.js}" src="../static/js/materialize/init.js"></script>
-
   </body>
 </html>

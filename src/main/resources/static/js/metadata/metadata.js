@@ -57,6 +57,7 @@
     } );
 });*/
 $(document).ready(function () {
+  $("#metadata-nav").addClass("btn white black-text waves-effect waves-blue-grey lighten-1");
     $('#form-MT').submit(function( event ) {
         // Stop form from submitting normally
         event.preventDefault();
