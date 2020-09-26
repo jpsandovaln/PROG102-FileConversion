@@ -36,8 +36,6 @@ import java.util.concurrent.ExecutionException;
 public class ExtractTextController {
     @Autowired
     private FileService fileService;
-    @Value("${tempFiles.path}")
-    private String temporal;
     @Autowired
     private FileUploadService fileUploadService;
     /**
