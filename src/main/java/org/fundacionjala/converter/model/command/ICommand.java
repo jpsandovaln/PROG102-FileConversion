@@ -7,7 +7,6 @@ import java.util.List;
 import java.util.concurrent.ExecutionException;
 import java.security.NoSuchAlgorithmException;
 import java.io.IOException;
-import org.apache.commons.io.FilenameUtils;
 
 public interface ICommand<T extends ModelParameter> {
     List<List<String>> createCommand(T modelParameter) throws NoSuchAlgorithmException, IOException, InterruptedException, ExecutionException;

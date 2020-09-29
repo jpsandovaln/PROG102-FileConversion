@@ -33,7 +33,7 @@ public class ConvertDoc {
      * @param docName the name of the doc
      * @param content the content that will have the word
      */
-    public String createDocumentWord(final String docName, final String content) throws IOException{
+    public String createDocumentWord(final String docName, final String content) throws IOException {
         FileOutputStream out = null;
         String pathCreated = docName + DOCX_EXTENSION;
         try {
