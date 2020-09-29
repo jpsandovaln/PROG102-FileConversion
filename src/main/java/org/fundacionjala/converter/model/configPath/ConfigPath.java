@@ -62,4 +62,11 @@ public class ConfigPath {
     public String getImageTool() {
         return properties.getProperty("image.path");
     }
+
+    /**
+     * Returns tmp file
+     */
+    public String getTmpFilePath() {
+        return properties.getProperty("tempFiles.path");
+    }
 }

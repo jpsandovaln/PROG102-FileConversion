@@ -46,27 +46,30 @@ public class AudioController {
      * @throws Exception
      */
 
-   @RequestMapping(value = "convertAudio", method = RequestMethod.POST)
-   public ResponseEntity audio(final RequestAudioParameter requestAudioParameter) {
-       try {
-           String filePath = fileUploadService.saveInputFile(requestAudioParameter.getFile());
-           String md5 = requestAudioParameter.generateMD5(filePath);
-           if (fileService.getFileByMd5(md5) == null) {
-               fileService.saveFile(new File(filePath, md5));
+    @RequestMapping(value = "convertAudio", method = RequestMethod.POST)
+    public ResponseEntity audio(final RequestAudioParameter requestAudioParameter) {
+        try {
+            requestAudioParameter.validate();
+            String md5 = requestAudioParameter.getMd5();
+            String filePath = "";
+
+            if (fileService.getFileByMd5(md5) == null) {
+                filePath = fileUploadService.saveInputFile(requestAudioParameter.getFile());
+                fileService.saveFile(new File(filePath, md5));
+            } else {
+                filePath = fileService.getFileByMd5(md5).getPath();
             }
+
             AudioParameter audioParameter = new AudioParameter();
             setAudioParameterValues(audioParameter, requestAudioParameter, filePath);
             String result = FileZipped.zipper(audioParameter, execute(audioParameter));
-            return ResponseEntity.ok().body(
-                    new OkResponse<Integer>(HttpServletResponse.SC_OK, result.toString()));
+            return ResponseEntity.ok().body(new OkResponse<Integer>(HttpServletResponse.SC_OK, result.toString()));
         } catch (IOException | InterruptedException | ExecutionException e) {
-            return ResponseEntity.badRequest()
-                    .body(new ErrorResponse<Integer>(HttpServletResponse.SC_BAD_REQUEST, e.getMessage()));
+            return ResponseEntity.badRequest().body(new ErrorResponse<Integer>(HttpServletResponse.SC_BAD_REQUEST, e.getMessage()));
         } catch (Exception e) {
-            return ResponseEntity.badRequest().body(
-                    new ErrorResponse<String>(Integer.toString(HttpServletResponse.SC_BAD_REQUEST), e.getMessage()));
+            return ResponseEntity.badRequest().body(new ErrorResponse<String>(Integer.toString(HttpServletResponse.SC_BAD_REQUEST), e.getMessage()));
         }
-   }
+    }
 
     /**
      *
