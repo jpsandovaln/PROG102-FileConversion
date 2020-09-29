@@ -3,12 +3,8 @@ package org.fundacionjala.converter.model.parameter.multimedia;
 public class VideoParameter extends MultimediaParameter {
 
     public static final String VCODEC_COMMAND = "-vcodec";
-    private String videoCodec;
     public static final String ACODEC_COMMAND = "-acodec";
     public static final String ACODEC_MP2 = "mp2";
-    private String audioCodec;
-    public static final String FRAME_RATE = "-r";
-    private String frames;
     public static final String INPUT_COMMAND = "-i";
     public static final String START = "-ss";
     public static final String START_TIME = "10";
@@ -18,10 +14,15 @@ public class VideoParameter extends MultimediaParameter {
     public static final String PALETTE = "\"fps=10,scale=320:-1:flags=lanczos,split[s0][s1];[s0]palettegen[p];[s1][p]paletteuse\"";
     public static final String LOOP = "-loop";
     public static final String ZERO = "0";
-    private boolean extractMetadata = false;
-    private boolean extractThumbnail = false;
+    public static final String FRAME_RATE = "-r";
+
+    private String videoCodec;
+    private String audioCodec;
+    private String frames;
     private String fileName;
     private String extension;
+    private boolean extractMetadata = false;
+    private boolean extractThumbnail = false;
 
     /**
      * Sets video codec
