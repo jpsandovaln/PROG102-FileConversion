@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeLeaf.org" lang="es">
+<html xmlns:th="http://www.thymeLeaf.org" xmlns:sec="http://www.thymeLeaf.org" lang="es">
 <head>
   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0"/>
@@ -29,7 +29,8 @@
         <li><a th:href="@{/file_img}" id="image-nav" href="img/image.html">Image</a></li>
         <li><a th:href="@{/file_metadata}" id="metadata-nav" href="metadata/metadata.html">Metadata</a></li>
         <li><a th:href="@{/file_extractText}" id="extract-nav" href="docs/docs.html">Extract</a></li>
-        <li><a th:href="@{/login}" id="login-nav" href="auth/login.html" class="">login</a></li>
+        <li th:if="${#httpServletRequest.remoteUser == null}"><a th:href="@{/login}" id="login-nav" href="auth/login.html" class="">login</a></li>
+        <li th:if="${#httpServletRequest.remoteUser != null}"><a th:href="@{/logout}" id="login-nav" href="auth/login.html" class="">logout</a></li>
       </ul>
 
       <ul id="nav-mobile" class="sidenav black">

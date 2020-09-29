@@ -9,11 +9,9 @@
 package org.fundacionjala.converter.controller;
 
 import org.fundacionjala.converter.controller.service.UserService;
-import org.fundacionjala.converter.database.entity.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
 
 /**
  * @author Elizabeth Bravo Flores

@@ -7,7 +7,12 @@ import org.fundacionjala.converter.controller.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.PathVariable;
 
 import javax.servlet.http.HttpServletResponse;
 import java.util.List;
@@ -69,7 +74,16 @@ public class UserController {
         return "delete";
     }
 
-    @RequestMapping(method = RequestMethod.POST, value ="/createUser")
+    /**
+     *
+     * @param name
+     * @param lastName
+     * @param username
+     * @param password
+     * @param rePassword
+     * @return responseEntity with message to correct or incorrect inputs.
+     */
+    @RequestMapping(method = RequestMethod.POST, value = "/createUser")
     public ResponseEntity createUser(final String name, final String lastName, final String username, final String password, final String rePassword) {
         System.out.println("ACCOUNT");
         if (password.equals(rePassword)) {
