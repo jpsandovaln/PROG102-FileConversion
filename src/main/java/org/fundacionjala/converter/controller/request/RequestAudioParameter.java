@@ -17,10 +17,7 @@ public class RequestAudioParameter extends RequestParameter {
     private String sampleRate;
     private String start;
     private String duration;
-    private String volume;
     private boolean isCut;
-    private String inputFile;
-    private String outputFile;
     private String md5;
     private boolean extractThumbnail;
     private boolean extractMetadata;
@@ -162,14 +159,6 @@ public class RequestAudioParameter extends RequestParameter {
 
     /**
      *
-     * @param outputFile
-     */
-    public void setOutputFile(final String outputFile) {
-        this.outputFile = outputFile;
-    }
-
-    /**
-     *
      * @return
      */
     public String getMd5() {
@@ -208,19 +197,4 @@ public class RequestAudioParameter extends RequestParameter {
         this.duration = duration;
     }
 
-    /**
-     *
-     * @param volume
-     */
-    public void setVolume(final String volume) {
-        this.volume = volume;
-    }
-
-    /**
-     *
-     * @param inputFile
-     */
-    public void setInputFile(final String inputFile) {
-        this.inputFile = inputFile;
-    }
 }
