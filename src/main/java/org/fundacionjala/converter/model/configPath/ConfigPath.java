@@ -69,4 +69,11 @@ public class ConfigPath {
     public String getTmpFilePath() {
         return properties.getProperty("tempFiles.path");
     }
+
+    /**
+     * Returns inputFile file path
+     */
+    public String getInputFile() {
+        return properties.getProperty("inputFiles.path");
+    }
 }

@@ -25,11 +25,6 @@ import java.nio.file.StandardCopyOption;
 @Service
 public class FileUploadService {
 
-    @Value("${inputFiles.path}")
-    private String inputFiles;
-    @Value("${tempFiles.path}")
-    private String tmpFiles;
-
     /**
      * save a file in the directory "input files"
      *
@@ -38,7 +33,7 @@ public class FileUploadService {
      * @throws IOException
      */
     public String saveInputFile(final MultipartFile file) throws IOException {
-        String pathFile = inputFiles + file.getOriginalFilename();
+        String pathFile = new ConfigPath().getInputFile() + file.getOriginalFilename();
         Files.copy(file.getInputStream(), Paths.get(pathFile), StandardCopyOption.REPLACE_EXISTING);
         return pathFile;
     }
