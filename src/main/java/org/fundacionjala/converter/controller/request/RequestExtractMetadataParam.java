@@ -14,23 +14,6 @@ package org.fundacionjala.converter.controller.request;
  */
 public class RequestExtractMetadataParam extends RequestParameter {
     private String detail;
-    private String checksumMD5;
-
-    /**
-     * Returns checksumMD5
-     * @return checksumMD5
-     */
-    public String getChecksumMD5() {
-        return checksumMD5;
-    }
-
-    /**
-     * Sets md5 parameter
-     * @param checksumMD5
-     */
-    public void setChecksumMD5(final String checksumMD5) {
-        this.checksumMD5 = checksumMD5;
-    }
 
     /**
      * Set amount of detail of metadata

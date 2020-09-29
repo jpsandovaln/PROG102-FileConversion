@@ -13,7 +13,7 @@ $(document).ready(function () {
             cache: false,
             success: function (data) {
                 console.log('SUCCESS : ', data);
-                $('#filenameDownload').attr('value', $('#fileName').val());
+                $('#filenameDownload').attr('value', $('#name').val());
                 $('#path').attr('value', data["message"]);
                 $('#submited').prop('disabled', false);
                 console.log(data["message"]);
