@@ -13,27 +13,27 @@
 <div class="container row">
     <div class="col s12 m4"> </div>
     <div class="card-panel center col s12 m4">
-        <form action="" th:action="@{/createAccount}" enctype="multipart/form-data">
+        <form action="" id="form-createAccount" method="post" th:action="@{/user/createUser}" enctype="multipart/form-data">
             <h2> Create Account</h2>
             <div class="input-field col s12">
                 <input type="text" id="username" name="username" class="validate" required>
-                <label for="username">username:</label>
+                <label for="username">Username:</label>
             </div>
             <div class="input-field col s12">
                 <input type="text" id="name" name="name" class="validate" required>
-                <label for="name">name:</label>
+                <label for="name">Name:</label>
             </div>
             <div class="input-field col s12 ">
                 <input type="text" id="lastName" name="lastName" class="validate" required>
                 <label for="lastName">Last Name:</label>
             </div>
             <div class="input-field col s12">
-                <input type="password" id="password" name="password" class="validate" >
-                <label for="password">password:</label>
+                <input type="password" id="password" name="password" class="validate" required>
+                <label for="password">Password:</label>
             </div>
             <div class="input-field col s12">
-                <input type="password" id="ConfirmPassword" name="ConfirmPassword" class="validate" >
-                <label for="ConfirmPassword">Confirm Password:</label>
+                <input type="password" id="rePassword" name="rePassword" class="validate" required>
+                <label for="rePassword">Confirm Password:</label>
             </div>
 
             <div class="center input-field col s12">
@@ -47,7 +47,7 @@
             Invalid username and password.
         </div>
         <p class="text-center"><a th:href="@{/login}" >Sign in</a></p>
-        <p class="text-center center"><a th:href="@{/}" >back to home</a></p>
+        <p class="text-center center"><a th:href="@{/}" >Back to home</a></p>
     </div>
     <div class="col s12 m4"></div>
 </div>
