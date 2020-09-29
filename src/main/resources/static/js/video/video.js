@@ -1,5 +1,5 @@
 $(document).ready(function () {
-    $("#image-nav").addClass("btn white black-text waves-effect waves-blue-grey lighten-1");
+    $("#video-nav").addClass("btn white black-text waves-effect waves-blue-grey lighten-1");
     $("#form-video").validate( {
         rules: {
             file: 'required',
