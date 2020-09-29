@@ -1,4 +1,3 @@
-package org.fundacionjala.converter.model.utility;
 /**
  * Copyright (c) 2020 Fundacion Jala.
  *
@@ -7,6 +6,9 @@ package org.fundacionjala.converter.model.utility;
  * Information and shall use it only in accordance with the terms of the
  * license agreement you entered into with Fundacion Jala
  */
+package org.fundacionjala.converter.model.utility;
+
+import com.lowagie.text.DocumentException;
 import com.lowagie.text.PageSize;
 import com.lowagie.text.Paragraph;
 import com.lowagie.text.pdf.PdfWriter;
@@ -14,9 +16,10 @@ import com.lowagie.text.Document;
 import org.apache.poi.xwpf.usermodel.XWPFDocument;
 import org.apache.poi.xwpf.usermodel.XWPFParagraph;
 import org.apache.poi.xwpf.usermodel.XWPFRun;
-
+import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
+
 /**
  * @author Jhordan Soto
  * @version 1.0
@@ -30,7 +33,7 @@ public class ConvertDoc {
      * @param docName the name of the doc
      * @param content the content that will have the word
      */
-    public String createDocumentWord(final String docName, final String content) {
+    public String createDocumentWord(final String docName, final String content) throws IOException {
         FileOutputStream out = null;
         String pathCreated = docName + DOCX_EXTENSION;
         try {
@@ -40,24 +43,18 @@ public class ConvertDoc {
             XWPFRun run = paragraph.createRun();
             run.setText(content);
             doc.write(out);
-
-        } catch (IOException e) {
-            e.printStackTrace();
         } finally {
-            try {
-                out.close();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
+            out.close();
         }
         return pathCreated;
     }
+
     /**
      * Creates a document pdf
      * @param docName the path and the name that it will have
      * @param content the content of the document
      */
-    public String createDocumentPdf(final String docName, final String content) {
+    public String createDocumentPdf(final String docName, final String content) throws FileNotFoundException, DocumentException {
         Document doc = null;
         String pathCreated = docName + PDF_EXTENSION;
         try {
@@ -66,9 +63,6 @@ public class ConvertDoc {
             doc.open();
             Paragraph paragraph = new Paragraph(content);
             doc.add(paragraph);
-
-        } catch (Exception e) {
-            e.printStackTrace();
         } finally {
             doc.close();
         }

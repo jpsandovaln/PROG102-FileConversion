@@ -53,7 +53,6 @@ public class VideoController {
             if (fileService.getFileByMd5(md5) == null) {
                 fileService.saveFile(new File(filePath, md5));
             }
-
             VideoParameter videoParameter = new VideoParameter();
             videoParameter.setInputFile(filePath);
             videoParameter.setFrames(requestVideoParameter.getFrames());

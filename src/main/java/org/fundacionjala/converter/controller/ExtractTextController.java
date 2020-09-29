@@ -47,25 +47,29 @@ public class ExtractTextController {
         requestExtractTextParameter.validate();
         String filePath = fileUploadService.saveInputFile(requestExtractTextParameter.getFile());
         String md5 = requestExtractTextParameter.generateMD5(filePath);
-        if (fileService.getFileByMd5(md5) == null) {
-            fileService.saveFile(new File(filePath, md5));
-        }
-        try {
-            ExtractTextFacade extractor = new ExtractTextFacade();
-            ExtractTextParameter parameter = new ExtractTextParameter();
-            parameter.setInputFile(filePath);
-            parameter.setMd5(md5);
-            parameter.setLanguage(requestExtractTextParameter.getLanguage());
-            parameter.setFormat(requestExtractTextParameter.getExportFormat());
-            String result = FileZipped.zipper(parameter, extractor.extractText(parameter));
-            return ResponseEntity.ok().body(
-                new OkResponse<Integer>(HttpServletResponse.SC_OK, result));
-        } catch (IOException | InterruptedException | ExecutionException e) {
-            return ResponseEntity.badRequest()
-                .body(new ErrorResponse<Integer>(HttpServletResponse.SC_BAD_REQUEST, e.getMessage()));
-        } catch (Exception e) {
-            return ResponseEntity.badRequest().body(
-                new ErrorResponse<String>(Integer.toString(HttpServletResponse.SC_BAD_REQUEST), e.getMessage()));
+        if (requestExtractTextParameter.getMd5().equals(md5)) {
+            if (fileService.getFileByMd5(md5) == null) {
+                fileService.saveFile(new File(filePath, md5));
+            }
+            try {
+                ExtractTextFacade extractor = new ExtractTextFacade();
+                ExtractTextParameter parameter = new ExtractTextParameter();
+                parameter.setInputFile(filePath);
+                parameter.setMd5(md5);
+                parameter.setLanguage(requestExtractTextParameter.getLanguage());
+                parameter.setFormat(requestExtractTextParameter.getExportFormat());
+                String result = FileZipped.zipper(parameter, extractor.extractText(parameter));
+                return ResponseEntity.ok().body(
+                        new OkResponse<Integer>(HttpServletResponse.SC_OK, result));
+            } catch (IOException | InterruptedException | ExecutionException e) {
+                return ResponseEntity.badRequest()
+                        .body(new ErrorResponse<Integer>(HttpServletResponse.SC_BAD_REQUEST, e.getMessage()));
+            } catch (Exception e) {
+                return ResponseEntity.badRequest().body(
+                        new ErrorResponse<String>(Integer.toString(HttpServletResponse.SC_BAD_REQUEST), e.getMessage()));
+            }
+        } else {
+            return ResponseEntity.badRequest().body(new ErrorResponse<Integer>(HttpServletResponse.SC_BAD_REQUEST, "ChecksumMD5 invalid"));
         }
     }
 }

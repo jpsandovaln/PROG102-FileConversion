@@ -1,16 +1,15 @@
-$(document).ready(function () {
+$(document).ready(function() {
     $("#audio-nav").addClass("btn white black-text waves-effect waves-blue-grey lighten-1");
-     $('#extractThumbnail').change(function() {
-            if(!$('#extractThumbnail').prop('checked')) {
-                $('#start').parent().hide();
-                $('#duration').parent().hide();
-            }
-            else{
-                $('#start').parent().show();
-                $('#duration').parent().show();
-            }
-     });
-    $( "#form-audio" ).validate( {
+    $('#extractThumbnail').change(function() {
+        if (!$('#extractThumbnail').prop('checked')) {
+            $('#start').parent().hide();
+            $('#duration').parent().hide();
+        } else {
+            $('#start').parent().show();
+            $('#duration').parent().show();
+        }
+    });
+    $("#form-audio").validate({
         rules: {
             file: 'required',
             name: 'required',
@@ -19,11 +18,9 @@ $(document).ready(function () {
             bitRate: 'required',
             channel: 'required',
             start: {
-                required:{
-                    depends:function ()
-                    {
-                        if($('#extractThumbnail').prop('checked'))
-                        {
+                required: {
+                    depends: function() {
+                        if ($('#extractThumbnail').prop('checked')) {
                             return true;
                         }
                         return false;
@@ -32,10 +29,8 @@ $(document).ready(function () {
             },
             duration: {
                 required: {
-                    depends:function ()
-                    {
-                        if($('#extractThumbnail').prop('checked'))
-                        {
+                    depends: function() {
+                        if ($('#extractThumbnail').prop('checked')) {
                             return true;
                         }
                         return false;
@@ -57,45 +52,45 @@ $(document).ready(function () {
             sampleRate: 'please insert the sample rate'
         },
         errorElement: "div",
-        errorPlacement: function ( error, element ) {
+        errorPlacement: function(error, element) {
             // Add the `help-block` class to the error element
-            error.addClass( "invalid-feedback" );
+            error.addClass("invalid-feedback");
             element.parent().append(error);
             element.addClass('invalid');
             element.addClass('select-validate');
         },
-        highlight: function ( element, errorClass, validClass ) {
+        highlight: function(element, errorClass, validClass) {
             $(element).addClass('invalid');
             $(element).removeClass('valid');
             $(element).removeClass('select-was-validate');
             $(element).addClass('select-validate');
         },
-        unhighlight: function ( element, errorClass, validClass ) {
+        unhighlight: function(element, errorClass, validClass) {
             $(element).removeClass('invalid');
             $(element).addClass('valid');
             $(element).addClass('select-was-validate');
             $(element).removeClass('select-validate');
         },
         submitHandler: function(form) {
-          $.ajax({
-                   type: 'POST',
-                   url: '/convertAudio',
-                   data: new FormData(form),
-                   enctype: 'multipart/form-data',
-                   processData: false,
-                   contentType: false,
-                   cache: false,
-                   success: function (data) {
-                      console.log('SUCCESS : ', data);
-                      $('#filenameDownload').attr('value', $('#fileName').val());
-                      $('#path').attr('value', data["message"]);
-                      $('#submited').prop('disabled', false);
-                      console.log(data["message"]);
-                   },
-                   error: function (e) {
-                       console.log('ERROR : ', e);
-                   }
-               });
+            $.ajax({
+                type: 'POST',
+                url: '/convertAudio',
+                data: new FormData(form),
+                enctype: 'multipart/form-data',
+                processData: false,
+                contentType: false,
+                cache: false,
+                success: function(data) {
+                    console.log('SUCCESS : ', data);
+                    $('#filenameDownload').attr('value', $('#fileName').val());
+                    $('#path').attr('value', data["message"]);
+                    $('#submited').prop('disabled', false);
+                    console.log(data["message"]);
+                },
+                error: function(e) {
+                    console.log('ERROR : ', e);
+                }
+            });
         }
-    } );
+    });
 });
