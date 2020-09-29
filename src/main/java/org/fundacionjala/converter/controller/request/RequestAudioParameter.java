@@ -18,7 +18,6 @@ public class RequestAudioParameter extends RequestParameter {
     private String start;
     private String duration;
     private boolean isCut;
-    private String md5;
     private boolean extractThumbnail;
     private boolean extractMetadata;
 
@@ -155,22 +154,6 @@ public class RequestAudioParameter extends RequestParameter {
      */
     public void setCut(final boolean cut) {
         this.isCut = cut;
-    }
-
-    /**
-     *
-     * @return
-     */
-    public String getMd5() {
-        return md5;
-    }
-
-    /**
-     *
-     * @param md5
-     */
-    public void setMd5(final String md5) {
-        this.md5 = md5;
     }
 
     /**
