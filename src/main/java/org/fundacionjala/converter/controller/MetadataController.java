@@ -9,6 +9,7 @@
 package org.fundacionjala.converter.controller;
 
 import org.fundacionjala.converter.executor.Executor;
+import org.fundacionjala.converter.model.command.ICommand;
 import org.fundacionjala.converter.model.command.MetadataModel;
 import org.fundacionjala.converter.model.parameter.metadata.MetadataParameter;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,11 +20,13 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 import org.fundacionjala.converter.controller.service.FileService;
 import org.fundacionjala.converter.controller.service.FileUploadService;
+import org.fundacionjala.converter.database.entity.File;
 import org.fundacionjala.converter.controller.request.RequestMetadataParameter;
 import org.fundacionjala.converter.controller.response.ErrorResponse;
 import org.fundacionjala.converter.controller.response.OkResponse;
 
 import java.io.IOException;
+import java.security.NoSuchAlgorithmException;
 import java.util.List;
 import java.util.concurrent.ExecutionException;
 
@@ -52,22 +55,41 @@ public class MetadataController {
     public ResponseEntity extractMetadata(final RequestMetadataParameter requestMetadataParameter) {
         try {
             requestMetadataParameter.validate();
-            String filePath = fileUploadService.saveInputFile(requestMetadataParameter.getFile());
-            String md5 = requestMetadataParameter.generateMD5(filePath);
+            String md5 = requestMetadataParameter.getMd5();
+            String filePath = "";
+
+            if (fileService.getFileByMd5(md5) == null) {
+                filePath = fileUploadService.saveInputFile(requestMetadataParameter.getFile());
+                fileService.saveFile(new File(filePath, md5));
+            } else {
+                filePath = fileService.getFileByMd5(md5).getPath();
+            }
+
             String exportFormat = requestMetadataParameter.getExportFormat();
             String detail = requestMetadataParameter.getDetail();
             MetadataParameter metaDataParameter = new MetadataParameter(filePath, exportFormat, detail, output, md5);
             metaDataParameter.setOutputFile(output + md5 + requestMetadataParameter.getExportFormat());
-            Executor executor = new Executor();
-            MetadataModel metaDataModel = new MetadataModel();
-            List<String> result = executor.executeCommandsList(metaDataModel.createCommand(metaDataParameter));
-            return ResponseEntity.ok().body(new OkResponse<Integer>(HttpServletResponse.SC_OK, result.get(0)));
+            String result = execute(metaDataParameter).get(0);
+            return ResponseEntity.ok().body(new OkResponse<Integer>(HttpServletResponse.SC_OK, result));
         } catch (IOException | InterruptedException | ExecutionException e) {
-            return ResponseEntity.badRequest()
-                    .body(new ErrorResponse<Integer>(HttpServletResponse.SC_BAD_REQUEST, e.getMessage()));
+            return ResponseEntity.badRequest().body(new ErrorResponse<Integer>(HttpServletResponse.SC_BAD_REQUEST, e.getMessage()));
         } catch (Exception e) {
-            return ResponseEntity.badRequest().body(
-                    new ErrorResponse<String>(Integer.toString(HttpServletResponse.SC_BAD_REQUEST), e.getMessage()));
+            return ResponseEntity.badRequest().body(new ErrorResponse<String>(Integer.toString(HttpServletResponse.SC_BAD_REQUEST), e.getMessage()));
         }
+    }
+
+    /**
+     *
+     * @param audioParameter
+     * @throws InterruptedException
+     * @throws ExecutionException
+     * @throws IOException
+     * @throws NoSuchAlgorithmException
+     */
+    private List<String> execute(final MetadataParameter parameter)
+            throws InterruptedException, ExecutionException, IOException, NoSuchAlgorithmException {
+        Executor executor = new Executor();
+        ICommand metaDataModel = new MetadataModel();
+        return executor.executeCommandsList(metaDataModel.createCommand(parameter));
     }
 }
