@@ -75,9 +75,11 @@ $(document).ready(function () {
                 $('#path').attr('value', data["message"]);
                 $('#submited').prop('disabled', false);
                 console.log(data["message"]);
+                alert("successfully " + "\n" + data["status"]+"\n" + data["message"]);
             },
             error: function (e) {
                 console.log('ERROR : ', e);
+                alert("error " + "\n" + e["status"] + "\n" + e["message"]);
             }
         });
     });
