@@ -1,5 +1,5 @@
 $(document).ready(function() {
-    $("#image-nav").addClass("btn white black-text waves-effect waves-blue-grey lighten-1");
+    $("#video-nav").addClass("btn white black-text waves-effect waves-blue-grey lighten-1");
     $("#form-video").validate({
         rules: {
             file: 'required',
@@ -50,7 +50,11 @@ $(document).ready(function() {
             $(element).addClass('select-was-validate');
             $(element).removeClass('select-validate');
         },
-        submitHandler: function(form) {
+        submitHandler: function(form) { <<
+            <<
+            <<
+            <
+            HEAD
             $.ajax({
                 type: 'POST',
                 url: '/convertVideo',
@@ -68,7 +72,32 @@ $(document).ready(function() {
                 error: function(e) {
                     console.log('ERROR : ', e);
                 }
-            });
+            }); ===
+            ===
+            =
+            $.ajax({
+                type: 'POST',
+                url: '/convertVideo',
+                data: new FormData(form),
+                enctype: 'multipart/form-data',
+                processData: false,
+                contentType: false,
+                cache: false,
+                success: function(data) {
+                    console.log('SUCCESS : ', data);
+                    $('#textarea_preview').val(data);
+                    $('#path').attr('value', data);
+                    $('#submitd').prop('disabled', false);
+                    alert("successfully " + "\n" + data["status"] + "\n" + data["message"]);
+                },
+                error: function(e) {
+                    console.log('ERROR : ', e);
+                    alert("error " + "\n" + e["status"] + "\n" + e["message"]);
+                }
+            }); >>>
+            >>>
+            >
+            dev
         }
     });
 });
