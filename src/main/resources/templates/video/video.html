@@ -12,15 +12,15 @@
                             <div class="btn teal accent-3">
                                 <i class="material-icons right">folder_open</i>
                                 <span> File</span>
-                                <input class="file-path validate" type="text">
                             </div>
                             <div class="file-path-wrapper">
-                                <input type="file" id="file" name="file" onchange="calculate()" />
+                                <input type="file" id="file" name="file" onchange="calculate()"/>
+                                <input class="file-path" type="text" disabled>
                             </div>
                         </div>
                         <div class="input-field col s12 m6">
-                            <input type="text" id="name" name="name" class="validate" required>
-                            <label for="name">Name:</label>
+                            <input type="text" id="md5" name="md5" class="validate" placeholder="" disabled>
+                            <label for="md5">MD5:</label>
                         </div>
                         <div class="input-field col s12 m6">
                           <select id="exportFormat" name="exportFormat" class="browser-default">
@@ -30,10 +30,10 @@
                             <option value="mp3">MP3</option>
                           </select>
                         </div>
-                         <div class="input-field col s12 m6">
-                            <input type="text" id="md5" name="md5" class="validate" >
-                            <label for="md5">MD5:</label>
-                         </div>
+                        <div class="input-field col s12 m6">
+                            <input type="text" id="name" name="name" class="validate" required>
+                            <label for="name">Name:</label>
+                        </div>
                          <div class="input-field col s12 m6">
                             <input type="text" id="videoCodec" name="videoCodec" class="validate" required>
                             <label for="videoCodec">video codec:</label>

@@ -12,15 +12,15 @@
                     <div class="btn teal accent-3">
                         <i class="material-icons right">folder_open</i>
                         <span> File</span>
-                        <input class="file-path validate" type="text">
                     </div>
                     <div class="file-path-wrapper">
-                        <input type="file" id="file" name="file" onchange="calculate()" />
+                        <input type="file" id="file" name="file" onchange="calculate()"/>
+                        <input class="file-path" type="text" disabled>
                     </div>
                 </div>
                 <div class="input-field col s12 m6">
-                    <input type="text" id="name" name="name" class="validate" required>
-                    <label for="name">Name:</label>
+                    <input type="text" id="md5" name="md5" class="validate" placeholder="" disabled>
+                    <label for="md5">MD5:</label>
                 </div>
                 <div class="input-field col s12 m6">
                     <select id="exportFormat" name="exportFormat" class="browser-default">
@@ -30,8 +30,8 @@
                     </select>
                 </div>
                 <div class="input-field col s12 m6">
-                    <input type="text" id="codec" name="codec" class="validate" required>
-                    <label for="codec">codec:</label>
+                    <input type="text" id="name" name="name" class="validate" required>
+                    <label for="name">Name:</label>
                 </div>
                 <div class="input-field col s12 m6">
                     <select id="channel" name="channel" class="browser-default">
@@ -41,16 +41,16 @@
                     </select>
                 </div>
                 <div class="input-field col s12 m6">
+                    <input type="text" id="codec" name="codec" class="validate" required>
+                    <label for="codec">codec:</label>
+                </div>
+                <div class="input-field col s12 m6">
                     <input type="text" id="bitRate" name="bitRate" class="validate" required>
                     <label for="bitRate">Bit Rate:</label>
                 </div>
                 <div class="input-field col s12 m6">
                     <input type="text" id="sampleRate" name="sampleRate" class="validate" required>
                     <label for="sampleRate">Sample Rate:</label>
-                </div>
-                <div class="input-field col s12 m6">
-                    <input type="text" id="md5" name="md5" class="validate" >
-                    <label for="md5">MD5:</label>
                 </div>
                 <div class="input-field col s12 m4">
                     <label for="extractThumbnail">
