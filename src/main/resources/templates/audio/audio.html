@@ -5,22 +5,21 @@
 <header><nav th:replace="index :: nav" replace="index :: nav"></nav></header>
 <!--formularios-->
 <div class="section container">
-    <div class="row">
-        <form action="" class="col s12" id="form-audio" method="post" th:action="@{/convertAudio}" enctype="multipart/form-data">
-            <div  class="row card-panel z-depth-5">
+    <div class="row card-panel z-depth-5">
+        <form action=""  id="form-audio" method="post" th:action="@{/convertAudio}" enctype="multipart/form-data">
                <div class="file-field input-field col s12 m6">
                     <div class="btn teal accent-3">
                         <i class="material-icons right">folder_open</i>
                         <span> File</span>
-                        <input class="file-path validate" type="text">
                     </div>
                     <div class="file-path-wrapper">
-                        <input type="file" id="file" name="file" onchange="calculate()" />
+                        <input type="file" id="file" name="file" onchange="calculate()"/>
+                        <input class="file-path" type="text" disabled>
                     </div>
                 </div>
                 <div class="input-field col s12 m6">
-                    <input type="text" id="name" name="name" class="validate" required>
-                    <label for="name">Name:</label>
+                    <input type="text" id="md5" name="md5" class="validate" placeholder="" disabled>
+                    <label for="md5">MD5:</label>
                 </div>
                 <div class="input-field col s12 m6">
                     <select id="exportFormat" name="exportFormat" class="browser-default">
@@ -30,8 +29,8 @@
                     </select>
                 </div>
                 <div class="input-field col s12 m6">
-                    <input type="text" id="codec" name="codec" class="validate" required>
-                    <label for="codec">codec:</label>
+                    <input type="text" id="name" name="name" class="validate" required>
+                    <label for="name">Name:</label>
                 </div>
                 <div class="input-field col s12 m6">
                     <select id="channel" name="channel" class="browser-default">
@@ -41,16 +40,16 @@
                     </select>
                 </div>
                 <div class="input-field col s12 m6">
+                    <input type="text" id="codec" name="codec" class="validate" required>
+                    <label for="codec">codec:</label>
+                </div>
+                <div class="input-field col s12 m6">
                     <input type="text" id="bitRate" name="bitRate" class="validate" required>
                     <label for="bitRate">Bit Rate:</label>
                 </div>
                 <div class="input-field col s12 m6">
                     <input type="text" id="sampleRate" name="sampleRate" class="validate" required>
                     <label for="sampleRate">Sample Rate:</label>
-                </div>
-                <div class="input-field col s12 m6">
-                    <input type="text" id="md5" name="md5" class="validate" >
-                    <label for="md5">MD5:</label>
                 </div>
                 <div class="input-field col s12 m4">
                     <label for="extractThumbnail">
@@ -72,14 +71,15 @@
                         <span>Metadata</span>
                     </label>
                 </div>
-                <div class="center input-field col s12">
-                    <button class="btn" type="submit">
-                        <i class="material-icons right">track_changes</i>Apply
-                    </button>
+                <div class="">
+                    <div class="input-field col s2 right">
+                        <button class="btn" type="submit">
+                            <i class="material-icons right">track_changes</i>Apply
+                        </button>
+                    </div>
                 </div>
-            </div>
         </form>
-        <div class="col s3 right">
+        <div class=" input-field col s2 right">
             <form method="get" th:action="@{/download/}">
                 <input type="text" name="path" id="path" value="" style="display:none">
                 <input type="text" name="filenameDownload" id="filenameDownload" value="" style="display:none">
