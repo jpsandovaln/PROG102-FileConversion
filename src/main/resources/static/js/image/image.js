@@ -80,18 +80,15 @@ $(document).ready(function () {
                    cache: false,
                    success: function (data) {
                         console.log('SUCCESS : ', data);
-                        $('#filenameDownload').attr('value', $('#fileName').val());
+                        $('#filenameDownload').attr('value', $('#name').val());
                         $('#path').attr('value', data["message"]);
                         $('#submited').prop('disabled', false);
                         console.log(data["message"]);
+                        alert("successfully " + "\n" + data["status"]+"\n" + data["message"]);
                    },
                    error: function (e) {
                        console.log('ERROR : ', e);
-                       Swal.fire({
-                           icon: 'error',
-                           title: e.responseJSON.error,
-                           showConfirmButton: true
-                         })
+                       alert("error " + "\n" + e["status"] + "\n" + e["message"]);
                    }
                });
         }

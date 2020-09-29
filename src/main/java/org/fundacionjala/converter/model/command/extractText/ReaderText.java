@@ -10,6 +10,7 @@ package org.fundacionjala.converter.model.command.extractText;
 
 import java.io.BufferedReader;
 import java.io.FileReader;
+import java.io.IOException;
 
 public class ReaderText {
     private BufferedReader buffer;
@@ -17,28 +18,23 @@ public class ReaderText {
     public ReaderText() {
         buffer = null;
     }
+
     /**
-     * read a file
+     * Reads a file
      * @param fileName the path and name of the file
      * @return the content of the file in a string
      */
-    public String readFile(final String fileName) throws Exception {
+    public String readFile(final String fileName) throws IOException {
         String readString = "";
         try {
-            String sCurrentLine;
+            String currentLine;
             buffer = new BufferedReader(new FileReader(fileName));
-            while ((sCurrentLine = buffer.readLine()) != null) {
-                readString += sCurrentLine;
+            while ((currentLine = buffer.readLine()) != null) {
+                readString += currentLine;
             }
-        } catch (Exception e) {
-            throw e;
         } finally {
-            try {
-                if (buffer != null) {
-                    buffer.close();
-                }
-            } catch (Exception ex) {
-                throw ex;
+            if (buffer != null) {
+                buffer.close();
             }
         }
         return readString;

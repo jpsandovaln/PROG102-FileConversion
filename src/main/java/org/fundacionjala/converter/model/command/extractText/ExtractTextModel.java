@@ -37,7 +37,7 @@ public class ExtractTextModel implements ICommand<ExtractTextParameter> {
     }
 
     /**
-     * Extracts text from image
+     * Extracts text from an image
      * @param parameter
      * @return
      */
@@ -50,7 +50,6 @@ public class ExtractTextModel implements ICommand<ExtractTextParameter> {
             command.add(parameter.getLanguage());
         }
         command.add(parameter.getInputFile());
-        //command.add(parameter.getOutputFile() + parameter.getFileName());
         command.add(parameter.getOutputFile() + changeName(parameter.getOutputFile(), parameter.getFileName(), FormatValidation.FORMAT_TXT));
         return command;
     }

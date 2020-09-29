@@ -1,6 +1,6 @@
-$(document).ready(function () {
-    $("#image-nav").addClass("btn white black-text waves-effect waves-blue-grey lighten-1");
-    $("#form-video").validate( {
+$(document).ready(function() {
+    $("#video-nav").addClass("btn white black-text waves-effect waves-blue-grey lighten-1");
+    $("#form-video").validate({
         rules: {
             file: 'required',
             name: 'required',
@@ -13,7 +13,7 @@ $(document).ready(function () {
             audioCodec: 'required',
             frames: 'required',
             sampleRate: 'required',
-            extractGif : {
+            extractGif: {
                 required: false,
             }
         },
@@ -31,44 +31,73 @@ $(document).ready(function () {
             sampleRate: 'Please, insert the sample rate',
         },
         errorElement: "div",
-        errorPlacement: function ( error, element ) {
+        errorPlacement: function(error, element) {
             // Add the `help-block` class to the error element
             error.addClass("error");
             element.parent().append(error);
             element.addClass('invalid');
             element.addClass('select-validate');
         },
-        highlight: function ( element, errorClass, validClass ) {
+        highlight: function(element, errorClass, validClass) {
             $(element).addClass('invalid');
             $(element).removeClass('valid');
             $(element).removeClass('select-was-validate');
             $(element).addClass('select-validate');
         },
-        unhighlight: function ( element, errorClass, validClass ) {
+        unhighlight: function(element, errorClass, validClass) {
             $(element).removeClass('invalid');
             $(element).addClass('valid');
             $(element).addClass('select-was-validate');
             $(element).removeClass('select-validate');
         },
-        submitHandler: function(form) {
-          $.ajax({
-                   type: 'POST',
-                   url: '/convertVideo',
-                   data: new FormData(form),
-                   enctype: 'multipart/form-data',
-                   processData: false,
-                   contentType: false,
-                   cache: false,
-                   success: function (data) {
-                        console.log('SUCCESS : ', data);
-                        $('#textarea_preview').val(data);
-                        $('#path').attr('value', data);
-                        $('#submitd').prop('disabled', false);
-                   },
-                   error: function (e) {
-                       console.log('ERROR : ', e);
-                   }
-               });
+        submitHandler: function(form) { <<
+            <<
+            <<
+            <
+            HEAD
+            $.ajax({
+                type: 'POST',
+                url: '/convertVideo',
+                data: new FormData(form),
+                enctype: 'multipart/form-data',
+                processData: false,
+                contentType: false,
+                cache: false,
+                success: function(data) {
+                    console.log('SUCCESS : ', data);
+                    $('#textarea_preview').val(data);
+                    $('#path').attr('value', data);
+                    $('#submitd').prop('disabled', false);
+                },
+                error: function(e) {
+                    console.log('ERROR : ', e);
+                }
+            }); ===
+            ===
+            =
+            $.ajax({
+                type: 'POST',
+                url: '/convertVideo',
+                data: new FormData(form),
+                enctype: 'multipart/form-data',
+                processData: false,
+                contentType: false,
+                cache: false,
+                success: function(data) {
+                    console.log('SUCCESS : ', data);
+                    $('#textarea_preview').val(data);
+                    $('#path').attr('value', data);
+                    $('#submitd').prop('disabled', false);
+                    alert("successfully " + "\n" + data["status"] + "\n" + data["message"]);
+                },
+                error: function(e) {
+                    console.log('ERROR : ', e);
+                    alert("error " + "\n" + e["status"] + "\n" + e["message"]);
+                }
+            }); >>>
+            >>>
+            >
+            dev
         }
-    } );
+    });
 });
