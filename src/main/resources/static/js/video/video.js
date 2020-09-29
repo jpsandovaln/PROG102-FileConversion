@@ -1,5 +1,5 @@
 $(document).ready(function () {
-    $("#image-nav").addClass("btn white black-text waves-effect waves-blue-grey lighten-1");
+    $("#video-nav").addClass("btn white black-text waves-effect waves-blue-grey lighten-1");
     $("#form-video").validate( {
         rules: {
             file: 'required',
@@ -64,9 +64,11 @@ $(document).ready(function () {
                         $('#textarea_preview').val(data);
                         $('#path').attr('value', data);
                         $('#submitd').prop('disabled', false);
+                        alert("successfully " + "\n" + data["status"]+"\n" + data["message"]);
                    },
                    error: function (e) {
                        console.log('ERROR : ', e);
+                       alert("error " + "\n" + e["status"] + "\n" + e["message"]);
                    }
                });
         }
