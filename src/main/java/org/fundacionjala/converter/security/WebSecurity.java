@@ -23,6 +23,7 @@ public class WebSecurity extends WebSecurityConfigurerAdapter {
             "/home",
             "/",
             "/createAccount",
+            "/user/createUser",
             "/css/**",
             "/user/add",
             "/images/**",
@@ -53,7 +54,7 @@ public class WebSecurity extends WebSecurityConfigurerAdapter {
                 .formLogin()
                 .loginPage("/login")
                 .permitAll()
-                .defaultSuccessUrl("/welcome")
+                .defaultSuccessUrl("/")
                 .failureUrl("/login?error=true")
                 .usernameParameter("username")
                 .passwordParameter("password")
