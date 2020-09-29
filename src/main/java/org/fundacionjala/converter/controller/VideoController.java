@@ -56,7 +56,6 @@ public class VideoController {
             if (fileService.getFileByMd5(md5) == null) {
                 fileService.saveFile(new File(filePath, md5));
             }
-
             VideoParameter videoParameter = new VideoParameter();
             setVideoParameter(videoParameter, requestVideoParameter, filePath);
             String result = FileZipped.zipper(videoParameter, execute(videoParameter));
