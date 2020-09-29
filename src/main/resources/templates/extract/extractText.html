@@ -11,46 +11,46 @@
     <div class="section container">
         <div class="row card-panel z-depth-5">
             <form action="" id="form-extract" method="post" th:action="@{/convertExtractText}" enctype="multipart/form-data">
-                 <div class="file-field input-field col s12 m6">
-                        <div class="btn teal accent-3">
-                            <i class="material-icons right">folder_open</i>
-                            <span> File</span>
-                        </div>
-                        <div class="file-path-wrapper">
-                            <input type="file" id="file" name="file" onchange="calculate()"/>
-                            <input class="file-path" type="text" disabled>
-                        </div>
+                <div class="file-field input-field col s12 m6">
+                    <div class="btn teal accent-3">
+                        <i class="material-icons right">folder_open</i>
+                        <span> File</span>
                     </div>
-                    <div class="input-field col s12 m6">
-                        <input type="text" id="md5" name="md5" class="validate" placeholder="" readonly>
-                        <label for="md5">MD5:</label>
+                    <div class="file-path-wrapper">
+                        <input type="file" id="file" name="file" onchange="calculate()" />
+                        <input class="file-path" type="text" disabled>
                     </div>
-                    <div class="input-field col s12 m6">
-                        <select id="language" name="language" class="browser-default">
+                </div>
+                <div class="input-field col s12 m6">
+                    <input type="text" id="md5" name="md5" class="validate" readonly="readonly" placeholder="">
+                    <label for="md5">MD5:</label>
+                </div>
+                <div class="input-field col s12 m6">
+                    <select id="language" name="language" class="browser-default">
                             <option value="" disabled selected>Select language</option>
                             <option value="spa">Spanish</option>
                             <option value="en">English</option>
                         </select>
-                    </div>
-                    <div class="input-field col s12 m6">
-                        <input type="text" id="name" name="name" class="validate" required>
-                        <label for="name">File name:</label>
-                    </div>
-                    <div class="input-field col s12 m6">
-                        <select id="format" name="exportFormat" class="browser-default">
+                </div>
+                <div class="input-field col s12 m6">
+                    <input type="text" id="name" name="name" class="validate" required>
+                    <label for="name">File name:</label>
+                </div>
+                <div class="input-field col s12 m6">
+                    <select id="format" name="exportFormat" class="browser-default">
                         <option value="" disabled selected>Select format to export</option>
                         <option value=".docx">Word</option>
                         <option value=".pdf">Pdf</option>
                         <option value=".txt">Txt</option>
                     </select>
+                </div>
+                <div class="">
+                    <div class="input-field col s2 right">
+                        <button class="btn" type="submit">
+                            <i class="material-icons right">track_changes</i>Apply
+                        </button>
                     </div>
-                    <div class="">
-                        <div class="input-field col s2 right">
-                            <button class="btn" type="submit">
-                                <i class="material-icons right">track_changes</i>Apply
-                            </button>
-                        </div>
-                    </div>
+                </div>
             </form>
             <div class="input-field col s2 right">
                 <form method="get" th:action="@{/download}">
@@ -70,4 +70,5 @@
     <script th:src="@{/js/extractText/extractText.js}"></script>
     <script th:src="@{/js/extractText/extractTextValidation.js}"></script>
 </body>
+
 </html>

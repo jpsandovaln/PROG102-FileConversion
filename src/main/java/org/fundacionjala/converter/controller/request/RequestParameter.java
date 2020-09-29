@@ -19,6 +19,7 @@ public abstract class RequestParameter {
 
     private MultipartFile file;
     private String exportFormat;
+    private String md5;
 
     /**
      *
@@ -84,6 +85,9 @@ public abstract class RequestParameter {
         if (this.getFile().getOriginalFilename().contains("..") || this.getFile() == null) {
             throw new Exception("failed file null");
         }
+        if (this.getMd5() == null || "".equals(this.getMd5())) {
+            throw new Exception("failed md5 null");
+        }
     }
 
     /**
@@ -98,6 +102,22 @@ public abstract class RequestParameter {
             return true;
         }
         return false;
+    }
+
+    /**
+     * Sets md5 parameter
+     * @param md5
+     */
+    public void setMd5(final String md5) {
+        this.md5 = md5;
+    }
+
+    /**
+     * Returns checksumMD5
+     * @return checksumMD5
+     */
+    public String getMd5() {
+        return md5;
     }
 }
 
