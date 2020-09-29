@@ -6,10 +6,9 @@
 <header><nav th:replace="index :: nav" replace="index :: nav"></nav></header>
 <!--formularios-->
 <div class="section container">
-    <div class="row">
-        <form action="" class="col s12" id="form-image" method="post" th:action="@{/convertImage}" enctype="multipart/form-data">
-            <div  class="row card-panel z-depth-5">
-                <div class="file-field input-field col s12 m6">
+    <div class="row card-panel z-depth-5">
+        <form action="" id="form-image" method="post" th:action="@{/convertImage}" enctype="multipart/form-data">
+             <div class="file-field input-field col s12 m6">
                     <div class="btn teal accent-3">
                         <i class="material-icons right">folder_open</i>
                         <span> File</span>
@@ -53,34 +52,34 @@
                     <label for="width">width:</label>
                 </div>
                 <div class="col s12 container">
-                    <div class="input-field col s4">
+                    <div class="input-field col s3">
                         <label for="gray">
                             <input id="gray" name="gray" type="checkbox"/>
                             <span>Scale Gray</span>
                         </label>
                     </div>
-                    <div class="input-field col s4">
+                    <div class="input-field col s3">
                         <label for="extractMetadata">
                             <input id="extractMetadata" name="extractMetadata" type="checkbox"/>
                             <span>Metadata</span>
                         </label>
                     </div>
-                    <div class="right input-field col s4">
+                    <div class=" input-field col s3">
                         <label for="extractThumbnail">
                             <input id="extractThumbnail" name="extractThumbnail" type="checkbox"/>
                             <span>thumbnail</span>
                         </label>
                     </div>
                 </div>
-                <br>
-                <div class="container input-field center col s12">
-                    <button class="btn" type="submit">
-                        <i class="material-icons right">track_changes</i>Apply
-                    </button>
+                <div class="">
+                    <div class="input-field col s2 right">
+                        <button class="btn" type="submit">
+                            <i class="material-icons right">track_changes</i>Apply
+                        </button>
+                    </div>
                 </div>
-            </div>
         </form>
-        <div class="col s3 right">
+        <div class="input-field col s2 right">
             <form method="get" th:action="@{/download/}">
                 <input type="text" name="path" id="path" value="" style="display:none">
                 <input type="text" name="filenameDownload" id="filenameDownload" value="" style="display:none">
