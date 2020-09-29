@@ -17,9 +17,13 @@
   <!-- Navegation Menu -->
   <nav class="black" role="navigation">
     <div class=" black nav-wrapper container nav">
-      <a id="logo-container" th:href="@{/}" href="" class="brand-logo">
+      <a th:if="${#httpServletRequest.remoteUser == null}" id="logo-container" th:href="@{/}" href="" class="brand-logo">
         <i class="material-icons">camera</i>
         Converter
+      </a>
+      <a th:if="${#httpServletRequest.remoteUser != null}" id="logo-container" th:href="@{/}" href="" class="brand-logo">
+      <i class="material-icons">camera</i>
+        Welcome [[${#httpServletRequest.remoteUser}]]!
       </a>
       <a href="#" data-target="nav-mobile" class="sidenav-trigger"><i class="material-icons">menu</i></a>
       <ul class="right hide-on-med-and-down">
