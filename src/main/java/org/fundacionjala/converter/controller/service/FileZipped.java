@@ -1,5 +1,6 @@
 package org.fundacionjala.converter.controller.service;
 
+import org.apache.commons.io.FilenameUtils;
 import org.fundacionjala.converter.model.parameter.ModelParameter;
 
 import java.io.File;
@@ -32,8 +33,8 @@ public class FileZipped {
         os.setMethod(Deflater.DEFLATED);
         int num = 1;
         for (String file: list) {
-            ZipEntry entry = new ZipEntry(num + modelParameter.getFormat());
-            os.putNextEntry(entry);
+            ZipEntry entrada = new ZipEntry(num + "." + FilenameUtils.getExtension(file));
+            os.putNextEntry(entrada);
             FileInputStream fis = new FileInputStream(file);
             byte[] buffer = new byte[BYTE];
             int leido = 0;

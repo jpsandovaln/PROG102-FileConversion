@@ -18,7 +18,6 @@ import org.fundacionjala.converter.controller.service.FileService;
 import org.fundacionjala.converter.model.command.extractText.ExtractTextFacade;
 import org.fundacionjala.converter.model.parameter.extractText.ExtractTextParameter;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -36,8 +35,6 @@ import java.util.concurrent.ExecutionException;
 public class ExtractTextController {
     @Autowired
     private FileService fileService;
-    @Value("${tempFiles.path}")
-    private String temporal;
     @Autowired
     private FileUploadService fileUploadService;
     /**
@@ -50,7 +47,7 @@ public class ExtractTextController {
         requestExtractTextParameter.validate();
         String filePath = fileUploadService.saveInputFile(requestExtractTextParameter.getFile());
         String md5 = requestExtractTextParameter.generateMD5(filePath);
-        if (requestExtractTextParameter.getChecksumMD5().equals(md5)) {
+        if (requestExtractTextParameter.getMd5().equals(md5)) {
             if (fileService.getFileByMd5(md5) == null) {
                 fileService.saveFile(new File(filePath, md5));
             }
