@@ -50,31 +50,7 @@ $(document).ready(function() {
             $(element).addClass('select-was-validate');
             $(element).removeClass('select-validate');
         },
-        submitHandler: function(form) { <<
-            <<
-            <<
-            <
-            HEAD
-            $.ajax({
-                type: 'POST',
-                url: '/convertVideo',
-                data: new FormData(form),
-                enctype: 'multipart/form-data',
-                processData: false,
-                contentType: false,
-                cache: false,
-                success: function(data) {
-                    console.log('SUCCESS : ', data);
-                    $('#textarea_preview').val(data);
-                    $('#path').attr('value', data);
-                    $('#submitd').prop('disabled', false);
-                },
-                error: function(e) {
-                    console.log('ERROR : ', e);
-                }
-            }); ===
-            ===
-            =
+        submitHandler: function(form) {
             $.ajax({
                 type: 'POST',
                 url: '/convertVideo',
@@ -94,10 +70,7 @@ $(document).ready(function() {
                     console.log('ERROR : ', e);
                     alert("error " + "\n" + e["status"] + "\n" + e["message"]);
                 }
-            }); >>>
-            >>>
-            >
-            dev
+            });
         }
     });
 });
