@@ -51,19 +51,9 @@
                     <input type="text" id="sampleRate" name="sampleRate" class="validate" required>
                     <label for="sampleRate">Sample Rate:</label>
                 </div>
-                <div class="input-field col s12 m4">
-                    <label for="extractThumbnail">
-                        <input id="extractThumbnail" name="extractThumbnail" type="checkbox" />
-                        <span>Cut</span>
-                    </label>
-                </div>
-                <div class="input-field col s12 m4">
-                    <input type="text" id="start" name="start" class="validate">
-                    <label for="start">start:</label>
-                </div>
-                <div class="input-field col s12 m4">
-                    <input type="text" id="duration" name="duration" class="validate">
-                    <label for="duration">duration:</label>
+                <div class="input-field col s12 m6">
+                    <input type="text" id="md5" name="md5" class="validate" >
+                    <label for="md5">MD5:</label>
                 </div>
                 <div class="input-field col s12">
                     <label for="extractMetadata">
@@ -71,12 +61,24 @@
                         <span>Metadata</span>
                     </label>
                 </div>
-                <div class="">
-                    <div class="input-field col s2 right">
-                        <button class="btn" type="submit">
-                            <i class="material-icons right">track_changes</i>Apply
-                        </button>
-                    </div>
+                <div class="input-field col s12 m4">
+                    <label for="extractThumbnail">
+                        <input id="extractThumbnail" name="extractThumbnail"  type="checkbox" />
+                        <span>Cut</span>
+                    </label>
+                </div>
+                <div class="input-field col s12 m4" style="display:none">
+                    <input type="text" id="start" name="start" placeholder="hh:mm:ss" class="validate">
+                    <label for="start">start:</label>
+                </div>
+                <div class="input-field col s12 m4" style="display:none">
+                    <input type="text" id="duration" name="duration" placeholder="hh:mm:ss" class="validate">
+                    <label for="duration">duration:</label>
+                </div>
+                <div class="center input-field col s12">
+                    <button class="btn" type="submit">
+                        <i class="material-icons right">track_changes</i>Apply
+                    </button>
                 </div>
         </form>
         <div class=" input-field col s2 right">
@@ -92,6 +94,8 @@
 </div>
 <main th:replace = "index :: main"></main>
 <footer th:replace = "index :: footer"></footer>
+<script src="https://kit.fontawesome.com/35db202371.js" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/jquery-validation@1.19.2/dist/jquery.validate.min.js"></script>
 <script th:src="@{/js/audio/audio.js}"></script>
 </body>
 </html>
