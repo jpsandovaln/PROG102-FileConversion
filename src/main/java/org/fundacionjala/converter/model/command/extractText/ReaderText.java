@@ -18,8 +18,9 @@ public class ReaderText {
     public ReaderText() {
         buffer = null;
     }
+
     /**
-     * read a file
+     * Reads a file
      * @param fileName the path and name of the file
      * @return the content of the file in a string
      */
