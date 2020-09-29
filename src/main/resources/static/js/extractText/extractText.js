@@ -16,9 +16,11 @@ $(document).ready(function () {
                 $('#path').attr('value', data["message"]);
                 $('#filenameDownload').attr('value', $('#name').val());
                 $('#submited').prop('disabled', false);
+                alert("successfully " + "\n" + data["status"]+"\n" + data["message"]);
             },
             error: function (e) {
                 console.log('ERROR : ', e);
+                alert("error " + "\n" + e["status"] + "\n" + e["message"]);
             }
         });
     });
