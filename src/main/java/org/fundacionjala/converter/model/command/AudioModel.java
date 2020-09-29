@@ -57,8 +57,7 @@ public class AudioModel implements ICommand {
     }
 
     private List<String> convert(final List<String> convert, final ModelParameter modelParameter) {
-        ConfigPath configPath = new ConfigPath();
-        File file = new File(configPath.getVideoAudioTool());
+        File file = new File(ConfigPath.getVideoAudioTool());
         String fileToolPath = file.getAbsolutePath();
         convert.add(fileToolPath);
         convert.add(OVERWRITING);
@@ -85,8 +84,7 @@ public class AudioModel implements ICommand {
     }
 
     private List<String> cut(final List<String> cut, final ModelParameter modelParameter) {
-        ConfigPath configPath = new ConfigPath();
-        File file = new File(configPath.getVideoAudioTool());
+        File file = new File(ConfigPath.getVideoAudioTool());
         String fileToolPath = file.getAbsolutePath();
         cut.add(fileToolPath);
 

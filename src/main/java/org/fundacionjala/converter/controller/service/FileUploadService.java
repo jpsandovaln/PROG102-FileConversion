@@ -9,7 +9,6 @@
 package org.fundacionjala.converter.controller.service;
 
 import org.fundacionjala.converter.model.configPath.ConfigPath;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -33,7 +32,7 @@ public class FileUploadService {
      * @throws IOException
      */
     public String saveInputFile(final MultipartFile file) throws IOException {
-        String pathFile = new ConfigPath().getInputFile() + file.getOriginalFilename();
+        String pathFile = ConfigPath.getInputFile() + file.getOriginalFilename();
         Files.copy(file.getInputStream(), Paths.get(pathFile), StandardCopyOption.REPLACE_EXISTING);
         return pathFile;
     }
@@ -46,7 +45,7 @@ public class FileUploadService {
      * @throws IOException
      */
     public String saveTmpFile(final MultipartFile file) throws IOException {
-        String pathFile = new ConfigPath().getTmpFilePath() + file.getOriginalFilename();
+        String pathFile = ConfigPath.getTmpFilePath() + file.getOriginalFilename();
         Files.copy(file.getInputStream(), Paths.get(pathFile), StandardCopyOption.REPLACE_EXISTING);
         return pathFile;
     }
