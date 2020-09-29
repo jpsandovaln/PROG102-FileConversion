@@ -18,12 +18,11 @@ public class MetadataModel implements ICommand {
     @Override
     public List<List<String>> createCommand(final ModelParameter modelParameter) {
         MetadataParameter metadataParameter = (MetadataParameter) modelParameter;
-        ConfigPath configPath = new ConfigPath();
         List<String> parameterList = new ArrayList<>();
         List<List<String>> finalList = new ArrayList<>();
-        System.out.println(configPath.getMetaDataExtractorTool());
+        System.out.println(ConfigPath.getMetaDataExtractorTool());
         parameterList.add("Metadata");
-        parameterList.add(configPath.getMetaDataExtractorTool());
+        parameterList.add(ConfigPath.getMetaDataExtractorTool());
         parameterList.add("-" + metadataParameter.getFormat());
         if (!metadataParameter.getDetail().equals(" ") && !metadataParameter.getDetail().equals("d")) {
             parameterList.add("-" + metadataParameter.getDetail());

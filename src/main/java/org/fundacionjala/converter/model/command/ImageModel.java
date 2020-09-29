@@ -18,12 +18,11 @@ public class ImageModel implements ICommand {
     private static final String COLORSPACE = "-colorspace";
     private static final String GRAY = "gray";
     public ImageModel() {
-        config = new ConfigPath();
     }
 
     private List<String> resize(final ImageParameter imageParameter) {
         List<String> command = new ArrayList<String>();
-        command.add(config.getImageTool());
+        command.add(ConfigPath.getImageTool());
         command.add(imageParameter.getInputFile());
         command.add(RESIZE + imageParameter.getHeight() + X + imageParameter.getWidth());
         command.add(SIGNOADMIRACION);
@@ -44,9 +43,8 @@ public class ImageModel implements ICommand {
     }
 
     private List<String> selectingImageRegion(final ImageParameter imageParameter) {
-        ConfigPath config = new ConfigPath();
         List<String> command = new ArrayList<String>();
-        command.add(config.getImageTool());
+        command.add(ConfigPath.getImageTool());
         command.add(imageParameter.getInputFile());
         command.add(CROP);
         command.add(imageParameter.getCrop());
@@ -57,7 +55,7 @@ public class ImageModel implements ICommand {
 
     private List<String> grayScale(final ImageParameter imageParameter) {
         List<String> command = new ArrayList<String>();
-        command.add(config.getImageTool());
+        command.add(ConfigPath.getImageTool());
         command.add(imageParameter.getInputFile());
         command.add(COLORSPACE);
         command.add(GRAY);
