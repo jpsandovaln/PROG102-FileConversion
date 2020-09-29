@@ -14,6 +14,7 @@ $(document).ready(function () {
             success: function (data) {
                 console.log('SUCCESS : ', data);
                 $('#textarea_preview').val(data);
+                $('#filenameDownload').attr('value', $('#name').val());
                 $('#path').attr('value', data);
                 $('#submitd').prop('disabled', false);
             },

@@ -19,6 +19,7 @@ public abstract class RequestParameter {
 
     private MultipartFile file;
     private String exportFormat;
+    private String checksumMD5;
 
     /**
      *
@@ -98,6 +99,22 @@ public abstract class RequestParameter {
             return true;
         }
         return false;
+    }
+
+    /**
+     * Returns checksumMD5
+     * @return checksumMD5
+     */
+    public String getChecksumMD5() {
+        return checksumMD5;
+    }
+
+    /**
+     * Sets md5 parameter
+     * @param checksumMD5
+     */
+    public void setChecksumMD5(final String checksumMD5) {
+        this.checksumMD5 = checksumMD5;
     }
 }
 

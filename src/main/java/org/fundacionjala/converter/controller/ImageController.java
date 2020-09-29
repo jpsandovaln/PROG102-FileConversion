@@ -52,7 +52,6 @@ public class ImageController {
             requestImageParameter.validate();
             String filePath = fileUploadService.saveInputFile(requestImageParameter.getFile());
             String md5 = requestImageParameter.generateMD5(filePath);
-
             ImageParameter imageParameter = new ImageParameter();
             imageParameter.setInputFile(filePath);
             imageParameter.setIsGray(requestImageParameter.getGray());
