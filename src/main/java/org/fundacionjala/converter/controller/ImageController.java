@@ -35,8 +35,6 @@ public class ImageController {
 
     @Autowired
     private FileService fileService;
-    @Value("${tempFiles.path}")
-    private String temporal;
     @Value("${convertedFiles.path}")
     private String output;
     @Autowired
