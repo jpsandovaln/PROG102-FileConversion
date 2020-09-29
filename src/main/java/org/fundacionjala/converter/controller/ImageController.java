@@ -63,6 +63,7 @@ public class ImageController {
             }
 
             ImageParameter imageParameter = new ImageParameter();
+            imageParameter.setMd5(md5);
             setImageParameter(imageParameter, requestImageParameter, filePath);
             String result = FileZipped.zipper(imageParameter, execute(imageParameter));
             return ResponseEntity.ok().body(new OkResponse<Integer>(HttpServletResponse.SC_OK, result.toString()));
@@ -75,8 +76,8 @@ public class ImageController {
 
     /**
      *
-     * @param imageParameter
-     * @param requestExtractTextParameter
+     * @param parameter
+     * @param request
      * @param filePath
      * @throws IOException
      */
@@ -85,15 +86,17 @@ public class ImageController {
         parameter.setIsGray(request.getGray());
         parameter.setIsThumbnail(request.getExtractThumbnail());
         parameter.setIsResize(request.getChangeSize());
-        parameter.setPositionXAndPositionY(request.getPosition());
+        if (!"".equals(request.getPosition())) {
+            parameter.setPositionXAndPositionY(request.getPosition());
+        }
+        parameter.setMetadata(request.getExtractMetadata());
         parameter.setName(request.getMd5());
         parameter.setFormat(request.getExportFormat());
-        parameter.setOutputFile(output + request.getMd5() + request.getExportFormat());
-    }
+        parameter.setOutputFile(output);    }
 
     /**
      *
-     * @param audioParameter
+     * @param parameter
      * @throws InterruptedException
      * @throws ExecutionException
      * @throws IOException
