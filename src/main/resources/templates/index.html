@@ -9,21 +9,19 @@
   <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
   <link th:href="@{/css/materialize/materialize.css}" href="../static/css/materialize/materialize.css" type="text/css" rel="stylesheet" media="screen,projection"/>
   <link th:href="@{/css/materialize/style.css}" href="../static/css/materialize/style.css" type="text/css" rel="stylesheet" media="screen,projection"/>
-  <link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
+  <link rel="shortcut icon" th:href="@{/favicon.ico}" type="image/x-icon">
 
 </head>
 <body>
 
   <!-- Navegation Menu -->
   <nav class="black" role="navigation">
-    <div class="nav-wrapper container nav">
+    <div class=" black nav-wrapper container nav">
       <a id="logo-container" th:href="@{/}" href="" class="brand-logo">
         <i class="material-icons">camera</i>
         Converter
       </a>
-
       <a href="#" data-target="nav-mobile" class="sidenav-trigger"><i class="material-icons">menu</i></a>
-
       <ul class="right hide-on-med-and-down">
         <li><a th:href="@{/}" id="home-nav" href="">Home</a></li>
         <li><a th:href="@{/file_audio}" id="audio-nav" href="audio/audio.html">Audio</a></li>
@@ -34,14 +32,14 @@
         <li><a th:href="@{/login}" id="login-nav" href="auth/login.html" class="">login</a></li>
       </ul>
 
-      <ul id="nav-mobile" class="sidenav">
-        <li><a th:href="@{/}" href="">Home</a></li>
-        <li><a th:href="@{/file_audio}" href="audio/audio.html">Audio</a></li>
-        <li><a th:href="@{/file_video}" href="video/video.html">Video</a></li>
-        <li><a th:href="@{/file_img}" href="img/image.html">Image</a></li>
-        <li><a th:href="@{/file_metadata}" href="metadata/metadata.html">Metadata</a></li>
-        <li><a th:href="@{/file_extractText}" href="docs/docs.html">Extract</a></li>
-        <li><a th:href="@{/login}" href="auth/login.html" class="btn white black-text waves-effect waves-blue-grey lighten-1">login</a></li>
+      <ul id="nav-mobile" class="sidenav black">
+        <li><a th:href="@{/}" href="" class="white-text">Home</a></li>
+        <li><a th:href="@{/file_audio}" href="audio/audio.html" class="white-text">Audio</a></li>
+        <li><a th:href="@{/file_video}" href="video/video.html" class="white-text">Video</a></li>
+        <li><a th:href="@{/file_img}" href="img/image.html" class="white-text"> Image</a></li>
+        <li><a th:href="@{/file_metadata}" href="metadata/metadata.html" class="white-text">Metadata</a></li>
+        <li><a th:href="@{/file_extractText}" href="docs/docs.html" class="white-text">Extract</a></li>
+        <li><a th:href="@{/login}" href="auth/login.html" class="white-text">login</a></li>
       </ul>
       
     </div>
@@ -54,7 +52,7 @@
         <img th:src="@{/images/animation-1.jpg}" src="../static/images/animation-1.jpg"  > <!-- random image -->
         <div class="caption center-align">
           <h3 class=" text-blue">Audio</h3>
-          <h5 class="light grey-text text-lighten-3">change format, cut, stereo</h5>
+          <h5 class="light grey-text text-lighten-3">You can change the format, crop, change channels and much more</h5>
           <a th:href="@{/file_audio}"href="audio/audio.html" class="btn btn-large white black-text waves-effect waves-grey">Go</a>
         </div>
       </li>
@@ -62,7 +60,7 @@
         <img th:src="@{/images/animation-2.jpg}" src="../static/images/animation-2.jpg" > <!-- random image -->
         <div class="caption left-align">
           <h3>Video</h3>
-          <h5 class="light grey-text text-lighten-3">Gif, thumbnail, extract metadata</h5>
+          <h5 class="light grey-text text-lighten-3">You can convert to Gif, change the audio and/or video codec and much more.</h5>
           <a th:href="@{/file_video}" href="video/video.html" class="btn btn-large white black-text waves-effect waves-grey">Go</a>
         </div>
       </li>
@@ -70,15 +68,29 @@
         <img th:src="@{/images/animation-3.jpg}" src="../static/images/animation-3.jpg" > <!-- random image -->
         <div class="caption right-align">
           <h3>Image</h3>
-          <h5 class="light grey-text text-lighten-3">re-zise, scala gray, thumbnail</h5>
+          <h5 class="light grey-text text-lighten-3">You can resize, convert to grayscale, extract thumbnail and much more.</h5>
           <a th:href="@{/file_img}" href="img/image.html" class="btn btn-large white black-text waves-effect waves-grey">Go</a>
         </div>
       </li>
-
+      <li>
+        <img th:src="@{/images/animation-4.jpg}" src="../static/images/animation-2.jpg" > <!-- random image -->
+        <div class="caption center-align">
+          <h3>Metadata</h3>
+          <h5 class="light grey-text text-lighten-3">You can extract metadata from any file and export in json, txt and other formats.</h5>
+          <a th:href="@{/file_metadata}" href="metadata/metadata.html" class="btn btn-large white black-text waves-effect waves-grey">Go</a>
+        </div>
+      </li>
+      <li>
+        <img th:src="@{/images/animation-5.jpg}" src="../static/images/animation-3.jpg" > <!-- random image -->
+        <div class="caption right-align">
+          <h3>Extract text</h3>
+          <h5 class="light grey-text text-lighten-3">You can extract text from images in Spanish and English languages.</h5>
+          <a th:href="@{/file_extractText}" href="extract/extractText.html" class="btn btn-large white black-text waves-effect waves-grey">Go</a>
+        </div>
+      </li>
     </ul>
   </section>
-
-<main>
+ <main>
 
   <div class="container">
     <div class="section">
@@ -94,23 +106,19 @@
               to the most advanced. available in all browsers.</p>
           </div>
         </div>
-
         <div class="col s12 m4">
           <div class="icon-block">
             <h2 class="center black-text"><i class="material-icons">group</i></h2>
             <h5 class="center">User Experience Focused</h5>
-
             <p class="light">In times like today, where the new goes out of style so quickly,
               we know that it is very important to have tools within reach of our environment,
               which is why we offer these useful services online and within the scope of your needs.</p>
           </div>
         </div>
-
         <div class="col s12 m4">
           <div class="icon-block">
             <h2 class="center black-text"><i class="material-icons">settings</i></h2>
             <h5 class="center">Easy to work with</h5>
-
             <p class="light">We have provided detailed documentation as well as specific examples to help new users get
               started. We are also always open to comments and can answer any questions a user may have about our services.</p>
           </div>
@@ -175,13 +183,12 @@
 </main>
 
   <footer class="page-footer black">
-    
     <div class="social-container">
-      <a href="facebook.com"><i class="fab fa-facebook-square"></i></a>
-      <a href="#"><i class="fab fa-instagram"></i></a>
-      <a href="#"><i class="fab fa-twitter"></i></a>
-      <a href="youtube.com"><i class="fab fa-youtube"></i></a>
-      <a href="#"><i class="fab fa-github"></i></a>
+      <a href="https://www.facebook.com/" target="_blank"><i class="fab fa-facebook-square"></i></a>
+      <a href="https://www.instagram.com/?hl=en" target="_blank"><i class="fab fa-instagram"></i></a>
+      <a href="https://twitter.com/?lang=en" target="_blank"><i class="fab fa-twitter"></i></a>
+      <a href="https://www.youtube.com/" target="_blank"><i class="fab fa-youtube"></i></a>
+      <a href="https://github.com/jpsandovaln/PROG102-FileConversion/tree/dev" target="_blank"><i class="fab fa-github"></i></a>
     </div>
 
     <div class="footer-copyright">

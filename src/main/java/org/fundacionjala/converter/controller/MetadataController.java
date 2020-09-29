@@ -38,8 +38,6 @@ public class MetadataController {
 
     @Autowired
     private FileService fileService;
-    @Value("${tempFiles.path}")
-    private String temporal;
     @Value("${convertedFiles.path}")
     private String output;
     @Autowired
@@ -60,7 +58,6 @@ public class MetadataController {
             String detail = requestMetadataParameter.getDetail();
             MetadataParameter metaDataParameter = new MetadataParameter(filePath, exportFormat, detail, output, md5);
             metaDataParameter.setOutputFile(output + md5 + requestMetadataParameter.getExportFormat());
-
             Executor executor = new Executor();
             MetadataModel metaDataModel = new MetadataModel();
             List<String> result = executor.executeCommandsList(metaDataModel.createCommand(metaDataParameter));

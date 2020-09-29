@@ -12,7 +12,7 @@ import org.fundacionjala.converter.database.entity.File;
 import org.springframework.data.repository.CrudRepository;
 
 /**
- * @author Laura Montaño, Mirko Romay R.
+ * @author Laura Montaño
  * @version 0.3
  */
 public interface FileRepository extends CrudRepository<File, Long> {

@@ -5,35 +5,34 @@
     <header><nav th:replace="index :: nav" replace="index :: nav"></nav></header>
           <!--formularios-->
         <div class="section container ">
-            <div class="row ">
-                <form class="col s12 " id="form-video" method="post" th:action="@{/convertVideo}" enctype="multipart/form-data">
-                    <div  class="row card-panel z-depth-5">
-                        <div class="file-field input-field col s12 m6">
+            <div class="row card-panel z-depth-5">
+                <form  id="form-video" method="post" th:action="@{/convertVideo}" enctype="multipart/form-data">
+                    <div class="file-field input-field col s12 m6">
                             <div class="btn teal accent-3">
                                 <i class="material-icons right">folder_open</i>
                                 <span> File</span>
-                                <input class="file-path validate" type="text">
                             </div>
                             <div class="file-path-wrapper">
-                                <input type="file" id="file" name="file" onchange="calculate()" />
+                                <input type="file" id="file" name="file" onchange="calculate()"/>
+                                <input class="file-path" type="text" disabled>
                             </div>
+                        </div>
+                        <div class="input-field col s12 m6">
+                            <input type="text" id="md5" name="md5" class="validate" placeholder="" disabled>
+                            <label for="md5">MD5:</label>
+                        </div>
+                        <div class="input-field col s12 m6">
+                          <select id="exportFormat" name="exportFormat" class="browser-default">
+                            <option value="" disabled selected>Select format or extension</option>
+                            <option value="mp4">MP4</option>
+                            <option value="gif">GIF</option>
+                            <option value="mp3">MP3</option>
+                          </select>
                         </div>
                         <div class="input-field col s12 m6">
                             <input type="text" id="name" name="name" class="validate" required>
                             <label for="name">Name:</label>
                         </div>
-                        <div class="input-field col s12 m6">
-                          <select id="exportFormat" name="exportFormat" class="browser-default">
-                            <option value="" disabled selected>Select format or extension</option>
-                            <option value=".mp4">MP4</option>
-                            <option value=".gif">GIF</option>
-                            <option value=".mp3">MP3</option>
-                          </select>
-                        </div>
-                         <div class="input-field col s12 m6">
-                            <input type="text" id="md5" name="md5" class="validate" >
-                            <label for="md5">MD5:</label>
-                         </div>
                          <div class="input-field col s12 m6">
                             <input type="text" id="videoCodec" name="videoCodec" class="validate" required>
                             <label for="videoCodec">video codec:</label>
@@ -77,15 +76,15 @@
                                 <span>GIF</span>
                             </label>
                         </div>
-                        
-                        <div class="center input-field col s12">
-                            <button class="btn" type="submit">
-                                <i class="material-icons right">track_changes</i>Apply
-                            </button>
+                        <div class="">
+                            <div class="input-field col s2 right">
+                                <button class="btn" type="submit">
+                                    <i class="material-icons right">track_changes</i>Apply
+                                </button>
+                            </div>
                         </div>
-                    </div>
                 </form>
-                <div class="col s3 right">
+                <div class="input-field col s2 right">
                     <form method="get" th:action="@{/download/}">
                         <input type="text" name="path" id="path" value="" style="display:none">
                         <input type="text" name="filenameDownload" id="filenameDownload" value="" style="display:none">
@@ -98,6 +97,9 @@
         </div>
      <main th:replace = "index :: main"></main>
      <footer th:replace = "index :: footer"></footer>
+    <script src="https://kit.fontawesome.com/35db202371.js" crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/jquery-validation@1.19.2/dist/jquery.validate.min.js"></script>
      <script th:src="@{/js/video/video.js}"></script>
     </body>
   </html>
