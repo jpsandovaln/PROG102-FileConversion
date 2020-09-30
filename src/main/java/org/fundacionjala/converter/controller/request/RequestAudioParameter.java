@@ -180,4 +180,15 @@ public class RequestAudioParameter extends RequestParameter {
         this.duration = duration;
     }
 
+    /**
+     *
+     * @throws Exception
+     */
+    @Override
+    public void validate() throws Exception {
+        super.validate();
+        if (this.getSampleRate() == null || "".equals(this.getSampleRate())) {
+            throw new Exception("failed Sample Rate empty");
+        }
+    }
 }
