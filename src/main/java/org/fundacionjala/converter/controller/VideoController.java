@@ -12,6 +12,7 @@ import org.fundacionjala.converter.controller.request.RequestVideoParameter;
 import org.fundacionjala.converter.controller.response.ErrorResponse;
 import org.fundacionjala.converter.controller.response.OkResponse;
 import org.fundacionjala.converter.executor.Executor;
+import org.fundacionjala.converter.model.command.ICommand;
 import org.fundacionjala.converter.database.entity.File;
 import org.fundacionjala.converter.model.command.multimedia.VideoModel;
 import org.fundacionjala.converter.model.parameter.multimedia.VideoParameter;
@@ -26,6 +27,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.io.IOException;
+import java.security.NoSuchAlgorithmException;
+import java.util.List;
 import java.util.concurrent.ExecutionException;
 
 import javax.servlet.http.HttpServletResponse;
@@ -48,38 +51,62 @@ public class VideoController {
     public ResponseEntity convertVideo(final RequestVideoParameter requestVideoParameter) {
         try {
             requestVideoParameter.validate();
-            String filePath = fileUploadService.saveInputFile(requestVideoParameter.getFile());
-            String md5 = requestVideoParameter.generateMD5(filePath);
+            String md5 = requestVideoParameter.getMd5();
+            String filePath = "";
+
             if (fileService.getFileByMd5(md5) == null) {
+                filePath = fileUploadService.saveInputFile(requestVideoParameter.getFile());
                 fileService.saveFile(new File(filePath, md5));
+            } else {
+                filePath = fileService.getFileByMd5(md5).getPath();
             }
+
             VideoParameter videoParameter = new VideoParameter();
-            videoParameter.setName(md5);
-            videoParameter.setMd5(md5);
-            videoParameter.setInputFile(filePath);
-            videoParameter.setFrames(requestVideoParameter.getFrames());
-            videoParameter.setFormat(requestVideoParameter.getExportFormat());
-            videoParameter.setAudioCodec(requestVideoParameter.getAudioCodec());
-            videoParameter.setVideoCodec(requestVideoParameter.getVideoCodec());
-            videoParameter.setTimeToSkip(requestVideoParameter.getTimeToSkip());
-            videoParameter.setSecondsToOutput(requestVideoParameter.getSecondsToOutput());
-            videoParameter.setControlLoop(requestVideoParameter.getControlLoop());
-            videoParameter.setDuration(requestVideoParameter.getDuration());
-            videoParameter.setExtractThumbnail(requestVideoParameter.getExtractThumbnail());
-            videoParameter.setExtractMetadata(requestVideoParameter.isExtractMetadata());
-            videoParameter.setOutputFile(output);
-            Executor executor = new Executor();
-            VideoModel video = new VideoModel();
-            String result = FileZipped.zipper(videoParameter,
-                    executor.executeCommandsList(video.createCommand(videoParameter)));
-            return ResponseEntity.ok().body(
-                    new OkResponse<Integer>(HttpServletResponse.SC_OK, result));
+            setVideoParameter(videoParameter, requestVideoParameter, filePath);
+            String result = FileZipped.zipper(videoParameter, execute(videoParameter));
+            return ResponseEntity.ok().body(new OkResponse<Integer>(HttpServletResponse.SC_OK, result));
         } catch (IOException | InterruptedException | ExecutionException e) {
-              return ResponseEntity.badRequest()
-                      .body(new ErrorResponse<Integer>(HttpServletResponse.SC_BAD_REQUEST, e.getMessage()));
+            return ResponseEntity.badRequest().body(new ErrorResponse<Integer>(HttpServletResponse.SC_BAD_REQUEST, e.getMessage()));
         } catch (Exception e) {
-              return ResponseEntity.badRequest().body(
-                      new ErrorResponse<String>(Integer.toString(HttpServletResponse.SC_BAD_REQUEST), e.getMessage()));
+            return ResponseEntity.badRequest().body(new ErrorResponse<String>(Integer.toString(HttpServletResponse.SC_BAD_REQUEST), e.getMessage()));
+        }
     }
-  }
+
+    /**
+   *
+   * @param imageParameter
+   * @param requestExtractTextParameter
+   * @param filePath
+   * @throws IOException
+   */
+    private void setVideoParameter(final VideoParameter parameter, final RequestVideoParameter request, final String filePath) throws IOException {
+        parameter.setName(request.getMd5());
+        parameter.setMd5(request.getMd5());
+        parameter.setInputFile(filePath);
+        parameter.setFrames(request.getFrames());
+        parameter.setFormat(request.getExportFormat());
+        parameter.setAudioCodec(request.getAudioCodec());
+        parameter.setVideoCodec(request.getVideoCodec());
+        parameter.setTimeToSkip(request.getTimeToSkip());
+        parameter.setSecondsToOutput(request.getSecondsToOutput());
+        parameter.setControlLoop(request.getControlLoop());
+        parameter.setDuration(request.getDuration());
+        parameter.setExtractThumbnail(request.getExtractThumbnail());
+        parameter.setExtractMetadata(request.isExtractMetadata());
+        parameter.setOutputFile(output);
+    }
+
+    /**
+   *
+   * @param audioParameter
+   * @throws InterruptedException
+   * @throws ExecutionException
+   * @throws IOException
+   * @throws NoSuchAlgorithmException
+   */
+    private List<String> execute(final VideoParameter parameter) throws InterruptedException, ExecutionException, IOException, NoSuchAlgorithmException {
+        Executor executor = new Executor();
+        ICommand videoModel = new VideoModel();
+        return executor.executeCommandsList(videoModel.createCommand(parameter));
+    }
 }
