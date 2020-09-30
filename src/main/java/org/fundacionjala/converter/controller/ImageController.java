@@ -54,14 +54,12 @@ public class ImageController {
             requestImageParameter.validate();
             String md5 = requestImageParameter.getMd5();
             String filePath = "";
-
             if (fileService.getFileByMd5(md5) == null) {
                 filePath = fileUploadService.saveInputFile(requestImageParameter.getFile());
                 fileService.saveFile(new File(filePath, md5));
             } else {
                 filePath = fileService.getFileByMd5(md5).getPath();
             }
-
             ImageParameter imageParameter = new ImageParameter();
             imageParameter.setMd5(md5);
             setImageParameter(imageParameter, requestImageParameter, filePath);
@@ -86,6 +84,7 @@ public class ImageController {
         parameter.setIsGray(request.getGray());
         parameter.setIsThumbnail(request.getExtractThumbnail());
         parameter.setIsResize(request.getChangeSize());
+        parameter.setMd5(request.getMd5());
         if (!"".equals(request.getPosition())) {
             parameter.setPositionXAndPositionY(request.getPosition());
         }
