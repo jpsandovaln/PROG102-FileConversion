@@ -83,6 +83,8 @@ public class ImageController {
         parameter.setIsGray(request.getGray());
         parameter.setIsThumbnail(request.getExtractThumbnail());
         parameter.setIsResize(request.getChangeSize());
+        parameter.setHeight(request.getHeight());
+        parameter.setWidth(request.getWidth());
         parameter.setMd5(request.getMd5());
         if (!"".equals(request.getPosition())) {
             parameter.setPositionXAndPositionY(request.getPosition());
