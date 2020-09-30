@@ -73,12 +73,12 @@ public class VideoController {
     }
 
     /**
-   *
-   * @param imageParameter
-   * @param requestExtractTextParameter
-   * @param filePath
-   * @throws IOException
-   */
+     *
+     * @param imageParameter
+     * @param requestExtractTextParameter
+     * @param filePath
+     * @throws IOException
+     */
     private void setVideoParameter(final VideoParameter parameter, final RequestVideoParameter request, final String filePath) throws IOException {
         parameter.setName(request.getMd5());
         parameter.setMd5(request.getMd5());
@@ -97,13 +97,13 @@ public class VideoController {
     }
 
     /**
-   *
-   * @param audioParameter
-   * @throws InterruptedException
-   * @throws ExecutionException
-   * @throws IOException
-   * @throws NoSuchAlgorithmException
-   */
+     *
+     * @param audioParameter
+     * @throws InterruptedException
+     * @throws ExecutionException
+     * @throws IOException
+     * @throws NoSuchAlgorithmException
+     */
     private List<String> execute(final VideoParameter parameter) throws InterruptedException, ExecutionException, IOException, NoSuchAlgorithmException {
         Executor executor = new Executor();
         ICommand videoModel = new VideoModel();

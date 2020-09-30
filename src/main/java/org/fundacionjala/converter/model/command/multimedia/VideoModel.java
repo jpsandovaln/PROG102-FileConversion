@@ -12,6 +12,7 @@ import org.fundacionjala.converter.model.command.ICommand;
 import org.fundacionjala.converter.model.command.MetadataModel;
 import org.fundacionjala.converter.model.commons.exception.InvalidDataException;
 import org.fundacionjala.converter.model.commons.validation.FormatValidation;
+import org.fundacionjala.converter.model.commons.validation.GifValidation;
 import org.fundacionjala.converter.model.configPath.ConfigPath;
 
 public class VideoModel implements ICommand<VideoParameter> {
@@ -42,9 +43,28 @@ public class VideoModel implements ICommand<VideoParameter> {
         if (format.equals(FormatValidation.FORMAT_MP4)) {
             return compressMp4(videoParameter);
         } else if (format.equals(FormatValidation.FORMAT_GIF)) {
+            GifValidation gifValidation = new GifValidation(videoParameter.getDuration(), videoParameter.getTimeToSkip(), videoParameter.getSecondsToOutput());
+            gifValidation.validate();
             return convertGif(videoParameter);
+        } else if (format.equals(FormatValidation.FORMAT_MOV)) {
+            return convertMov(videoParameter);
         }
         return null;
+    }
+
+    private List<String> convertMov(final VideoParameter videoParameter) {
+        listParameters = new ArrayList<String>();
+        listParameters.add(configPath.getVideoAudioTool());
+        listParameters.add(VideoParameter.INPUT_COMMAND);
+        listParameters.add(videoParameter.getInputFile());
+        listParameters.add(VideoParameter.VCODEC_COMMAND);
+        listParameters.add(VideoParameter.COPY);
+        listParameters.add(VideoParameter.ACODEC_COMMAND);
+        listParameters.add(VideoParameter.COPY);
+        String name = changeName(videoParameter.getOutputFile(), videoParameter.getName(), FormatValidation.FORMAT_MP4) + videoParameter.getFormat();
+        listParameters.add(videoParameter.getOutputFile() + name);
+        outputFiles.add(videoParameter.getOutputFile() + name);
+        return listParameters;
     }
 
     /**
