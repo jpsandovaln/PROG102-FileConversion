@@ -31,7 +31,7 @@ public class FileZipped {
         ZipOutputStream os = new ZipOutputStream(new FileOutputStream(modelParameter.getOutputFile() + modelParameter.getMd5() + FORMATZIP));
         os.setLevel(Deflater.DEFAULT_COMPRESSION);
         os.setMethod(Deflater.DEFLATED);
-        int num = 0;
+        int num = 1;
         for (String file: list) {
             ZipEntry entrada = new ZipEntry(num + "." + FilenameUtils.getExtension(file));
             os.putNextEntry(entrada);
