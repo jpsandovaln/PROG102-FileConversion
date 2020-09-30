@@ -74,7 +74,7 @@ public class ImageController {
 
     /**
      *
-     * @param parameter
+     * @param parameter image parameter
      * @param request
      * @param filePath
      * @throws IOException
