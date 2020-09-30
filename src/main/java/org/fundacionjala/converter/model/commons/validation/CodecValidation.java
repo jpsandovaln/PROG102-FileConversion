@@ -23,6 +23,7 @@ public class CodecValidation implements IValidationStrategy {
     private static final String LIBX264 = "libx264";
     private static final String H264 = "h264";
     private static final String MP3 = "mp3";
+    private static final String COPY = "copy";
 
     public CodecValidation(final String codec) {
         this.codec = codec;
@@ -30,6 +31,7 @@ public class CodecValidation implements IValidationStrategy {
         codecsAllowed.add(LIBX264);
         codecsAllowed.add(H264);
         codecsAllowed.add(MP3);
+        codecsAllowed.add(COPY);
     }
 
     /**

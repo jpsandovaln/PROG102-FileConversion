@@ -9,7 +9,6 @@ import org.fundacionjala.converter.model.commons.validation.IValidationStrategy;
 import org.fundacionjala.converter.model.commons.validation.ValidationContext;
 import org.fundacionjala.converter.model.commons.validation.NotNullOrEmpty;
 import org.fundacionjala.converter.model.commons.validation.FormatValidation;
-import org.fundacionjala.converter.model.commons.validation.GifValidation;
 
 public class VideoParameter extends MultimediaParameter {
 
@@ -23,6 +22,7 @@ public class VideoParameter extends MultimediaParameter {
     public static final String LOOP = "-loop";
     public static final String FRAME_RATE = "\"fps=";
     public static final String GIF = ".gif";
+    public static final String COPY = "copy";
     //Parameters of thumbnail
     public static final String PALETTE_THUMBNAIL = "\"fps=10,scale=320:-1:flags=lanczos,split[s0][s1];[s0]palettegen[p];[s1][p]paletteuse\"";
     public static final String START_TIME = "10";
@@ -208,12 +208,11 @@ public class VideoParameter extends MultimediaParameter {
     public void validate() throws InvalidDataException {
         List<IValidationStrategy> validationStrategyList = new ArrayList<>();
         validationStrategyList.add(new CodecValidation(this.videoCodec));
-        validationStrategyList.add(new CodecValidation(this.videoCodec));
+        validationStrategyList.add(new CodecValidation(this.audioCodec));
         validationStrategyList.add(new NotNullOrEmpty("videoCodec", this.videoCodec));
         validationStrategyList.add(new NotNullOrEmpty("audioCodec", this.audioCodec));
         validationStrategyList.add(new NotNullOrEmpty("format", this.getFormat()));
         validationStrategyList.add(new FormatValidation(this.getFormat()));
-        validationStrategyList.add(new GifValidation(this.duration, this.timeToSkip, this.secondsToOutput));
         ValidationContext context = new ValidationContext(validationStrategyList);
         context.validation();
     }

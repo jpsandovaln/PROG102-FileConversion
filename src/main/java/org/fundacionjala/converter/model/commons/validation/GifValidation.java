@@ -15,6 +15,8 @@ import org.fundacionjala.converter.model.commons.exception.InvalidDataException;
  */
 public class GifValidation implements IValidationStrategy {
 
+    private static final int SECONDS_MIN = 60;
+    private static final int SECONDS_HOUR = 3600;
     private int duration;
     private int time;
     private int start;
@@ -25,9 +27,21 @@ public class GifValidation implements IValidationStrategy {
      * @param secondsToOutput
      */
     public GifValidation(final String duration, final String timeToSkip, final String secondsToOutput) throws NumberFormatException, NullPointerException {
-        this.duration = Integer.parseInt(duration);
-        this.start = Integer.parseInt(timeToSkip);
+        this.duration = convertToSeconds(duration);
+        this.start = convertToSeconds(timeToSkip);
         this.time = Integer.parseInt(secondsToOutput);
+    }
+
+    /**
+     * Converts duration to seconds
+     * @param duration - String reference to object duration of this video file
+     */
+    public int convertToSeconds(final String time) throws ArrayIndexOutOfBoundsException, NullPointerException {
+        String[] parts = time.split(":");
+        int hour = Integer.parseInt(parts[0]);
+        int minute = Integer.parseInt(parts[1]);
+        int second = Integer.parseInt(parts[2]);
+        return second + (SECONDS_MIN * minute) + (SECONDS_HOUR * hour);
     }
 
     /**
@@ -39,5 +53,33 @@ public class GifValidation implements IValidationStrategy {
         if ((start < 0) && (start >= duration) && (time < 0) && (time <= start) && (time >= duration) && ((start + time) >= duration)) {
             throw new InvalidDataException("Invalid arguments to convert a Gif");
         }
+    }
+
+    /**
+     * @return the duration
+     */
+    public int getDuration() {
+        return duration;
+    }
+
+    /**
+     * @param duration the duration to set
+     */
+    public void setDuration(final int duration) {
+        this.duration = duration;
+    }
+
+    /**
+     * @return the start
+     */
+    public int getStart() {
+        return start;
+    }
+
+    /**
+     * @param start the start to set
+     */
+    public void setStart(final int start) {
+        this.start = start;
     }
 }
