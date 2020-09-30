@@ -22,7 +22,6 @@ public class RequestMultimediaParameter extends RequestParameter {
         if (this.getAudioCodec() == null || "".equals(this.getAudioCodec())) {
             throw new Exception("Failed audiocodec empty");
         }
-
     }
 
     /**
