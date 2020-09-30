@@ -13,8 +13,8 @@
                         <span> File</span>
                     </div>
                     <div class="file-path-wrapper">
-                        <input type="file" id="file" name="file" onchange="calculate()"/>
-                        <input class="file-path" type="text" disabled>
+                        <input type="file" id="file" name="file" onchange=""/>
+                        <input id="file-path" class="file-path" type="text" disabled>
                     </div>
                 </div>
                 <div class="input-field col s12 m6">
@@ -40,16 +40,22 @@
                     </select>
                 </div>
                 <div class="input-field col s12 m6">
-                    <input type="text" id="codec" name="codec" class="validate" required>
-                    <label for="codec">codec:</label>
+                    <select id="codec" name="codec" class="browser-default">
+                        <option value="" disabled selected>Select the codec</option>
+                        <option value="libmp3lame">libmp3lame</option>
+                    </select>
                 </div>
                 <div class="input-field col s12 m6">
-                    <input type="text" id="bitRate" name="bitRate" class="validate" required>
-                    <label for="bitRate">Bit Rate:</label>
+                    <select id="bitRate" name="bitRate" class="browser-default">
+                        <option value="" disabled selected>Select the bitRate</option>
+                        <option value="32k">32k</option>
+                    </select>
                 </div>
                 <div class="input-field col s12 m6">
-                    <input type="text" id="sampleRate" name="sampleRate" class="validate" required>
-                    <label for="sampleRate">Sample Rate:</label>
+                    <select id="sampleRate" name="sampleRate" class="browser-default">
+                        <option value="" disabled selected>Select the sampleRate</option>
+                        <option value="22050">22050</option>
+                    </select>
                 </div>
                 <div class="input-field col s12">
                     <label for="extractMetadata">
