@@ -8,6 +8,7 @@ public class LanguageValidation implements IValidationStrategy {
     private String lang;
     private static final String LANGUAGE_SPA = "spa";
     private static final String LANGUAGE_EN = "en";
+    private static final String LANGUAGE_FRE = "fra";
     private List<String> languagesAllowed;
 
     public LanguageValidation(final String lang) {
@@ -15,6 +16,7 @@ public class LanguageValidation implements IValidationStrategy {
         languagesAllowed = new ArrayList<>();
         languagesAllowed.add(LANGUAGE_SPA);
         languagesAllowed.add(LANGUAGE_EN);
+        languagesAllowed.add(LANGUAGE_FRE);
     }
 
     /**
