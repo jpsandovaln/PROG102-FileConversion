@@ -12,7 +12,9 @@ import org.fundacionjala.converter.controller.request.RequestImageParameter;
 import org.fundacionjala.converter.controller.response.ErrorResponse;
 import org.fundacionjala.converter.controller.response.OkResponse;
 import org.fundacionjala.converter.controller.service.FileZipped;
+import org.fundacionjala.converter.database.entity.File;
 import org.fundacionjala.converter.executor.Executor;
+import org.fundacionjala.converter.model.command.ICommand;
 import org.fundacionjala.converter.model.command.ImageModel;
 import org.fundacionjala.converter.model.parameter.image.ImageParameter;
 import org.fundacionjala.converter.controller.service.FileService;
@@ -25,6 +27,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import java.io.IOException;
+import java.security.NoSuchAlgorithmException;
+import java.util.List;
 import java.util.concurrent.ExecutionException;
 
 import javax.servlet.http.HttpServletResponse;
@@ -48,30 +52,56 @@ public class ImageController {
     public ResponseEntity convertImage(final RequestImageParameter requestImageParameter) {
         try {
             requestImageParameter.validate();
-            String filePath = fileUploadService.saveInputFile(requestImageParameter.getFile());
-            String md5 = requestImageParameter.generateMD5(filePath);
+            String md5 = requestImageParameter.getMd5();
+            String filePath = "";
+
+            if (fileService.getFileByMd5(md5) == null) {
+                filePath = fileUploadService.saveInputFile(requestImageParameter.getFile());
+                fileService.saveFile(new File(filePath, md5));
+            } else {
+                filePath = fileService.getFileByMd5(md5).getPath();
+            }
 
             ImageParameter imageParameter = new ImageParameter();
-            imageParameter.setInputFile(filePath);
-            imageParameter.setIsGray(requestImageParameter.getGray());
-            imageParameter.setIsThumbnail(requestImageParameter.getExtractThumbnail());
-            imageParameter.setIsResize(requestImageParameter.getChangeSize());
-            imageParameter.setPositionXAndPositionY(requestImageParameter.getPosition());
-            imageParameter.setName(md5);
-            imageParameter.setFormat(requestImageParameter.getExportFormat());
-            imageParameter.setOutputFile(output + md5 + requestImageParameter.getExportFormat());
-
-            Executor executor = new Executor();
-            ImageModel imageModel = new ImageModel();
-            String result = FileZipped.zipper(imageParameter, executor.executeCommandsList(imageModel.createCommand(imageParameter)));
-            return ResponseEntity.ok().body(
-                    new OkResponse<Integer>(HttpServletResponse.SC_OK, result.toString()));
+            setImageParameter(imageParameter, requestImageParameter, filePath);
+            String result = FileZipped.zipper(imageParameter, execute(imageParameter));
+            return ResponseEntity.ok().body(new OkResponse<Integer>(HttpServletResponse.SC_OK, result.toString()));
         } catch (IOException | InterruptedException | ExecutionException e) {
-            return ResponseEntity.badRequest()
-                    .body(new ErrorResponse<Integer>(HttpServletResponse.SC_BAD_REQUEST, e.getMessage()));
+            return ResponseEntity.badRequest().body(new ErrorResponse<Integer>(HttpServletResponse.SC_BAD_REQUEST, e.getMessage()));
         } catch (Exception e) {
-            return ResponseEntity.badRequest().body(
-                    new ErrorResponse<String>(Integer.toString(HttpServletResponse.SC_BAD_REQUEST), e.getMessage()));
+            return ResponseEntity.badRequest().body(new ErrorResponse<String>(Integer.toString(HttpServletResponse.SC_BAD_REQUEST), e.getMessage()));
         }
+    }
+
+    /**
+     *
+     * @param imageParameter
+     * @param requestExtractTextParameter
+     * @param filePath
+     * @throws IOException
+     */
+    private void setImageParameter(final ImageParameter parameter, final RequestImageParameter request, final String filePath) throws IOException {
+        parameter.setInputFile(filePath);
+        parameter.setIsGray(request.getGray());
+        parameter.setIsThumbnail(request.getExtractThumbnail());
+        parameter.setIsResize(request.getChangeSize());
+        parameter.setPositionXAndPositionY(request.getPosition());
+        parameter.setName(request.getMd5());
+        parameter.setFormat(request.getExportFormat());
+        parameter.setOutputFile(output + request.getMd5() + request.getExportFormat());
+    }
+
+    /**
+     *
+     * @param audioParameter
+     * @throws InterruptedException
+     * @throws ExecutionException
+     * @throws IOException
+     * @throws NoSuchAlgorithmException
+     */
+    private List<String> execute(final ImageParameter parameter) throws InterruptedException, ExecutionException, IOException, NoSuchAlgorithmException {
+        Executor executor = new Executor();
+        ICommand imageModel = new ImageModel();
+        return executor.executeCommandsList(imageModel.createCommand(parameter));
     }
 }

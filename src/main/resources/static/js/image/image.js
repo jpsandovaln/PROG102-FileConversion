@@ -80,17 +80,23 @@ $(document).ready(function () {
                    cache: false,
                    success: function (data) {
                         console.log('SUCCESS : ', data);
-                        $('#filenameDownload').attr('value', $('#fileName').val());
+                        $('#filenameDownload').attr('value', $('#name').val());
                         $('#path').attr('value', data["message"]);
                         $('#submited').prop('disabled', false);
                         console.log(data["message"]);
+                        Swal.fire({
+                              position: 'top-end',
+                              icon: 'success',
+                              title:  "success",
+                              text: data["message"]
+                          })
                    },
                    error: function (e) {
                        console.log('ERROR : ', e);
                        Swal.fire({
-                           icon: 'error',
-                           title: e.responseJSON.error,
-                           showConfirmButton: true
+                         icon: 'error',
+                         title: 'Error',
+                         text:  e.responseJSON.error
                          })
                    }
                });
