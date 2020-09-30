@@ -13,9 +13,6 @@ $(document).ready(function() {
             audioCodec: 'required',
             frames: 'required',
             sampleRate: 'required',
-            extractGif: {
-                required: false,
-            }
         },
         messages: {
             file: 'please insert the file',
@@ -61,9 +58,9 @@ $(document).ready(function() {
                 cache: false,
                 success: function(data) {
                     console.log('SUCCESS : ', data);
-                    $('#textarea_preview').val(data);
-                    $('#path').attr('value', data);
-                    $('#submitd').prop('disabled', false);
+                    $('#path').attr('value', data["message"]);
+                    $('#filenameDownload').attr('value', $('#name').val());
+                    $('#submited').prop('disabled', false);
                     Swal.fire({
                       position: 'top-end',
                       icon: 'success',

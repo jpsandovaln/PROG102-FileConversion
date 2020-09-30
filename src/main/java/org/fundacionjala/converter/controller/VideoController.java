@@ -50,17 +50,17 @@ public class VideoController {
     @RequestMapping(method = RequestMethod.POST, value = "convertVideo")
     public ResponseEntity convertVideo(final RequestVideoParameter requestVideoParameter) {
         try {
-            requestVideoParameter.validate();
+            if (requestVideoParameter.getExportFormat().equals(VideoParameter.MP4)) {
+                requestVideoParameter.validate();
+            }
             String md5 = requestVideoParameter.getMd5();
             String filePath = "";
-
             if (fileService.getFileByMd5(md5) == null) {
                 filePath = fileUploadService.saveInputFile(requestVideoParameter.getFile());
                 fileService.saveFile(new File(filePath, md5));
             } else {
                 filePath = fileService.getFileByMd5(md5).getPath();
             }
-
             VideoParameter videoParameter = new VideoParameter();
             setVideoParameter(videoParameter, requestVideoParameter, filePath);
             String result = FileZipped.zipper(videoParameter, execute(videoParameter));
