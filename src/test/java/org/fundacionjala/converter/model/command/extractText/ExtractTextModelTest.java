@@ -1,13 +1,13 @@
 package org.fundacionjala.converter.model.command.extractText;
 
 import org.fundacionjala.converter.model.parameter.extractText.ExtractTextParameter;
-import org.junit.Test;
-
+import org.junit.jupiter.api.Test;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-
-import static org.junit.Assert.*;
+//import org.junit.Assert;
+import org.junit.jupiter.api.Assertions;
+//import org.junit.Assert;
 
 public class ExtractTextModelTest {
     ExtractTextModel extractTextModel = new ExtractTextModel();
@@ -27,6 +27,6 @@ public class ExtractTextModelTest {
         listParameters.add(parameter.getOutputFile() + parameter.getFileName());
         expected.add(listParameters);
         List<List<String>> result = extractTextModel.createCommand(parameter);
-        assertEquals(expected, result);
+        Assertions.assertEquals(expected, result);
     }
 }

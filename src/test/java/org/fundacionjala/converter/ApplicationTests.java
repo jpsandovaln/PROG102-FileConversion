@@ -5,7 +5,7 @@ import org.fundacionjala.converter.model.command.AudioModel;
 import org.fundacionjala.converter.model.command.MetadataModel;
 import org.fundacionjala.converter.model.parameter.metadata.MetadataParameter;
 import org.fundacionjala.converter.model.parameter.multimedia.*;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.junit.Assert;
 
 import java.io.IOException;
