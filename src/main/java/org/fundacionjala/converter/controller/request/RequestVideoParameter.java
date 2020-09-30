@@ -169,20 +169,8 @@ public class RequestVideoParameter extends RequestMultimediaParameter {
         if (this.videoCodec == null || "".equals(this.videoCodec)) {
             throw new Exception("failed video Codec empty");
         }
-        if (this.frames == null || "".equals(this.frames)) {
-            throw new Exception("failed frames empty");
-        }
-        if (this.controlLoop == null || "".equals(this.controlLoop)) {
-            throw new Exception("failed loop empty");
-        }
         if (!this.videoCodec.equals(VIDEO_CODEC_SUPPORTED)) {
             throw new Exception("Invalid value of video Codec");
-        }
-        if ((!this.frames.equals(FRAME_21)) && (!this.frames.equals(FRAME_24)) && (!this.frames.equals(FRAME_27)) && (!this.frames.equals(FRAME_30))) {
-            throw new Exception("Invalid value of frame rate");
-        }
-        if ((!this.controlLoop.equals(ZERO)) && (!this.controlLoop.equals(ONE_MINUS))) {
-            throw new Exception("Invalid value of loop");
         }
     }
 }
