@@ -32,7 +32,6 @@ public class ExtractTextFacade {
     private ChecksumMD5 checksumMD5;
     private ReaderText reader;
     private ConvertDoc convertDoc;
-    private ConfigPath configPath;
     private ExtractTextModel extractor;
     private Executor executor;
     private List<String> resultList;
@@ -41,7 +40,6 @@ public class ExtractTextFacade {
         checksumMD5 = new ChecksumMD5();
         reader = new ReaderText();
         convertDoc = new ConvertDoc();
-        configPath = new ConfigPath();
         extractor = new ExtractTextModel();
         executor = new Executor();
         resultList = new ArrayList<>();
@@ -54,7 +52,7 @@ public class ExtractTextFacade {
     public List<String> extractText(final ExtractTextParameter parameter) throws InvalidDataException, InterruptedException, ExecutionException, DocumentException, NoSuchAlgorithmException, IOException {
         parameter.validate();
         String format = parameter.getFormat();
-        parameter.setOutputFile(configPath.getConvertedFilesPath());
+        parameter.setOutputFile(ConfigPath.getConvertedFilesPath());
         parameter.setFileName(checksumMD5.getMD5(parameter.getInputFile()));
         if (format.equals(FormatValidation.FORMAT_TXT)) {
             String newName = executor.executeCommandsList(extractor.createCommand(parameter)).get(0) + FormatValidation.FORMAT_TXT;
