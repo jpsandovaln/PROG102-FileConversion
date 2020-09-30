@@ -56,40 +56,40 @@
       <li>
         <img th:src="@{/images/animation-1.jpg}" src="../static/images/animation-1.jpg"  > <!-- random image -->
         <div class="caption center-align">
-          <h3 class=" text-blue">Audio</h3>
-          <h5 class="light grey-text text-lighten-3">You can change the format, crop, change channels and much more</h5>
+          <h3 class="animation-text">Audio</h3>
+          <h5 class="animation-text">You can change the format, crop, change channels and much more</h5>
           <a th:href="@{/file_audio}"href="audio/audio.html" class="btn btn-large white black-text waves-effect waves-grey">Go</a>
         </div>
       </li>
       <li>
         <img th:src="@{/images/animation-2.jpg}" src="../static/images/animation-2.jpg" > <!-- random image -->
         <div class="caption left-align">
-          <h3>Video</h3>
-          <h5 class="light grey-text text-lighten-3">You can convert to Gif, change the audio and/or video codec and much more.</h5>
+          <h3 class="animation-text">Video</h3>
+          <h5 class="animation-text">You can convert to Gif, change the audio and/or video codec and much more.</h5>
           <a th:href="@{/file_video}" href="video/video.html" class="btn btn-large white black-text waves-effect waves-grey">Go</a>
         </div>
       </li>
       <li>
         <img th:src="@{/images/animation-3.jpg}" src="../static/images/animation-3.jpg" > <!-- random image -->
         <div class="caption right-align">
-          <h3>Image</h3>
-          <h5 class="light grey-text text-lighten-3">You can resize, convert to grayscale, extract thumbnail and much more.</h5>
+          <h3 class="animation-text">Image</h3>
+          <h5 class="animation-text">You can resize, convert to grayscale, extract thumbnail and much more.</h5>
           <a th:href="@{/file_img}" href="img/image.html" class="btn btn-large white black-text waves-effect waves-grey">Go</a>
         </div>
       </li>
       <li>
         <img th:src="@{/images/animation-4.jpg}" src="../static/images/animation-2.jpg" > <!-- random image -->
         <div class="caption center-align">
-          <h3>Metadata</h3>
-          <h5 class="light grey-text text-lighten-3">You can extract metadata from any file and export in json, txt and other formats.</h5>
+          <h3 class="animation-text">Metadata</h3>
+          <h5 class="animation-text">You can extract metadata from any file and export in json, txt and other formats.</h5>
           <a th:href="@{/file_metadata}" href="metadata/metadata.html" class="btn btn-large white black-text waves-effect waves-grey">Go</a>
         </div>
       </li>
       <li>
         <img th:src="@{/images/animation-5.jpg}" src="../static/images/animation-3.jpg" > <!-- random image -->
         <div class="caption right-align">
-          <h3>Extract text</h3>
-          <h5 class="light grey-text text-lighten-3">You can extract text from images in Spanish and English languages.</h5>
+          <h3 class="animation-text">Extract text</h3>
+          <h5 class="animation-text">You can extract text from images in Spanish and English languages.</h5>
           <a th:href="@{/file_extractText}" href="extract/extractText.html" class="btn btn-large white black-text waves-effect waves-grey">Go</a>
         </div>
       </li>
@@ -148,9 +148,12 @@
         <div class="card-content">
           <span class="card-title activator grey-text text-darken-4">Change your image to scala gray</span>
         </div>
+        <div class="card-reveal">
+          <span class="card-title grey-text text-darken-4">Change your image to scala gray<i class="material-icons right">close</i></span>
+          <p> you can change to grayscale, better known image with black and white.</p>
+        </div>
       </div>           
     </div>
-
     <div class="col s12 m12 l6">
       <div class="card">
         <div class="card-image waves-effect waves-block waves-light">
@@ -158,6 +161,11 @@
         </div>
         <div class="card-content">
           <span class="card-title activator grey-text text-darken-4">Re-size your file</span>
+        </div>
+        <div class="card-reveal">
+          <span class="card-title grey-text text-darken-4">Re-size your file<i class="material-icons right">close</i></span>
+          <p>You can resize the images, giving width height position x and y.
+            you can trim the videos, audios and much more.</p>
         </div>
       </div>           
     </div>
@@ -170,7 +178,11 @@
         <div class="card-content">
           <span class="card-title activator grey-text text-darken-4">Convert your video to GIF</span>
         </div>
-      </div>           
+        <div class="card-reveal">
+          <span class="card-title grey-text text-darken-4">Convert your video to GIF<i class="material-icons right">close</i></span>
+          <p>You can convert to gif, you can trim the video by starting and ending, you can change the codec, you can change the sample rate, you can change the format.</p>
+        </div>
+      </div>
     </div>
     <div class="col s12 m12 l6">
       <div class="card">
@@ -179,6 +191,10 @@
         </div>
         <div class="card-content">
           <span class="card-title activator grey-text text-darken-4">Extract the data from your file</span>
+        </div>
+        <div class="card-reveal">
+          <span class="card-title grey-text text-darken-4">Extract the data from your file<i class="material-icons right">close</i></span>
+          <p>You can extract text from any image, it recognizes Spanish, English and France language and you can export in word pdf and txt</p>
         </div>
       </div>           
     </div>
