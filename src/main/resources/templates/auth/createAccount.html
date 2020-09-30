@@ -35,7 +35,8 @@
                 <input type="password" id="rePassword" name="rePassword" class="validate" required>
                 <label for="rePassword">Confirm Password:</label>
             </div>
-
+            <div th:if="${message != null}" th:text="${message}" class="alert alert-danger" role="alert" style="color:red">
+            </div>
             <div class="center input-field col s12">
                 <button class="btn" type="submit">
                     <i class="material-icons right">track_changes</i>register now
