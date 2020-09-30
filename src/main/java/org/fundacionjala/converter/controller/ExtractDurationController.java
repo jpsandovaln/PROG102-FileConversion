@@ -14,7 +14,7 @@ import java.io.IOException;
 
 @RestController
 public class ExtractDurationController {
-    private static final String COMMAND = " -v error -show_entries format=duration -of default=noprint_wrappers=1:nokey=1 -sexagesimal ";
+    private static final String COMMAND = " -v error -show_entries format=duration -of default=noprint_wrappers=1:nokey=1 -sexagesimal ", DOUBLE_QUOTES = "\"";
     @Autowired
     private FileUploadService fileUploadService;
     @Value("${duration.path}")
@@ -33,7 +33,7 @@ public class ExtractDurationController {
             String filePath = fileUploadService.saveInputFile(file);
             File realFile = new File(filePath);
             filePath = realFile.getAbsolutePath();
-            String completeCommand = toolPath + COMMAND + "\"" + filePath + "\"";
+            String completeCommand = toolPath + COMMAND + DOUBLE_QUOTES + filePath + DOUBLE_QUOTES;
             Executor exec = new Executor();
             String result = exec.executeSingleStringCommand(completeCommand);
             result = result.substring(0, result.indexOf("."));
