@@ -20,7 +20,7 @@ public class RequestMultimediaParameter extends RequestParameter {
     public void validate() throws Exception {
         super.validate();
         if (this.getAudioCodec() == null || "".equals(this.getAudioCodec())) {
-            throw new Exception("failed audiocodec empty");
+            throw new Exception("Failed audiocodec empty");
         }
 
     }
