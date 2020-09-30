@@ -55,8 +55,8 @@ public final class ConfigPath {
 
     /**
      * Returns tessDataDir
-     */    
-	public static String getTesstDataDir() {
-		return ConfigHandler.getConfigPathInstance().getValueAsString("ocr.tessdata.path");
-	}
+     */
+    public static String getTesstDataDir() {
+        return ConfigHandler.getConfigPathInstance().getValueAsString("ocr.tessdata.path");
+    }
 }
