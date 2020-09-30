@@ -14,7 +14,7 @@
                             <span> File</span>
                         </div>
                         <div class="file-path-wrapper">
-                            <input type="file" id="file" name="file" onchange="calculate()"/>
+                            <input type="file" id="file" name="file" onchange="calculate();calculateDuration();"/>
                             <input class="file-path" type="text" disabled>
                         </div>
                     </div>
@@ -119,5 +119,6 @@
     <script src="https://cdn.jsdelivr.net/npm/jquery-validation@1.19.2/dist/jquery.validate.min.js"></script>
     <script th:src="@{/js/video/video.js}"></script>
     <script th:src="@{/js/video/video_gif.js}"></script>
+    <script th:src="@{/js/duration/duration.js}"></script>
     </body>
   </html>
