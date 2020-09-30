@@ -82,15 +82,23 @@ $(document).ready(function() {
                 cache: false,
                 success: function(data) {
                     console.log('SUCCESS : ', data);
-                    $('#filenameDownload').attr('value', $('#fileName').val());
-                    $('#path').attr('value', data["message"]);
-                    $('#submited').prop('disabled', false);
-                    console.log(data["message"]);
-                    alert("successfully " + "\n" + data["status"] + "\n" + data["message"]);
+                    $('#textarea_preview').val(data);
+                    $('#path').attr('value', data);
+                    $('#submitd').prop('disabled', false);
+                    Swal.fire({
+                      position: 'top-end',
+                      icon: 'success',
+                      title:  "success",
+                      text: data["message"]
+                    })
                 },
                 error: function(e) {
                     console.log('ERROR : ', e);
-                    alert("error " + "\n" + e["status"] + "\n" + e["message"]);
+                    Swal.fire({
+                      icon: 'error',
+                      title: 'Error',
+                      text:  e.responseJSON.error
+                    })
                 }
             });
         }
