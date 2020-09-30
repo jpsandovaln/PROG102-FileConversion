@@ -27,7 +27,6 @@ public class VideoModel implements ICommand<VideoParameter> {
     private ConfigPath configPath;
 
     public VideoModel() {
-        configPath = new ConfigPath();
     }
 
     /**
