@@ -10,7 +10,6 @@ import org.fundacionjala.converter.model.parameter.metadata.MetadataParameter;
 import org.fundacionjala.converter.model.parameter.multimedia.VideoParameter;
 import org.fundacionjala.converter.model.command.ICommand;
 import org.fundacionjala.converter.model.command.MetadataModel;
-import org.fundacionjala.converter.model.commons.ChecksumMD5;
 import org.fundacionjala.converter.model.commons.exception.InvalidDataException;
 import org.fundacionjala.converter.model.commons.validation.FormatValidation;
 import org.fundacionjala.converter.model.configPath.ConfigPath;
@@ -25,11 +24,9 @@ public class VideoModel implements ICommand<VideoParameter> {
     private boolean convertedGif = false;
     private static final String FORMAT = "j"; // json
     private static final String DETAIL = "v";
-    private ChecksumMD5 checksumMD5;
     private ConfigPath configPath;
 
     public VideoModel() {
-        checksumMD5 = new ChecksumMD5();
         configPath = new ConfigPath();
     }
 
@@ -166,8 +163,6 @@ public class VideoModel implements ICommand<VideoParameter> {
             throws NoSuchAlgorithmException, IOException, InterruptedException, ExecutionException {
         list = new ArrayList<>();
         outputFiles = new ArrayList<String>();
-        videoParameter.setOutputFile(configPath.getConvertedFilesPath());
-        videoParameter.setName(checksumMD5.getMD5(videoParameter.getInputFile()));
         try {
             list.add(convert(videoParameter));
         } catch (InvalidDataException e) {

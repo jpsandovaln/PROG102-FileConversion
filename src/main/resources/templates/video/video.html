@@ -41,9 +41,14 @@
                             <input type="text" id="audioCodec" name="audioCodec" class="validate" required>
                             <label for="audioCodec">audio codec:</label>
                         </div>
-                        <div class="input-field col s12 m12">
-                            <input type="text" id="frames" name="frames" class="validate" required>
-                            <label for="frames">Frame rate:</label>
+                        <div class="input-field col s12 m6">
+                            <select id="frames" name="frames" class="validate browser-default">
+                                <option value="" disabled selected>Select a frame rate</option>
+                                <option value="21">21</option>
+                                <option value="24">24</option>
+                                <option value="27">27</option>
+                                <option value="30">30</option>
+                            </select>
                         </div>
                         <div class="input-field col s12 m12">
                             <input type="text" id="sampleRate" name="sampleRate" class="validate" required>
