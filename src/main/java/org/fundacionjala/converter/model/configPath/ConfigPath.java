@@ -52,4 +52,11 @@ public final class ConfigPath {
     public static String getInputFile() {
         return ConfigHandler.getConfigPathInstance().getValueAsString("inputFiles.path");
     }
+
+    /**
+     * Returns tessDataDir
+     */
+    public static String getTesstDataDir() {
+        return ConfigHandler.getConfigPathInstance().getValueAsString("ocr.tessdata.path");
+    }
 }

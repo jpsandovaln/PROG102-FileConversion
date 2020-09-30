@@ -80,6 +80,7 @@ public class ExtractTextController {
      */
     private void setRequestExtractTextParameter(final ExtractTextParameter extractTextParameter, final RequestExtractTextParameter requestExtractTextParameter, final String filePath) throws IOException {
         extractTextParameter.setInputFile(filePath);
+        extractTextParameter.setMd5(requestExtractTextParameter.getMd5());
         extractTextParameter.setLanguage(requestExtractTextParameter.getLanguage());
         extractTextParameter.setFormat(requestExtractTextParameter.getExportFormat());
     }
