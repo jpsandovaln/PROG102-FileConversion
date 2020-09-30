@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeLeaf.org" lang="es">
+<html xmlns:th="http://www.thymeLeaf.org" xmlns:sec="http://www.thymeLeaf.org" lang="es">
 <head>
   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0"/>
@@ -17,9 +17,13 @@
   <!-- Navegation Menu -->
   <nav class="black" role="navigation">
     <div class=" black nav-wrapper container nav">
-      <a id="logo-container" th:href="@{/}" href="" class="brand-logo">
+      <a th:if="${#httpServletRequest.remoteUser == null}" id="logo-container" th:href="@{/}" href="" class="brand-logo">
         <i class="material-icons">camera</i>
         Converter
+      </a>
+      <a th:if="${#httpServletRequest.remoteUser != null}" id="logo-container" th:href="@{/}" href="" class="brand-logo">
+      <i class="material-icons">camera</i>
+        Welcome [[${#httpServletRequest.remoteUser}]]!
       </a>
       <a href="#" data-target="nav-mobile" class="sidenav-trigger"><i class="material-icons">menu</i></a>
       <ul class="right hide-on-med-and-down">
@@ -29,7 +33,8 @@
         <li><a th:href="@{/file_img}" id="image-nav" href="img/image.html">Image</a></li>
         <li><a th:href="@{/file_metadata}" id="metadata-nav" href="metadata/metadata.html">Metadata</a></li>
         <li><a th:href="@{/file_extractText}" id="extract-nav" href="docs/docs.html">Extract</a></li>
-        <li><a th:href="@{/login}" id="login-nav" href="auth/login.html" class="">login</a></li>
+        <li th:if="${#httpServletRequest.remoteUser == null}"><a th:href="@{/login}" id="login-nav" href="auth/login.html" class="">login</a></li>
+        <li th:if="${#httpServletRequest.remoteUser != null}"><a th:href="@{/logout}" id="login-nav" href="auth/login.html" class="">logout</a></li>
       </ul>
 
       <ul id="nav-mobile" class="sidenav black">
@@ -196,6 +201,7 @@
         © 2020 Copyright AT12 prog102
       </div>
     </div>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
     <script src="https://kit.fontawesome.com/35db202371.js" crossorigin="anonymous"></script>
     <script th:src="@{/js/jquery-3.5.1.js}"></script>
     <script th:src="@{/js/materialize/materialize.js}" src="../static/js/materialize/materialize.js"></script>

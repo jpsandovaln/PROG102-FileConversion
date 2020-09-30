@@ -54,14 +54,12 @@ public class ImageController {
             requestImageParameter.validate();
             String md5 = requestImageParameter.getMd5();
             String filePath = "";
-
             if (fileService.getFileByMd5(md5) == null) {
                 filePath = fileUploadService.saveInputFile(requestImageParameter.getFile());
                 fileService.saveFile(new File(filePath, md5));
             } else {
                 filePath = fileService.getFileByMd5(md5).getPath();
             }
-
             ImageParameter imageParameter = new ImageParameter();
             setImageParameter(imageParameter, requestImageParameter, filePath);
             String result = FileZipped.zipper(imageParameter, execute(imageParameter));
@@ -75,8 +73,8 @@ public class ImageController {
 
     /**
      *
-     * @param imageParameter
-     * @param requestExtractTextParameter
+     * @param parameter image parameter
+     * @param request
      * @param filePath
      * @throws IOException
      */
@@ -85,15 +83,20 @@ public class ImageController {
         parameter.setIsGray(request.getGray());
         parameter.setIsThumbnail(request.getExtractThumbnail());
         parameter.setIsResize(request.getChangeSize());
-        parameter.setPositionXAndPositionY(request.getPosition());
+        parameter.setHeight(request.getHeight());
+        parameter.setWidth(request.getWidth());
+        parameter.setMd5(request.getMd5());
+        if (!"".equals(request.getPosition())) {
+            parameter.setPositionXAndPositionY(request.getPosition());
+        }
+        parameter.setMetadata(request.getExtractMetadata());
         parameter.setName(request.getMd5());
         parameter.setFormat(request.getExportFormat());
-        parameter.setOutputFile(output + request.getMd5() + request.getExportFormat());
-    }
+        parameter.setOutputFile(output);    }
 
     /**
      *
-     * @param audioParameter
+     * @param parameter
      * @throws InterruptedException
      * @throws ExecutionException
      * @throws IOException
