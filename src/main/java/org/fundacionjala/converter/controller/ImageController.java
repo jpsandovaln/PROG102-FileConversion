@@ -61,7 +61,6 @@ public class ImageController {
                 filePath = fileService.getFileByMd5(md5).getPath();
             }
             ImageParameter imageParameter = new ImageParameter();
-            imageParameter.setMd5(md5);
             setImageParameter(imageParameter, requestImageParameter, filePath);
             String result = FileZipped.zipper(imageParameter, execute(imageParameter));
             return ResponseEntity.ok().body(new OkResponse<Integer>(HttpServletResponse.SC_OK, result.toString()));
