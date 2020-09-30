@@ -42,9 +42,8 @@ public class ExtractTextModel implements ICommand<ExtractTextParameter> {
      * @return
      */
     private List<String> extractText(final ExtractTextParameter parameter) {
-        ConfigPath cPath = new ConfigPath();
         List<String> command = new ArrayList<String>();
-        command.add(cPath.getExtractTextTool());
+        command.add(ConfigPath.getExtractTextTool());
         if (!parameter.getLanguage().equals(LANGUAGE_EN)) {
             command.add(parameter.LANG_COMMAND);
             command.add(parameter.getLanguage());

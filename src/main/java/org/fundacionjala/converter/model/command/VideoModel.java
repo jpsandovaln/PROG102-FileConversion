@@ -71,9 +71,8 @@ public class VideoModel implements ICommand<VideoParameter> {
      */
     private List<String> compressToMp4(final VideoParameter videoParameter) {
         convertedMp4 = true;
-        final ConfigPath cPath = new ConfigPath();
         listParameters = new ArrayList<String>();
-        listParameters.add(cPath.getVideoAudioTool());
+        listParameters.add(ConfigPath.getVideoAudioTool());
         listParameters.add(VideoParameter.INPUT_COMMAND);
         listParameters.add(videoParameter.getInputFile());
         listParameters.add(VideoParameter.VCODEC_COMMAND);
@@ -97,8 +96,7 @@ public class VideoModel implements ICommand<VideoParameter> {
      */
     private List<String> extractThumbnail(final VideoParameter videoParameter) {
         listThumbnailParameters = new ArrayList<>();
-        ConfigPath cPath = new ConfigPath();
-        listThumbnailParameters.add(cPath.getVideoAudioTool());
+        listThumbnailParameters.add(ConfigPath.getVideoAudioTool());
         listThumbnailParameters.add(VideoParameter.INPUT_COMMAND);
         listThumbnailParameters.add(videoParameter.getInputFile());
         listThumbnailParameters.add(VideoParameter.START);
@@ -161,8 +159,7 @@ public class VideoModel implements ICommand<VideoParameter> {
     private List<String> gif(final VideoParameter videoParameter) {
         convertedGif = true;
         final List<String> listParameters = new ArrayList<>();
-        final ConfigPath cPath = new ConfigPath();
-        listParameters.add(cPath.getVideoAudioTool());
+        listParameters.add(ConfigPath.getVideoAudioTool());
         listParameters.add(VideoParameter.INPUT_COMMAND);
         listParameters.add(videoParameter.getInputFile());
         listParameters.add(VideoParameter.FRAME_RATE);
