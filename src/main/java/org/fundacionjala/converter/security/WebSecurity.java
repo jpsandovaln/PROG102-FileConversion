@@ -22,6 +22,8 @@ public class WebSecurity extends WebSecurityConfigurerAdapter {
             "/login",
             "/home",
             "/",
+            "/createAccount",
+            "/user/createUser",
             "/css/**",
             "/user/add",
             "/images/**",
@@ -47,12 +49,12 @@ public class WebSecurity extends WebSecurityConfigurerAdapter {
         http.csrf().disable().authorizeRequests()
                 .antMatchers(RESOURCES).permitAll()
                 .antMatchers("/admin*").access("hasRole('ADMIN')")
-                //.anyRequest().authenticated()
+                .anyRequest().authenticated()
                 .and()
                 .formLogin()
                 .loginPage("/login")
                 .permitAll()
-                .defaultSuccessUrl("/welcome")
+                .defaultSuccessUrl("/")
                 .failureUrl("/login?error=true")
                 .usernameParameter("username")
                 .passwordParameter("password")

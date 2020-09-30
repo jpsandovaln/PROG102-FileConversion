@@ -10,6 +10,22 @@ public class ImageParameter extends ModelParameter {
   private boolean isGrayScale;
   private boolean isThumbnail;
   private boolean isRezise;
+  private boolean isMetadata;
+  /**
+   *
+   * @return
+   */
+  public boolean isMetadata() {
+    return isMetadata;
+  }
+
+  /**
+   *
+   * @param metadata
+   */
+  public void setMetadata(final boolean metadata) {
+    isMetadata = metadata;
+  }
   /**
    *
    * @return
@@ -25,7 +41,13 @@ public class ImageParameter extends ModelParameter {
   public void setPositionXAndPositionY(final String positionXAndPositionY) {
     this.positionXAndPositionY = positionXAndPositionY;
   }
-
+  /**
+   *
+   * @return if is metadata
+   */
+  public boolean getIsMetadata() {
+    return isMetadata;
+  }
   /**
    *
    * @return

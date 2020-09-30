@@ -13,8 +13,8 @@ import org.fundacionjala.converter.controller.response.ErrorResponse;
 import org.fundacionjala.converter.controller.response.OkResponse;
 import org.fundacionjala.converter.executor.Executor;
 import org.fundacionjala.converter.model.command.ICommand;
-import org.fundacionjala.converter.model.command.VideoModel;
 import org.fundacionjala.converter.database.entity.File;
+import org.fundacionjala.converter.model.command.multimedia.VideoModel;
 import org.fundacionjala.converter.model.parameter.multimedia.VideoParameter;
 import org.fundacionjala.converter.controller.service.FileService;
 import org.fundacionjala.converter.controller.service.FileUploadService;
@@ -51,11 +51,16 @@ public class VideoController {
     public ResponseEntity convertVideo(final RequestVideoParameter requestVideoParameter) {
         try {
             requestVideoParameter.validate();
-            String filePath = fileUploadService.saveInputFile(requestVideoParameter.getFile());
-            String md5 = requestVideoParameter.generateMD5(filePath);
+            String md5 = requestVideoParameter.getMd5();
+            String filePath = "";
+
             if (fileService.getFileByMd5(md5) == null) {
+                filePath = fileUploadService.saveInputFile(requestVideoParameter.getFile());
                 fileService.saveFile(new File(filePath, md5));
+            } else {
+                filePath = fileService.getFileByMd5(md5).getPath();
             }
+
             VideoParameter videoParameter = new VideoParameter();
             setVideoParameter(videoParameter, requestVideoParameter, filePath);
             String result = FileZipped.zipper(videoParameter, execute(videoParameter));
@@ -68,31 +73,37 @@ public class VideoController {
     }
 
     /**
-   *
-   * @param imageParameter
-   * @param requestExtractTextParameter
-   * @param filePath
-   * @throws IOException
-   */
+     *
+     * @param imageParameter
+     * @param requestExtractTextParameter
+     * @param filePath
+     * @throws IOException
+     */
     private void setVideoParameter(final VideoParameter parameter, final RequestVideoParameter request, final String filePath) throws IOException {
+        parameter.setName(request.getMd5());
+        parameter.setMd5(request.getMd5());
         parameter.setInputFile(filePath);
         parameter.setFrames(request.getFrames());
-        parameter.setExtension(request.getExportFormat());
+        parameter.setFormat(request.getExportFormat());
         parameter.setAudioCodec(request.getAudioCodec());
         parameter.setVideoCodec(request.getVideoCodec());
+        parameter.setTimeToSkip(request.getTimeToSkip());
+        parameter.setSecondsToOutput(request.getSecondsToOutput());
+        parameter.setControlLoop(request.getControlLoop());
+        parameter.setDuration(request.getDuration());
         parameter.setExtractThumbnail(request.getExtractThumbnail());
         parameter.setExtractMetadata(request.isExtractMetadata());
         parameter.setOutputFile(output);
     }
 
     /**
-   *
-   * @param audioParameter
-   * @throws InterruptedException
-   * @throws ExecutionException
-   * @throws IOException
-   * @throws NoSuchAlgorithmException
-   */
+     *
+     * @param audioParameter
+     * @throws InterruptedException
+     * @throws ExecutionException
+     * @throws IOException
+     * @throws NoSuchAlgorithmException
+     */
     private List<String> execute(final VideoParameter parameter) throws InterruptedException, ExecutionException, IOException, NoSuchAlgorithmException {
         Executor executor = new Executor();
         ICommand videoModel = new VideoModel();
