@@ -12,8 +12,8 @@ import org.fundacionjala.converter.controller.request.RequestVideoParameter;
 import org.fundacionjala.converter.controller.response.ErrorResponse;
 import org.fundacionjala.converter.controller.response.OkResponse;
 import org.fundacionjala.converter.executor.Executor;
-import org.fundacionjala.converter.model.command.VideoModel;
 import org.fundacionjala.converter.database.entity.File;
+import org.fundacionjala.converter.model.command.multimedia.VideoModel;
 import org.fundacionjala.converter.model.parameter.multimedia.VideoParameter;
 import org.fundacionjala.converter.controller.service.FileService;
 import org.fundacionjala.converter.controller.service.FileUploadService;
@@ -53,19 +53,23 @@ public class VideoController {
             if (fileService.getFileByMd5(md5) == null) {
                 fileService.saveFile(new File(filePath, md5));
             }
-
             VideoParameter videoParameter = new VideoParameter();
+            videoParameter.setName(md5);
+            videoParameter.setMd5(md5);
             videoParameter.setInputFile(filePath);
             videoParameter.setFrames(requestVideoParameter.getFrames());
-            videoParameter.setExtension(requestVideoParameter.getExportFormat());
+            videoParameter.setFormat(requestVideoParameter.getExportFormat());
             videoParameter.setAudioCodec(requestVideoParameter.getAudioCodec());
             videoParameter.setVideoCodec(requestVideoParameter.getVideoCodec());
+            videoParameter.setTimeToSkip(requestVideoParameter.getTimeToSkip());
+            videoParameter.setSecondsToOutput(requestVideoParameter.getSecondsToOutput());
+            videoParameter.setControlLoop(requestVideoParameter.getControlLoop());
+            videoParameter.setDuration(requestVideoParameter.getDuration());
             videoParameter.setExtractThumbnail(requestVideoParameter.getExtractThumbnail());
             videoParameter.setExtractMetadata(requestVideoParameter.isExtractMetadata());
             videoParameter.setOutputFile(output);
             Executor executor = new Executor();
             VideoModel video = new VideoModel();
-            System.out.println(video.createCommand(videoParameter));
             String result = FileZipped.zipper(videoParameter,
                     executor.executeCommandsList(video.createCommand(videoParameter)));
             return ResponseEntity.ok().body(
