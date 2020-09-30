@@ -17,7 +17,6 @@ function calculateDuration(){
             },
             error: function (e) {
                 console.log('ERROR : ', e);
-                alert("error " + "\n" + e["status"] + "\n" + e["message"]);
             }
         });
 }

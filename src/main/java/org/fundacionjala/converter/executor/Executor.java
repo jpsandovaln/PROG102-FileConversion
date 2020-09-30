@@ -59,8 +59,15 @@ public class Executor {
     processDuration.waitFor();
     return command.get(command.size() - 1);
   }
-
-  private String executeMetadata(final List<String> command) throws ExecutionException, IOException, InterruptedException {
+  /**
+   *
+   * @param command
+   * @return
+   * @throws ExecutionException
+   * @throws IOException
+   * @throws InterruptedException
+   */
+  public String executeMetadata(final List<String> command) throws ExecutionException, IOException, InterruptedException {
     List<String> commandMetadata = new ArrayList<String>();
     for (int i = 1; i < command.size() - 1; i++) {
       commandMetadata.add(command.get(i));
@@ -69,9 +76,27 @@ public class Executor {
     Process processDuration = new ProcessBuilder(commandMetadata)
             .redirectErrorStream(true)
             .redirectOutput(new File(command.get(command.size() - 1))).start();
+    processDuration.waitFor();
     StringBuilder output = new StringBuilder();
     BufferedReader processOutputReader = new BufferedReader(new InputStreamReader(processDuration.getInputStream()));
-    processDuration.waitFor();
     return command.get(command.size() - 1);
+  }
+
+  /**
+   *
+   * @param command
+   * @return a single result of a String command
+   * @throws IOException
+   * @throws InterruptedException
+   */
+  public String executeSingleStringCommand(final String command) throws IOException, InterruptedException {
+    Process processDuration = new ProcessBuilder("cmd", "/c", command).redirectErrorStream(true).start();
+    processDuration.waitFor();
+    StringBuilder output = new StringBuilder();
+    BufferedReader processOutputReader = new BufferedReader(new InputStreamReader(processDuration.getInputStream()));
+    while (processOutputReader.ready()) {
+      output.append((char) processOutputReader.read());
+    }
+    return output.toString();
   }
 }

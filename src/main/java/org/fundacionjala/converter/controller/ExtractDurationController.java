@@ -1,6 +1,7 @@
 package org.fundacionjala.converter.controller;
 
 import org.fundacionjala.converter.controller.service.FileUploadService;
+import org.fundacionjala.converter.executor.Executor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -8,10 +9,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.io.BufferedReader;
 import java.io.File;
 import java.io.IOException;
-import java.io.InputStreamReader;
 
 @RestController
 public class ExtractDurationController {
@@ -34,17 +33,10 @@ public class ExtractDurationController {
             String filePath = fileUploadService.saveInputFile(file);
             File realFile = new File(filePath);
             filePath = realFile.getAbsolutePath();
-            String completeCommand = toolPath + COMMAND + filePath;
-            completeCommand = completeCommand.replace('\\', '/');
-            System.out.println(completeCommand);
-            Process processDuration = new ProcessBuilder("cmd", "/c", completeCommand).redirectErrorStream(true).start();
-            processDuration.waitFor();
-            StringBuilder output = new StringBuilder();
-            BufferedReader processOutputReader = new BufferedReader(new InputStreamReader(processDuration.getInputStream()));
-            while (processOutputReader.ready()) {
-                output.append((char) processOutputReader.read());
-            }
-            String result = output.substring(0, output.indexOf("."));
+            String completeCommand = toolPath + COMMAND + "\"" + filePath + "\"";
+            Executor exec = new Executor();
+            String result = exec.executeSingleStringCommand(completeCommand);
+            result = result.substring(0, result.indexOf("."));
             return result;
         } catch (IOException | InterruptedException e) {
             return e.getMessage();
