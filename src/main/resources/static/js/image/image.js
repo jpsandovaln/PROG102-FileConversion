@@ -9,28 +9,36 @@ $(document).ready(function () {
                 required: true,
                 minlength: 32,
             },
-            position: {
-                required:{
-                depends:function ()
-                    {
-                        if($('#changeSize').prop('checked'))
-                        {
-                            return true;
-                        }
-                        return false;
-
-                    }
-                }
-            },
-            height: {
-                required:true,
-                number:true
-            },
-            width: {
-                required:true,
-                number:true
-            }
-        },
+                       position: {
+                           required: false,
+                       },
+                       height: {
+                           required:{
+                                     depends:function ()
+                                       {
+                                         if($('#changeSize').prop('checked'))
+                                           {
+                                             return true;
+                                           }
+                                             return false;
+                                           }
+                                    },
+                           number:true
+                       },
+                       width: {
+                           required:{
+                                     depends:function ()
+                                       {
+                                         if($('#changeSize').prop('checked'))
+                                          {
+                                           return true;
+                                          }
+                                           return false;
+                                       }
+                                     },
+                           number:true
+                       }
+                   },
         messages: {
             file: 'please insert the file',
             name: 'please insert the name',

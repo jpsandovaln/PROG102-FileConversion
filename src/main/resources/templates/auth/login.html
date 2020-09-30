@@ -13,7 +13,7 @@
 <div class="container row">
     <div class="col s12 m4"> </div>
     <div class="card-panel center col s12 m4">
-        <form action="" th:action="@{/login}" enctype="multipart/form-data">
+        <form method="post" th:action="@{/login}" enctype="multipart/form-data">
             <h2> Log In</h2>
             <div class="input-field col s12">
                 <input type="text" id="username" name="username" class="validate" required>
@@ -33,7 +33,7 @@
             Invalid username and password.
         </div>
         <p class="text-center"><a th:href="@{/createAccount}" >Create Account</a></p>
-        <p class="text-center center"><a th:href="@{/}" >back to home</a></p>
+        <p class="text-center center"><a th:href="@{/}" >Back to home</a></p>
     </div>
     <div class="col s12 m4"></div>
 </div>
