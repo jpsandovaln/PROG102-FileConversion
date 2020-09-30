@@ -18,9 +18,20 @@ $(document).ready(function () {
                 $('#path').attr('value', data["message"]);
                 $('#submited').prop('disabled', false);
                 console.log(data["message"]);
+                Swal.fire({
+                          position: 'top-end',
+                          icon: 'success',
+                          title:  "success",
+                          text: data["message"]
+                        })
             },
             error: function (e) {
                 console.log('ERROR : ', e);
+                Swal.fire({
+                       icon: 'error',
+                       title: 'Error',
+                       text:  e.responseJSON.error
+                     })
             }
         });
     });
