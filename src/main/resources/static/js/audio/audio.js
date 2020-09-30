@@ -9,6 +9,43 @@ $(document).ready(function() {
             $('#duration').parent().show();
         }
     });
+    $('#file').change( function () {
+        var file = $('#file').val();
+        if (!validate(file)){
+             var fileInput = $('#file').val('');
+             var fileInputPath = $('#file-path').val('');
+             var md5 = $('#md5').val('');
+             Swal.fire(
+               'Error',
+               'This file is not supported for audio',
+               'error'
+             )
+        }
+        else{
+            calculate();
+        }
+    });
+
+    function validate(file){
+        var validExtension = ['mp3', 'wav'] ;
+        var extension = '';
+        var valid = false;
+        var flag = true;
+
+        for(var i = 0 ; i< validExtension.length || flag ; i++)
+        {
+            extension = file.indexOf("."+validExtension[i]);
+            if(extension != '-1')
+            {
+                valid = true;
+            }
+            if(i == validExtension.length)
+            {
+                flag = false;
+            }
+        }
+        return valid;
+    }
     $("#form-audio").validate({
         rules: {
             file: 'required',
