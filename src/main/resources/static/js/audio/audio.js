@@ -121,7 +121,8 @@ $(document).ready(function() {
                     console.log('SUCCESS : ', data);
                     $('#textarea_preview').val(data);
                     $('#path').attr('value', data);
-                    $('#submitd').prop('disabled', false);
+                    $('#filenameDownload').attr('value', $('#name').val());
+                    $('#submited').prop('disabled', false);
                     Swal.fire({
                       position: 'top-end',
                       icon: 'success',
