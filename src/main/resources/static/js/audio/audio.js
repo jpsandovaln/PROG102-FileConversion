@@ -12,14 +12,14 @@ $(document).ready(function() {
     $('#file').change( function () {
         var file = $('#file').val();
         if (!validate(file)){
-             var fileInput = $('#file').val('');
-             var fileInputPath = $('#file-path').val('');
-             var md5 = $('#md5').val('');
-             Swal.fire(
-               'Error',
-               'This file is not supported for audio',
-               'error'
-             )
+            var fileInput = $('#file').val('');
+            var fileInputPath = $('#file-path').val('');
+            var md5 = $('#md5').val('');
+            Swal.fire(
+                'Error',
+                'This file is not supported for audio',
+                'error'
+            )
         }
         else{
             calculate();
@@ -61,8 +61,9 @@ $(document).ready(function() {
                             return true;
                         }
                         return false;
-                    }
-                }
+                    },
+                },
+               min: '0',
             },
             duration: {
                 required: {
@@ -72,21 +73,28 @@ $(document).ready(function() {
                         }
                         return false;
                     }
-                }
+                },
+                min: '1',
             },
             sampleRate: 'required'
         },
         messages: {
-            file: 'please insert the file',
-            name: 'please insert the name',
-            exportFormat: 'please insert the format',
-            codec: 'please insert the codec',
-            bitRate: 'please insert the bitRate',
-            channel: 'please insert the channel',
-            isCut: 'please insert if its cut',
-            start: 'please insert the start time',
-            duration: 'please insert the duration time',
-            sampleRate: 'please insert the sample rate'
+            file: 'Please, insert the file',
+            name: 'Please, insert the name',
+            exportFormat: 'Please, insert the format',
+            codec: 'Please, insert the codec',
+            bitRate: 'Please, insert the bitRate',
+            channel: 'Please, insert the channel',
+            isCut: 'Please, insert if its cut',
+            start: {
+                required: 'Please insert the start time',
+                min: 'Min value required 00:00:00',
+            },
+            duration:{
+                required: 'Please, insert the duration time',
+                min: 'Min value required 00:00:01',
+            },
+            sampleRate: 'Please, insert the sample rate'
         },
         errorElement: "div",
         errorPlacement: function(error, element) {
@@ -119,22 +127,23 @@ $(document).ready(function() {
                 cache: false,
                 success: function(data) {
                     console.log('SUCCESS : ', data);
-                    $('#textarea_preview').val(data);
-                    $('#path').attr('value', data);
-                    $('#submitd').prop('disabled', false);
+                    $('#path').attr('value', data["message"]);
+                    $('#submited').prop('disabled', false);
+                    $('#filenameDownload').attr('value', $('#name').val());
+                    $('#submited').prop('disabled', false);
                     Swal.fire({
-                      position: 'top-end',
-                      icon: 'success',
-                      title:  "success",
-                      text: data["message"]
+                        position: 'top-end',
+                        icon: 'success',
+                        title:  "success",
+                        text: data["message"]
                     })
                 },
                 error: function(e) {
                     console.log('ERROR : ', e);
                     Swal.fire({
-                      icon: 'error',
-                      title: 'Error',
-                      text:  e.responseJSON.error
+                        icon: 'error',
+                        title: 'Error',
+                        text:  e.responseJSON.error
                     })
                 }
             });
