@@ -43,10 +43,11 @@ public class ImageController {
     private String output;
     @Autowired
     private FileUploadService fileUploadService;
+
     /**
-     *
-     * @param requestImageParameter
-     * @return
+     * Converts image
+     * @param requestImageParameter - the reference RequestImageParameter that contains parameters of the file
+     * @return ResponseEntity - the reference to OkResponse if file is converted successfully, ErrorResponse otherwise
      */
     @RequestMapping(method = RequestMethod.POST, value = "convertImage")
     public ResponseEntity convertImage(final RequestImageParameter requestImageParameter) {
@@ -65,20 +66,23 @@ public class ImageController {
             String result = FileZipped.zipper(imageParameter, execute(imageParameter));
             return ResponseEntity.ok().body(new OkResponse<Integer>(HttpServletResponse.SC_OK, result.toString()));
         } catch (IOException | InterruptedException | ExecutionException e) {
-            return ResponseEntity.badRequest().body(new ErrorResponse<Integer>(HttpServletResponse.SC_BAD_REQUEST, e.getMessage()));
+            return ResponseEntity.badRequest().body(
+                    new ErrorResponse<Integer>(HttpServletResponse.SC_BAD_REQUEST, e.getMessage()));
         } catch (Exception e) {
-            return ResponseEntity.badRequest().body(new ErrorResponse<String>(Integer.toString(HttpServletResponse.SC_BAD_REQUEST), e.getMessage()));
+            return ResponseEntity.badRequest().body(
+                    new ErrorResponse<String>(Integer.toString(HttpServletResponse.SC_BAD_REQUEST), e.getMessage()));
         }
     }
 
     /**
-     *
-     * @param parameter image parameter
-     * @param request
-     * @param filePath
+     * Sets imageParameter value
+     * @param parameter - the reference ImageParameter to set parameters
+     * @param request - the reference RequestImageParameter that contains parameters of the file
+     * @param filePath - the reference String with path of the file
      * @throws IOException
      */
-    private void setImageParameter(final ImageParameter parameter, final RequestImageParameter request, final String filePath) throws IOException {
+    private void setImageParameter(final ImageParameter parameter,
+            final RequestImageParameter request, final String filePath) throws IOException {
         parameter.setInputFile(filePath);
         parameter.setIsGray(request.getGray());
         parameter.setIsThumbnail(request.getExtractThumbnail());
@@ -96,14 +100,16 @@ public class ImageController {
     }
 
     /**
-     *
-     * @param parameter
+     * Executes the command list
+     * @param parameter - the reference ImageParameter to set parameters
+     * @return list - the reference to the list<String> that contains the file paths of converted files
      * @throws InterruptedException
      * @throws ExecutionException
      * @throws IOException
      * @throws NoSuchAlgorithmException
      */
-    private List<String> execute(final ImageParameter parameter) throws InterruptedException, ExecutionException, IOException, NoSuchAlgorithmException {
+    private List<String> execute(final ImageParameter parameter)
+            throws InterruptedException, ExecutionException, IOException, NoSuchAlgorithmException {
         Executor executor = new Executor();
         ICommand imageModel = new ImageModel();
         return executor.executeCommandsList(imageModel.createCommand(parameter));

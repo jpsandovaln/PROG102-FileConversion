@@ -14,7 +14,37 @@ public class RequestMetadataParameter extends RequestParameter {
     private String detail;
 
     /**
-     *
+     * @return fileName
+     */
+    public String getFileName() {
+        return fileName;
+    }
+
+    /**
+     * Sets fileName value
+     * @param fileName the fileName to set
+     */
+    public void setFileName(final String fileName) {
+        this.fileName = fileName;
+    }
+
+    /**
+     * @return detail
+     */
+    public String getDetail() {
+        return detail;
+    }
+
+    /**
+     * Sets detail value
+     * @param detail the detail to set
+     */
+    public void setDetail(final String detail) {
+        this.detail = detail;
+    }
+
+    /**
+     * Validates metadata parameters
      * @throws Exception
      */
     @Override
@@ -23,37 +53,5 @@ public class RequestMetadataParameter extends RequestParameter {
         if (this.getFileName() == null || "".equals(this.getFileName())) {
             throw new Exception("File name error");
         }
-    }
-
-    /**
-     *
-     * @return getFileName
-     */
-    public String getFileName() {
-        return fileName;
-    }
-
-    /**
-     *
-     * @return setFileName
-     */
-    public void setFileName(final String fileName) {
-        this.fileName = fileName;
-    }
-
-    /**
-     *
-     * @return
-     */
-    public String getDetail() {
-        return detail;
-    }
-
-    /**
-     *
-     * @return getDetail
-     */
-    public void setDetail(final String detail) {
-        this.detail = detail;
     }
 }
