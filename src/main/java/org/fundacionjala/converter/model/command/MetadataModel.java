@@ -1,5 +1,6 @@
 package org.fundacionjala.converter.model.command;
 
+import org.fundacionjala.converter.model.commons.exception.InvalidDataException;
 import org.fundacionjala.converter.model.configPath.ConfigPath;
 import org.fundacionjala.converter.model.parameter.ModelParameter;
 import org.fundacionjala.converter.model.parameter.metadata.MetadataParameter;
@@ -11,14 +12,19 @@ public class MetadataModel implements ICommand {
     private static final String DEFAULT_VAL = "d";
     private static final String MINUS = "-";
     private static final String LOW_BAR = "_";
+    private static final String JSON = ".json";
+    private static final String HTML = ".html";
+    private static final String TXT = ".txt";
+    private static final String CSV = ".csv";
+    private static final String XMP = ".XMP";
     private static final Map<String, String> map = new HashMap<String, String>();
 
     public MetadataModel() {
-        map.put("j",".json");
-        map.put("h",".html");
-        map.put("t",".txt");
-        map.put("T",".csv");
-        map.put("xmp",".XMP");
+        map.put("j", JSON);
+        map.put("h", HTML);
+        map.put("t", TXT);
+        map.put("T", CSV);
+        map.put("xmp", XMP);
 
     }
 
@@ -30,34 +36,20 @@ public class MetadataModel implements ICommand {
     @Override
     public List<List<String>> createCommand(final ModelParameter modelParameter) {
         MetadataParameter metadataParameter = (MetadataParameter) modelParameter;
-
+        //metadataParameter.validate();
         List<String> parameterList = new ArrayList<>();
         List<List<String>> finalList = new ArrayList<>();
         System.out.println(ConfigPath.getMetaDataExtractorTool());
         parameterList.add(DATA);
         parameterList.add(ConfigPath.getMetaDataExtractorTool());
-        parameterList.add("-" + metadataParameter.getFormat());
-        if (!metadataParameter.getDetail().equals(" ") && !metadataParameter.getDetail().equals(DEFAULT_VAL)) {
-            parameterList.add("-" + metadataParameter.getDetail());
+        parameterList.add(MINUS + metadataParameter.getFormat());
+        if (!metadataParameter.getDetail().equals(DEFAULT_VAL)) {
+            parameterList.add(MINUS + metadataParameter.getDetail());
         }
         parameterList.add(metadataParameter.getInputFile());
-        parameterList.add(metadataParameter.getMd5() + "_" + DATA + map.get(metadataParameter.getFormat()));
+        System.out.println(metadataParameter.getOutputFile());
+        parameterList.add(metadataParameter.getOutputFile()+ LOW_BAR + DATA + map.get(metadataParameter.getFormat()));
         finalList.add(parameterList);
         return finalList;
     }
-//
-//    private String formatSuffix(final String format) {
-//        switch (format) {
-//            case "j":
-//                return JSON;
-//            case "h":
-//                return HTML;
-//            case "t":
-//                return TXT;
-//            case "T":
-//                return CSV;
-//            default:
-//                return XMP;
-//        }
-//    }
 }
