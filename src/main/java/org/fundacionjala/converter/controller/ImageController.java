@@ -92,7 +92,8 @@ public class ImageController {
         parameter.setMetadata(request.getExtractMetadata());
         parameter.setName(request.getMd5());
         parameter.setFormat(request.getExportFormat());
-        parameter.setOutputFile(output);    }
+        parameter.setOutputFile(output);
+    }
 
     /**
      *
