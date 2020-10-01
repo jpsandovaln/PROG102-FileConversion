@@ -5,9 +5,8 @@ import org.junit.jupiter.api.Test;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-//import org.junit.Assert;
 import org.junit.jupiter.api.Assertions;
-//import org.junit.Assert;
+
 
 public class ExtractTextModelTest {
     ExtractTextModel extractTextModel = new ExtractTextModel();
