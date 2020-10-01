@@ -87,6 +87,7 @@ $(document).ready(function () {
                               title:  "success",
                               text: data["message"]
                           })
+                          window.location.href = "/login";
                    },
                    error: function (e) {
                        console.log('ERROR : ', e);
