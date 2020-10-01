@@ -20,40 +20,40 @@ import org.springframework.web.bind.annotation.GetMapping;
 public class ViewController {
 
     /**
-    * displays video view
-    * @return video view
+    * Displays video view
+    * @return video/video - the reference String to fiel video
     */
     @GetMapping("/file_video")
     public String convertVideo() {
         return "video/video";
     }
     /**
-    * displays audio view
-    * @return audio view
+    * Displays audio view
+    * @return audio/audio - the reference String to file audio
     */
     @GetMapping("/file_audio")
     public String convertAudio() {
         return "audio/audio";
     }
     /**
-    * displays docs view
-    * @return docs view
+    * Displays docs view
+    * @return extract/extractText - the reference String to file extractText
     */
     @GetMapping("/file_extractText")
     public String extractText() {
         return "extract/extractText";
     }
     /**
-    * displays image view
-    * @return image view
+    * Displays image view
+    * @return img/image - the reference String to file image
     */
     @GetMapping("/file_img")
     public String convertImage() {
         return "img/image";
     }
     /**
-    * displays metadata view
-    * @return metadata view
+    * Displays metadata view
+    * @return metadata/metadata - the reference String to file metadata
     */
     @GetMapping("/file_metadata")
     public String viewMetadata() {
@@ -61,16 +61,16 @@ public class ViewController {
     }
 
     /**
-     * displays login view
-     * @return metadata view
+     * Displays login view
+     * @return auth/login - the reference String to login
      */
     @GetMapping("/login")
     public String login(final Model model) {
         return "auth/login";
     }
     /**
-     * displays view user logged
-     * @return user view
+     * Displays view user logged
+     * @return auth/welcome - the reference String to welcome
      */
     @GetMapping("/welcome")
     public String homeUser() {
@@ -78,8 +78,8 @@ public class ViewController {
     }
 
     /**
-     * displays account creation
-     * @return user view
+     * Displays account creation
+     * @return auth/createAccount - the reference String to createAccount
      */
     @GetMapping("/createAccount")
     public String createAccount(final Model model) {

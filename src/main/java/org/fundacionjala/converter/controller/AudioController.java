@@ -40,12 +40,10 @@ public class AudioController {
     private FileUploadService fileUploadService;
 
     /**
-     *
-     * @param requestAudioParameter
-     * @return
-     * @throws Exception
+     * Converts audio
+     * @param requestAudioParameter - the reference RequestAudioParameter that contains parameters of the file
+     * @return ResponseEntity - the reference to OkResponse if file is converted successfully, ErrorResponse otherwise
      */
-
     @RequestMapping(value = "convertAudio", method = RequestMethod.POST)
     public ResponseEntity audio(final RequestAudioParameter requestAudioParameter) {
         try {
@@ -63,22 +61,25 @@ public class AudioController {
             AudioParameter audioParameter = new AudioParameter();
             setAudioParameterValues(audioParameter, requestAudioParameter, filePath);
             String result = FileZipped.zipper(audioParameter, execute(audioParameter));
-            return ResponseEntity.ok().body(new OkResponse<Integer>(HttpServletResponse.SC_OK, result.toString()));
+            return ResponseEntity.ok().body(new OkResponse<Integer>(HttpServletResponse.SC_OK, result));
         } catch (IOException | InterruptedException | ExecutionException e) {
-            return ResponseEntity.badRequest().body(new ErrorResponse<Integer>(HttpServletResponse.SC_BAD_REQUEST, e.getMessage()));
+            return ResponseEntity.badRequest().body(
+                    new ErrorResponse<Integer>(HttpServletResponse.SC_BAD_REQUEST, e.getMessage()));
         } catch (Exception e) {
-            return ResponseEntity.badRequest().body(new ErrorResponse<String>(Integer.toString(HttpServletResponse.SC_BAD_REQUEST), e.getMessage()));
+            return ResponseEntity.badRequest().body(
+                    new ErrorResponse<String>(Integer.toString(HttpServletResponse.SC_BAD_REQUEST), e.getMessage()));
         }
     }
 
     /**
-     *
-     * @param audioParameter
-     * @param requestAudioParameter
-     * @param filePath
+     * Sets audioParameter value
+     * @param audioParameter - the reference VideoParameter to set parameters
+     * @param requestAudioParameter - the reference RequestVideoParameter that contains parameters of the file
+     * @param filePath - the reference String with path of the file
      * @throws IOException
      */
-    private void setAudioParameterValues(final AudioParameter audioParameter, final RequestAudioParameter requestAudioParameter, final String filePath) throws IOException {
+    private void setAudioParameterValues(final AudioParameter audioParameter,
+            final RequestAudioParameter requestAudioParameter, final String filePath) throws IOException {
         audioParameter.setInputFile(filePath);
         audioParameter.setOutputFile(output);
         audioParameter.setMd5(requestAudioParameter.generateMD5(filePath));
@@ -90,19 +91,21 @@ public class AudioController {
         audioParameter.setSampleRate(requestAudioParameter.getSampleRate()); //-ar
         audioParameter.setStart(requestAudioParameter.getStart()); //-ss
         audioParameter.setDuration(requestAudioParameter.getDuration()); //-t
-        audioParameter.setCut(requestAudioParameter.getExtractThumbnail());
-        audioParameter.setMetadata(requestAudioParameter.getExtractMetadata());
+        audioParameter.setCut(requestAudioParameter.getIsCut());
+        audioParameter.setExtractMetadata(requestAudioParameter.isExtractMetadata());
     }
 
     /**
-     *
-     * @param audioParameter
+     * Executes the command list
+     * @param audioParameter - the reference AudioParameter to set parameters
+     * @return list - the reference to the list<String> that contains the file paths of converted files
      * @throws InterruptedException
      * @throws ExecutionException
      * @throws IOException
      * @throws NoSuchAlgorithmException
      */
-    private List<String> execute(final AudioParameter audioParameter) throws InterruptedException, ExecutionException, IOException, NoSuchAlgorithmException {
+    private List<String> execute(final AudioParameter audioParameter)
+            throws InterruptedException, ExecutionException, IOException, NoSuchAlgorithmException {
         Executor executor = new Executor();
         ICommand audioModel = new AudioModel();
         return executor.executeCommandsList(audioModel.createCommand(audioParameter));

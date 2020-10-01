@@ -24,7 +24,7 @@ public interface ICommand<T extends ModelParameter> {
             String newName = fileName.replaceAll(modelParameter.getFormat(), "(" + fileNo + ")" + modelParameter.getFormat());
             aFile = new File(newName);
         }
-        modelParameter.setOutputFile(aFile.getAbsolutePath());
+        modelParameter.setOutputFile(aFile.getPath());
     }
 
     /**

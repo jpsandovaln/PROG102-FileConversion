@@ -12,7 +12,22 @@ public class RequestExtractTextParameter extends RequestParameter {
     private String language;
 
     /**
-     *
+     * @return language
+     */
+    public String getLanguage() {
+        return language;
+    }
+
+    /**
+     * Sets language value
+     * @param language the language to set
+     */
+    public void setLanguage(final String language) {
+        this.language = language;
+    }
+
+    /**
+     * Validates extract Text parameters
      * @throws Exception
      */
     @Override
@@ -21,21 +36,5 @@ public class RequestExtractTextParameter extends RequestParameter {
         if (this.getLanguage() == null || "".equals(this.getLanguage())) {
             throw new Exception("failed Language empty");
         }
-    }
-
-    /**
-     *
-     * @return
-     */
-    public String getLanguage() {
-        return language;
-    }
-
-    /**
-     *
-     * @param language
-     */
-    public void setLanguage(final String language) {
-        this.language = language;
     }
 }

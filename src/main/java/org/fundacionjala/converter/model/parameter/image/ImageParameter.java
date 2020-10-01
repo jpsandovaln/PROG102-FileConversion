@@ -4,204 +4,205 @@ import org.fundacionjala.converter.model.parameter.ModelParameter;
 
 public class ImageParameter extends ModelParameter {
 
-  private int height;
-  private int width;
-  private String positionXAndPositionY;
-  private boolean isGrayScale;
-  private boolean isThumbnail;
-  private boolean isRezise;
-  private boolean isMetadata;
-  /**
-   *
-   * @return
-   */
-  public boolean isMetadata() {
-    return isMetadata;
-  }
+    private int height;
+    private int width;
+    private String positionXAndPositionY;
+    private String name;
+    private boolean isGrayScale;
+    private boolean isThumbnail;
+    private boolean isRezise;
+    private boolean isMetadata;
 
-  /**
-   *
-   * @param metadata
-   */
-  public void setMetadata(final boolean metadata) {
-    isMetadata = metadata;
-  }
-  /**
-   *
-   * @return
-   */
-  public String getPositionXAndPositionY() {
-    return positionXAndPositionY;
-  }
+    /**
+     * @return isMetadata
+     */
+    public boolean isMetadata() {
+        return isMetadata;
+    }
 
-  /**
-   *
-   * @param positionXAndPositionY
-   */
-  public void setPositionXAndPositionY(final String positionXAndPositionY) {
-    this.positionXAndPositionY = positionXAndPositionY;
-  }
-  /**
-   *
-   * @return if is metadata
-   */
-  public boolean getIsMetadata() {
-    return isMetadata;
-  }
-  /**
-   *
-   * @return
-   */
-  public boolean isGrayScale() {
-    return isGrayScale;
-  }
+    /**
+     * Sets metadata value
+     * @param metadata the metadata to set
+     */
+    public void setMetadata(final boolean metadata) {
+        isMetadata = metadata;
+    }
 
-  /**
-   *
-   * @param grayScale
-   */
-  public void setGrayScale(final boolean grayScale) {
-    isGrayScale = grayScale;
-  }
+    /**
+     * @return positionXandPositionY
+     */
+    public String getPositionXAndPositionY() {
+        return positionXAndPositionY;
+    }
 
-  /**
-   *
-   * @return
-   */
-  public boolean isThumbnail() {
-    return isThumbnail;
-  }
+    /**
+     * Sets positionXAndPositionY value
+     * @param positionXAndPositionY the positionXAndPositionY to set
+     */
+    public void setPositionXAndPositionY(final String positionXAndPositionY) {
+        this.positionXAndPositionY = positionXAndPositionY;
+    }
 
-  /**
-   *
-   * @param thumbnail
-   */
-  public void setThumbnail(final boolean thumbnail) {
-    isThumbnail = thumbnail;
-  }
+    /**
+     * @return isMetadata
+     */
+    public boolean getIsMetadata() {
+        return isMetadata;
+    }
 
-  /**
-   *
-   * @return
-   */
-  public boolean isRezise() {
-    return isRezise;
-  }
+    /**
+     * @return isGrayScale
+     */
+    public boolean isGrayScale() {
+        return isGrayScale;
+    }
 
-  /**
-   *
-   * @param rezise
-   */
-  public void setRezise(final boolean rezise) {
-    isRezise = rezise;
-  }
+    /**
+     * Sets grayScale value
+     * @param grayScale the grayScale to set
+     */
+    public void setGrayScale(final boolean grayScale) {
+        isGrayScale = grayScale;
+    }
 
-  /**
-   *
-   * @return
-   */
-  public String getName() {
-    return name;
-  }
+    /**
+     * @return isThumbnail
+     */
+    public boolean isThumbnail() {
+        return isThumbnail;
+    }
 
-  /**
-   *
-   * @param name
-   */
-  public void setName(final String name) {
-    this.name = name;
-  }
+    /**
+     * Sets isThumbnail value
+     * @param thumbnail the thumbnail to set
+     */
+    public void setThumbnail(final boolean thumbnail) {
+        isThumbnail = thumbnail;
+    }
 
-  private String name;
+    /**
+     * @return isRezise
+     */
+    public boolean isRezise() {
+        return isRezise;
+    }
 
-  /**
-   * getIsGray()
-   */
-  public boolean getIsGray() {
-    return isGrayScale;
-  }
+    /**
+     * Sets rezise value
+     * @param rezise the rezise to set
+     */
+    public void setRezise(final boolean rezise) {
+        isRezise = rezise;
+    }
 
-  /**
-   * setIsGray()
-   */
-  public void setIsGray(final boolean isGrayScale) {
-    this.isGrayScale = isGrayScale;
-  }
+    /**
+     * @return name
+     */
+    public String getName() {
+        return name;
+    }
 
-  /**
-   * getHeight()
-   */
-  public int getHeight() {
-    return height;
-  }
+    /**
+     * Sets name value
+     * @param name the name to set
+     */
+    public void setName(final String name) {
+        this.name = name;
+    }
 
-  /**
-   * setHeight()
-   */
-  public void setHeight(final int height) {
-    this.height = height;
-  }
+    /**
+     * @return isGrayScale
+     */
+    public boolean getIsGray() {
+        return isGrayScale;
+    }
 
-  /**
-   * getWidth()
-   */
-  public int getWidth() {
-    return width;
-  }
+    /**
+     * Sets isGrayScale value
+     * @param isGrayScale the isGrayScale to set
+     */
+    public void setIsGray(final boolean isGrayScale) {
+        this.isGrayScale = isGrayScale;
+    }
 
-  /**
-   * setWidth()
-   */
-  public void setWidth(final int width) {
-    this.width = width;
-  }
+    /**
+     * @return height
+     */
+    public int getHeight() {
+        return height;
+    }
 
-  /**
-   * setPositionXAndPositionY()
-   */
-  public String setPositionXAndPositionY(final String startPositionX, final String startPositionY) {
-    return startPositionX + "+" + startPositionY;
-  }
+    /**
+     * Sets height value
+     * @param height the height to set
+     */
+    public void setHeight(final int height) {
+        this.height = height;
+    }
 
-  /**
-   * getCrop()
-   */
-  public String getCrop() {
-    return height + "x" + width + "+" + positionXAndPositionY;
-  }
+    /**
+     * @return width
+     */
+    public int getWidth() {
+        return width;
+    }
 
-  /**
-   * getSelectingImageRegion()
-   */
-  public boolean getSelectingImageRegion() {
-    return false;
-  }
+    /**
+     * Sets width value
+     * @param width the width to set
+     */
+    public void setWidth(final int width) {
+        this.width = width;
+    }
 
-  /**
-   * setIsThumbnail(final boolean isThumbnail)
-   */
-  public void setIsThumbnail(final boolean isThumbnail) {
-    this.isThumbnail = isThumbnail;
-  }
+    /**
+     * @return startPositionX + "+" + startPositionY
+     */
+    public String setPositionXAndPositionY(final String startPositionX, final String startPositionY) {
+        return startPositionX + "+" + startPositionY;
+    }
 
-  /**
-   * getIsThumbnail()
-   */
-  public boolean getIsThumbnail() {
-    return isThumbnail;
-  }
+    /**
+     * @return height + "x" + width + "+" + positionXAndPositionY
+     */
+    public String getCrop() {
+        return height + "x" + width + "+" + positionXAndPositionY;
+    }
 
-  /**
-   * getIsResize()
-   */
-  public boolean getIsResize() {
-    return isRezise;
-  }
+    /**
+     * @return false
+     */
+    public boolean getSelectingImageRegion() {
+        return false;
+    }
 
-  /**
-   * setIsResize()
-   */
-  public void setIsResize(final boolean isRezise) {
-    this.isRezise = isRezise;
-  }
+    /**
+     * Sets isThumbnail value
+     * @param isThumbnail the isThumbnail to set
+     */
+    public void setIsThumbnail(final boolean isThumbnail) {
+        this.isThumbnail = isThumbnail;
+    }
+
+    /**
+     * @return isThumbnail()
+     */
+    public boolean getIsThumbnail() {
+        return isThumbnail;
+    }
+
+    /**
+     * @return isResize
+     */
+    public boolean getIsResize() {
+        return isRezise;
+    }
+
+    /**
+     * Sets isResize value
+     * @param isResize the isResize to set
+     */
+    public void setIsResize(final boolean isRezise) {
+        this.isRezise = isRezise;
+    }
 }
