@@ -15,7 +15,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
-import org.springframework.web.servlet.view.RedirectView;
 
 import javax.servlet.http.HttpServletResponse;
 import java.util.List;
@@ -103,7 +102,7 @@ public class UserController {
                 user.setRol("user");
                 user.setPassword(password);
                 userService.saveUser(user);
-                return ResponseEntity.ok().body(new OkResponse<Integer>(HttpServletResponse.SC_OK, "Your account was created! Please, login to continue." ));
+                return ResponseEntity.ok().body(new OkResponse<Integer>(HttpServletResponse.SC_OK, "Your account was created! Please, login to continue."));
             } else {
                 return ResponseEntity.badRequest().body(new ErrorResponse<Integer>(HttpServletResponse.SC_BAD_REQUEST, "The username \"" + username + "\" already exists, please change it."));
             }
