@@ -7,6 +7,7 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.nio.file.Paths;
 import java.util.List;
 import java.util.zip.Deflater;
 import java.util.zip.ZipEntry;
@@ -29,18 +30,20 @@ public class FileZipped {
      * @throws IOException
      */
     public static String zipper(final ModelParameter modelParameter, final List<String> list) throws IOException {
-        ZipOutputStream os = new ZipOutputStream(new FileOutputStream(modelParameter.getOutputFile() + SLASH + modelParameter.getMd5() + FORMATZIP));
+        String locationPath = Paths.get("").toAbsolutePath() + SLASH;
+        String outputPath =  locationPath + modelParameter.getOutputFile() + SLASH + modelParameter.getMd5() + FORMATZIP;
+        ZipOutputStream os = new ZipOutputStream(new FileOutputStream(outputPath));
         os.setLevel(Deflater.DEFAULT_COMPRESSION);
         os.setMethod(Deflater.DEFLATED);
         int num = 0;
         for (String file: list) {
-            ZipEntry entrada = new ZipEntry(num + "." + FilenameUtils.getExtension(file));
-            os.putNextEntry(entrada);
-            FileInputStream fis = new FileInputStream(file);
+            ZipEntry zipEntry = new ZipEntry(num + "." + FilenameUtils.getExtension(file));
+            os.putNextEntry(zipEntry);
+            FileInputStream fis = new FileInputStream(locationPath + file);
             byte[] buffer = new byte[BYTE];
-            int leido = 0;
-            while (0 < (leido = fis.read(buffer))) {
-                os.write(buffer, 0, leido);
+            int len = 0;
+            while (0 < (len = fis.read(buffer))) {
+                os.write(buffer, 0, len);
             }
             fis.close();
             num++;
