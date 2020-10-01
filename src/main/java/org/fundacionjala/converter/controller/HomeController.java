@@ -16,9 +16,10 @@ import org.springframework.web.bind.annotation.GetMapping;
  */
 @Controller
 public class HomeController {
+
     /**
-    * displays home view
-    * @return home view
+    * Displays home view
+    * @return index - the reference String to home view
     */
     @GetMapping(value = {"/", "home"})
     public String home() {

@@ -4,29 +4,15 @@ import java.io.IOException;
 
 public class AudioParameter extends MultimediaParameter {
 
-    private String name;
     private String format;
-    private String codec;
     private String bitRate;
     private String channel;
     private String sampleRate;
-    private String start;
-    private String duration;
     private String volume;
-    private boolean isMetadata = false;
     private boolean isCut = false;
     private AudioParameterValidation audioValidation = new AudioParameterValidation();
 
     /**
-     *
-     * @return new name file
-     */
-    public String getName() {
-        return name;
-    }
-
-    /**
-     *
      * @return audio format
      */
     public String getFormat() {
@@ -34,15 +20,6 @@ public class AudioParameter extends MultimediaParameter {
     }
 
     /**
-     *
-     * @return audio codec
-     */
-    public String getCodec() {
-        return codec;
-    }
-
-    /**
-     *
      * @return audio bit rate
      */
     public String getBitRate() {
@@ -50,7 +27,6 @@ public class AudioParameter extends MultimediaParameter {
     }
 
     /**
-     *
      * @return audio channel
      */
     public String getChannel() {
@@ -58,7 +34,6 @@ public class AudioParameter extends MultimediaParameter {
     }
 
     /**
-     *
      * @return audio sample rate
      */
     public String getSampleRate() {
@@ -66,23 +41,6 @@ public class AudioParameter extends MultimediaParameter {
     }
 
     /**
-     *
-     * @return audio start
-     */
-    public String getStart() {
-        return start;
-    }
-
-    /**
-     *
-     * @return audio duration
-     */
-    public String getDuration() {
-        return duration;
-    }
-
-    /**
-     *
      * @return audio volume
      */
     public String getVolume() {
@@ -90,25 +48,15 @@ public class AudioParameter extends MultimediaParameter {
     }
 
     /**
-     *
-     * @return if is metadata
-     */
-    public boolean getIsMetadata() {
-        return isMetadata;
-    }
-
-    /**
-     *
      * @return if is cut
      */
     public boolean getIsCut() {
         return isCut;
     }
 
-
     /**
-     *
-     * @param inputFile
+     * Sets inputFile value
+     * @param inputFile the inputFile to set
      * @throws IOException
      */
     public void setInputFile(final String inputFile) throws IOException {
@@ -120,18 +68,9 @@ public class AudioParameter extends MultimediaParameter {
         }
     }
 
-
     /**
-     *
-     * @param name
-     */
-    public void setName(final String name) {
-         this.name = audioValidation.validateAudioName(name);
-    }
-
-    /**
-     *
-     * @param format
+     * Sets format value
+     * @param format the  to set
      */
     public void setFormat(final String format) {
         if (audioValidation.validateAudioFormat(format)) {
@@ -143,72 +82,40 @@ public class AudioParameter extends MultimediaParameter {
     }
 
     /**
-     *
-     * @param codec
-     */
-    public void setCodec(final String codec) {
-        this.codec = codec;
-    }
-
-    /**
-     *
-     * @param bitRate
+     * Sets bitRate value
+     * @param bitRate the  to set
      */
     public void setBitRate(final String bitRate) {
         this.bitRate = bitRate;
     }
 
     /**
-     *
-     * @param channel
+     * Sets channel value
+     * @param channel the  to set
      */
     public void setChannel(final String channel) {
         this.channel = channel;
     }
 
     /**
-     *
-     * @param sampleRate
+     * Sets sampleRate value
+     * @param sampleRate the  to set
      */
     public void setSampleRate(final String sampleRate) {
         this.sampleRate = sampleRate;
     }
 
     /**
-     *
-     * @param start
-     */
-    public void setStart(final String start) {
-        this.start = start;
-    }
-
-    /**
-     *
-     * @param duration
-     */
-    public void setDuration(final String duration) {
-        this.duration = duration;
-    }
-
-    /**
-     *
-     * @param volume
+     * Sets volume value
+     * @param volume the  to set
      */
     public void setVolume(final String volume) {
         this.volume = volume;
     }
 
     /**
-     *
-     * @param metadata
-     */
-    public void setMetadata(final boolean metadata) {
-        isMetadata = metadata;
-    }
-
-    /**
-     *
-     * @param cut
+     * Sets cut value
+     * @param cut the  to set
      */
     public void setCut(final boolean cut) {
         isCut = cut;

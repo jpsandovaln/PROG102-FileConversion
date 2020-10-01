@@ -42,7 +42,7 @@ public class VideoModel implements ICommand<VideoParameter> {
             videoParameter.validate();
             return compressMp4(videoParameter);
         } else if (format.equals(FormatValidation.FORMAT_GIF)) {
-            GifValidation gifValidation = new GifValidation(videoParameter.getDuration(), videoParameter.getTimeToSkip(), videoParameter.getSecondsToOutput());
+            GifValidation gifValidation = new GifValidation(videoParameter.getDuration(), videoParameter.getStart(), videoParameter.getSecondsToOutput());
             gifValidation.validate();
             return convertGif(videoParameter);
         } else if (format.equals(FormatValidation.FORMAT_MOV)) {
@@ -84,7 +84,7 @@ public class VideoModel implements ICommand<VideoParameter> {
         listParameters.add(VideoParameter.VCODEC_COMMAND);
         listParameters.add(videoParameter.getVideoCodec());
         listParameters.add(VideoParameter.ACODEC_COMMAND);
-        listParameters.add(videoParameter.getAudioCodec());
+        listParameters.add(videoParameter.getCodec());
         String name = changeName(videoParameter.getOutputFile(), videoParameter.getName(), FormatValidation.FORMAT_MP4) + videoParameter.getFormat();
         listParameters.add(videoParameter.getOutputFile() + name);
         outputFiles.add(videoParameter.getOutputFile() + name);
@@ -102,7 +102,7 @@ public class VideoModel implements ICommand<VideoParameter> {
         listParameters.add(VideoParameter.INPUT_COMMAND);
         listParameters.add(videoParameter.getInputFile());
         listParameters.add(VideoParameter.START);
-        listParameters.add(videoParameter.getTimeToSkip());
+        listParameters.add(videoParameter.getStart());
         listParameters.add(VideoParameter.TIME);
         listParameters.add(videoParameter.getSecondsToOutput());
         listParameters.add(VideoParameter.VF);

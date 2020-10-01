@@ -23,12 +23,12 @@
                         <label for="md5">MD5:</label>
                     </div>
                     <div class="input-field col s12 m6">
-                      <select id="exportFormat" name="exportFormat" class="browser-default">
-                        <option value="" disabled selected>Select format or extension</option>
-                        <option value=".mp4">MP4</option>
-                        <option value=".gif">GIF</option>
-                        <option value=".mov">MOV</option>
-                      </select>
+                        <select id="exportFormat" name="exportFormat" class="browser-default">
+                            <option value="" disabled selected>Select format or extension</option>
+                            <option value=".mp4">MP4</option>
+                            <option value=".gif">GIF</option>
+                            <option value=".mov">MOV</option>
+                        </select>
                     </div>
                     <div class="input-field col s12 m6">
                         <input type="text" id="name" name="name" class="validate" required>
@@ -43,7 +43,7 @@
                                 </select>
                             </div>
                             <div class="input-field col s12 m6">
-                                <select id="audioCodec" name="audioCodec" class="validate browser-default">
+                                <select id="codec" name="codec" class="validate browser-default">
                                     <option value="" disabled selected>Select audio codec</option>
                                     <option value="mp3">MP3</option>
                                 </select>
@@ -71,12 +71,16 @@
                         </div>
                         <div class="col s12 m6">
                             <div class="input-field col s12 m12">
-                                <input type="text" id="start" name="timeToSkip" class="validate">
+                                <input type="text" id="duration" name="duration" class="validate" placeholder="" readonly>
+                                <label for="duration">duration:</label>
+                            </div>
+                            <div class="input-field col s12 m12">
+                                <input type="text" id="start" name="start" class="validate">
                                 <label for="start">start:</label>
                             </div>
                             <div class="input-field col s12 m12">
-                                <input type="number" id="duration" name="secondsToOutput" min="1" max="50" step="1" class="validate">
-                                <label for="duration">duration (seconds): </label>
+                                <input type="number" id="secondsToOutput" name="secondsToOutput" min="1" max="50" step="1" class="validate">
+                                <label for="secondsToOutput">duration of gif (seconds): </label>
                             </div>
                         </div>
                     </div>
