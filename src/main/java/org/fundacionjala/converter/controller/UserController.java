@@ -92,7 +92,8 @@ public class UserController {
      *          displays a message with incorrect inputs otherwise
      */
     @RequestMapping(method = RequestMethod.POST, value = "/createUser")
-    public ResponseEntity createUser(final String name, final String lastName, final String username, final String password, final String rePassword, final RedirectAttributes attributes) {
+    public ResponseEntity createUser(final String name, final String lastName, final String username,
+                                     final String password, final String rePassword, final RedirectAttributes attributes) {
         if (password.equals(rePassword)) {
             if (userRepo.findUserByUsername(username) == null) {
                 User user = new User();
@@ -102,12 +103,15 @@ public class UserController {
                 user.setRol("user");
                 user.setPassword(password);
                 userService.saveUser(user);
-                return ResponseEntity.ok().body(new OkResponse<Integer>(HttpServletResponse.SC_OK, "Your account was created! Please, login to continue."));
+                return ResponseEntity.ok().body(new OkResponse<Integer>(HttpServletResponse.SC_OK,
+                        "Your account was created! Please, login to continue."));
             } else {
-                return ResponseEntity.badRequest().body(new ErrorResponse<Integer>(HttpServletResponse.SC_BAD_REQUEST, "The username \"" + username + "\" already exists, please change it."));
+                return ResponseEntity.badRequest().body(new ErrorResponse<Integer>(HttpServletResponse.SC_BAD_REQUEST,
+                        "The username \"" + username + "\" already exists, please change it."));
             }
         } else {
-            return ResponseEntity.badRequest().body(new ErrorResponse<Integer>(HttpServletResponse.SC_BAD_REQUEST, "Password and Password Confirmation are different."));
+            return ResponseEntity.badRequest().body(new ErrorResponse<Integer>(HttpServletResponse.SC_BAD_REQUEST,
+                    "Password and Password Confirmation are different."));
         }
     }
 }

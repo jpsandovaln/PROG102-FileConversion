@@ -6,7 +6,7 @@ $(document).ready(function () {
         },
         messages: {
             username: 'Please, insert username',
-            password: 'Please, insert the password',
+            password: 'Please, insert password',
         },
         errorElement: "div",
         errorPlacement: function ( error, element ) {
