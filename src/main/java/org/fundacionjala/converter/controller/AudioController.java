@@ -5,7 +5,7 @@ import org.fundacionjala.converter.controller.response.ErrorResponse;
 import org.fundacionjala.converter.controller.response.OkResponse;
 import org.fundacionjala.converter.controller.service.FileZipped;
 import org.fundacionjala.converter.executor.Executor;
-import org.fundacionjala.converter.model.command.AudioModel;
+import org.fundacionjala.converter.model.command.multimedia.AudioModel;
 import org.fundacionjala.converter.model.command.ICommand;
 import org.fundacionjala.converter.database.entity.File;
 import org.fundacionjala.converter.model.parameter.multimedia.AudioParameter;
