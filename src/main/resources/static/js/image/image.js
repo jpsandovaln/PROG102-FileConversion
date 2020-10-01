@@ -23,7 +23,8 @@ $(document).ready(function () {
                                              return false;
                                            }
                                     },
-                           number:true
+                           number:true,
+                           min: 0,
                        },
                        width: {
                            required:{
@@ -36,7 +37,8 @@ $(document).ready(function () {
                                            return false;
                                        }
                                      },
-                           number:true
+                           number:true,
+                           min: 0,
                        }
                    },
         messages: {
@@ -50,11 +52,13 @@ $(document).ready(function () {
             position: 'please insert the position',
             height: {
                 required:'please, insert the height',
-                number: 'Please, insert just numbers'
+                number: 'Please, insert just numbers',
+                min: 'Min value required is 0',
             },
             width: {
                 required:'please, insert the width',
-                number: 'Please, insert just numbers'
+                number: 'Please, insert just numbers',
+                min: 'Min value required is 0',
             }
         },
         errorElement: "div",

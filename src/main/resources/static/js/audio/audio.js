@@ -61,8 +61,9 @@ $(document).ready(function() {
                             return true;
                         }
                         return false;
-                    }
-                }
+                    },
+                },
+               min: '0',
             },
             duration: {
                 required: {
@@ -72,21 +73,28 @@ $(document).ready(function() {
                         }
                         return false;
                     }
-                }
+                },
+                min: '1',
             },
             sampleRate: 'required'
         },
         messages: {
-            file: 'please insert the file',
-            name: 'please insert the name',
-            exportFormat: 'please insert the format',
-            codec: 'please insert the codec',
-            bitRate: 'please insert the bitRate',
-            channel: 'please insert the channel',
-            isCut: 'please insert if its cut',
-            start: 'please insert the start time',
-            duration: 'please insert the duration time',
-            sampleRate: 'please insert the sample rate'
+            file: 'Please, insert the file',
+            name: 'Please, insert the name',
+            exportFormat: 'Please, insert the format',
+            codec: 'Please, insert the codec',
+            bitRate: 'Please, insert the bitRate',
+            channel: 'Please, insert the channel',
+            isCut: 'Please, insert if its cut',
+            start: {
+                required: 'Please insert the start time',
+                min: 'Min value required 00:00:00',
+            },
+            duration:{
+                required: 'Please, insert the duration time',
+                min: 'Min value required 00:00:01',
+            },
+            sampleRate: 'Please, insert the sample rate'
         },
         errorElement: "div",
         errorPlacement: function(error, element) {
