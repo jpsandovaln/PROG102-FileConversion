@@ -74,7 +74,7 @@ public class AudioModel implements ICommand {
         String nameFile = ((AudioParameter) modelParameter).getName();
         String formatFile = ((AudioParameter) modelParameter).getFormat();
         convert.add(modelParameter.getOutputFile() + nameFile + formatFile);
-
+        name(modelParameter);
         return convert;
     }
 
@@ -99,6 +99,7 @@ public class AudioModel implements ICommand {
         String nameFile = param.getName();
         String formatFile = param.getFormat();
         cut.add(modelParameter.getOutputFile() + nameFile + CUT_SUFFIX + formatFile);
+        name(modelParameter);
         return cut;
     }
     private List<String> extractMetadata(final AudioParameter audioParameter, final String suffix) {

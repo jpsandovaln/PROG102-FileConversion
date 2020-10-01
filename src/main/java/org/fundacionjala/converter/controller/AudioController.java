@@ -61,7 +61,7 @@ public class AudioController {
             AudioParameter audioParameter = new AudioParameter();
             setAudioParameterValues(audioParameter, requestAudioParameter, filePath);
             String result = FileZipped.zipper(audioParameter, execute(audioParameter));
-            return ResponseEntity.ok().body(new OkResponse<Integer>(HttpServletResponse.SC_OK, result.toString()));
+            return ResponseEntity.ok().body(new OkResponse<Integer>(HttpServletResponse.SC_OK, result));
         } catch (IOException | InterruptedException | ExecutionException e) {
             return ResponseEntity.badRequest().body(
                     new ErrorResponse<Integer>(HttpServletResponse.SC_BAD_REQUEST, e.getMessage()));

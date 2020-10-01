@@ -8,7 +8,6 @@
  */
 package org.fundacionjala.converter.model.utility;
 
-import com.lowagie.text.DocumentException;
 import com.lowagie.text.PageSize;
 import com.lowagie.text.Paragraph;
 import com.lowagie.text.pdf.PdfWriter;
@@ -16,7 +15,7 @@ import com.lowagie.text.Document;
 import org.apache.poi.xwpf.usermodel.XWPFDocument;
 import org.apache.poi.xwpf.usermodel.XWPFParagraph;
 import org.apache.poi.xwpf.usermodel.XWPFRun;
-import java.io.FileNotFoundException;
+import org.fundacionjala.converter.model.commons.exception.ConvertDocException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 
@@ -33,7 +32,7 @@ public class ConvertDoc {
      * @param docName the name of the doc
      * @param content the content that will have the word
      */
-    public String createDocumentWord(final String docName, final String content) throws IOException {
+    public String createDocumentWord(final String docName, final String content) throws ConvertDocException {
         FileOutputStream out = null;
         String pathCreated = docName + DOCX_EXTENSION;
         try {
@@ -43,8 +42,14 @@ public class ConvertDoc {
             XWPFRun run = paragraph.createRun();
             run.setText(content);
             doc.write(out);
+        } catch (IOException e) {
+            throw new ConvertDocException("Error while converting to word");
         } finally {
-            out.close();
+            try {
+                out.close();
+            } catch (Exception e) {
+                throw new ConvertDocException("Error while converting to word");
+            }
         }
         return pathCreated;
     }
@@ -54,7 +59,7 @@ public class ConvertDoc {
      * @param docName the path and the name that it will have
      * @param content the content of the document
      */
-    public String createDocumentPdf(final String docName, final String content) throws FileNotFoundException, DocumentException {
+    public String createDocumentPdf(final String docName, final String content) throws ConvertDocException {
         Document doc = null;
         String pathCreated = docName + PDF_EXTENSION;
         try {
@@ -63,6 +68,8 @@ public class ConvertDoc {
             doc.open();
             Paragraph paragraph = new Paragraph(content);
             doc.add(paragraph);
+        } catch (Exception e) {
+            throw new ConvertDocException("Error while converting to pdf");
         } finally {
             doc.close();
         }
