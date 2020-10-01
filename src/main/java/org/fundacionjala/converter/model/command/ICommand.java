@@ -24,7 +24,7 @@ public interface ICommand<T extends ModelParameter> {
             String newName = fileName.replaceAll(modelParameter.getFormat(), "(" + fileNo + ")" + modelParameter.getFormat());
             aFile = new File(newName);
         }
-        modelParameter.setOutputFile(aFile.getAbsolutePath());
+        modelParameter.setOutputFile(aFile.getPath());
     }
 
     /**
@@ -44,6 +44,27 @@ public interface ICommand<T extends ModelParameter> {
             newName = fileName + "(" + fileNo + ")";
             aFile = new File(pathOutputFile + newName + format);
         }
+        return newName;
+    }
+
+    /**
+     * Returns a new file name
+     * @param pathOutputFile
+     * @param fileName
+     * @param format
+     * @return
+     */
+    default String changeOutputName(final String pathOutputFile, final String fileName, final String format) {
+        String file = pathOutputFile + fileName + format;
+        String nameAuxiliar = fileName;
+        File aFile = new File(file);
+        int fileNo = 0;
+        while (aFile.exists() && !aFile.isDirectory()) {
+            fileNo++;
+            nameAuxiliar = fileName + "(" + fileNo + ")";
+            aFile = new File(pathOutputFile + nameAuxiliar + format);
+        }
+        String newName = fileName + "(" + ++fileNo + ")";
         return newName;
     }
 }

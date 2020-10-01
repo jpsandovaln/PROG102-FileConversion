@@ -8,193 +8,82 @@
  */
 package org.fundacionjala.converter.controller.request;
 
-public class RequestAudioParameter extends RequestParameter {
+public class RequestAudioParameter extends RequestMultimediaParameter {
 
-    private String name;
-    private String codec;
     private String bitRate;
     private String channel;
     private String sampleRate;
-    private String start;
-    private String duration;
     private boolean isCut;
-    private String md5;
-    private boolean extractThumbnail;
-    private boolean extractMetadata;
 
     /**
-     *
-     * @return
-     */
-    public boolean getExtractThumbnail() {
-        return extractThumbnail;
-    }
-
-    /**
-     *
-     * @param extractThumbnail
-     */
-    public void setExtractThumbnail(final boolean extractThumbnail) {
-        this.extractThumbnail = extractThumbnail;
-    }
-    /**
-     *
-     * @return
-     */
-    public String getName() {
-        return name;
-    }
-
-    /**
-     *
-     * @param name
-     */
-    public void setName(final String name) {
-        this.name = name;
-    }
-
-    /**
-     *
-     * @return
-     */
-    public String getCodec() {
-        return codec;
-    }
-
-    /**
-     *
-     * @param codec
-     */
-    public void setCodec(final String codec) {
-        this.codec = codec;
-    }
-
-    /**
-     *
-     * @return
+     * @return audio bit rate
      */
     public String getBitRate() {
         return bitRate;
     }
 
     /**
-     *
-     * @return
+     * @return audio channel
      */
     public String getChannel() {
         return channel;
     }
 
     /**
-     *
-     * @return
+     * @return audio sample rate
      */
     public String getSampleRate() {
         return sampleRate;
     }
 
     /**
-     *
-     * @param sampleRate
+     * @return if is cut
      */
-    public void setSampleRate(final String sampleRate) {
-        this.sampleRate = sampleRate;
+    public boolean getIsCut() {
+        return isCut;
     }
 
     /**
-     *
-     * @return
-     */
-    public String getStart() {
-        return start;
-    }
-
-    /**
-     *
-     * @param start
-     */
-    public void setStart(final String start) {
-        this.start = start;
-    }
-
-    /**
-     *
-     * @return
-     */
-    public String getDuration() {
-        return duration;
-    }
-
-    /**
-     *
-     * @return
-     */
-    public boolean getExtractMetadata() {
-        return extractMetadata;
-    }
-
-    /**
-     *
-     * @param extractMetadata
-     */
-    public void setExtractMetadata(final boolean extractMetadata) {
-        this.extractMetadata = extractMetadata;
-    }
-
-    /**
-     *
-     * @return
-     */
-    public boolean isCut() {
-        return this.isCut;
-    }
-
-    /**
-     *
-     * @param cut
-     */
-    public void setCut(final boolean cut) {
-        this.isCut = cut;
-    }
-
-    /**
-     *
-     * @return
-     */
-    public String getMd5() {
-        return md5;
-    }
-
-    /**
-     *
-     * @param md5
-     */
-    public void setMd5(final String md5) {
-        this.md5 = md5;
-    }
-
-    /**
-     *
-     * @param bitRate
+     * Sets bitRate value
+     * @param bitRate the  to set
      */
     public void setBitRate(final String bitRate) {
         this.bitRate = bitRate;
     }
 
     /**
-     *
-     * @param channel
+     * Sets channel value
+     * @param channel the  to set
      */
     public void setChannel(final String channel) {
         this.channel = channel;
     }
 
     /**
-     *
-     * @param duration
+     * Sets sampleRate value
+     * @param sampleRate the  to set
      */
-    public void setDuration(final String duration) {
-        this.duration = duration;
+    public void setSampleRate(final String sampleRate) {
+        this.sampleRate = sampleRate;
     }
 
+    /**
+     * Sets cut value
+     * @param cut the  to set
+     */
+    public void setCut(final boolean cut) {
+        isCut = cut;
+    }
+
+    /**
+     * Validates audio parameters
+     * @throws Exception
+     */
+    @Override
+    public void validate() throws Exception {
+        super.validate();
+        if (this.getSampleRate() == null || "".equals(this.getSampleRate())) {
+            throw new Exception("failed Sample Rate empty");
+        }
+    }
 }

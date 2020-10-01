@@ -2,89 +2,108 @@
   <html xmlns:th="http://www.thymeLeaf.org" lang="en">
     <head th:replace="index::head"></head>
     <body>
-    <header><nav th:replace="index :: nav" replace="index :: nav"></nav></header>
+    <header><nav th:replace="index :: nav" replace="index :: nav">
+    </nav></header>
           <!--formularios-->
         <div class="section container ">
             <div class="row card-panel z-depth-5">
                 <form  id="form-video" method="post" th:action="@{/convertVideo}" enctype="multipart/form-data">
                     <div class="file-field input-field col s12 m6">
-                            <div class="btn teal accent-3">
-                                <i class="material-icons right">folder_open</i>
-                                <span> File</span>
-                            </div>
-                            <div class="file-path-wrapper">
-                                <input type="file" id="file" name="file" onchange="calculate()"/>
-                                <input class="file-path" type="text" disabled>
-                            </div>
+                        <div class="btn teal accent-3">
+                            <i class="material-icons right">folder_open</i>
+                            <span> File</span>
                         </div>
-                        <div class="input-field col s12 m6">
-                            <input type="text" id="md5" name="md5" class="validate" placeholder="" disabled>
-                            <label for="md5">MD5:</label>
+                        <div class="file-path-wrapper">
+                            <input type="file" id="file" name="file" onchange="calculate();calculateDuration();"/>
+                            <input class="file-path" type="text" disabled>
                         </div>
-                        <div class="input-field col s12 m6">
-                          <select id="exportFormat" name="exportFormat" class="browser-default">
+                    </div>
+                    <div class="input-field col s12 m6">
+                        <input type="text" id="md5" name="md5" class="validate" placeholder="" readonly>
+                        <label for="md5">MD5:</label>
+                    </div>
+                    <div class="input-field col s12 m6">
+                        <select id="exportFormat" name="exportFormat" class="browser-default">
                             <option value="" disabled selected>Select format or extension</option>
-                            <option value="mp4">MP4</option>
-                            <option value="gif">GIF</option>
-                            <option value="mp3">MP3</option>
-                          </select>
-                        </div>
-                        <div class="input-field col s12 m6">
-                            <input type="text" id="name" name="name" class="validate" required>
-                            <label for="name">Name:</label>
-                        </div>
-                         <div class="input-field col s12 m6">
-                            <input type="text" id="videoCodec" name="videoCodec" class="validate" required>
-                            <label for="videoCodec">video codec:</label>
-                        </div>
-                        <div class="input-field col s12 m6">
-                            <input type="text" id="audioCodec" name="audioCodec" class="validate" required>
-                            <label for="audioCodec">audio codec:</label>
-                        </div>
-                        <div class="input-field col s12 m12">
-                            <input type="text" id="frames" name="frames" class="validate" required>
-                            <label for="frames">Frame rate:</label>
-                        </div>
-                        <div class="input-field col s12 m12">
-                            <input type="text" id="sampleRate" name="sampleRate" class="validate" required>
-                            <label for="sampleRate">sample Rate:</label>
-                        </div>
-
-                         <div class="input-field col s12 m4">
-                            <label for="extractThumbnail">
-                              <input id="extractThumbnail" name="extractThumbnail" type="checkbox" />
-                              <span>thumbnail</span>
-                            </label>
-                        </div>
-                        <div class="input-field col s12 m4">
-                            <input type="text" id="start" name="start" class="validate">
-                            <label for="start">start:</label>
-                        </div>
-                        <div class="input-field col s12 m4">
-                            <input type="text" id="duration" name="duration" class="validate">
-                            <label for="duration">duration:</label>
-                        </div>                
-                        <div class="input-field col s3">
-                            <label>
-                                <input id="extractMetadata" name="extractMetadata" type="checkbox"/>
-                                <span>Metadata</span>
-                            </label>
-                        </div>
-                        <div class="input-field col s3">
-                            <label>
-                                <input id="extractGif" name="extractGif" type="checkbox"/>
-                                <span>GIF</span>
-                            </label>
-                        </div>
-                        <div class="">
-                            <div class="input-field col s2 right">
-                                <button class="btn" type="submit">
-                                    <i class="material-icons right">track_changes</i>Apply
-                                </button>
+                            <option value=".mp4">MP4</option>
+                            <option value=".gif">GIF</option>
+                            <option value=".mov">MOV</option>
+                        </select>
+                    </div>
+                    <div class="input-field col s12 m6">
+                        <input type="text" id="name" name="name" class="validate" required>
+                        <label for="name">Name:</label>
+                    </div>
+                    <div class="card-panel col s12 m12" id="mp4-options" style="display: none">
+                        <div class="col s12 m6">
+                            <div class="input-field col s12 m6">
+                                <select id="videoCodec" name="videoCodec" class="validate browser-default">
+                                    <option value="" disabled selected>Select video codec</option>
+                                    <option value="h264">H264</option>
+                                </select>
+                            </div>
+                            <div class="input-field col s12 m6">
+                                <select id="codec" name="codec" class="validate browser-default">
+                                    <option value="" disabled selected>Select audio codec</option>
+                                    <option value="mp3">MP3</option>
+                                </select>
                             </div>
                         </div>
+                    </div>
+                    <div class="card-panel col s12 m12" id="gif-options" style="display: none">
+                        <div class="col s12 m6">
+                            <div class="input-field col s12 m12">
+                                <select id="frames" name="frames" class="validate browser-default">
+                                    <option value="" disabled selected>Select a frame rate</option>
+                                    <option value="21">21</option>
+                                    <option value="24">24</option>
+                                    <option value="27">27</option>
+                                    <option value="30">30</option>
+                                </select>
+                            </div>
+                            <div class="input-field col s12 m12">
+                                <select id="sampleRate" name="controlLoop" class="validate browser-default">
+                                    <option value="" disabled selected>Select sample Rate:</option>
+                                    <option value="0">Loop Forever</option>
+                                    <option value="-1">No Looping</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col s12 m6">
+                            <div class="input-field col s12 m12">
+                                <input type="text" id="duration" name="duration" class="validate" placeholder="" readonly>
+                                <label for="duration">duration:</label>
+                            </div>
+                            <div class="input-field col s12 m12">
+                                <input type="text" id="start" name="start" class="validate">
+                                <label for="start">start:</label>
+                            </div>
+                            <div class="input-field col s12 m12">
+                                <input type="number" id="secondsToOutput" name="secondsToOutput" min="1" max="50" step="1" class="validate">
+                                <label for="secondsToOutput">duration of gif (seconds): </label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="input-field col s12 m12">
+                        <label for="extractThumbnail">
+                            <input id="extractThumbnail" name="extractThumbnail" type="checkbox" />
+                            <span>thumbnail</span>
+                        </label>
+                    </div>
+                    <div class="input-field col s12 m12">
+                        <label>
+                            <input id="extractMetadata" name="extractMetadata" type="checkbox"/>
+                            <span>Metadata</span>
+                        </label>
+                    </div>
+                    <br>
+                    <div class="input-field col s6 m2 right mt30">
+                        <button class="btn btn-small" type="submit">
+                            <i class="material-icons right">track_changes</i>Apply
+                        </button>
+                    </div>
                 </form>
-                <div class="input-field col s2 right">
+                <div class="input-field col s6 m2 right mt30">
                     <form method="get" th:action="@{/download/}">
                         <input type="text" name="path" id="path" value="" style="display:none">
                         <input type="text" name="filenameDownload" id="filenameDownload" value="" style="display:none">
@@ -100,6 +119,8 @@
     <script src="https://kit.fontawesome.com/35db202371.js" crossorigin="anonymous"></script>
     <script src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/jquery-validation@1.19.2/dist/jquery.validate.min.js"></script>
-     <script th:src="@{/js/video/video.js}"></script>
+    <script th:src="@{/js/video/video.js}"></script>
+    <script th:src="@{/js/video/video_gif.js}"></script>
+    <script th:src="@{/js/duration/duration.js}"></script>
     </body>
   </html>

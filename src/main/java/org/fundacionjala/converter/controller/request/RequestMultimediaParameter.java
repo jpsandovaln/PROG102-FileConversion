@@ -10,56 +10,96 @@ package org.fundacionjala.converter.controller.request;
 
 public class RequestMultimediaParameter extends RequestParameter {
 
-    private String sampleRate;
-    private String audioCodec;
+    private String name;
+    private String codec;
+    private String start;
+    private String duration;
+    private boolean extractMetadata;
 
     /**
-     *
+     * @return name
+     */
+    public String getName() {
+        return name;
+    }
+
+    /**
+     * Sets name value
+     * @param name the name to set
+     */
+    public void setName(final String name) {
+        this.name = name;
+    }
+
+    /**
+     * @return codec
+     */
+    public String getCodec() {
+        return codec;
+    }
+
+    /**
+     * Sets codec value
+     * @param codec the codec to set
+     */
+    public void setCodec(final String codec) {
+        this.codec = codec;
+    }
+
+    /**
+     * @return start
+     */
+    public String getStart() {
+        return start;
+    }
+
+    /**
+     * Sets start value
+     * @param start the start to set
+     */
+    public void setStart(final String start) {
+        this.start = start;
+    }
+
+    /**
+     * @return duration
+     */
+    public String getDuration() {
+        return duration;
+    }
+
+    /**
+     * Sets duration value
+     * @param duration the duration to set
+     */
+    public void setDuration(final String duration) {
+        this.duration = duration;
+    }
+
+    /**
+     * @return extractMetadata
+     */
+    public boolean isExtractMetadata() {
+        return extractMetadata;
+    }
+
+    /**
+     * Sets extractMetadata value
+     * @param extractMetadata the extractMetadata to set
+     */
+    public void setExtractMetadata(final boolean extractMetadata) {
+        this.extractMetadata = extractMetadata;
+    }
+
+    /**
+     * Validates multimedia parameters
      * @throws Exception
      */
     @Override
     public void validate() throws Exception {
         super.validate();
-        if (this.getSampleRate() == null || "".equals(this.getSampleRate())) {
-            throw new Exception("failed Sample Rate empty");
+        if (this.getCodec() == null || "".equals(this.getCodec())) {
+            throw new Exception("Failed audiocodec empty");
         }
-
-        if (this.getAudioCodec() == null || "".equals(this.getAudioCodec())) {
-            throw new Exception("failed audiocodec empty");
-        }
-
     }
-
-    /**
-     *
-     * @return
-     */
-    public String getSampleRate() {
-        return sampleRate;
-    }
-
-    /**
-     *
-     * @param sampleRate
-     */
-    public void setSampleRate(final String sampleRate) {
-        this.sampleRate = sampleRate;
-    }
-
-    /**
-     *
-     * @return
-     */
-    public String getAudioCodec() {
-        return audioCodec;
-    }
-
-    /**
-     *
-     * @param audioCodec
-     */
-    public void setAudioCodec(final String audioCodec) {
-        this.audioCodec = audioCodec;
-    }
-
 }

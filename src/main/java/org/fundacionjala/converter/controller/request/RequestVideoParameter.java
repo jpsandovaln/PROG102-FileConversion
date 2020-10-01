@@ -9,13 +9,16 @@
 package org.fundacionjala.converter.controller.request;
 
 public class RequestVideoParameter extends RequestMultimediaParameter {
+
+    private static final String VIDEO_CODEC_SUPPORTED = "h264";
     private String videoCodec;
     private String frames;
+    private String secondsToOutput;
+    private String controlLoop;
     private boolean extractThumbnail;
-    private boolean extractMetadata;
 
     /**
-     *
+     * Sets video codec
      * @param videoCodec
      */
     public void setVideoCodec(final String videoCodec) {
@@ -23,68 +26,84 @@ public class RequestVideoParameter extends RequestMultimediaParameter {
     }
 
     /**
-     *
-     * @return
-     */
-    public String getFrames() {
-        return frames;
-    }
-
-    /**
-     *
-     * @param frames
-     */
-    public void setFrames(final String frames) {
-        this.frames = frames;
-    }
-
-    /**
-     *
-     * @return
-     */
-    public boolean getExtractThumbnail() {
-        return extractThumbnail;
-    }
-
-    /**
-     *
-     * @param extractThumbnail
-     */
-    public void setExtractThumbnail(final boolean extractThumbnail) {
-        this.extractThumbnail = extractThumbnail;
-    }
-
-    /**
-     *
-     * @throws Exception
-     */
-    @Override
-    public void validate() throws Exception {
-        super.validate();
-        if (this.getVideoCodec() == null || "".equals(this.getVideoCodec())) {
-            throw new Exception("failed video Codec empty");
-        }
-    }
-
-    /**
-     *
-     * @return
+     * @return videoCodec
      */
     public String getVideoCodec() {
         return videoCodec;
     }
 
     /**
-     * @return the extractMetadata
+     * @return frames
      */
-    public boolean isExtractMetadata() {
-        return extractMetadata;
+    public String getFrames() {
+        return frames;
     }
 
     /**
-     * @param extractMetadata the extractMetadata to set
+     * Sets the frames per second
+     * @param frames the frames to set
      */
-    public void setExtractMetadata(final boolean extractMetadata) {
-        this.extractMetadata = extractMetadata;
+    public void setFrames(final String frames) {
+        this.frames = frames;
+    }
+
+    /**
+     * @return extractThumbnail
+     */
+    public boolean isExtractThumbnail() {
+        return extractThumbnail;
+    }
+
+    /**
+     * Sets extractThumbnail value
+     * @param extractThumbnail the extractThumbnail to set
+     */
+    public void setExtractThumbnail(final boolean extractThumbnail) {
+        this.extractThumbnail = extractThumbnail;
+    }
+
+    /**
+     * @return secondsToOutput
+     */
+    public String getSecondsToOutput() {
+        return secondsToOutput;
+    }
+
+    /**
+     * Sets secondsToOutput value
+     * @param secondsToOutput the secondsToOutput to set
+     */
+    public void setSecondsToOutput(final String secondsToOutput) {
+        this.secondsToOutput = secondsToOutput;
+    }
+
+    /**
+     * @return controlLoop
+     */
+    public String getControlLoop() {
+        return controlLoop;
+    }
+
+    /**
+     * Sets controlLoop value
+     * @param controlLoop the controlLoop to set
+     */
+    public void setControlLoop(final String controlLoop) {
+        this.controlLoop = controlLoop;
+    }
+
+    /**
+     * Validates video parameters
+     * @throws Exception
+     */
+    @Override
+    public void validate() throws Exception {
+        super.validate();
+        if (this.videoCodec == null || "".equals(this.videoCodec)) {
+            throw new Exception("failed video Codec empty");
+        }
+        if (!this.videoCodec.equals(VIDEO_CODEC_SUPPORTED)) {
+            throw new Exception("Invalid value of video Codec");
+        }
     }
 }

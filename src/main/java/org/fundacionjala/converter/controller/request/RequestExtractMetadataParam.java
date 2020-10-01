@@ -16,7 +16,7 @@ public class RequestExtractMetadataParam extends RequestParameter {
     private String detail;
 
     /**
-     * Set amount of detail of metadata
+     * Sets amount of detail of metadata
      * @param detail
      */
     public void setDetail(final String detail) {
@@ -24,7 +24,6 @@ public class RequestExtractMetadataParam extends RequestParameter {
     }
 
     /**
-     * Returns details
      * @return detail
      */
     public String getDetail() {

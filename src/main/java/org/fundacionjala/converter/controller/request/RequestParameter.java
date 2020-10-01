@@ -11,7 +11,9 @@ package org.fundacionjala.converter.controller.request;
 import org.fundacionjala.converter.model.ChecksumMD5;
 import org.fundacionjala.converter.database.entity.File;
 import org.fundacionjala.converter.controller.service.FileService;
+import org.fundacionjala.converter.controller.service.FileUploadService;
 import org.springframework.web.multipart.MultipartFile;
+
 import java.io.IOException;
 import java.security.NoSuchAlgorithmException;
 
@@ -22,7 +24,7 @@ public abstract class RequestParameter {
     private String md5;
 
     /**
-     *
+     * Sets file value
      * @param file
      */
     public void setFile(final MultipartFile file) {
@@ -30,7 +32,7 @@ public abstract class RequestParameter {
     }
 
     /**
-     *
+     * Sets exportFormat value
      * @param exportFormat
      */
     public void setExportFormat(final String exportFormat) {
@@ -38,29 +40,45 @@ public abstract class RequestParameter {
     }
 
     /**
-     * @return
+     * @return exportFormat
      */
-
     public String getExportFormat() {
         return exportFormat;
     }
 
     /**
-     * @return
+     * @return file
      */
     public MultipartFile getFile() {
         return file;
     }
 
     /**
-     * @param filePath
-     * @return
+     * Sets md5 value
+     * @param md5
+     */
+    public void setMd5(final String md5) {
+        this.md5 = md5;
+    }
+
+    /**
+     * @return md5
+     */
+    public String getMd5() {
+        return md5;
+    }
+
+    /**
+     * Generates md5 of a given file
+     * @param filePath - the reference to String that contains the path of the file
+     * @return String - checksum of the file
+     * @throws NoSuchAlgorithmException
+     * @throws IOException
      */
     public String generateMD5(final String filePath) {
         try {
-            String checksum = "";
             ChecksumMD5 checksumMD5 = new ChecksumMD5();
-            checksum = checksumMD5.getMD5(filePath);
+            String checksum = checksumMD5.getMD5(filePath);
             return checksum;
         } catch (NoSuchAlgorithmException | IOException e) {
             e.getMessage();
@@ -69,21 +87,21 @@ public abstract class RequestParameter {
     }
 
     /**
-     *
+     * Validates exportFormat, file, md5 fields
      * @throws Exception
      */
     public void validate() throws Exception {
 
         if (this.getExportFormat() == null || "".equals(this.getExportFormat())) {
-            throw new Exception("failed format empty");
+            throw new Exception("Failed format empty");
         }
 
         if (this.getFile().getOriginalFilename().contains("..") || this.getFile() == null) {
-            throw new Exception("failed file null");
+            throw new Exception("Failed file null");
         }
 
-        if (this.getFile().getOriginalFilename().contains("..") || this.getFile() == null) {
-            throw new Exception("failed file null");
+        if (!this.generateMD5(new FileUploadService().saveTmpFile(file)).equals(md5)) {
+            throw new Exception("Faild in the md5");
         }
         if (this.getMd5() == null || "".equals(this.getMd5())) {
             throw new Exception("failed md5 null");
@@ -91,10 +109,10 @@ public abstract class RequestParameter {
     }
 
     /**
-     *
-     * @param md5ToCompare
-     * @param fileService
-     * @return
+     * Checks if file is in database using its md5 field
+     * @param md5ToCompare - the reference to String that contains the md5 to compare
+     * @param fileService - the reference to FileService that contains the file
+     * @return true if the file is in database, false otherwise
      */
     public boolean isInDataBase(final String md5ToCompare, final FileService fileService) {
         File temp = fileService.getFileByMd5(md5ToCompare);
@@ -102,22 +120,6 @@ public abstract class RequestParameter {
             return true;
         }
         return false;
-    }
-
-    /**
-     * Sets md5 parameter
-     * @param md5
-     */
-    public void setMd5(final String md5) {
-        this.md5 = md5;
-    }
-
-    /**
-     * Returns checksumMD5
-     * @return checksumMD5
-     */
-    public String getMd5() {
-        return md5;
     }
 }
 

@@ -1,5 +1,5 @@
 $(document).ready(function() {
-    $("#image-nav").addClass("btn white black-text waves-effect waves-blue-grey lighten-1");
+    $("#video-nav").addClass("btn white black-text waves-effect waves-blue-grey lighten-1");
     $("#form-video").validate({
         rules: {
             file: 'required',
@@ -13,9 +13,6 @@ $(document).ready(function() {
             audioCodec: 'required',
             frames: 'required',
             sampleRate: 'required',
-            extractGif: {
-                required: false,
-            }
         },
         messages: {
             file: 'please insert the file',
@@ -61,12 +58,23 @@ $(document).ready(function() {
                 cache: false,
                 success: function(data) {
                     console.log('SUCCESS : ', data);
-                    $('#textarea_preview').val(data);
-                    $('#path').attr('value', data);
-                    $('#submitd').prop('disabled', false);
+                    $('#path').attr('value', data["message"]);
+                    $('#filenameDownload').attr('value', $('#name').val());
+                    $('#submited').prop('disabled', false);
+                    Swal.fire({
+                      position: 'top-end',
+                      icon: 'success',
+                      title:  "success",
+                      text: data["message"]
+                    })
                 },
                 error: function(e) {
                     console.log('ERROR : ', e);
+                    Swal.fire({
+                      icon: 'error',
+                      title: 'Error',
+                      text:  e.responseJSON.error
+                    })
                 }
             });
         }

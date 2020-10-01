@@ -1,28 +1,42 @@
 package org.fundacionjala.converter.model.parameter.multimedia;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import org.fundacionjala.converter.model.commons.exception.InvalidDataException;
+import org.fundacionjala.converter.model.commons.validation.CodecValidation;
+import org.fundacionjala.converter.model.commons.validation.IValidationStrategy;
+import org.fundacionjala.converter.model.commons.validation.ValidationContext;
+import org.fundacionjala.converter.model.commons.validation.NotNullOrEmpty;
+import org.fundacionjala.converter.model.commons.validation.FormatValidation;
+
 public class VideoParameter extends MultimediaParameter {
 
     public static final String VCODEC_COMMAND = "-vcodec";
     public static final String ACODEC_COMMAND = "-acodec";
-    public static final String ACODEC_MP2 = "mp2";
     public static final String INPUT_COMMAND = "-i";
     public static final String START = "-ss";
-    public static final String START_TIME = "10";
     public static final String TIME = "-t";
-    public static final String DURATION = "5";
     public static final String VF = "-vf";
-    public static final String PALETTE = "\"fps=10,scale=320:-1:flags=lanczos,split[s0][s1];[s0]palettegen[p];[s1][p]paletteuse\"";
+    public static final String PALETTE = ",scale=320:-1:flags=lanczos,split[s0][s1];[s0]palettegen[p];[s1][p]paletteuse\"";
     public static final String LOOP = "-loop";
+    public static final String FRAME_RATE = "\"fps=";
+    public static final String GIF = ".gif";
+    public static final String COPY = "copy";
+    //Parameters of thumbnail
+    public static final String PALETTE_THUMBNAIL = "\"fps=10,scale=320:-1:flags=lanczos,split[s0][s1];[s0]palettegen[p];[s1][p]paletteuse\"";
+    public static final String START_TIME = "10";
+    public static final String DURATION = "5";
     public static final String ZERO = "0";
-    public static final String FRAME_RATE = "-r";
-
+    public static final String MP4 = ".mp4";
     private String videoCodec;
-    private String audioCodec;
     private String frames;
-    private String fileName;
-    private String extension;
-    private boolean extractMetadata = false;
+    private String secondsToOutput;
+    private String controlLoop;
     private boolean extractThumbnail = false;
+
+    public VideoParameter() {
+    }
 
     /**
      * Sets video codec
@@ -33,15 +47,6 @@ public class VideoParameter extends MultimediaParameter {
     }
 
     /**
-     * Gets audio codec
-     * @param audioCodec
-     */
-    public void setAudioCodec(final String audioCodec) {
-        this.audioCodec = audioCodec;
-    }
-
-    /**
-     * Gets video codec
      * @return videoCodec
      */
     public String getVideoCodec() {
@@ -49,16 +54,7 @@ public class VideoParameter extends MultimediaParameter {
     }
 
     /**
-     * Gets audio codec
-     * @return audioCodec
-     */
-    public String getAudioCodec() {
-        return audioCodec;
-    }
-
-    /**
-     * Returns the frames per second
-     * @return String - the frames
+     * @return frames
      */
     public String getFrames() {
         return frames;
@@ -66,30 +62,13 @@ public class VideoParameter extends MultimediaParameter {
 
     /**
      * Sets the frames per second
-     * @param frames
+     * @param frames the frames to set
      */
     public void setFrames(final String frames) {
         this.frames = frames;
     }
 
     /**
-     * Returns extractMetadata value
-     * @return boolean - the reference to extractMetadata of this object
-     */
-    public boolean isExtractMetadata() {
-        return extractMetadata;
-    }
-
-    /**
-     * Sets extractMetadata value
-     * @param extractMetadata
-     */
-    public void setExtractMetadata(final boolean extractMetadata) {
-        this.extractMetadata = extractMetadata;
-    }
-
-    /**
-     * Returns extractThumbnail value
      * @return extractThumbnail
      */
     public boolean isExtractThumbnail() {
@@ -98,37 +77,55 @@ public class VideoParameter extends MultimediaParameter {
 
     /**
      * Sets extractThumbnail value
-     * @param extractThumbnail
+     * @param extractThumbnail the extractThumbnail to set
      */
     public void setExtractThumbnail(final boolean extractThumbnail) {
         this.extractThumbnail = extractThumbnail;
     }
 
     /**
-     * @return the fileName
+     * @return secondsToOutput
      */
-    public String getFileName() {
-        return fileName;
+    public String getSecondsToOutput() {
+        return secondsToOutput;
     }
 
     /**
-     * @param fileName the fileName to set
+     * Sets secondsToOutput value
+     * @param secondsToOutput the secondsToOutput to set
      */
-    public void setFileName(final String fileName) {
-        this.fileName = fileName;
+    public void setSecondsToOutput(final String secondsToOutput) {
+        this.secondsToOutput = secondsToOutput;
     }
 
     /**
-     * @return the extension
+     * @return controlLoop
      */
-    public String getExtension() {
-        return extension;
+    public String getControlLoop() {
+        return controlLoop;
     }
 
     /**
-     * @param extension the extension to set
+     * Sets controlLoop value
+     * @param controlLoop the controlLoop to set
      */
-    public void setExtension(final String extension) {
-        this.extension = extension;
+    public void setControlLoop(final String controlLoop) {
+        this.controlLoop = controlLoop;
+    }
+
+    /**
+     * Validates the video parameters
+     * @throws InvalidDataException
+     */
+    public void validate() throws InvalidDataException {
+        List<IValidationStrategy> validationStrategyList = new ArrayList<>();
+        validationStrategyList.add(new CodecValidation(this.videoCodec));
+        validationStrategyList.add(new CodecValidation(this.getCodec()));
+        validationStrategyList.add(new NotNullOrEmpty("videoCodec", this.videoCodec));
+        validationStrategyList.add(new NotNullOrEmpty("audioCodec", this.getCodec()));
+        validationStrategyList.add(new NotNullOrEmpty("format", this.getFormat()));
+        validationStrategyList.add(new FormatValidation(this.getFormat()));
+        ValidationContext context = new ValidationContext(validationStrategyList);
+        context.validation();
     }
 }

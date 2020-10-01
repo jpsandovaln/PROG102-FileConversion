@@ -11,7 +11,7 @@ public abstract class ModelParameter {
   public ModelParameter() {
   }
   /**
-   *
+   * Sets  value
    * @param md5
    */
   public void setMd5(final String md5) {
@@ -31,43 +31,43 @@ public abstract class ModelParameter {
   }
 
   /**
-   *
-   * @return the format that will be converted
+   * @return format
    */
   public String getFormat() {
     return format;
   }
 
   /**
-   *
-   * @param format the format that will be seted
+   * Sets format value
+   * @param format the format to set
    */
   public void setFormat(final String format) {
     this.format = format;
   }
 
   /**
-   * getInputFile
+   * @return inputFile
    */
   public String getInputFile() {
     return inputFile;
   }
 
   /**
-   * getOutputFile
+   * @return outputFile
    */
   public String getOutputFile() {
     return outputFile;
   }
 
   /**
-   * getMd5
+   * @return md5
    */
   public String getMd5() {
     return md5;
   }
 
   /**
+   * Sets inputFile value
    * @param inputFile the inputFile to set
    */
   public void setInputFile(final String inputFile) throws IOException {
@@ -75,6 +75,7 @@ public abstract class ModelParameter {
   }
 
   /**
+   * Sets outputFile value
    * @param outputFile the outputFile to set
    */
   public void setOutputFile(final String outputFile) {

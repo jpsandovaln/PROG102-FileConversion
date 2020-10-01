@@ -9,28 +9,38 @@ $(document).ready(function () {
                 required: true,
                 minlength: 32,
             },
-            position: {
-                required:{
-                depends:function ()
-                    {
-                        if($('#changeSize').prop('checked'))
-                        {
-                            return true;
-                        }
-                        return false;
-
-                    }
-                }
-            },
-            height: {
-                required:true,
-                number:true
-            },
-            width: {
-                required:true,
-                number:true
-            }
-        },
+                       position: {
+                           required: false,
+                       },
+                       height: {
+                           required:{
+                                     depends:function ()
+                                       {
+                                         if($('#changeSize').prop('checked'))
+                                           {
+                                             return true;
+                                           }
+                                             return false;
+                                           }
+                                    },
+                           number:true,
+                           min: 0,
+                       },
+                       width: {
+                           required:{
+                                     depends:function ()
+                                       {
+                                         if($('#changeSize').prop('checked'))
+                                          {
+                                           return true;
+                                          }
+                                           return false;
+                                       }
+                                     },
+                           number:true,
+                           min: 0,
+                       }
+                   },
         messages: {
             file: 'please insert the file',
             name: 'please insert the name',
@@ -42,11 +52,13 @@ $(document).ready(function () {
             position: 'please insert the position',
             height: {
                 required:'please, insert the height',
-                number: 'Please, insert just numbers'
+                number: 'Please, insert just numbers',
+                min: 'Min value required is 0',
             },
             width: {
                 required:'please, insert the width',
-                number: 'Please, insert just numbers'
+                number: 'Please, insert just numbers',
+                min: 'Min value required is 0',
             }
         },
         errorElement: "div",
@@ -84,13 +96,19 @@ $(document).ready(function () {
                         $('#path').attr('value', data["message"]);
                         $('#submited').prop('disabled', false);
                         console.log(data["message"]);
+                        Swal.fire({
+                              position: 'top-end',
+                              icon: 'success',
+                              title:  "success",
+                              text: data["message"]
+                          })
                    },
                    error: function (e) {
                        console.log('ERROR : ', e);
                        Swal.fire({
-                           icon: 'error',
-                           title: e.responseJSON.error,
-                           showConfirmButton: true
+                         icon: 'error',
+                         title: 'Error',
+                         text:  e.responseJSON.error
                          })
                    }
                });

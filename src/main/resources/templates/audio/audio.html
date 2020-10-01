@@ -13,12 +13,12 @@
                         <span> File</span>
                     </div>
                     <div class="file-path-wrapper">
-                        <input type="file" id="file" name="file" onchange="calculate()"/>
-                        <input class="file-path" type="text" disabled>
+                        <input type="file" id="file" name="file" onchange=""/>
+                        <input id="file-path" class="file-path" type="text" disabled>
                     </div>
                 </div>
                 <div class="input-field col s12 m6">
-                    <input type="text" id="md5" name="md5" class="validate" placeholder="" disabled>
+                    <input type="text" id="md5" name="md5" class="validate" placeholder="" readonly>
                     <label for="md5">MD5:</label>
                 </div>
                 <div class="input-field col s12 m6">
@@ -40,30 +40,22 @@
                     </select>
                 </div>
                 <div class="input-field col s12 m6">
-                    <input type="text" id="codec" name="codec" class="validate" required>
-                    <label for="codec">codec:</label>
+                    <select id="codec" name="codec" class="browser-default">
+                        <option value="" disabled selected>Select the codec</option>
+                        <option value="libmp3lame">libmp3lame</option>
+                    </select>
                 </div>
                 <div class="input-field col s12 m6">
-                    <input type="text" id="bitRate" name="bitRate" class="validate" required>
-                    <label for="bitRate">Bit Rate:</label>
+                    <select id="bitRate" name="bitRate" class="browser-default">
+                        <option value="" disabled selected>Select the bitRate</option>
+                        <option value="32k">32k</option>
+                    </select>
                 </div>
                 <div class="input-field col s12 m6">
-                    <input type="text" id="sampleRate" name="sampleRate" class="validate" required>
-                    <label for="sampleRate">Sample Rate:</label>
-                </div>
-                <div class="input-field col s12 m4">
-                    <label for="extractThumbnail">
-                        <input id="extractThumbnail" name="extractThumbnail" type="checkbox" />
-                        <span>Cut</span>
-                    </label>
-                </div>
-                <div class="input-field col s12 m4">
-                    <input type="text" id="start" name="start" class="validate">
-                    <label for="start">start:</label>
-                </div>
-                <div class="input-field col s12 m4">
-                    <input type="text" id="duration" name="duration" class="validate">
-                    <label for="duration">duration:</label>
+                    <select id="sampleRate" name="sampleRate" class="browser-default">
+                        <option value="" disabled selected>Select the sampleRate</option>
+                        <option value="22050">22050</option>
+                    </select>
                 </div>
                 <div class="input-field col s12">
                     <label for="extractMetadata">
@@ -71,15 +63,27 @@
                         <span>Metadata</span>
                     </label>
                 </div>
-                <div class="">
-                    <div class="input-field col s2 right">
-                        <button class="btn" type="submit">
-                            <i class="material-icons right">track_changes</i>Apply
-                        </button>
-                    </div>
+                <div class="input-field col s12 m4">
+                    <label for="extractThumbnail">
+                        <input id="extractThumbnail" name="extractThumbnail"  type="checkbox" />
+                        <span>Cut</span>
+                    </label>
+                </div>
+                <div class="input-field col s12 m4" style="display:none">
+                    <input type="text" id="start" min="0" name="start" placeholder="hh:mm:ss" class="validate">
+                    <label for="start">start:</label>
+                </div>
+                <div class="input-field col s12 m4" style="display:none">
+                    <input type="text" id="duration" name="duration" placeholder="hh:mm:ss" class="validate">
+                    <label for="duration">duration:</label>
+                </div>
+                <div class="input-field col s6 m2 right mt30">
+                    <button class="btn" type="submit">
+                        <i class="material-icons right">track_changes</i>Apply
+                    </button>
                 </div>
         </form>
-        <div class=" input-field col s2 right">
+        <div class="input-field col s6 m2 right mt30">
             <form method="get" th:action="@{/download/}">
                 <input type="text" name="path" id="path" value="" style="display:none">
                 <button type="submit" id="submited" class="btn waves-effect waves-light" disabled>
@@ -92,6 +96,8 @@
 </div>
 <main th:replace = "index :: main"></main>
 <footer th:replace = "index :: footer"></footer>
+<script src="https://kit.fontawesome.com/35db202371.js" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/jquery-validation@1.19.2/dist/jquery.validate.min.js"></script>
 <script th:src="@{/js/audio/audio.js}"></script>
 </body>
 </html>

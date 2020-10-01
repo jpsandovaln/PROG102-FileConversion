@@ -19,7 +19,112 @@ public class RequestImageParameter extends RequestParameter {
     private boolean extractMetadata;
 
     /**
-     *
+     * @return height
+     */
+    public int getHeight() {
+        return height;
+    }
+
+    /**
+     * Sets height value
+     * @param height the height to set
+     */
+    public void setHeight(final int height) {
+        this.height = height;
+    }
+
+    /**
+     * @return width
+     */
+    public int getWidth() {
+        return width;
+    }
+
+    /**
+     * Sets width value
+     * @param width the width to set
+     */
+    public void setWidth(final int width) {
+        this.width = width;
+    }
+
+    /**
+     * @return extractThumbnail
+     */
+    public boolean getExtractThumbnail() {
+        return extractThumbnail;
+    }
+
+    /**
+     * Sets extractThumbnail value
+     * @param extractThumbnail the extractThumbnail to set
+     */
+    public void setExtractThumbnail(final boolean extractThumbnail) {
+        this.extractThumbnail = extractThumbnail;
+    }
+
+    /**
+     * @return extractMetadata
+     */
+    public boolean getExtractMetadata() {
+        return extractMetadata;
+    }
+
+    /**
+     * Sets extractMetadata value
+     * @param extractMetadata - the extractMetadata to set
+     */
+    public void setExtractMetadata(final boolean extractMetadata) {
+        this.extractMetadata = extractMetadata;
+    }
+
+    /**
+     * @return position
+     */
+    public String getPosition() {
+        return position;
+    }
+
+    /**
+     * Sets position value
+     * @param position the position to set
+     */
+    public void setPosition(final String position) {
+        this.position = position;
+    }
+
+    /**
+     * @return changeSize
+     */
+    public boolean getChangeSize() {
+        return changeSize;
+    }
+
+    /**
+     * Sets changeSize value
+     * @param changeSize - the changeSize to set
+     */
+    public void setChangeSize(final boolean changeSize) {
+        this.changeSize = changeSize;
+    }
+
+    /**
+     * @return gray
+     */
+    public boolean getGray() {
+        return gray;
+    }
+
+    /**
+     * Sets gray value
+     * @param gray the gray to set
+     */
+    public void setGray(final boolean gray) {
+        this.gray = gray;
+    }
+
+    /**
+     * Validates image parameters
      * @throws Exception
      */
     @Override
@@ -38,116 +143,4 @@ public class RequestImageParameter extends RequestParameter {
             throw new Exception("failed Thumbnail empty");
         }
     }
-
-    /**
-     *
-     * @return
-     */
-    public boolean getExtractThumbnail() {
-        return extractThumbnail;
-    }
-
-    /**
-     *
-     * @param extractThumbnail
-     */
-    public void setExtractThumbnail(final boolean extractThumbnail) {
-        this.extractThumbnail = extractThumbnail;
-    }
-
-    /**
-     *
-     * @return
-     */
-    public boolean getExtractMetadata() {
-        return extractMetadata;
-    }
-
-    /**
-     *
-     * @param extractMetadata
-     */
-    public void setExtractMetadata(final boolean extractMetadata) {
-        this.extractMetadata = extractMetadata;
-    }
-
-    /**
-     *
-     * @return
-     */
-    public String getPosition() {
-        return position;
-    }
-
-    /**
-     *
-     * @param position
-     */
-    public void setPosition(final String position) {
-        this.position = position;
-    }
-
-    /**
-     *
-     * @return
-     */
-    public boolean getChangeSize() {
-        return changeSize;
-    }
-
-    /**
-     *
-     * @param changeSize
-     */
-    public void setChangeSize(final boolean changeSize) {
-        this.changeSize = changeSize;
-    }
-
-    /**
-     *
-     * @return
-     */
-    public int getHeight() {
-        return height;
-    }
-
-    /**
-     *
-     * @param height
-     */
-    public void setHeight(final int height) {
-        this.height = height;
-    }
-
-    /**
-     *
-     * @return
-     */
-    public int getWidth() {
-        return width;
-    }
-
-    /**
-     *
-     * @param width
-     */
-    public void setWidth(final int width) {
-        this.width = width;
-    }
-    /**
-     *
-     * @return
-     */
-    public boolean getGray() {
-        return gray;
-    }
-
-    /**
-     *
-     * @param gray
-     */
-    public void setGray(final boolean gray) {
-        this.gray = gray;
-    }
-
 }
