@@ -12,6 +12,12 @@ public class MetadataParameter extends ModelParameter {
     private String format;
     private String detail;
 
+    public MetadataParameter(final String inputFile, final String format, final String detail,
+                             final String outputFile, final String md5) {
+        super(inputFile, outputFile, md5);
+        this.detail = detail;
+        this.format = format;
+    }
     /**
      *
      * @return format
@@ -28,6 +34,10 @@ public class MetadataParameter extends ModelParameter {
         return detail;
     }
 
+    /**
+     * Validates the parameters
+     * @throws InvalidDataException
+     */
     public void validate() throws InvalidDataException {
         List<IValidationStrategy> validationStrategyList = new ArrayList<>();
         validationStrategyList.add(new DetailMetadataValidation(this.detail));
@@ -36,15 +46,5 @@ public class MetadataParameter extends ModelParameter {
         validationStrategyList.add(new FormatMetadataValidation(this.format));
         ValidationContext context = new ValidationContext(validationStrategyList);
         context.validation();
-    }
-    /**
-     * List<String> getParameter()
-     */
-
-    public MetadataParameter(final String inputFile, final String format, final String detail, final String outputFile,
-            final String md5) {
-        super(inputFile, outputFile, md5);
-        this.detail = detail;
-        this.format = format;
     }
 }
