@@ -37,10 +37,11 @@ public class ExtractTextController {
     private FileService fileService;
     @Autowired
     private FileUploadService fileUploadService;
+
     /**
-     *
-     * @param requestExtractTextParameter
-     * @return
+     * Extract text of a image
+     * @param requestExtractTextParameter - the reference RequestExtractTextParameter that contains parameters of the file
+     * @return ResponseEntity - the reference to OkResponse if file is converted successfully, ErrorResponse otherwise
      */
     @RequestMapping(method = RequestMethod.POST, value = "/convertExtractText")
     public ResponseEntity convertExtractText(final RequestExtractTextParameter requestExtractTextParameter) throws Exception {
@@ -63,22 +64,23 @@ public class ExtractTextController {
             return ResponseEntity.ok().body(
                 new OkResponse<Integer>(HttpServletResponse.SC_OK, result));
         } catch (IOException | InterruptedException | ExecutionException e) {
-            return ResponseEntity.badRequest()
-                .body(new ErrorResponse<Integer>(HttpServletResponse.SC_BAD_REQUEST, e.getMessage()));
+            return ResponseEntity.badRequest().body(
+                    new ErrorResponse<Integer>(HttpServletResponse.SC_BAD_REQUEST, e.getMessage()));
         } catch (Exception e) {
             return ResponseEntity.badRequest().body(
-                new ErrorResponse<String>(Integer.toString(HttpServletResponse.SC_BAD_REQUEST), e.getMessage()));
+                    new ErrorResponse<String>(Integer.toString(HttpServletResponse.SC_BAD_REQUEST), e.getMessage()));
         }
     }
 
     /**
-     *
-     * @param extractTextParameter
-     * @param requestExtractTextParameter
-     * @param filePath
+     * Sets extractTextParameter value
+     * @param extractTextParameter - the reference ExtractTextParameter to set parameters
+     * @param requestExtractTextParameter - the reference RequestExtractTextParameter that contains parameters of the file
+     * @param filePath - the reference String with path of the file
      * @throws IOException
      */
-    private void setRequestExtractTextParameter(final ExtractTextParameter extractTextParameter, final RequestExtractTextParameter requestExtractTextParameter, final String filePath) throws IOException {
+    private void setRequestExtractTextParameter(final ExtractTextParameter extractTextParameter,
+            final RequestExtractTextParameter requestExtractTextParameter, final String filePath) throws IOException {
         extractTextParameter.setInputFile(filePath);
         extractTextParameter.setMd5(requestExtractTextParameter.getMd5());
         extractTextParameter.setLanguage(requestExtractTextParameter.getLanguage());

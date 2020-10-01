@@ -30,9 +30,9 @@ public class UserController {
 
 
     /**
-     * displays list of users
-     * @param model
-     * @return view
+     * Displays list of users
+     * @param model - the reference Model
+     * @return list - the reference String to list of users
      */
     @GetMapping(value = "/list")
     public String userList(final Model model) {
@@ -41,22 +41,22 @@ public class UserController {
         return "list";
     }
     /**
-     * Save a new user
-     * @param model
-     * @param user, new user to save
-     * @return view
+     * Saves a new user
+     * @param model - the reference Model
+     * @param user - the reference to User to save
+     * @return save - the reference String to add a user
      */
     @PostMapping(value = "/add")
     public String saveUser(final User user, final Model model) {
-
         userService.saveUser(user);
         return "save";
     }
     /**
-     * edit an user
-     * @param model
-     * @param user to edit
-     * @return view
+     * Edits an user
+     * @param id - the reference int of id of the user to edit
+     * @param user - the reference to User to edit
+     * @param model - the reference Model
+     * @return edit - the reference String to edit a user
      */
     @PostMapping(value = "/edit/{id}")
     public String editUser(@PathVariable("id") final Long id, final User user, final Model model) {
@@ -64,10 +64,11 @@ public class UserController {
         return "edit";
     }
     /**
-     * delete an user by id
-     * @param model
-     * @param id, identify of user to delete
-     * @return view
+     * Deletes an user by id
+     * @param id - the reference int of id of the user to delete
+     * @param user - the reference to User to delete
+     * @param model - the reference Model
+     * @return delete
      */
     @GetMapping(value = "/delete/{id}")
     public String deleteUser(@PathVariable final long id, final Model model) {
@@ -76,16 +77,20 @@ public class UserController {
     }
 
     /**
-     *
-     * @param name
-     * @param lastName
-     * @param username
-     * @param password
-     * @param rePassword
+     * Creates a user
+     * @param name - the reference String of user's name
+     * @param lastName - the reference String of user's lastname
+     * @param username - the reference String of user's username
+     * @param password - the reference String of user's password
+     * @param rePassword - the reference String of user's rePassword
+     * @param attributes - the reference RedirectAttributes of user's attributes
      * @return responseEntity with message to correct or incorrect inputs.
+     * @return ResponseEntity - the reference to message to correct inputs if user is created successfully;
+     *          displays a message with incorrect inputs otherwise
      */
     @RequestMapping(method = RequestMethod.POST, value = "/createUser")
-    public RedirectView createUser(final String name, final String lastName, final String username, final String password, final String rePassword, final RedirectAttributes attributes) {
+    public RedirectView createUser(final String name, final String lastName, final String username,
+            final String password, final String rePassword, final RedirectAttributes attributes) {
         if (password.equals(rePassword)) {
             if (userRepo.findUserByUsername(username) == null) {
                 User user = new User();

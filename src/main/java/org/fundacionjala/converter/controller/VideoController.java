@@ -43,9 +43,9 @@ public class VideoController {
     private FileUploadService fileUploadService;
 
     /**
-     *
-     * @param requestVideoParameter
-     * @return
+     * Converts video
+     * @param requestVideoParameter - the reference RequestVideoParameter that contains parameters of the file
+     * @return ResponseEntity - the reference to OkResponse if file is converted successfully, ErrorResponse otherwise
      */
     @RequestMapping(method = RequestMethod.POST, value = "convertVideo")
     public ResponseEntity convertVideo(final RequestVideoParameter requestVideoParameter) {
@@ -66,45 +66,50 @@ public class VideoController {
             String result = FileZipped.zipper(videoParameter, execute(videoParameter));
             return ResponseEntity.ok().body(new OkResponse<Integer>(HttpServletResponse.SC_OK, result));
         } catch (IOException | InterruptedException | ExecutionException e) {
-            return ResponseEntity.badRequest().body(new ErrorResponse<Integer>(HttpServletResponse.SC_BAD_REQUEST, e.getMessage()));
+            return ResponseEntity.badRequest().body(
+                    new ErrorResponse<Integer>(HttpServletResponse.SC_BAD_REQUEST, e.getMessage()));
         } catch (Exception e) {
-            return ResponseEntity.badRequest().body(new ErrorResponse<String>(Integer.toString(HttpServletResponse.SC_BAD_REQUEST), e.getMessage()));
+            return ResponseEntity.badRequest().body(
+                    new ErrorResponse<String>(Integer.toString(HttpServletResponse.SC_BAD_REQUEST), e.getMessage()));
         }
     }
 
     /**
-     *
-     * @param imageParameter
-     * @param requestExtractTextParameter
-     * @param filePath
+     * Sets videoParameter value
+     * @param videoParameter - the reference VideoParameter to set parameters
+     * @param requestVideoParameter - the reference RequestVideoParameter that contains parameters of the file
+     * @param filePath - the reference String with path of the file
      * @throws IOException
      */
-    private void setVideoParameter(final VideoParameter parameter, final RequestVideoParameter request, final String filePath) throws IOException {
-        parameter.setName(request.getMd5());
-        parameter.setMd5(request.getMd5());
-        parameter.setInputFile(filePath);
-        parameter.setFrames(request.getFrames());
-        parameter.setFormat(request.getExportFormat());
-        parameter.setAudioCodec(request.getAudioCodec());
-        parameter.setVideoCodec(request.getVideoCodec());
-        parameter.setTimeToSkip(request.getTimeToSkip());
-        parameter.setSecondsToOutput(request.getSecondsToOutput());
-        parameter.setControlLoop(request.getControlLoop());
-        parameter.setDuration(request.getDuration());
-        parameter.setExtractThumbnail(request.getExtractThumbnail());
-        parameter.setExtractMetadata(request.isExtractMetadata());
-        parameter.setOutputFile(output);
+    private void setVideoParameter(final VideoParameter videoParameter,
+            final RequestVideoParameter requestVideoParameter, final String filePath) throws IOException {
+        videoParameter.setName(requestVideoParameter.getMd5());
+        videoParameter.setMd5(requestVideoParameter.getMd5());
+        videoParameter.setInputFile(filePath);
+        videoParameter.setFrames(requestVideoParameter.getFrames());
+        videoParameter.setFormat(requestVideoParameter.getExportFormat());
+        videoParameter.setCodec(requestVideoParameter.getCodec());
+        videoParameter.setVideoCodec(requestVideoParameter.getVideoCodec());
+        videoParameter.setStart(requestVideoParameter.getStart());
+        videoParameter.setSecondsToOutput(requestVideoParameter.getSecondsToOutput());
+        videoParameter.setControlLoop(requestVideoParameter.getControlLoop());
+        videoParameter.setDuration(requestVideoParameter.getDuration());
+        videoParameter.setExtractThumbnail(requestVideoParameter.isExtractThumbnail());
+        videoParameter.setExtractMetadata(requestVideoParameter.isExtractMetadata());
+        videoParameter.setOutputFile(output);
     }
 
     /**
-     *
-     * @param audioParameter
+     * Executes the command list
+     * @param videoParameter - the reference VideoParameter to set parameters
+     * @return list - the reference to the list<String> that contains the file paths of converted files
      * @throws InterruptedException
      * @throws ExecutionException
      * @throws IOException
      * @throws NoSuchAlgorithmException
      */
-    private List<String> execute(final VideoParameter parameter) throws InterruptedException, ExecutionException, IOException, NoSuchAlgorithmException {
+    private List<String> execute(final VideoParameter parameter)
+            throws InterruptedException, ExecutionException, IOException, NoSuchAlgorithmException {
         Executor executor = new Executor();
         ICommand videoModel = new VideoModel();
         return executor.executeCommandsList(videoModel.createCommand(parameter));

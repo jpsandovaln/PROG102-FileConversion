@@ -51,42 +51,45 @@ public class File {
     }
 
     /**
-     * @return the id
+     * @return id
      */
     public Long getId() {
         return id;
     }
     /**
-     * @return the path
+     * @return path
      */
     public String getPath() {
         return path;
     }
     /**
-     * @return the md5
+     * @return md5
      */
     public String getMd5() {
         return md5;
     }
     /**
-     * @return the user
+     * @return user
      */
     public User getUser() {
         return user;
     }
     /**
+     * Sets path value
      * @param path the path to set
      */
     public void setPath(final String path) {
         this.path = path;
     }
     /**
+     * Sets md5 value
      * @param md5 the md5 to set
      */
     public void setMd5(final String md5) {
         this.md5 = md5;
     }
     /**
+     * Sets user value
      * @param user to relate the file
      */
     public void setUser(final User user) {

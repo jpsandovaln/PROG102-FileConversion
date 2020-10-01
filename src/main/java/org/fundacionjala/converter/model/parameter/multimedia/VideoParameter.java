@@ -29,24 +29,11 @@ public class VideoParameter extends MultimediaParameter {
     public static final String DURATION = "5";
     public static final String ZERO = "0";
     public static final String MP4 = ".mp4";
-
-    private String name;
     private String videoCodec;
-    private String audioCodec;
     private String frames;
-    private String timeToSkip;
     private String secondsToOutput;
     private String controlLoop;
-    private String duration;
-    private boolean extractMetadata = false;
     private boolean extractThumbnail = false;
-
-    /**
-     * @param duration
-     */
-    public VideoParameter(final String duration) {
-        this.duration = duration;
-    }
 
     public VideoParameter() {
     }
@@ -60,15 +47,6 @@ public class VideoParameter extends MultimediaParameter {
     }
 
     /**
-     * Gets audio codec
-     * @param audioCodec
-     */
-    public void setAudioCodec(final String audioCodec) {
-        this.audioCodec = audioCodec;
-    }
-
-    /**
-     * Gets video codec
      * @return videoCodec
      */
     public String getVideoCodec() {
@@ -76,16 +54,7 @@ public class VideoParameter extends MultimediaParameter {
     }
 
     /**
-     * Gets audio codec
-     * @return audioCodec
-     */
-    public String getAudioCodec() {
-        return audioCodec;
-    }
-
-    /**
-     * Returns the frames per second
-     * @return String - the frames
+     * @return frames
      */
     public String getFrames() {
         return frames;
@@ -93,30 +62,13 @@ public class VideoParameter extends MultimediaParameter {
 
     /**
      * Sets the frames per second
-     * @param frames
+     * @param frames the frames to set
      */
     public void setFrames(final String frames) {
         this.frames = frames;
     }
 
     /**
-     * Returns extractMetadata value
-     * @return boolean - the reference to extractMetadata of this object
-     */
-    public boolean isExtractMetadata() {
-        return extractMetadata;
-    }
-
-    /**
-     * Sets extractMetadata value
-     * @param extractMetadata
-     */
-    public void setExtractMetadata(final boolean extractMetadata) {
-        this.extractMetadata = extractMetadata;
-    }
-
-    /**
-     * Returns extractThumbnail value
      * @return extractThumbnail
      */
     public boolean isExtractThumbnail() {
@@ -125,34 +77,21 @@ public class VideoParameter extends MultimediaParameter {
 
     /**
      * Sets extractThumbnail value
-     * @param extractThumbnail
+     * @param extractThumbnail the extractThumbnail to set
      */
     public void setExtractThumbnail(final boolean extractThumbnail) {
         this.extractThumbnail = extractThumbnail;
     }
 
     /**
-     * @return the timeToSkip
-     */
-    public String getTimeToSkip() {
-        return timeToSkip;
-    }
-
-    /**
-     * @param timeToSkip the timeToSkip to set
-     */
-    public void setTimeToSkip(final String timeToSkip) {
-        this.timeToSkip = timeToSkip;
-    }
-
-    /**
-     * @return the secondsToOutput
+     * @return secondsToOutput
      */
     public String getSecondsToOutput() {
         return secondsToOutput;
     }
 
     /**
+     * Sets secondsToOutput value
      * @param secondsToOutput the secondsToOutput to set
      */
     public void setSecondsToOutput(final String secondsToOutput) {
@@ -160,13 +99,14 @@ public class VideoParameter extends MultimediaParameter {
     }
 
     /**
-     * @return the controlLoop
+     * @return controlLoop
      */
     public String getControlLoop() {
         return controlLoop;
     }
 
     /**
+     * Sets controlLoop value
      * @param controlLoop the controlLoop to set
      */
     public void setControlLoop(final String controlLoop) {
@@ -174,43 +114,15 @@ public class VideoParameter extends MultimediaParameter {
     }
 
     /**
-     * @return the duration in seconds
-     */
-    public String getDuration() {
-        return duration;
-    }
-
-    /**
-     * @param duration the duration to set
-     */
-    public void setDuration(final String duration) {
-        this.duration = duration;
-    }
-
-    /**
-     * @return the name
-     */
-    public String getName() {
-        return name;
-    }
-
-    /**
-     * @param name the name to set
-     */
-    public void setName(final String name) {
-        this.name = name;
-    }
-
-    /**
-     * Validates the parameters
+     * Validates the video parameters
      * @throws InvalidDataException
      */
     public void validate() throws InvalidDataException {
         List<IValidationStrategy> validationStrategyList = new ArrayList<>();
         validationStrategyList.add(new CodecValidation(this.videoCodec));
-        validationStrategyList.add(new CodecValidation(this.audioCodec));
+        validationStrategyList.add(new CodecValidation(this.getCodec()));
         validationStrategyList.add(new NotNullOrEmpty("videoCodec", this.videoCodec));
-        validationStrategyList.add(new NotNullOrEmpty("audioCodec", this.audioCodec));
+        validationStrategyList.add(new NotNullOrEmpty("audioCodec", this.getCodec()));
         validationStrategyList.add(new NotNullOrEmpty("format", this.getFormat()));
         validationStrategyList.add(new FormatValidation(this.getFormat()));
         ValidationContext context = new ValidationContext(validationStrategyList);

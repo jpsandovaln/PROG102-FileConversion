@@ -1,7 +1,7 @@
 package org.fundacionjala.converter;
 
 import org.fundacionjala.converter.executor.Executor;
-import org.fundacionjala.converter.model.command.AudioModel;
+import org.fundacionjala.converter.model.command.multimedia.AudioModel;
 import org.fundacionjala.converter.model.command.MetadataModel;
 import org.fundacionjala.converter.model.parameter.metadata.MetadataParameter;
 import org.fundacionjala.converter.model.parameter.multimedia.*;
