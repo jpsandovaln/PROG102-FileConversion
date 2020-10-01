@@ -20,6 +20,8 @@ public class ExtractTextModelTest {
         List<List<String>> expected = new ArrayList<>();
         List<String> listParameters = new ArrayList<>();
         listParameters.add("thirdParty/ocr/tesseract.exe");
+        listParameters.add("--tessdata-dir");
+        listParameters.add("thirdParty/ocr/tessdata");
         listParameters.add(ExtractTextParameter.LANG_COMMAND);
         listParameters.add(parameter.getLanguage());
         listParameters.add(parameter.getInputFile());
