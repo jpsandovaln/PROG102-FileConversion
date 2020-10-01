@@ -8,6 +8,7 @@
  */
 package org.fundacionjala.converter.model.command.extractText;
 
+import com.lowagie.text.DocumentException;
 import org.fundacionjala.converter.executor.Executor;
 import org.fundacionjala.converter.model.ChecksumMD5;
 import org.fundacionjala.converter.model.commons.exception.InvalidDataException;
@@ -15,10 +16,13 @@ import org.fundacionjala.converter.model.commons.validation.FormatValidation;
 import org.fundacionjala.converter.model.configPath.ConfigPath;
 import org.fundacionjala.converter.model.parameter.extractText.ExtractTextParameter;
 import org.fundacionjala.converter.model.utility.ConvertDoc;
+import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.ExecutionException;
 
 /**
  * @author Angela Martinez
@@ -28,7 +32,6 @@ public class ExtractTextFacade {
     private ChecksumMD5 checksumMD5;
     private ReaderText reader;
     private ConvertDoc convertDoc;
-    private ConfigPath configPath;
     private ExtractTextModel extractor;
     private Executor executor;
     private List<String> resultList;
@@ -37,7 +40,6 @@ public class ExtractTextFacade {
         checksumMD5 = new ChecksumMD5();
         reader = new ReaderText();
         convertDoc = new ConvertDoc();
-        configPath = new ConfigPath();
         extractor = new ExtractTextModel();
         executor = new Executor();
         resultList = new ArrayList<>();
@@ -47,10 +49,10 @@ public class ExtractTextFacade {
      * Creates a document
      * @param parameter - the parameter to execute the conversion using tesseract
      */
-    public List<String> extractText(final ExtractTextParameter parameter) throws InvalidDataException, Exception {
+    public List<String> extractText(final ExtractTextParameter parameter) throws InvalidDataException, InterruptedException, ExecutionException, DocumentException, NoSuchAlgorithmException, IOException {
         parameter.validate();
         String format = parameter.getFormat();
-        parameter.setOutputFile(configPath.getConvertedFilesPath());
+        parameter.setOutputFile(ConfigPath.getConvertedFilesPath());
         parameter.setFileName(checksumMD5.getMD5(parameter.getInputFile()));
         if (format.equals(FormatValidation.FORMAT_TXT)) {
             String newName = executor.executeCommandsList(extractor.createCommand(parameter)).get(0) + FormatValidation.FORMAT_TXT;
@@ -79,7 +81,7 @@ public class ExtractTextFacade {
      * @param format
      * @param outputFile
      */
-    private void eraseDocument(final String format, final String outputFile) throws Exception {
+    private void eraseDocument(final String format, final String outputFile) throws IOException {
         if (format.equals(FormatValidation.FORMAT_DOCX) || format.equals(FormatValidation.FORMAT_PDF) || format.equals(FormatValidation.FORMAT_TXT)) {
             Files.delete(Paths.get(outputFile + FormatValidation.FORMAT_TXT));
         }

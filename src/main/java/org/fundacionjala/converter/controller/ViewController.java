@@ -9,6 +9,7 @@
 package org.fundacionjala.converter.controller;
 
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 
 /**
@@ -17,6 +18,7 @@ import org.springframework.web.bind.annotation.GetMapping;
  */
 @Controller
 public class ViewController {
+
     /**
     * displays video view
     * @return video view
@@ -60,13 +62,12 @@ public class ViewController {
 
     /**
      * displays login view
-     * @return login view
+     * @return metadata view
      */
     @GetMapping("/login")
-    public String login() {
+    public String login(final Model model) {
         return "auth/login";
     }
-
     /**
      * displays view user logged
      * @return user view
@@ -77,11 +78,11 @@ public class ViewController {
     }
 
     /**
-     * displays view user logged
+     * displays account creation
      * @return user view
      */
     @GetMapping("/createAccount")
-    public String createAccount() {
+    public String createAccount(final Model model) {
         return "auth/createAccount";
     }
 }

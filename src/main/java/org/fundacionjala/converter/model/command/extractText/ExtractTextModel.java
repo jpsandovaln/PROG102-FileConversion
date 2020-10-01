@@ -21,7 +21,7 @@ import org.fundacionjala.converter.model.parameter.extractText.ExtractTextParame
  */
 public class ExtractTextModel implements ICommand<ExtractTextParameter> {
     public static final String LANGUAGE_EN = "en";
-
+    public static final String TESSDATA_DIR = "--tessdata-dir";
     public ExtractTextModel() {
     }
 
@@ -37,20 +37,20 @@ public class ExtractTextModel implements ICommand<ExtractTextParameter> {
     }
 
     /**
-     * Extracts text from image
+     * Extracts text from an image
      * @param parameter
      * @return
      */
     private List<String> extractText(final ExtractTextParameter parameter) {
-        ConfigPath cPath = new ConfigPath();
         List<String> command = new ArrayList<String>();
-        command.add(cPath.getExtractTextTool());
+        command.add(ConfigPath.getExtractTextTool());
+        command.add(TESSDATA_DIR);
+        command.add(ConfigPath.getTesstDataDir());
         if (!parameter.getLanguage().equals(LANGUAGE_EN)) {
             command.add(parameter.LANG_COMMAND);
             command.add(parameter.getLanguage());
         }
         command.add(parameter.getInputFile());
-        //command.add(parameter.getOutputFile() + parameter.getFileName());
         command.add(parameter.getOutputFile() + changeName(parameter.getOutputFile(), parameter.getFileName(), FormatValidation.FORMAT_TXT));
         return command;
     }

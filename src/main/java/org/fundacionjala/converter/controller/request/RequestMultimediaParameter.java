@@ -10,7 +10,6 @@ package org.fundacionjala.converter.controller.request;
 
 public class RequestMultimediaParameter extends RequestParameter {
 
-    private String sampleRate;
     private String audioCodec;
 
     /**
@@ -20,30 +19,9 @@ public class RequestMultimediaParameter extends RequestParameter {
     @Override
     public void validate() throws Exception {
         super.validate();
-        if (this.getSampleRate() == null || "".equals(this.getSampleRate())) {
-            throw new Exception("failed Sample Rate empty");
-        }
-
         if (this.getAudioCodec() == null || "".equals(this.getAudioCodec())) {
-            throw new Exception("failed audiocodec empty");
+            throw new Exception("Failed audiocodec empty");
         }
-
-    }
-
-    /**
-     *
-     * @return
-     */
-    public String getSampleRate() {
-        return sampleRate;
-    }
-
-    /**
-     *
-     * @param sampleRate
-     */
-    public void setSampleRate(final String sampleRate) {
-        this.sampleRate = sampleRate;
     }
 
     /**

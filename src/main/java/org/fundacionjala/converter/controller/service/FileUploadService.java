@@ -8,7 +8,7 @@
  */
 package org.fundacionjala.converter.controller.service;
 
-import org.springframework.beans.factory.annotation.Value;
+import org.fundacionjala.converter.model.configPath.ConfigPath;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -24,9 +24,6 @@ import java.nio.file.StandardCopyOption;
 @Service
 public class FileUploadService {
 
-    @Value("${inputFiles.path}")
-    private String inputFiles;
-
     /**
      * save a file in the directory "input files"
      *
@@ -35,7 +32,20 @@ public class FileUploadService {
      * @throws IOException
      */
     public String saveInputFile(final MultipartFile file) throws IOException {
-        String pathFile = inputFiles + file.getOriginalFilename();
+        String pathFile = ConfigPath.getInputFile() + file.getOriginalFilename();
+        Files.copy(file.getInputStream(), Paths.get(pathFile), StandardCopyOption.REPLACE_EXISTING);
+        return pathFile;
+    }
+
+    /**
+     * save a file in the directory "input files"
+     *
+     * @param file to save
+     * @return
+     * @throws IOException
+     */
+    public String saveTmpFile(final MultipartFile file) throws IOException {
+        String pathFile = ConfigPath.getTmpFilePath() + file.getOriginalFilename();
         Files.copy(file.getInputStream(), Paths.get(pathFile), StandardCopyOption.REPLACE_EXISTING);
         return pathFile;
     }

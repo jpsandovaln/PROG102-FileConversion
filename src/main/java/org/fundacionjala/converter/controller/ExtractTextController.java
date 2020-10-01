@@ -44,19 +44,21 @@ public class ExtractTextController {
      */
     @RequestMapping(method = RequestMethod.POST, value = "/convertExtractText")
     public ResponseEntity convertExtractText(final RequestExtractTextParameter requestExtractTextParameter) throws Exception {
-        requestExtractTextParameter.validate();
-        String filePath = fileUploadService.saveInputFile(requestExtractTextParameter.getFile());
-        String md5 = requestExtractTextParameter.generateMD5(filePath);
-        if (fileService.getFileByMd5(md5) == null) {
-            fileService.saveFile(new File(filePath, md5));
-        }
         try {
+            requestExtractTextParameter.validate();
+            String md5 = requestExtractTextParameter.getMd5();
+            String filePath = "";
+
+            if (fileService.getFileByMd5(md5) == null) {
+                filePath = fileUploadService.saveInputFile(requestExtractTextParameter.getFile());
+                fileService.saveFile(new File(filePath, md5));
+            } else {
+                filePath = fileService.getFileByMd5(md5).getPath();
+            }
+
             ExtractTextFacade extractor = new ExtractTextFacade();
             ExtractTextParameter parameter = new ExtractTextParameter();
-            parameter.setInputFile(filePath);
-            parameter.setMd5(md5);
-            parameter.setLanguage(requestExtractTextParameter.getLanguage());
-            parameter.setFormat(requestExtractTextParameter.getExportFormat());
+            setRequestExtractTextParameter(parameter, requestExtractTextParameter, filePath);
             String result = FileZipped.zipper(parameter, extractor.extractText(parameter));
             return ResponseEntity.ok().body(
                 new OkResponse<Integer>(HttpServletResponse.SC_OK, result));
@@ -67,5 +69,19 @@ public class ExtractTextController {
             return ResponseEntity.badRequest().body(
                 new ErrorResponse<String>(Integer.toString(HttpServletResponse.SC_BAD_REQUEST), e.getMessage()));
         }
+    }
+
+    /**
+     *
+     * @param extractTextParameter
+     * @param requestExtractTextParameter
+     * @param filePath
+     * @throws IOException
+     */
+    private void setRequestExtractTextParameter(final ExtractTextParameter extractTextParameter, final RequestExtractTextParameter requestExtractTextParameter, final String filePath) throws IOException {
+        extractTextParameter.setInputFile(filePath);
+        extractTextParameter.setMd5(requestExtractTextParameter.getMd5());
+        extractTextParameter.setLanguage(requestExtractTextParameter.getLanguage());
+        extractTextParameter.setFormat(requestExtractTextParameter.getExportFormat());
     }
 }

@@ -15,20 +15,21 @@ import java.util.zip.ZipOutputStream;
 public class FileZipped {
     private static final int BYTE = 1024;
     private static final String FORMATZIP = ".zip";
+    private static final String SLASH = "/";
     private int ex;
     public FileZipped(final int ex) {
-     this.ex = ex;
+        this.ex = ex;
     }
 
     /**
      *
-     * @param modelParameter to get the format attribute that is inside of the audiomodel
+     * @param modelParameter to get the format attribute that is inside of the modelparameter
      * @param list the list that returns the executor with the path of the files converted
      * @return the path of the zip
      * @throws IOException
      */
     public static String zipper(final ModelParameter modelParameter, final List<String> list) throws IOException {
-        ZipOutputStream os = new ZipOutputStream(new FileOutputStream(modelParameter.getOutputFile() + modelParameter.getMd5() + FORMATZIP));
+        ZipOutputStream os = new ZipOutputStream(new FileOutputStream(modelParameter.getOutputFile() + SLASH + modelParameter.getMd5() + FORMATZIP));
         os.setLevel(Deflater.DEFAULT_COMPRESSION);
         os.setMethod(Deflater.DEFLATED);
         int num = 0;
@@ -47,10 +48,10 @@ public class FileZipped {
         os.closeEntry();
         os.close();
         File file;
-       for (String path:list) {
+        for (String path:list) {
             file = new File(path);
             file.delete();
         }
-        return modelParameter.getOutputFile() + modelParameter.getMd5() + FORMATZIP; //modelParameter.getOutputFile() + ".zip";
+        return modelParameter.getOutputFile() + SLASH + modelParameter.getMd5() + FORMATZIP; //modelParameter.getOutputFile() + ".zip";
     }
 }

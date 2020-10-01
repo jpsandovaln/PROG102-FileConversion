@@ -63,3 +63,10 @@ nav {
     border-color:green;
     border-width:2px;
 }
+
+.animation-text{
+   text-shadow: 1px 2px #000;
+}
+body {
+background-color:#e3f2fd;
+}

@@ -18,7 +18,6 @@ public class RequestAudioParameter extends RequestParameter {
     private String start;
     private String duration;
     private boolean isCut;
-    private String md5;
     private boolean extractThumbnail;
     private boolean extractMetadata;
 
@@ -159,22 +158,6 @@ public class RequestAudioParameter extends RequestParameter {
 
     /**
      *
-     * @return
-     */
-    public String getMd5() {
-        return md5;
-    }
-
-    /**
-     *
-     * @param md5
-     */
-    public void setMd5(final String md5) {
-        this.md5 = md5;
-    }
-
-    /**
-     *
      * @param bitRate
      */
     public void setBitRate(final String bitRate) {
@@ -197,4 +180,15 @@ public class RequestAudioParameter extends RequestParameter {
         this.duration = duration;
     }
 
+    /**
+     *
+     * @throws Exception
+     */
+    @Override
+    public void validate() throws Exception {
+        super.validate();
+        if (this.getSampleRate() == null || "".equals(this.getSampleRate())) {
+            throw new Exception("failed Sample Rate empty");
+        }
+    }
 }
