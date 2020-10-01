@@ -28,6 +28,7 @@ public class VideoParameter extends MultimediaParameter {
     public static final String START_TIME = "10";
     public static final String DURATION = "5";
     public static final String ZERO = "0";
+    public static final String MP4 = ".mp4";
 
     private String name;
     private String videoCodec;
@@ -166,7 +167,6 @@ public class VideoParameter extends MultimediaParameter {
     }
 
     /**
-     * A value of 0 is infinite looping, -1 is no looping, and 1 will loop once meaning it will play twice. So a value of 10 will cause the GIF to play 11 times.
      * @param controlLoop the controlLoop to set
      */
     public void setControlLoop(final String controlLoop) {

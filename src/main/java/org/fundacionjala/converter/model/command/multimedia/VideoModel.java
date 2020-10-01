@@ -32,15 +32,14 @@ public class VideoModel implements ICommand<VideoParameter> {
 
     /**
      * Returns list of commands to convert the video to mp4 or gif
-     *
      * @param videoParameter - the reference to Video Parameter
      * @return List<String> - list of commands to convert
      * @throws InvalidDataException
      */
     public List<String> convert(final VideoParameter videoParameter) throws InvalidDataException {
-        videoParameter.validate();
         String format = videoParameter.getFormat();
         if (format.equals(FormatValidation.FORMAT_MP4)) {
+            videoParameter.validate();
             return compressMp4(videoParameter);
         } else if (format.equals(FormatValidation.FORMAT_GIF)) {
             GifValidation gifValidation = new GifValidation(videoParameter.getDuration(), videoParameter.getTimeToSkip(), videoParameter.getSecondsToOutput());
@@ -52,6 +51,11 @@ public class VideoModel implements ICommand<VideoParameter> {
         return null;
     }
 
+    /**
+     * Returns list of commands to convert the video to mp4 or mov
+     * @param videoParameter - the reference to Video Parameter
+     * @return List<String> - list of commands to convert
+     */
     private List<String> convertMov(final VideoParameter videoParameter) {
         listParameters = new ArrayList<String>();
         listParameters.add(configPath.getVideoAudioTool());
@@ -68,10 +72,8 @@ public class VideoModel implements ICommand<VideoParameter> {
     }
 
     /**
-     * Compress video to mp4
-     *
-     * @param videoParameter
-     * @param fullPathOutputFile
+     * Compress video
+     * @param videoParameter - the reference to Video Parameter
      * @return List<String> - list of commands to convert
      */
     private List<String> compressMp4(final VideoParameter videoParameter) {
@@ -118,7 +120,7 @@ public class VideoModel implements ICommand<VideoParameter> {
 
     /**
      * Returns a list of commands to extract thumbnail
-     * Thumbnail parameters are:
+     * Thumbnail parameters by default are:
      * -frame rate: 10
      * -starts in second 10
      * -duration: 5 seconds
@@ -148,8 +150,8 @@ public class VideoModel implements ICommand<VideoParameter> {
 
     /**
      * Creates a list of commands for the parameters given
-     * @param listMetadataParameters - the reference to the List of metadatas parameters
-     * @return List - list of commands
+     * @param videoParameter - the reference to Video Parameter
+     * @return List<List<String>> - list of commands
      * @throws IOException
      * @throws NoSuchAlgorithmException
      * @throws ExecutionException
