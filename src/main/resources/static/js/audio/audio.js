@@ -12,14 +12,14 @@ $(document).ready(function() {
     $('#file').change( function () {
         var file = $('#file').val();
         if (!validate(file)){
-             var fileInput = $('#file').val('');
-             var fileInputPath = $('#file-path').val('');
-             var md5 = $('#md5').val('');
-             Swal.fire(
-               'Error',
-               'This file is not supported for audio',
-               'error'
-             )
+            var fileInput = $('#file').val('');
+            var fileInputPath = $('#file-path').val('');
+            var md5 = $('#md5').val('');
+            Swal.fire(
+                'Error',
+                'This file is not supported for audio',
+                'error'
+            )
         }
         else{
             calculate();
@@ -127,23 +127,23 @@ $(document).ready(function() {
                 cache: false,
                 success: function(data) {
                     console.log('SUCCESS : ', data);
-                    $('#textarea_preview').val(data);
-                    $('#path').attr('value', data);
+                    $('#path').attr('value', data["message"]);
+                    $('#submited').prop('disabled', false);
                     $('#filenameDownload').attr('value', $('#name').val());
                     $('#submited').prop('disabled', false);
                     Swal.fire({
-                      position: 'top-end',
-                      icon: 'success',
-                      title:  "success",
-                      text: data["message"]
+                        position: 'top-end',
+                        icon: 'success',
+                        title:  "success",
+                        text: data["message"]
                     })
                 },
                 error: function(e) {
                     console.log('ERROR : ', e);
                     Swal.fire({
-                      icon: 'error',
-                      title: 'Error',
-                      text:  e.responseJSON.error
+                        icon: 'error',
+                        title: 'Error',
+                        text:  e.responseJSON.error
                     })
                 }
             });

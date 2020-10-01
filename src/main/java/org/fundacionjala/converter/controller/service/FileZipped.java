@@ -15,6 +15,7 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.nio.file.Paths;
 import java.util.List;
 import java.util.zip.Deflater;
 import java.util.zip.ZipEntry;
@@ -37,17 +38,19 @@ public class FileZipped {
      * @throws IOException
      */
     public static String zipper(final ModelParameter modelParameter, final List<String> list) throws IOException {
-        ZipOutputStream os = new ZipOutputStream(new FileOutputStream(modelParameter.getOutputFile() + SLASH + modelParameter.getMd5() + FORMAT_ZIP));
+        String locationPath = Paths.get("").toAbsolutePath() + SLASH;
+        String outputPath =  locationPath + modelParameter.getOutputFile() + SLASH + modelParameter.getMd5() + FORMAT_ZIP;
+        ZipOutputStream os = new ZipOutputStream(new FileOutputStream(outputPath));
         os.setLevel(Deflater.DEFAULT_COMPRESSION);
         os.setMethod(Deflater.DEFLATED);
         for (String file: list) {
             ZipEntry entry = new ZipEntry(FilenameUtils.getName(file));
             os.putNextEntry(entry);
-            FileInputStream fis = new FileInputStream(file);
+            FileInputStream fis = new FileInputStream(locationPath + file);
             byte[] buffer = new byte[BYTE];
-            int leido = 0;
-            while (0 < (leido = fis.read(buffer))) {
-                os.write(buffer, 0, leido);
+            int len = 0;
+            while (0 < (len = fis.read(buffer))) {
+                os.write(buffer, 0, len);
             }
             fis.close();
         }
