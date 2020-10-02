@@ -1,9 +1,12 @@
 package org.fundacionjala.converter.controller;
 
+import org.fundacionjala.converter.controller.response.ErrorResponse;
+import org.fundacionjala.converter.controller.response.OkResponse;
 import org.fundacionjala.converter.database.entity.User;
 import org.fundacionjala.converter.controller.service.UserService;
 import org.fundacionjala.converter.database.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -12,8 +15,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
-import org.springframework.web.servlet.view.RedirectView;
 
+import javax.servlet.http.HttpServletResponse;
 import java.util.List;
 
 /**
@@ -89,8 +92,8 @@ public class UserController {
      *          displays a message with incorrect inputs otherwise
      */
     @RequestMapping(method = RequestMethod.POST, value = "/createUser")
-    public RedirectView createUser(final String name, final String lastName, final String username,
-            final String password, final String rePassword, final RedirectAttributes attributes) {
+    public ResponseEntity createUser(final String name, final String lastName, final String username,
+                                     final String password, final String rePassword, final RedirectAttributes attributes) {
         if (password.equals(rePassword)) {
             if (userRepo.findUserByUsername(username) == null) {
                 User user = new User();
@@ -100,15 +103,15 @@ public class UserController {
                 user.setRol("user");
                 user.setPassword(password);
                 userService.saveUser(user);
-                attributes.addFlashAttribute("message", "Your account was created! Please, login to continue.");
-                return new RedirectView("/login", true);
+                return ResponseEntity.ok().body(new OkResponse<Integer>(HttpServletResponse.SC_OK,
+                        "Your account was created! Please, login to continue."));
             } else {
-                attributes.addFlashAttribute("message", "The username \"" + username + "\" already exists, please change it.");
-                return new RedirectView("/createAccount", true);
+                return ResponseEntity.badRequest().body(new ErrorResponse<Integer>(HttpServletResponse.SC_BAD_REQUEST,
+                        "The username \"" + username + "\" already exists, please change it."));
             }
         } else {
-            attributes.addFlashAttribute("message", "Password and Password Confirmation are different.");
-            return new RedirectView("/createAccount", true);
+            return ResponseEntity.badRequest().body(new ErrorResponse<Integer>(HttpServletResponse.SC_BAD_REQUEST,
+                    "Password and Password Confirmation are different."));
         }
     }
 }
