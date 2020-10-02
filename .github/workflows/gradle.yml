@@ -27,6 +27,7 @@ jobs:
         name: CheckStyle
         path: build/reports/checkstyle/
     - name: list directories and md5sum
+      if: failure()
       run: ls -R /storage && md5sum storage/convertedFiles/*
     - name: Building the project
       run: ./gradlew build
