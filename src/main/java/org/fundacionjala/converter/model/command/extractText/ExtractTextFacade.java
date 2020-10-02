@@ -10,9 +10,7 @@ package org.fundacionjala.converter.model.command.extractText;
 
 import org.fundacionjala.converter.executor.Executor;
 import org.fundacionjala.converter.model.ChecksumMD5;
-import org.fundacionjala.converter.model.commons.exception.ConvertDocException;
-import org.fundacionjala.converter.model.commons.exception.InvalidDataException;
-import org.fundacionjala.converter.model.commons.exception.ReadFileException;
+import org.fundacionjala.converter.model.commons.exception.ExtractTextException;
 import org.fundacionjala.converter.model.commons.validation.FormatValidation;
 import org.fundacionjala.converter.model.configPath.ConfigPath;
 import org.fundacionjala.converter.model.parameter.extractText.ExtractTextParameter;
@@ -20,10 +18,8 @@ import org.fundacionjala.converter.model.utility.ConvertDoc;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
-import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.ExecutionException;
 
 /**
  * @author Angela Martinez
@@ -50,21 +46,24 @@ public class ExtractTextFacade {
      * Creates a document
      * @param parameter - the parameter to execute the conversion using tesseract
      */
-    public List<String> extractText(final ExtractTextParameter parameter) throws ReadFileException, InvalidDataException,
-            InterruptedException, ExecutionException, NoSuchAlgorithmException, IOException, ConvertDocException {
-        parameter.validate();
-        String format = parameter.getFormat();
-        parameter.setOutputFile(ConfigPath.getConvertedFilesPath());
-        parameter.setFileName(checksumMD5.getMD5(parameter.getInputFile()));
-        if (format.equals(FormatValidation.FORMAT_TXT)) {
-            String newName = executor.executeCommandsList(extractor.createCommand(parameter)).get(0) + FormatValidation.FORMAT_TXT;
-            List<String> listResult = new ArrayList<>();
-            listResult.add(newName);
-            return listResult;
-        } else {
-            convertExtractTextTo(parameter);
+    public List<String> extractText(final ExtractTextParameter parameter) throws ExtractTextException {
+        try {
+            parameter.validate();
+            String format = parameter.getFormat();
+            parameter.setOutputFile(ConfigPath.getConvertedFilesPath());
+            parameter.setFileName(checksumMD5.getMD5(parameter.getInputFile()));
+            if (format.equals(FormatValidation.FORMAT_TXT)) {
+                String newName = executor.executeCommandsList(extractor.createCommand(parameter)).get(0) + FormatValidation.FORMAT_TXT;
+                List<String> listResult = new ArrayList<>();
+                listResult.add(newName);
+                return listResult;
+            } else {
+                convertExtractTextTo(parameter);
+            }
+            return resultList;
+        } catch (Exception e) {
+            throw new ExtractTextException("Error while extracting text");
         }
-        return resultList;
     }
 
     /**
@@ -76,20 +75,24 @@ public class ExtractTextFacade {
      * @throws ReadFileException
      * @throws ConvertDocException
      */
-    private void convertExtractTextTo(final ExtractTextParameter parameter) throws InterruptedException, ExecutionException, IOException, ReadFileException, ConvertDocException {
-        String format = parameter.getFormat();
-        executor.executeCommandsList(extractor.createCommand(parameter));
-        String outputFile = parameter.getOutputFile() + parameter.getFileName();
-        String result = reader.readFile(outputFile + FormatValidation.FORMAT_TXT);
-        if (format.equals(FormatValidation.FORMAT_PDF)) {
-            String outputFileChanged = extractor.changeName(parameter.getOutputFile(), parameter.getFileName(), FormatValidation.FORMAT_PDF);
-            resultList.add(convertDoc.createDocumentPdf(parameter.getOutputFile() + outputFileChanged, result));
+    private void convertExtractTextTo(final ExtractTextParameter parameter) throws ExtractTextException {
+        try {
+            String format = parameter.getFormat();
+            executor.executeCommandsList(extractor.createCommand(parameter));
+            String outputFile = parameter.getOutputFile() + parameter.getFileName();
+            String result = reader.readFile(outputFile + FormatValidation.FORMAT_TXT);
+            if (format.equals(FormatValidation.FORMAT_PDF)) {
+                String outputFileChanged = extractor.changeName(parameter.getOutputFile(), parameter.getFileName(), FormatValidation.FORMAT_PDF);
+                resultList.add(convertDoc.createDocumentPdf(parameter.getOutputFile() + outputFileChanged, result));
+            }
+            if (format.equals(FormatValidation.FORMAT_DOCX)) {
+                String outputFileChanged = extractor.changeName(parameter.getOutputFile(), parameter.getFileName(), FormatValidation.FORMAT_DOCX);
+                resultList.add(convertDoc.createDocumentWord(parameter.getOutputFile() + outputFileChanged, result));
+            }
+            eraseDocument(format, outputFile);
+        } catch (Exception e) {
+            throw new ExtractTextException("Error while extracting text");
         }
-        if (format.equals(FormatValidation.FORMAT_DOCX)) {
-            String outputFileChanged = extractor.changeName(parameter.getOutputFile(), parameter.getFileName(), FormatValidation.FORMAT_DOCX);
-            resultList.add(convertDoc.createDocumentWord(parameter.getOutputFile() + outputFileChanged, result));
-        }
-        eraseDocument(format, outputFile);
     }
 
     /**

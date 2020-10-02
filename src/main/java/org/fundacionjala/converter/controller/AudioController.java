@@ -8,6 +8,7 @@ import org.fundacionjala.converter.executor.Executor;
 import org.fundacionjala.converter.model.command.multimedia.AudioModel;
 import org.fundacionjala.converter.model.command.ICommand;
 import org.fundacionjala.converter.database.entity.File;
+import org.fundacionjala.converter.model.commons.exception.ModelParameterException;
 import org.fundacionjala.converter.model.parameter.multimedia.AudioParameter;
 import org.fundacionjala.converter.controller.service.FileService;
 import org.fundacionjala.converter.controller.service.FileUploadService;
@@ -104,8 +105,8 @@ public class AudioController {
      * @throws IOException
      * @throws NoSuchAlgorithmException
      */
-    private List<String> execute(final AudioParameter audioParameter)
-            throws InterruptedException, ExecutionException, IOException, NoSuchAlgorithmException {
+    private List<String> execute(final AudioParameter audioParameter) throws ModelParameterException,
+            InterruptedException, ExecutionException, IOException, NoSuchAlgorithmException {
         Executor executor = new Executor();
         ICommand audioModel = new AudioModel();
         return executor.executeCommandsList(audioModel.createCommand(audioParameter));

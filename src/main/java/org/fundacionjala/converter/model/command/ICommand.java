@@ -1,5 +1,6 @@
 package org.fundacionjala.converter.model.command;
 
+import org.fundacionjala.converter.model.commons.exception.ModelParameterException;
 import org.fundacionjala.converter.model.parameter.ModelParameter;
 
 import java.io.File;
@@ -9,7 +10,7 @@ import java.security.NoSuchAlgorithmException;
 import java.io.IOException;
 
 public interface ICommand<T extends ModelParameter> {
-    List<List<String>> createCommand(T modelParameter) throws NoSuchAlgorithmException, IOException, InterruptedException, ExecutionException;
+    List<List<String>> createCommand(T modelParameter) throws NoSuchAlgorithmException, IOException, InterruptedException, ExecutionException, ModelParameterException;
 
     /**
      *

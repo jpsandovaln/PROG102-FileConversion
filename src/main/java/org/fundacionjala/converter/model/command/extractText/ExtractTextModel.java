@@ -11,6 +11,7 @@ package org.fundacionjala.converter.model.command.extractText;
 import java.util.ArrayList;
 import java.util.List;
 import org.fundacionjala.converter.model.command.ICommand;
+import org.fundacionjala.converter.model.commons.exception.ModelParameterException;
 import org.fundacionjala.converter.model.commons.validation.FormatValidation;
 import org.fundacionjala.converter.model.configPath.ConfigPath;
 import org.fundacionjala.converter.model.parameter.extractText.ExtractTextParameter;
@@ -30,7 +31,7 @@ public class ExtractTextModel implements ICommand<ExtractTextParameter> {
      * @return list of commands
      */
     @Override
-    public List<List<String>> createCommand(final ExtractTextParameter parameter) {
+    public List<List<String>> createCommand(final ExtractTextParameter parameter) throws ModelParameterException {
         List<List<String>> listCommands = new ArrayList<>();
         listCommands.add(extractText(parameter));
         return listCommands;
@@ -41,17 +42,21 @@ public class ExtractTextModel implements ICommand<ExtractTextParameter> {
      * @param parameter
      * @return
      */
-    private List<String> extractText(final ExtractTextParameter parameter) {
-        List<String> command = new ArrayList<String>();
-        command.add(ConfigPath.getExtractTextTool());
-        command.add(TESSDATA_DIR);
-        command.add(ConfigPath.getTesstDataDir());
-        if (!parameter.getLanguage().equals(LANGUAGE_EN)) {
-            command.add(parameter.LANG_COMMAND);
-            command.add(parameter.getLanguage());
+    private List<String> extractText(final ExtractTextParameter parameter) throws ModelParameterException {
+        if (parameter != null) {
+            List<String> command = new ArrayList<>();
+            command.add(ConfigPath.getExtractTextTool());
+            command.add(TESSDATA_DIR);
+            command.add(ConfigPath.getTesstDataDir());
+            if (!parameter.getLanguage().equals(LANGUAGE_EN)) {
+                command.add(parameter.LANG_COMMAND);
+                command.add(parameter.getLanguage());
+            }
+            command.add(parameter.getInputFile());
+            command.add(parameter.getOutputFile() + changeName(parameter.getOutputFile(), parameter.getFileName(), FormatValidation.FORMAT_TXT));
+            return command;
+        } else {
+            throw new ModelParameterException("Invalid ExtractTextParameter");
         }
-        command.add(parameter.getInputFile());
-        command.add(parameter.getOutputFile() + changeName(parameter.getOutputFile(), parameter.getFileName(), FormatValidation.FORMAT_TXT));
-        return command;
     }
 }

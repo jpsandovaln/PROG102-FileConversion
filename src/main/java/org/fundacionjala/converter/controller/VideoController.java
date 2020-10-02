@@ -15,6 +15,7 @@ import org.fundacionjala.converter.executor.Executor;
 import org.fundacionjala.converter.model.command.ICommand;
 import org.fundacionjala.converter.database.entity.File;
 import org.fundacionjala.converter.model.command.multimedia.VideoModel;
+import org.fundacionjala.converter.model.commons.exception.ModelParameterException;
 import org.fundacionjala.converter.model.parameter.multimedia.VideoParameter;
 import org.fundacionjala.converter.controller.service.FileService;
 import org.fundacionjala.converter.controller.service.FileUploadService;
@@ -101,7 +102,7 @@ public class VideoController {
 
     /**
      * Executes the command list
-     * @param videoParameter - the reference VideoParameter to set parameters
+     * @param parameter - the reference VideoParameter to set parameters
      * @return list - the reference to the list<String> that contains the file paths of converted files
      * @throws InterruptedException
      * @throws ExecutionException
@@ -109,7 +110,7 @@ public class VideoController {
      * @throws NoSuchAlgorithmException
      */
     private List<String> execute(final VideoParameter parameter)
-            throws InterruptedException, ExecutionException, IOException, NoSuchAlgorithmException {
+            throws InterruptedException, ExecutionException, IOException, NoSuchAlgorithmException, ModelParameterException {
         Executor executor = new Executor();
         ICommand videoModel = new VideoModel();
         return executor.executeCommandsList(videoModel.createCommand(parameter));

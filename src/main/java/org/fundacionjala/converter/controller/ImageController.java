@@ -16,6 +16,7 @@ import org.fundacionjala.converter.database.entity.File;
 import org.fundacionjala.converter.executor.Executor;
 import org.fundacionjala.converter.model.command.ICommand;
 import org.fundacionjala.converter.model.command.ImageModel;
+import org.fundacionjala.converter.model.commons.exception.ModelParameterException;
 import org.fundacionjala.converter.model.parameter.image.ImageParameter;
 import org.fundacionjala.converter.controller.service.FileService;
 import org.fundacionjala.converter.controller.service.FileUploadService;
@@ -109,7 +110,7 @@ public class ImageController {
      * @throws NoSuchAlgorithmException
      */
     private List<String> execute(final ImageParameter parameter)
-            throws InterruptedException, ExecutionException, IOException, NoSuchAlgorithmException {
+            throws InterruptedException, ExecutionException, IOException, NoSuchAlgorithmException, ModelParameterException {
         Executor executor = new Executor();
         ICommand imageModel = new ImageModel();
         return executor.executeCommandsList(imageModel.createCommand(parameter));
