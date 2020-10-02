@@ -3,11 +3,11 @@ package org.fundacionjala.converter.model.parameter.metadata;
 import com.lowagie.text.Meta;
 import org.fundacionjala.converter.model.command.MetadataModel;
 import org.fundacionjala.converter.model.parameter.ModelParameter;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-class MetadataParameterTest {
+class MetadataParameterTest extends ModelParameter {
     MetadataParameter metadataParameter = new MetadataParameter("storage\\inputFiles\\aud.mp3", "j", "v", "meta", "abcabcabc");
 
     @Test

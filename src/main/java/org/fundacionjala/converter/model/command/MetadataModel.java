@@ -1,11 +1,13 @@
 package org.fundacionjala.converter.model.command;
 
-import org.fundacionjala.converter.model.commons.exception.InvalidDataException;
 import org.fundacionjala.converter.model.configPath.ConfigPath;
 import org.fundacionjala.converter.model.parameter.ModelParameter;
 import org.fundacionjala.converter.model.parameter.metadata.MetadataParameter;
 
-import java.util.*;
+import java.util.Map;
+import java.util.HashMap;
+import java.util.List;
+import java.util.ArrayList;
 
 public class MetadataModel implements ICommand {
     private static final String DATA = "Metadata";
@@ -17,7 +19,7 @@ public class MetadataModel implements ICommand {
     private static final String TXT = ".txt";
     private static final String CSV = ".csv";
     private static final String XMP = ".XMP";
-    private static final Map<String, String> map = new HashMap<String, String>();
+    private Map<String, String> map = new HashMap<String, String>();
 
     public MetadataModel() {
         map.put("j", JSON);
@@ -25,7 +27,6 @@ public class MetadataModel implements ICommand {
         map.put("t", TXT);
         map.put("T", CSV);
         map.put("xmp", XMP);
-
     }
 
     /**
@@ -46,7 +47,7 @@ public class MetadataModel implements ICommand {
             parameterList.add(MINUS + metadataParameter.getDetail());
         }
         parameterList.add(metadataParameter.getInputFile());
-        parameterList.add(metadataParameter.getOutputFile()+ LOW_BAR + DATA + map.get(metadataParameter.getFormat()));
+        parameterList.add(metadataParameter.getOutputFile() + LOW_BAR + DATA + map.get(metadataParameter.getFormat()));
         finalList.add(parameterList);
         return finalList;
     }

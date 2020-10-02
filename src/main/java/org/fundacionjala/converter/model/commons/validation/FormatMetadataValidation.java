@@ -25,6 +25,9 @@ public class FormatMetadataValidation implements IValidationStrategy {
         formatsAllowed.add(XMP);
     }
 
+    /**
+     * @throws InvalidDataException
+     */
     @Override
     public void validate() throws InvalidDataException {
         if (!formatsAllowed.contains(this.format)) {

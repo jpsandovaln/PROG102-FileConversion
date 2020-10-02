@@ -9,7 +9,7 @@ import java.io.IOException;
 import java.util.concurrent.ExecutionException;
 import static org.junit.jupiter.api.Assertions.*;
 
-class MetadataModelTest extends ModelParameter {
+class MetadataModelTest {
 
     @Test
     void createCommand() throws InterruptedException, ExecutionException, IOException {
