@@ -28,7 +28,7 @@ jobs:
         path: build/reports/checkstyle/
     - name: list directories and md5sum
       if: failure()
-      run: ls -R storage/ && ls -lha storage/ && cat storage/* && md5sum storage/convertedFiles/*
+      run: ls -R storage/ && ls -lha storage/ && cat storage/convertedFiles/* && md5sum storage/convertedFiles/*
     - name: Building the project
       run: ./gradlew build
     - uses: actions/upload-artifact@master
