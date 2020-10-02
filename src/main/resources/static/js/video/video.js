@@ -28,6 +28,19 @@ $(document).ready(function() {
         }
         return valid;
     }
+    $.validator.addMethod(
+       "regex",
+       function(value, element, regexp)
+       {
+        if (regexp.constructor != RegExp)
+         regexp = new RegExp(regexp);
+        else if (regexp.global)
+         regexp.lastIndex = 0;
+        return this.optional(element) || regexp.test(value);
+       },
+       "Please check your input."
+     );
+
     $("#form-video").validate({
         rules: {
             file: 'required',
@@ -72,8 +85,8 @@ $(document).ready(function() {
                         return false;
                     },
                 },
-                number: true,
                 min: '00:00:00',
+                regex: /^([0-1]?[0-9]|[2][0-3]):([0-5][0-9])(:[0-5][0-9])$/,
             },
             secondsToOutput: {
                 required: {
@@ -102,7 +115,7 @@ $(document).ready(function() {
             start: {
                 required: 'Please insert the start time',
                 min: 'Min value required 00:00:00',
-                //max: 'Max value required must not exceed the duration of video. Please insert a valid value',
+                regex: 'Format valid is hh:mm:ss'
             },
             timeToSkip: {
                 required: 'Please insert the audio codec',
