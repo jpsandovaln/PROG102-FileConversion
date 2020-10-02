@@ -1,4 +1,4 @@
-package org.fundacionjala.converter;
+package org.fundacionjala.converter.model.command.multimedia;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
@@ -15,7 +15,7 @@ import org.junit.Test;
 
 public class VideoModelTest {
 
-    /*private static final String duration = "0:04:00";
+    private static final String duration = "0:04:00";
     private static final String timeToSkip = "0:00:15";
     private static final String secondsToOutput = "5";
     private static final String controlLoop = "0";
@@ -38,7 +38,7 @@ public class VideoModelTest {
         vParameter.setOutputFile("storage/convertedFiles/");
         vParameter.setName("inputFile");
         vParameter.setFormat(".mov");
-        vParameter.setAudioCodec(audioCodec);
+        vParameter.setCodec(audioCodec);
         vParameter.setVideoCodec(videoCodec);
         List<String> actual = vModel.convert(vParameter);
         assertEquals(expected, actual.toString());
@@ -53,7 +53,7 @@ public class VideoModelTest {
         vParameter.setOutputFile("storage/convertedFiles/");
         vParameter.setName("inputFile");
         vParameter.setFormat(".mp4");
-        vParameter.setAudioCodec(audioCodec);
+        vParameter.setCodec(audioCodec);
         vParameter.setVideoCodec(videoCodec);
         List<String> actual = vModel.convert(vParameter);
         assertEquals(expected, actual.toString());
@@ -67,10 +67,10 @@ public class VideoModelTest {
         vParameter.setOutputFile("storage/convertedFiles/");
         vParameter.setName("inputFile");
         vParameter.setFormat(".gif");
-        vParameter.setAudioCodec(audioCodec);
+        vParameter.setCodec(audioCodec);
         vParameter.setVideoCodec(videoCodec);
         vParameter.setDuration(duration);
-        vParameter.setTimeToSkip(timeToSkip);
+        vParameter.setStart(timeToSkip);
         vParameter.setSecondsToOutput(secondsToOutput);
         vParameter.setFrames(frames);
         vParameter.setControlLoop(controlLoop);
@@ -87,11 +87,11 @@ public class VideoModelTest {
         vParameter.setOutputFile("storage/convertedFiles/");
         vParameter.setName("inputFile");
         vParameter.setFormat(".mp4");
-        vParameter.setAudioCodec(audioCodec);
+        vParameter.setCodec(audioCodec);
         vParameter.setVideoCodec(videoCodec);
         vParameter.setExtractThumbnail(extractThumbnail);
         list = vModel.createCommand(vParameter);
         List<String> actual = list.get(1);
         assertEquals(expected, actual.toString());
-    }*/
+    }
 }

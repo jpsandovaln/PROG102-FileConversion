@@ -46,6 +46,20 @@ $(document).ready(function() {
         }
         return valid;
     }
+
+     $.validator.addMethod(
+       "regex",
+       function(value, element, regexp)
+       {
+        if (regexp.constructor != RegExp)
+         regexp = new RegExp(regexp);
+        else if (regexp.global)
+         regexp.lastIndex = 0;
+        return this.optional(element) || regexp.test(value);
+       },
+       "Please check your input."
+     );
+
     $("#form-audio").validate({
         rules: {
             file: 'required',
@@ -64,6 +78,7 @@ $(document).ready(function() {
                     },
                 },
                min: '0',
+               regex: /^([0-1]?[0-9]|[2][0-3]):([0-5][0-9])(:[0-5][0-9])$/,
             },
             duration: {
                 required: {
@@ -75,6 +90,7 @@ $(document).ready(function() {
                     }
                 },
                 min: '1',
+                regex: /^([0-1]?[0-9]|[2][0-3]):([0-5][0-9])(:[0-5][0-9])$/,
             },
             sampleRate: 'required'
         },
@@ -89,10 +105,12 @@ $(document).ready(function() {
             start: {
                 required: 'Please insert the start time',
                 min: 'Min value required 00:00:00',
+                regex: 'Format valid is hh:mm:ss'
             },
             duration:{
                 required: 'Please, insert the duration time',
                 min: 'Min value required 00:00:01',
+                regex: 'Format valid is hh:mm:ss'
             },
             sampleRate: 'Please, insert the sample rate'
         },

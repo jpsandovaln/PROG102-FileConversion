@@ -1,4 +1,4 @@
-package org.fundacionjala.converter;
+package org.fundacionjala.converter.model.commons.validation;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
