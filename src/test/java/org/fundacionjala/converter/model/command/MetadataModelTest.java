@@ -22,7 +22,7 @@ public class MetadataModelTest {
         String detail = "common";
         String md5OriginalFile = "e1b3fab24c8af81c1aa13dbbb4e44ff0";
         String nameFileOutPut = outputFile + md5OriginalFile + exportFormat;
-        String expectedMd5 = "3ce789adf27eaed9a056097de44a5303";
+        String expectedMd5 = "d1d504648ea46197754919795c8702bc";
 
         MetadataParameter metaDataParameter = new MetadataParameter(inputFile, exportFormat, detail, outputFile, md5OriginalFile);
         metaDataParameter.setOutputFile(nameFileOutPut);
