@@ -82,7 +82,7 @@ public class MetadataController {
 
     /**
      *
-     * @param audioParameter
+     * @param parameter
      * @throws InterruptedException
      * @throws ExecutionException
      * @throws IOException
