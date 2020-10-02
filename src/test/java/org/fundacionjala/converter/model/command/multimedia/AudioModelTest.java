@@ -82,7 +82,7 @@ public class AudioModelTest {
         audioParameter.setBitRate("32k");
         audioParameter.setFormat(".wav");
         audioParameter.setSampleRate("22050");
-        audioParameter.setMetadata(true);
+        audioParameter.setExtractMetadata(true);
         List<List<String>> list = audioModel.createCommand(audioParameter);
         System.out.println(list.get(1));
         assertEquals(6, list.get(1).size());

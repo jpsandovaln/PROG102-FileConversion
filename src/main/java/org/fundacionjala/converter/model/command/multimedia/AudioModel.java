@@ -45,7 +45,7 @@ public class AudioModel implements ICommand<AudioParameter> {
             cut = cut(cut, audioParameter);
             listCommands.add(cut);
         }
-        if (audioParameter.getIsMetadata()) {
+        if (audioParameter.isExtractMetadata()) {
             listCommands.add(extractMetadata(audioParameter, VOID));
             if (audioParameter.getIsCut()) {
                 listCommands.add(extractMetadata(audioParameter, CUT_SUFFIX));
