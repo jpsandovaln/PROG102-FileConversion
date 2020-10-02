@@ -1,5 +1,6 @@
 package org.fundacionjala.converter.controller.service;
 
+import org.fundacionjala.converter.controller.exceptions.NonExistentException;
 import org.fundacionjala.converter.database.entity.User;
 import org.fundacionjala.converter.database.exception.NullAttributeException;
 import org.fundacionjala.converter.database.repository.UserRepository;
@@ -72,33 +73,39 @@ public class UserService implements UserDetailsService {
     /**
      * Updates a user in the table "users"
      * @param user - the reference to the User to update
+     * @throws NonExistentException
      */
-    public void updateUser(final User user, final Long id) {
-        try {
-            User userTemp = userRepository.getUserById(id);
-            userTemp.setName(user.getName());
-            userTemp.setLastName(user.getLastName());
-            userTemp.setUsername(user.getUsername());
-            userTemp.setRol(user.getRol());
-            userRepository.save(userTemp);
-            System.out.println("user updated");
-        } catch (Exception e) {
-            e.printStackTrace();
-            System.out.println(e.getMessage());
+    public void updateUser(final User user, final Long id) throws NonExistentException {
+        User userTemp = userRepository.getUserById(id);
+        if (userTemp != null) {
+            try {
+                userTemp.setName(user.getName());
+                userTemp.setLastName(user.getLastName());
+                userTemp.setUsername(user.getUsername());
+                userTemp.setRol(user.getRol());
+                userRepository.save(userTemp);
+                System.out.println("User updated");
+            } catch (NullAttributeException e) {
+                e.printStackTrace();
+                System.out.println(e.getMessage());
+            }
+        } else {
+            throw new NonExistentException("update");
         }
     }
 
     /**
      * Deletes the reference to a user in the table "users"
      * @param id - the reference to the user to delete
+     * @throws NonExistentException
      */
-    public void deleteUser(final long id) {
-        try {
+    public void deleteUser(final long id) throws NonExistentException {
+        User userTemp = userRepository.getUserById(id);
+        if(userTemp != null) {
             userRepository.deleteById(id);
             System.out.println("user deleted");
-        } catch (Exception e) {
-            e.printStackTrace();
-            System.out.println(e.getMessage());
+        } else {
+            throw new NonExistentException("delete");
         }
     }
 
@@ -116,7 +123,7 @@ public class UserService implements UserDetailsService {
                     buildGranted(user.getRol()));
 
         } catch (UsernameNotFoundException | NullAttributeException e) {
-            System.out.println("Error: Does not existe users." + e.getMessage());
+            System.out.println("Error: Does not exist users." + e.getMessage());
         }
 
         return userDetails;
