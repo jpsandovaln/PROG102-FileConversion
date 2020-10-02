@@ -47,12 +47,8 @@ public class User {
     /**
      * @return the id
      */
-    public Long getId() throws NullAttributeException {
-        if (id != null) {
-            return id;
-        } else {
-            throw new NullAttributeException("id");
-        }
+    public Long getId() {
+        return id;
     }
     /**
      * @return the name

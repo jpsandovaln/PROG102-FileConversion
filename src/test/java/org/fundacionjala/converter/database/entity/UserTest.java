@@ -38,13 +38,7 @@ public class UserTest {
     @Test
     public void getNullIdTest() {
         User user = new User();
-        try{
-           user.getId();
-        } catch (NullAttributeException e) {
-            String actual = e.getMessage();
-            String expected = "The attribute: \"id\" is null";
-            Assert.assertEquals(expected, actual);
-        }
+        Assert.assertNull(user.getId());
     }
 
     @Test
