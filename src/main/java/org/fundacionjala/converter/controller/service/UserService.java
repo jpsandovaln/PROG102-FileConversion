@@ -1,6 +1,7 @@
 package org.fundacionjala.converter.controller.service;
 
 import org.fundacionjala.converter.database.entity.User;
+import org.fundacionjala.converter.database.exception.NullAttributeException;
 import org.fundacionjala.converter.database.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
@@ -114,7 +115,7 @@ public class UserService implements UserDetailsService {
                     user.getPassword(),
                     buildGranted(user.getRol()));
 
-        } catch (UsernameNotFoundException e) {
+        } catch (UsernameNotFoundException | NullAttributeException e) {
             System.out.println("Error: Does not existe users." + e.getMessage());
         }
 

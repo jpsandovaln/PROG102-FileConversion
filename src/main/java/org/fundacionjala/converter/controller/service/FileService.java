@@ -15,6 +15,7 @@ import java.util.Optional;
 import javax.persistence.NonUniqueResultException;
 
 import org.fundacionjala.converter.database.entity.File;
+import org.fundacionjala.converter.database.exception.NullAttributeException;
 import org.fundacionjala.converter.database.repository.FileRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.IncorrectResultSizeDataAccessException;
@@ -78,7 +79,7 @@ public class FileService {
             fileTemp.setUser(file.getUser());
             fileRepository.save(fileTemp);
         }
-    } catch (NullPointerException e) {
+    } catch (NullPointerException | NullAttributeException e) {
         e.printStackTrace();
         System.out.println("NullPointerException ocurred");
     }
@@ -96,7 +97,7 @@ public class FileService {
             fileTemp.setMd5(file.getMd5());
             fileRepository.save(fileTemp);
         }
-    } catch (NullPointerException | NonUniqueResultException | IncorrectResultSizeDataAccessException e) {
+    } catch (NullPointerException | NonUniqueResultException | IncorrectResultSizeDataAccessException | NullAttributeException e) {
         e.printStackTrace();
         System.out.println("Error ocurred");
     }
@@ -106,7 +107,7 @@ public class FileService {
      * Deletes the reference to a file in the table "files"
      * @param file - the reference to the object File to delete
      */
-    public void deleteFile(final File file) {
+    public void deleteFile(final File file) throws NullAttributeException {
         File fileToDelete = fileRepository.findByMd5(file.getMd5());
         fileRepository.delete(fileToDelete);
     }

@@ -8,6 +8,7 @@
  */
 package org.fundacionjala.converter.controller;
 
+import org.fundacionjala.converter.database.exception.NullAttributeException;
 import org.fundacionjala.converter.model.ChecksumMD5;
 import org.fundacionjala.converter.database.entity.File;
 import org.fundacionjala.converter.controller.service.FileService;
@@ -102,7 +103,7 @@ public class UploadFileController {
      * @param file to delete
      */
     @DeleteMapping("/delete")
-    public ResponseEntity<?>  deleteFile(@RequestBody final File file) {
+    public ResponseEntity<?>  deleteFile(@RequestBody final File file) throws NullAttributeException {
         if (fileService.getFileByMd5(file.getMd5()) != null) {
             fileService.deleteFile(file);
             return new ResponseEntity<Object>("file deleted", HttpStatus.OK);
@@ -116,7 +117,7 @@ public class UploadFileController {
      * @param md5's file to delete
      */
     @DeleteMapping("/delete-md5{md5}")
-    public ResponseEntity<?>  deleteByMD5(@RequestParam("md5")  final String md5) {
+    public ResponseEntity<?>  deleteByMD5(@RequestParam("md5")  final String md5) throws NullAttributeException {
         File file = fileService.getFileByMd5(md5);
         String filename = file.toString();
         if (file != null) {

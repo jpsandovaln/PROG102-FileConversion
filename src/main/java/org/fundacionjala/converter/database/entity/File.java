@@ -8,6 +8,8 @@
  */
 package org.fundacionjala.converter.database.entity;
 
+import org.fundacionjala.converter.database.exception.NullAttributeException;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
@@ -51,28 +53,52 @@ public class File {
     }
 
     /**
-     * @return the id
+     * @return the id of the File
      */
-    public Long getId() {
-        return id;
+    public Long getId() throws NullAttributeException {
+        if (id != null) {
+            return id;
+        } else {
+            throw new NullAttributeException("id");
+        }
     }
     /**
-     * @return the path
+     * @return the path of the File
      */
-    public String getPath() {
-        return path;
+    public String getPath() throws NullAttributeException {
+        if (path != null) {
+            return path;
+        } else {
+            throw new NullAttributeException("path");
+        }
     }
     /**
-     * @return the md5
+     * @return the md5 of the File
      */
-    public String getMd5() {
-        return md5;
+    public String getMd5() throws NullAttributeException {
+        if (md5 != null) {
+            return md5;
+        } else {
+            throw new NullAttributeException("md5");
+        }
     }
     /**
-     * @return the user
+     * @return the user of the File
      */
-    public User getUser() {
-        return user;
+    public User getUser() throws NullAttributeException {
+        if (user != null) {
+            return user;
+        } else {
+            throw new NullAttributeException("user");
+        }
+    }
+
+    /**
+     *
+     * @param id
+     */
+    public void setId(final long id) {
+        this.id = id;
     }
     /**
      * @param path the path to set
@@ -99,5 +125,13 @@ public class File {
     @Override
     public String toString() {
         return "File [id=" + id + ", md5=" + md5 + ", path=" + path + "]";
+    }
+
+    /**
+     * method toStringWithUser()
+     * @return java.lang.Object#toString() and user information
+     */
+    public String toStringWithUser() throws NullAttributeException {
+        return toString().substring(0, toString().length() - 1) + ", user=" + user.getUsername() + "]";
     }
 }
