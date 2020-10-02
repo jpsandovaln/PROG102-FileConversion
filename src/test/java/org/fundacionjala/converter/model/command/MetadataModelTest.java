@@ -19,10 +19,10 @@ public class MetadataModelTest {
         String inputFile = "storage/inputFiles/test.mp3";
         String outputFile = "storage/convertedFiles/";
         String exportFormat = "j";
-        String detail = "d";
+        String detail = "common";
         String md5OriginalFile = "e1b3fab24c8af81c1aa13dbbb4e44ff0";
         String nameFileOutPut = outputFile + md5OriginalFile + exportFormat;
-        String expectedMd5 = "33c966b510c6c117b317b1e91e2b6267";
+        String expectedMd5 = "3ce789adf27eaed9a056097de44a5303";
 
         MetadataParameter metaDataParameter = new MetadataParameter(inputFile, exportFormat, detail, outputFile, md5OriginalFile);
         metaDataParameter.setOutputFile(nameFileOutPut);
