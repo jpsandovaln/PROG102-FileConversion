@@ -1,5 +1,6 @@
 package org.fundacionjala.converter.model.parameter.extractText;
 
+import org.fundacionjala.converter.model.commons.exception.InvalidDataException;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.Assertions;
 
@@ -60,5 +61,68 @@ public class ExtractTextParameterTest {
         String expected = "ExtractTextParameter [language=spa, format=.docx]";
         String result = parameter.toString();
         Assertions.assertEquals(expected, result);
+    }
+    @Test
+    public void nullFormat() {
+        Throwable exception = Assertions.assertThrows(
+                InvalidDataException.class,
+                () -> {
+                    parameter.setLanguage("spa");
+                    parameter.setFormat(null);
+                    parameter.validate();
+                }
+        );
+    }
+    @Test
+    public void emptyFormat() {
+        Throwable exception = Assertions.assertThrows(
+                InvalidDataException.class,
+                () -> {
+                    parameter.setLanguage("spa");
+                    parameter.setFormat(" ");
+                    parameter.validate();
+                }
+        );
+    }
+    @Test
+    public void emptyLanguage() {
+        Throwable exception = Assertions.assertThrows(
+                InvalidDataException.class,
+                () -> {
+                    parameter.setLanguage(" ");
+                    parameter.validate();
+                }
+        );
+    }
+    @Test
+    public void nullLanguage() {
+        Throwable exception = Assertions.assertThrows(
+                InvalidDataException.class,
+                () -> {
+                    parameter.setLanguage(null);
+                    parameter.validate();
+                }
+        );
+    }
+    @Test
+    public void invalidFormat() {
+        Throwable exception = Assertions.assertThrows(
+                InvalidDataException.class,
+                () -> {
+                    parameter.setLanguage("spa");
+                    parameter.setFormat("pptx");
+                    parameter.validate();
+                }
+        );
+    }
+    @Test
+    public void invalidLanguage() {
+        Throwable exception = Assertions.assertThrows(
+                InvalidDataException.class,
+                () -> {
+                    parameter.setLanguage("spaniol");
+                    parameter.validate();
+                }
+        );
     }
 }

@@ -16,52 +16,9 @@ import java.nio.file.Files;
 
 public class ExtractTextFacadeTest {
 
-    ExtractTextModel extractTextModel = new ExtractTextModel();
     ExtractTextFacade extractTextFacade = new ExtractTextFacade();
     ExtractTextParameter parameter = new ExtractTextParameter();
-    @Test
-    public void extractTextWithNullFormat() {
-        Throwable exception = Assertions.assertThrows(
-                InvalidDataException.class,
-                () -> {
-                    parameter.setLanguage("spa");
-                    parameter.setFormat(null);
-                    extractTextFacade.extractText(parameter);
-                }
-        );
-    }
-    @Test
-    public void extractTextWithEmptyFormat() {
-        Throwable exception = Assertions.assertThrows(
-                InvalidDataException.class,
-                () -> {
-                    parameter.setLanguage("spa");
-                    parameter.setFormat(" ");
-                    extractTextFacade.extractText(parameter);
-                }
-        );
-    }
-    @Test
-    public void extractTextWithNullLanguage() {
-        Throwable exception = Assertions.assertThrows(
-                InvalidDataException.class,
-                () -> {
-                    parameter.setLanguage(null);
-                    extractTextFacade.extractText(parameter);
-                }
-        );
-    }
-    @Test
-    public void extractTextWithInvalidFormat() {
-        Throwable exception = Assertions.assertThrows(
-                InvalidDataException.class,
-                () -> {
-                    parameter.setLanguage("spa");
-                    parameter.setFormat("pptx");
-                    extractTextFacade.extractText(parameter);
-                }
-        );
-    }
+
     @Test
     public void extractTextWithFormatTxt() throws IOException, InterruptedException, ExecutionException, NoSuchAlgorithmException, InvalidDataException, ReadFileException, ConvertDocException {
         parameter.setFormat(".txt");
@@ -70,7 +27,7 @@ public class ExtractTextFacadeTest {
         parameter.setInputFile("storage/inputFiles/imagen7.jpg");
         List<String> expected = new ArrayList<>();
         expected.add("storage/convertedFiles/ffa5f5433efe74bc99530e84798b2ffd.txt");
-        List<String> result = new ArrayList<>();
+        List<String> result;
         result = extractTextFacade.extractText(parameter);
         Assertions.assertEquals(expected, result);
         Files.deleteIfExists(Path.of("storage/convertedFiles/ffa5f5433efe74bc99530e84798b2ffd.txt"));
@@ -83,7 +40,7 @@ public class ExtractTextFacadeTest {
         parameter.setInputFile("storage/inputFiles/imagen7.jpg");
         List<String> expected = new ArrayList<>();
         expected.add("storage/convertedFiles/ffa5f5433efe74bc99530e84798b2ffd.docx");
-        List<String> result = new ArrayList<>();
+        List<String> result;
         result = extractTextFacade.extractText(parameter);
         Assertions.assertEquals(expected, result);
         Files.deleteIfExists(Path.of("storage/convertedFiles/ffa5f5433efe74bc99530e84798b2ffd.docx"));
@@ -96,7 +53,7 @@ public class ExtractTextFacadeTest {
         parameter.setInputFile("storage/inputFiles/imagen7.jpg");
         List<String> expected = new ArrayList<>();
         expected.add("storage/convertedFiles/ffa5f5433efe74bc99530e84798b2ffd.pdf");
-        List<String> result = new ArrayList<>();
+        List<String> result;
         result = extractTextFacade.extractText(parameter);
         Assertions.assertEquals(expected, result);
         Files.deleteIfExists(Path.of("storage/convertedFiles/ffa5f5433efe74bc99530e84798b2ffd.pdf"));
@@ -109,29 +66,9 @@ public class ExtractTextFacadeTest {
         parameter.setInputFile("storage/inputFiles/imagen7.jpg");
         List<String> expected = new ArrayList<>();
         expected.add("storage/convertedFiles/ffa5f5433efe74bc99530e84798b2ffd.pdf");
-        List<String> result = new ArrayList<>();
+        List<String> result;
         result = extractTextFacade.extractText(parameter);
         Assertions.assertEquals(expected, result);
         Files.deleteIfExists(Path.of("storage/convertedFiles/ffa5f5433efe74bc99530e84798b2ffd.pdf"));
-    }
-    @Test
-    public void extractTextWithInvalidLanguage() {
-        Throwable exception = Assertions.assertThrows(
-                InvalidDataException.class,
-                () -> {
-                    parameter.setLanguage("spañol");
-                    extractTextFacade.extractText(parameter);
-                }
-        );
-    }
-    @Test
-    public void extractTextWithEmptyLanguage() {
-        Throwable exception = Assertions.assertThrows(
-                InvalidDataException.class,
-                () -> {
-                    parameter.setFormat(" ");
-                    extractTextFacade.extractText(parameter);
-                }
-        );
     }
 }
