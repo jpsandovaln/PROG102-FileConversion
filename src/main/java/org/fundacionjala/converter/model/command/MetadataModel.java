@@ -39,7 +39,6 @@ public class MetadataModel implements ICommand {
         //metadataParameter.validate();
         List<String> parameterList = new ArrayList<>();
         List<List<String>> finalList = new ArrayList<>();
-        System.out.println(ConfigPath.getMetaDataExtractorTool());
         parameterList.add(DATA);
         parameterList.add(ConfigPath.getMetaDataExtractorTool());
         parameterList.add(MINUS + metadataParameter.getFormat());
@@ -47,7 +46,6 @@ public class MetadataModel implements ICommand {
             parameterList.add(MINUS + metadataParameter.getDetail());
         }
         parameterList.add(metadataParameter.getInputFile());
-        System.out.println(metadataParameter.getOutputFile());
         parameterList.add(metadataParameter.getOutputFile()+ LOW_BAR + DATA + map.get(metadataParameter.getFormat()));
         finalList.add(parameterList);
         return finalList;
