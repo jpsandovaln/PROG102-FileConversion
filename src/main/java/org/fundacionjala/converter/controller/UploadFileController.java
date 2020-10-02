@@ -8,6 +8,8 @@
  */
 package org.fundacionjala.converter.controller;
 
+import org.fundacionjala.converter.controller.exceptions.NonExistentException;
+import org.fundacionjala.converter.database.exception.NullAttributeException;
 import org.fundacionjala.converter.model.ChecksumMD5;
 import org.fundacionjala.converter.database.entity.File;
 import org.fundacionjala.converter.controller.service.FileService;
@@ -23,6 +25,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
+import java.security.NoSuchAlgorithmException;
 import java.util.List;
 
 /**
@@ -38,17 +42,8 @@ public class UploadFileController {
     private FileService fileService;
 
     /**
-     * Displays upload file
-     * @return upload file -  - the reference String to upload file
-     */
-    @GetMapping("/modifying")
-    public String index() {
-        return "upload file";
-    }
-
-    /**
      * Displays file upload successfully with md5
-     * @param path - the reference String with path of the file
+     * @param file - the reference file
      * @return ResponseEntity - the reference to Ok if file is uploaded successfully
      */
     @PostMapping("/upload")
@@ -77,7 +72,7 @@ public class UploadFileController {
      */
     @PostMapping("/upload-md5")
     public ResponseEntity<?> uploadFile(@RequestParam("file") final MultipartFile file,
-            @RequestParam final String md5) throws Exception {
+            @RequestParam final String md5) throws IOException, NoSuchAlgorithmException, NullAttributeException {
         if (file == null || file.isEmpty()) {
             return new ResponseEntity<Object>("Select a file", HttpStatus.OK);
         }
@@ -105,11 +100,13 @@ public class UploadFileController {
      */
     @DeleteMapping("/delete")
     public ResponseEntity<?>  deleteFile(@RequestBody final File file) {
-        if (fileService.getFileByMd5(file.getMd5()) != null) {
+        try {
             fileService.deleteFile(file);
-            return new ResponseEntity<Object>("file deleted", HttpStatus.OK);
-        } else {
-            return new ResponseEntity<Object>("file doesn't exist", HttpStatus.OK);
+            return new ResponseEntity<Object>("File deleted", HttpStatus.OK);
+        } catch (NonExistentException e) {
+            return new ResponseEntity<Object>("File doesn't exist", HttpStatus.OK);
+        } catch (NullAttributeException e) {
+            return new ResponseEntity<Object>("File error: " + e.getMessage(), HttpStatus.OK);
         }
     }
 
@@ -119,14 +116,14 @@ public class UploadFileController {
      * @return ResponseEntity - the reference to OkResponse if file is converted successfully
      */
     @DeleteMapping("/delete-md5{md5}")
-    public ResponseEntity<?>  deleteByMD5(@RequestParam("md5")  final String md5) {
+    public ResponseEntity<?> deleteByMD5(@RequestParam("md5")  final String md5) {
         File file = fileService.getFileByMd5(md5);
-        String filename = file.toString();
-        if (file != null) {
-            fileService.deleteFile(file);
-            return new ResponseEntity<Object>("file deleted" + filename, HttpStatus.OK);
-        } else {
-            return new ResponseEntity<Object>("file doesn't exist" + filename, HttpStatus.OK);
+        try {
+            String filename = file.toString();
+            fileService.deleteFileByMd5(md5);
+            return new ResponseEntity<Object>("File " + filename + "deleted", HttpStatus.OK);
+        } catch (NonExistentException e) {
+            return new ResponseEntity<Object>("File doesn't exist", HttpStatus.OK);
         }
     }
 
@@ -165,7 +162,14 @@ public class UploadFileController {
      * @param file the File to update
      */
     @PostMapping("/update-file")
-    public void updateFile(@RequestParam final File file) {
-        fileService.updateFile(file);
+    public ResponseEntity<?> updateFile(@RequestParam final File file) {
+        try {
+            fileService.updateFile(file);
+            return new ResponseEntity<Object>("File updated", HttpStatus.OK);
+        } catch (NonExistentException e) {
+            return new ResponseEntity<Object>("File doesn't exist", HttpStatus.BAD_REQUEST);
+        } catch (NullAttributeException e) {
+            return new ResponseEntity<Object>("File error: " + e.getMessage(), HttpStatus.BAD_REQUEST);
+        }
     }
 }

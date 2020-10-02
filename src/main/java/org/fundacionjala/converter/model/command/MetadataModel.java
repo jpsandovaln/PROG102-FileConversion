@@ -4,11 +4,30 @@ import org.fundacionjala.converter.model.configPath.ConfigPath;
 import org.fundacionjala.converter.model.parameter.ModelParameter;
 import org.fundacionjala.converter.model.parameter.metadata.MetadataParameter;
 
-import java.util.ArrayList;
-import java.util.Date;
+import java.util.Map;
+import java.util.HashMap;
 import java.util.List;
+import java.util.ArrayList;
 
 public class MetadataModel implements ICommand {
+    private static final String DATA = "Metadata";
+    private static final String DEFAULT_VAL = "d";
+    private static final String MINUS = "-";
+    private static final String LOW_BAR = "_";
+    private static final String JSON = ".json";
+    private static final String HTML = ".html";
+    private static final String TXT = ".txt";
+    private static final String CSV = ".csv";
+    private static final String XMP = ".XMP";
+    private Map<String, String> map = new HashMap<String, String>();
+
+    public MetadataModel() {
+        map.put("j", JSON);
+        map.put("h", HTML);
+        map.put("t", TXT);
+        map.put("T", CSV);
+        map.put("xmp", XMP);
+    }
 
     /**
      *
@@ -18,33 +37,18 @@ public class MetadataModel implements ICommand {
     @Override
     public List<List<String>> createCommand(final ModelParameter modelParameter) {
         MetadataParameter metadataParameter = (MetadataParameter) modelParameter;
+        //metadataParameter.validate();
         List<String> parameterList = new ArrayList<>();
         List<List<String>> finalList = new ArrayList<>();
-        System.out.println(ConfigPath.getMetaDataExtractorTool());
-        parameterList.add("Metadata");
+        parameterList.add(DATA);
         parameterList.add(ConfigPath.getMetaDataExtractorTool());
-        parameterList.add("-" + metadataParameter.getFormat());
-        if (!metadataParameter.getDetail().equals(" ") && !metadataParameter.getDetail().equals("d")) {
-            parameterList.add("-" + metadataParameter.getDetail());
+        parameterList.add(MINUS + metadataParameter.getFormat());
+        if (!metadataParameter.getDetail().equals(DEFAULT_VAL)) {
+            parameterList.add(MINUS + metadataParameter.getDetail());
         }
         parameterList.add(metadataParameter.getInputFile());
-        parameterList.add(metadataParameter.getOutputFile() + "_" + new Date().getTime() + formatSuffix(metadataParameter.getFormat()));
+        parameterList.add(metadataParameter.getOutputFile() + LOW_BAR + DATA + map.get(metadataParameter.getFormat()));
         finalList.add(parameterList);
         return finalList;
-    }
-
-    private String formatSuffix(final String format) {
-        switch (format) {
-            case "j":
-                return ".json";
-            case "h":
-                return ".html";
-            case "t":
-                return ".txt";
-            case "T":
-                return ".csv";
-            default:
-                return ".XMP";
-        }
     }
 }

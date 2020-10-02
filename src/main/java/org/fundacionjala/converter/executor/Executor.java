@@ -72,7 +72,6 @@ public class Executor {
     for (int i = 1; i < command.size() - 1; i++) {
       commandMetadata.add(command.get(i));
     }
-    System.out.println(commandMetadata);
     Process processDuration = new ProcessBuilder(commandMetadata)
             .redirectErrorStream(true)
             .redirectOutput(new File(command.get(command.size() - 1))).start();
