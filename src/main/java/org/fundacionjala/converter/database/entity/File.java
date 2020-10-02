@@ -101,18 +101,21 @@ public class File {
         this.id = id;
     }
     /**
+     * Sets path value
      * @param path the path to set
      */
     public void setPath(final String path) {
         this.path = path;
     }
     /**
+     * Sets md5 value
      * @param md5 the md5 to set
      */
     public void setMd5(final String md5) {
         this.md5 = md5;
     }
     /**
+     * Sets user value
      * @param user to relate the file
      */
     public void setUser(final User user) {

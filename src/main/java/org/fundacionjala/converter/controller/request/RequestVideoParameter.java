@@ -11,24 +11,14 @@ package org.fundacionjala.converter.controller.request;
 public class RequestVideoParameter extends RequestMultimediaParameter {
 
     private static final String VIDEO_CODEC_SUPPORTED = "h264";
-    private static final String FRAME_21 = "21";
-    private static final String FRAME_24 = "24";
-    private static final String FRAME_27 = "27";
-    private static final String FRAME_30 = "30";
-    private static final String ZERO = "0";
-    private static final String ONE_MINUS = "-1";
     private String videoCodec;
     private String frames;
-    private boolean extractThumbnail;
-    private boolean extractMetadata;
-    private String name;
-    private String timeToSkip;
     private String secondsToOutput;
     private String controlLoop;
-    private String duration = "40";
+    private boolean extractThumbnail;
 
     /**
-     *
+     * Sets video codec
      * @param videoCodec
      */
     public void setVideoCodec(final String videoCodec) {
@@ -36,95 +26,51 @@ public class RequestVideoParameter extends RequestMultimediaParameter {
     }
 
     /**
-     *
-     * @return
-     */
-    public String getFrames() {
-        return frames;
-    }
-
-    /**
-     *
-     * @param frames
-     */
-    public void setFrames(final String frames) {
-        this.frames = frames;
-    }
-
-    /**
-     *
-     * @return
-     */
-    public boolean getExtractThumbnail() {
-        return extractThumbnail;
-    }
-
-    /**
-     *
-     * @param extractThumbnail
-     */
-    public void setExtractThumbnail(final boolean extractThumbnail) {
-        this.extractThumbnail = extractThumbnail;
-    }
-
-    /**
-     *
-     * @return
+     * @return videoCodec
      */
     public String getVideoCodec() {
         return videoCodec;
     }
 
     /**
-     * @return the extractMetadata
+     * @return frames
      */
-    public boolean isExtractMetadata() {
-        return extractMetadata;
+    public String getFrames() {
+        return frames;
     }
 
     /**
-     * @param extractMetadata the extractMetadata to set
+     * Sets the frames per second
+     * @param frames the frames to set
      */
-    public void setExtractMetadata(final boolean extractMetadata) {
-        this.extractMetadata = extractMetadata;
+    public void setFrames(final String frames) {
+        this.frames = frames;
     }
 
     /**
-     * @return the name
+     * @return extractThumbnail
      */
-    public String getName() {
-        return name;
+    public boolean isExtractThumbnail() {
+        return extractThumbnail;
     }
 
     /**
-     * @param name the name to set
+     * Sets extractThumbnail value
+     * @param extractThumbnail the extractThumbnail to set
      */
-    public void setName(final String name) {
-        this.name = name;
+    public void setExtractThumbnail(final boolean extractThumbnail) {
+        this.extractThumbnail = extractThumbnail;
     }
 
     /**
-     * @return the timeToSkip
-     */
-    public String getTimeToSkip() {
-        return timeToSkip;
-    }
-
-    /**
-     * @param timeToSkip the timeToSkip to set
-     */
-    public void setTimeToSkip(final String timeToSkip) {
-        this.timeToSkip = timeToSkip;
-    }
-
-    /**
-     * @return the secondsToOutput
+     * @return secondsToOutput
      */
     public String getSecondsToOutput() {
         return secondsToOutput;
     }
 
     /**
+     * Sets secondsToOutput value
      * @param secondsToOutput the secondsToOutput to set
      */
     public void setSecondsToOutput(final String secondsToOutput) {
@@ -132,13 +78,14 @@ public class RequestVideoParameter extends RequestMultimediaParameter {
     }
 
     /**
-     * @return the controlLoop
+     * @return controlLoop
      */
     public String getControlLoop() {
         return controlLoop;
     }
 
     /**
+     * Sets controlLoop value
      * @param controlLoop the controlLoop to set
      */
     public void setControlLoop(final String controlLoop) {
@@ -146,21 +93,7 @@ public class RequestVideoParameter extends RequestMultimediaParameter {
     }
 
     /**
-     * @return the duration
-     */
-    public String getDuration() {
-        return duration;
-    }
-
-    /**
-     * @param duration the duration to set
-     */
-    public void setDuration(final String duration) {
-        this.duration = duration;
-    }
-
-    /**
-     *
+     * Validates video parameters
      * @throws Exception
      */
     @Override
@@ -169,20 +102,8 @@ public class RequestVideoParameter extends RequestMultimediaParameter {
         if (this.videoCodec == null || "".equals(this.videoCodec)) {
             throw new Exception("failed video Codec empty");
         }
-        if (this.frames == null || "".equals(this.frames)) {
-            throw new Exception("failed frames empty");
-        }
-        if (this.controlLoop == null || "".equals(this.controlLoop)) {
-            throw new Exception("failed loop empty");
-        }
         if (!this.videoCodec.equals(VIDEO_CODEC_SUPPORTED)) {
             throw new Exception("Invalid value of video Codec");
-        }
-        if ((!this.frames.equals(FRAME_21)) && (!this.frames.equals(FRAME_24)) && (!this.frames.equals(FRAME_27)) && (!this.frames.equals(FRAME_30))) {
-            throw new Exception("Invalid value of frame rate");
-        }
-        if ((!this.controlLoop.equals(ZERO)) && (!this.controlLoop.equals(ONE_MINUS))) {
-            throw new Exception("Invalid value of loop");
         }
     }
 }

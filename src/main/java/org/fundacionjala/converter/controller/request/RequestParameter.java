@@ -22,8 +22,9 @@ public abstract class RequestParameter {
     private MultipartFile file;
     private String exportFormat;
     private String md5;
+
     /**
-     *
+     * Sets file value
      * @param file
      */
     public void setFile(final MultipartFile file) {
@@ -31,7 +32,7 @@ public abstract class RequestParameter {
     }
 
     /**
-     *
+     * Sets exportFormat value
      * @param exportFormat
      */
     public void setExportFormat(final String exportFormat) {
@@ -39,39 +40,40 @@ public abstract class RequestParameter {
     }
 
     /**
-     * @return
+     * @return exportFormat
      */
-
     public String getExportFormat() {
         return exportFormat;
     }
 
     /**
-     * @return
+     * @return file
      */
     public MultipartFile getFile() {
         return file;
     }
 
     /**
-     *
-     * @param exportFormat
+     * Sets md5 value
+     * @param md5
      */
     public void setMd5(final String md5) {
         this.md5 = md5;
     }
 
     /**
-     * @return
+     * @return md5
      */
-
     public String getMd5() {
         return md5;
     }
 
     /**
-     * @param filePath
-     * @return
+     * Generates md5 of a given file
+     * @param filePath - the reference to String that contains the path of the file
+     * @return String - checksum of the file
+     * @throws NoSuchAlgorithmException
+     * @throws IOException
      */
     public String generateMD5(final String filePath) {
         try {
@@ -85,7 +87,7 @@ public abstract class RequestParameter {
     }
 
     /**
-     *
+     * Validates exportFormat, file, md5 fields
      * @throws Exception
      */
     public void validate() throws Exception {
@@ -107,10 +109,10 @@ public abstract class RequestParameter {
     }
 
     /**
-     *
-     * @param md5ToCompare
-     * @param fileService
-     * @return
+     * Checks if file is in database using its md5 field
+     * @param md5ToCompare - the reference to String that contains the md5 to compare
+     * @param fileService - the reference to FileService that contains the file
+     * @return true if the file is in database, false otherwise
      */
     public boolean isInDataBase(final String md5ToCompare, final FileService fileService) {
         File temp = fileService.getFileByMd5(md5ToCompare);

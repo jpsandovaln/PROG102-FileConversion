@@ -7,8 +7,14 @@ public class MetadataParameter extends ModelParameter {
     private String format;
     private String detail;
 
+    public MetadataParameter(final String inputFile, final String format,
+            final String detail, final String outputFile, final String md5) {
+        super(inputFile, outputFile, md5);
+        this.detail = detail;
+        this.format = format;
+    }
+
     /**
-     *
      * @return format
      */
     public String getFormat() {
@@ -16,21 +22,9 @@ public class MetadataParameter extends ModelParameter {
     }
 
     /**
-     *
      * @return detail
      */
     public String getDetail() {
         return detail;
-    }
-
-    /**
-     * List<String> getParameter()
-     */
-
-    public MetadataParameter(final String inputFile, final String format, final String detail, final String outputFile,
-            final String md5) {
-        super(inputFile, outputFile, md5);
-        this.detail = detail;
-        this.format = format;
     }
 }

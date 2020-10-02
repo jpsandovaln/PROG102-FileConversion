@@ -21,9 +21,9 @@ public class ExtractDurationController {
     private String toolPath;
 
     /**
-     *
-     * @param file
-     * @return duration of the video input file
+     * Calculates duration of a file
+     * @param file - the reference MultipartFile of the file
+     * @return duration - the reference String with path of the file
      */
     @RequestMapping(method = RequestMethod.POST, value = "calculateDuration")
     public String calculateDuration(final MultipartFile file) {

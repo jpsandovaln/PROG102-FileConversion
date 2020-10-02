@@ -8,6 +8,7 @@
  */
 package org.fundacionjala.converter.model.command.extractText;
 
+import org.fundacionjala.converter.model.commons.exception.ReadFileException;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
@@ -24,7 +25,7 @@ public class ReaderText {
      * @param fileName the path and name of the file
      * @return the content of the file in a string
      */
-    public String readFile(final String fileName) throws IOException {
+    public String readFile(final String fileName) throws ReadFileException {
         String readString = "";
         try {
             String currentLine;
@@ -32,9 +33,15 @@ public class ReaderText {
             while ((currentLine = buffer.readLine()) != null) {
                 readString += currentLine;
             }
+        } catch (IOException e) {
+            throw new ReadFileException("Error while reading a file");
         } finally {
             if (buffer != null) {
-                buffer.close();
+                try {
+                    buffer.close();
+                } catch (IOException e) {
+                    throw new ReadFileException("Error while reading a file");
+                }
             }
         }
         return readString;

@@ -39,8 +39,8 @@ public class UploadFileController {
     private FileService fileService;
 
     /**
-     * displays upload file without param
-     * @return upload file
+     * Displays upload file
+     * @return upload file -  - the reference String to upload file
      */
     @GetMapping("/modifying")
     public String index() {
@@ -48,10 +48,9 @@ public class UploadFileController {
     }
 
     /**
-     * displays file upload successfully with md5
-     * @param file uploaded
-     * @return file upload successfully with md5.
-     * @throws Exception
+     * Displays file upload successfully with md5
+     * @param path - the reference String with path of the file
+     * @return ResponseEntity - the reference to Ok if file is uploaded successfully
      */
     @PostMapping("/upload")
     public ResponseEntity<?> uploadFile(@RequestParam("file") final MultipartFile file) throws Exception {
@@ -70,14 +69,16 @@ public class UploadFileController {
         }
     }
     /**
-     * displays message about file loading, and inserted md5 is correct or not
-     * @param file uploaded
-     * @param md5 String
-     * @return file upload successfully with message correct or incorrect md5
+     * Displays message about file loading, and inserted md5 if it is correct or not
+     * @param file - the reference MultipartFile of the file
+     * @param md5 - the reference String with md5 of the file
+     * @return ResponseEntity - the reference to ok if the file was uploaded
+     *          successfully with message of correct or incorrect md5
      * @throws Exception
      */
     @PostMapping("/upload-md5")
-    public ResponseEntity<?> uploadFile(@RequestParam("file") final MultipartFile file, @RequestParam final String md5) throws Exception {
+    public ResponseEntity<?> uploadFile(@RequestParam("file") final MultipartFile file,
+            @RequestParam final String md5) throws Exception {
         if (file == null || file.isEmpty()) {
             return new ResponseEntity<Object>("Select a file", HttpStatus.OK);
         }
@@ -99,8 +100,9 @@ public class UploadFileController {
     }
 
     /**
-     * delete the file in data base
-     * @param file to delete
+     * Deletes file in database
+     * @param file - the reference File to delete
+     * @return ResponseEntity - the reference to OkResponse if file is deleted successfully
      */
     @DeleteMapping("/delete")
     public ResponseEntity<?>  deleteFile(@RequestBody final File file) throws NullAttributeException {
@@ -113,8 +115,9 @@ public class UploadFileController {
     }
 
     /**
-     * delete the file according to your md5
-     * @param md5's file to delete
+     * Deletes the file with corresponding md5
+     * @param md5 - the reference String to md5 of file to delete
+     * @return ResponseEntity - the reference to OkResponse if file is converted successfully
      */
     @DeleteMapping("/delete-md5{md5}")
     public ResponseEntity<?>  deleteByMD5(@RequestParam("md5")  final String md5) throws NullAttributeException {
@@ -129,8 +132,7 @@ public class UploadFileController {
     }
 
     /**
-     * get List files of database
-     * @return list files
+     * @return list - the reference List<File> of files of database
      */
     @GetMapping("/files")
     public List<File> getFiles() {
@@ -138,8 +140,8 @@ public class UploadFileController {
     }
 
     /**
-     * get file with id
-     * @param id to find
+     * Gets File with corresponding id
+     * @param id the reference int of id of the file
      * @return file
      */
 
@@ -149,8 +151,8 @@ public class UploadFileController {
     }
 
     /**
-     * get File with md5
-     * @param md5 to find
+     * Gets File with corresponding md5
+     * @param md5 the reference String of md5 of the file
      * @return file
      */
     @GetMapping("/file-md5{md5}")
@@ -160,8 +162,8 @@ public class UploadFileController {
     }
 
     /**
-     * update file in data base
-     * @param file to update
+     * Updates file in database
+     * @param file the File to update
      */
     @PostMapping("/update-file")
     public void updateFile(@RequestParam final File file) {

@@ -22,14 +22,17 @@ import org.springframework.web.bind.annotation.RestController;
  */
 @RestController
 public class DownloadFileController {
+
     /**
-     * displays file upload successfully with md5
-     * @param path of file
-     * @return file download successfully.
-     * @throws Exception
+     * Displays file to download
+     * @param path - the reference String with path of the file
+     * @param filenameDownload - the reference String with the name of the file
+     * @return ResponseEntity - the reference to Ok if file is downloaded successfully
+     * @throws IOException
      */
     @RequestMapping(path = "/download", method = RequestMethod.GET)
-    public ResponseEntity<Resource> download(final @RequestParam("path") String path, final @RequestParam("filenameDownload") String filenameDownload) throws IOException {
+    public ResponseEntity<Resource> download(final @RequestParam("path") String path,
+            final @RequestParam("filenameDownload") String filenameDownload) throws IOException {
         File file = new File(path);
         HttpHeaders header = new HttpHeaders();
         String ext = FilenameUtils.getExtension(path);

@@ -1,5 +1,7 @@
-package org.fundacionjala.converter.model.command;
+package org.fundacionjala.converter.model.command.multimedia;
 
+import org.fundacionjala.converter.model.command.ICommand;
+import org.fundacionjala.converter.model.command.MetadataModel;
 import org.fundacionjala.converter.model.configPath.ConfigPath;
 import org.fundacionjala.converter.model.parameter.ModelParameter;
 import org.fundacionjala.converter.model.parameter.metadata.MetadataParameter;
@@ -47,7 +49,7 @@ public class AudioModel implements ICommand {
             cut = cut(cut, modelParameter);
             listCommands.add(cut);
         }
-        if (param.getIsMetadata()) {
+        if (param.isExtractMetadata()) {
             listCommands.add(extractMetadata(param, VOID));
             if (param.getIsCut()) {
                 listCommands.add(extractMetadata(param, CUT_SUFFIX));
@@ -72,7 +74,7 @@ public class AudioModel implements ICommand {
         String nameFile = ((AudioParameter) modelParameter).getName();
         String formatFile = ((AudioParameter) modelParameter).getFormat();
         convert.add(modelParameter.getOutputFile() + nameFile + formatFile);
-
+        name(modelParameter);
         return convert;
     }
 
@@ -97,6 +99,7 @@ public class AudioModel implements ICommand {
         String nameFile = param.getName();
         String formatFile = param.getFormat();
         cut.add(modelParameter.getOutputFile() + nameFile + CUT_SUFFIX + formatFile);
+        name(modelParameter);
         return cut;
     }
     private List<String> extractMetadata(final AudioParameter audioParameter, final String suffix) {
