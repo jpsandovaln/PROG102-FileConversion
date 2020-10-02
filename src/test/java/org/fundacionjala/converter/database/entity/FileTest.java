@@ -6,12 +6,13 @@ import org.junit.Assert;
 
 public class FileTest {
 
-    private static final String A_PATH = "inputFiles\\file.txt";
     private static final long LONG_ONE = 1;
+    private static final String A_PATH = "inputFiles\\file.txt";
     private static final String AN_MD5 = "line76Ac0nsh78AcFNsh718Aca0h08p1";
     private static final String A_NAME = "Jhon";
+    private static final String AN_USERNAME = "jhon1";
     private static final String FILE_EXPECTED_TO_STRING = "File [id=null, md5=" + AN_MD5 + ", path=" + A_PATH + "]";
-    private static final String FILE_WITH_USER_EXPECTED_STRING = "File [id=null, md5=" + AN_MD5 + ", path=" + A_PATH + ", user=null]";
+    private static final String FILE_WITH_USER_EXPECTED_STRING = "File [id=null, md5=" + AN_MD5 + ", path=" + A_PATH + ", user=" + AN_USERNAME + "]";
 
     @Test
     public void createVoidFileTest() {
@@ -36,6 +37,7 @@ public class FileTest {
     @Test
     public void createFileWithPathAndMd5AndUSerTest() throws NullAttributeException {
         User user = new User();
+        user.setUsername(AN_USERNAME);
         File file = new File(A_PATH, AN_MD5, user);
         String actual = file.toStringWithUser();
         String expected = FILE_WITH_USER_EXPECTED_STRING;
@@ -119,12 +121,6 @@ public class FileTest {
     @Test
     public void getNullUserTest() {
         File file = new File();
-        try{
-            file.getUser();
-        } catch (NullAttributeException e) {
-            String actual = e.getMessage();
-            String expected = "The attribute: \"user\" is null";
-            Assert.assertEquals(expected, actual);
-        }
+        Assert.assertNull(file.getUser());
     }
 }

@@ -85,12 +85,8 @@ public class File {
     /**
      * @return the user of the File
      */
-    public User getUser() throws NullAttributeException {
-        if (user != null) {
+    public User getUser() {
             return user;
-        } else {
-            throw new NullAttributeException("user");
-        }
     }
 
     /**
