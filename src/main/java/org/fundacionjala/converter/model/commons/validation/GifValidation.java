@@ -23,12 +23,12 @@ public class GifValidation implements IValidationStrategy {
 
     /**
      * @param duration
-     * @param timeToSkip
+     * @param start
      * @param secondsToOutput
      */
-    public GifValidation(final String duration, final String timeToSkip, final String secondsToOutput) throws NumberFormatException, NullPointerException {
+    public GifValidation(final String duration, final String start, final String secondsToOutput) throws NumberFormatException, NullPointerException {
         this.duration = convertToSeconds(duration);
-        this.start = convertToSeconds(timeToSkip);
+        this.start = convertToSeconds(start);
         this.time = Integer.parseInt(secondsToOutput);
     }
 

@@ -17,25 +17,24 @@ import java.util.List;
  */
 public class AudioModel implements ICommand {
 
-    private static final String
-            CODEC = "-codec:a",
-            BITRATE = "-b:a",
-            CHANNEL = "-ac",
-            SAMPLE_RATE = "-ar",
-            VOLUME = "-vol",
-            START = "-ss",
-            DURATION = "-t",
-            OVERWRITING = "-y",
-            INPUT = "-i",
-            CUT_SUFFIX = "cut",
-            VOID = "",
-            META_SUFFIX = "-meta",
-            JSON = "j",
-            VERBOSE = "v";
+    private static final String CODEC = "-codec:a";
+    private static final String BITRATE = "-b:a";
+    private static final String CHANNEL = "-ac";
+    private static final String SAMPLE_RATE = "-ar";
+    private static final String VOLUME = "-vol";
+    private static final String START = "-ss";
+    private static final String DURATION = "-t";
+    private static final String OVERWRITING = "-y";
+    private static final String INPUT = "-i";
+    private static final String CUT_SUFFIX = "cut";
+    private static final String VOID = "";
+    private static final String META_SUFFIX = "-meta";
+    private static final String JSON = "j";
+    private static final String VERBOSE = "v";
     /**
-     * create command
-     * @return list of commands
-     * @param modelParameter
+     * Creates a list of commands for the parameters given
+     * @param modelParameter - the reference ModelParameter with parameters of audio
+     * @return List<List<String>> - list of commands
      */
     @Override
     public List<List<String>> createCommand(final ModelParameter modelParameter) {
@@ -58,6 +57,13 @@ public class AudioModel implements ICommand {
         return listCommands;
     }
 
+    /**
+     * Returns list of commands to convert the audio file
+     * @param modelParameter - the reference ModelParameter with parameters of audio
+     * @param convert - the reference List<String> where to add commands
+     * @return convert - the reference List<String> of commands list to convert
+     * @throws InvalidDataException
+     */
     private List<String> convert(final List<String> convert, final ModelParameter modelParameter) {
         File file = new File(ConfigPath.getVideoAudioTool());
         String fileToolPath = file.getAbsolutePath();
@@ -78,6 +84,12 @@ public class AudioModel implements ICommand {
         return convert;
     }
 
+    /**
+     * Adds to list
+     * @param list - the reference List<String> to the list where to add elements
+     * @param condition - the reference String of condition
+     * @param command - the reference String of command
+     */
     private void addToList(final List<String> list, final String condition, final String command) {
         if (condition != null) {
             list.add(command);
@@ -85,11 +97,16 @@ public class AudioModel implements ICommand {
         }
     }
 
+    /**
+     * Cuts audio file
+     * @param cut - the reference List<String> to add to the list
+     * @param modelParameter - the reference ModelParameter with parameters of audio
+     * @return cut - the reference List<String> of commands list to cut
+     */
     private List<String> cut(final List<String> cut, final ModelParameter modelParameter) {
         File file = new File(ConfigPath.getVideoAudioTool());
         String fileToolPath = file.getAbsolutePath();
         cut.add(fileToolPath);
-
         cut.add(OVERWRITING);
         cut.add(INPUT);
         cut.add(modelParameter.getInputFile());
@@ -102,6 +119,13 @@ public class AudioModel implements ICommand {
         name(modelParameter);
         return cut;
     }
+
+    /**
+     * Extracts metadata of audio file
+     * @param audioParameter - the reference AudioParameter with parameters of audio
+     * @param suffix - the reference String to suffix
+     * @return
+     */
     private List<String> extractMetadata(final AudioParameter audioParameter, final String suffix) {
         String input = audioParameter.getOutputFile() + audioParameter.getName() + suffix + audioParameter.getFormat();
         String output = audioParameter.getName() + suffix + audioParameter.getFormat().substring(1) + META_SUFFIX;

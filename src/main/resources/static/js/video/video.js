@@ -1,31 +1,115 @@
 $(document).ready(function() {
     $("#video-nav").addClass("btn white black-text waves-effect waves-blue-grey lighten-1");
+    
+    $('#file').change( function () {
+        var file = $('#file').val();
+        if (!validate(file)){
+            var fileInput = $('#file').val('');
+            var fileInputPath = $('#file-path').val('');
+            var md5 = $('#md5').val('');
+            Swal.fire(
+                'Error',
+                'This file is not supported for audio',
+                'error'
+            )
+        }
+        else{
+            calculate();
+        }
+    });
+    function validate(file){
+        var validExtension = 'mp4';
+        var extension = '';
+        var valid = false;
+        extension = file.indexOf("."+validExtension);
+        if(extension != '-1')
+        {
+            valid = true;
+        }
+        return valid;
+    }
     $("#form-video").validate({
         rules: {
             file: 'required',
-            name: 'required',
+            name: {
+                required: true,
+                minlength: 4,
+            },
             exportFormat: 'required',
             md5: {
                 required: true,
                 minlength: 32,
             },
             videoCodec: 'required',
-            audioCodec: 'required',
-            frames: 'required',
-            sampleRate: 'required',
+            codec: 'required',
+            frames: {
+                required: {
+                    depends: function() {
+                        if ($('#exportFormat').prop('checked')) {
+                            return true;
+                        }
+                        return false;
+                    }
+                },
+                min: '1',
+            },
+            controlLoop: {
+                required: {
+                    depends: function() {
+                        if ($('#exportFormat').prop('checked')) {
+                            return true;
+                        }
+                        return false;
+                    }
+                },
+            },
+            start: {
+                required: {
+                    depends: function() {
+                        if ($('#exportFormat').prop('checked')) {
+                            return true;
+                        }
+                        return false;
+                    },
+                },
+                number: true,
+                min: '00:00:00',
+            },
+            secondsToOutput: {
+                required: {
+                    depends: function() {
+                        if ($('#exportFormat').prop('checked')) {
+                            return true;
+                        }
+                        return false;
+                    },
+                },
+                number: true,
+                min: '1',
+            }, 
         },
         messages: {
-            file: 'please insert the file',
-            name: 'please insert the name',
-            exportFormat: 'please insert the format',
-            md5: {
-                required: "Please, insert the md5",
-                minlength: "Your md5 code must consist of at least 32 characters",
+            file: 'Please insert the file',
+            name: {
+                required: "Please insert a name",
+                minlength: "Enter at least 4 characters"
             },
-            videoCodec: 'Please, insert the video codec',
-            audioCodec: 'Please, insert the audio codec',
-            frames: 'Please, insert the Frame',
-            sampleRate: 'Please, insert the sample rate',
+            exportFormat: 'Please select the format',
+            videoCodec: 'Please insert the video codec',
+            codec: 'Please insert the audio codec',
+            frames: 'Please select the frames rate',
+            controlLoop: 'Please select one option',
+            start: {
+                required: 'Please insert the start time',
+                min: 'Min value required 00:00:00',
+                //max: 'Max value required must not exceed the duration of video. Please insert a valid value',
+            },
+            timeToSkip: {
+                required: 'Please insert the audio codec',
+                number: 'Please insert just numbers',
+                min: 'Min value required is 1',
+                max: 'Max value required is 50',
+            }
         },
         errorElement: "div",
         errorPlacement: function(error, element) {
