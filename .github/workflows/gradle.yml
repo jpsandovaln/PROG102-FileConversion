@@ -35,6 +35,11 @@ jobs:
       run: ls -R storage/ && ls -lha storage/ && cat storage/convertedFiles/* && md5sum storage/convertedFiles/*
     - name: Building the project
       run: ./gradlew build
+    - name: Test Coverage Upload
+      uses: actions/upload-artifact@v2
+      with:
+        name: TestCoverage
+        path: build/reports/jacoco/test/html/
     - uses: actions/upload-artifact@master
       with:
         name: Caching the artifact
