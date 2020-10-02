@@ -1,9 +1,7 @@
 package org.fundacionjala.converter.model.command.multimedia;
 
-import org.fundacionjala.converter.model.parameter.metadata.MetadataParameter;
 import org.fundacionjala.converter.model.parameter.multimedia.VideoParameter;
 import org.fundacionjala.converter.model.command.ICommand;
-import org.fundacionjala.converter.model.command.MetadataModel;
 import org.fundacionjala.converter.model.commons.exception.InvalidDataException;
 import org.fundacionjala.converter.model.commons.validation.FormatValidation;
 import org.fundacionjala.converter.model.commons.validation.GifValidation;
@@ -19,12 +17,9 @@ public class VideoModel implements ICommand<VideoParameter> {
     private List<String> listParameters;
     private List<String> listThumbnailParameters;
     private List<List<String>> list;
-    private List<List<String>> listMetadataCommands;
-    private List<MetadataParameter> listMetadataParameters;
-    private List<String> outputFiles;
-    private boolean convertedGif = false;
-    private static final String FORMAT = "j";   // json
-    private static final String DETAIL = "v";
+    private static final String COMPRESSED = "(mp4)";
+    private static final String GIF = "(gif)";
+    private static final String MOV = "(mov)";
     private ConfigPath configPath;
 
     public VideoModel() {
@@ -40,12 +35,18 @@ public class VideoModel implements ICommand<VideoParameter> {
         String format = videoParameter.getFormat();
         if (format.equals(FormatValidation.FORMAT_MP4)) {
             videoParameter.validate();
+            String newName = videoParameter.getMd5() + COMPRESSED;
+            videoParameter.setName(newName);
             return compressMp4(videoParameter);
         } else if (format.equals(FormatValidation.FORMAT_GIF)) {
+            String newName = videoParameter.getMd5() + GIF;
+            videoParameter.setName(newName);
             GifValidation gifValidation = new GifValidation(videoParameter.getDuration(), videoParameter.getStart(), videoParameter.getSecondsToOutput());
             gifValidation.validate();
             return convertGif(videoParameter);
         } else if (format.equals(FormatValidation.FORMAT_MOV)) {
+            String newName = videoParameter.getMd5() + MOV;
+            videoParameter.setName(newName);
             return convertMov(videoParameter);
         }
         return null;
@@ -67,7 +68,7 @@ public class VideoModel implements ICommand<VideoParameter> {
         listParameters.add(VideoParameter.COPY);
         String name = changeName(videoParameter.getOutputFile(), videoParameter.getName(), FormatValidation.FORMAT_MP4) + videoParameter.getFormat();
         listParameters.add(videoParameter.getOutputFile() + name);
-        outputFiles.add(videoParameter.getOutputFile() + name);
+        videoParameter.getOutputFiles().add(videoParameter.getOutputFile() + name);
         return listParameters;
     }
 
@@ -87,7 +88,7 @@ public class VideoModel implements ICommand<VideoParameter> {
         listParameters.add(videoParameter.getCodec());
         String name = changeName(videoParameter.getOutputFile(), videoParameter.getName(), FormatValidation.FORMAT_MP4) + videoParameter.getFormat();
         listParameters.add(videoParameter.getOutputFile() + name);
-        outputFiles.add(videoParameter.getOutputFile() + name);
+        videoParameter.getOutputFiles().add(videoParameter.getOutputFile() + name);
         return listParameters;
     }
 
@@ -114,8 +115,7 @@ public class VideoModel implements ICommand<VideoParameter> {
         listParameters.add(videoParameter.getControlLoop());
         String name = changeName(videoParameter.getOutputFile(), videoParameter.getName(), FormatValidation.FORMAT_GIF) + videoParameter.getFormat();
         listParameters.add(videoParameter.getOutputFile() + name);
-        outputFiles.add(videoParameter.getOutputFile() + name);
-        convertedGif = true;
+        videoParameter.getOutputFiles().add(videoParameter.getOutputFile() + name);
         return listParameters;
     }
 
@@ -129,7 +129,7 @@ public class VideoModel implements ICommand<VideoParameter> {
      * @param videoParameter - the reference VideoParameter with parameters of video
      * @return List<String> - list of commands
      */
-    private List<String> extractThumbnail(final VideoParameter videoParameter) {
+    public List<String> extractThumbnail(final VideoParameter videoParameter) {
         listThumbnailParameters = new ArrayList<>();
         listThumbnailParameters.add(configPath.getVideoAudioTool());
         listThumbnailParameters.add(VideoParameter.INPUT_COMMAND);
@@ -144,31 +144,8 @@ public class VideoModel implements ICommand<VideoParameter> {
         listThumbnailParameters.add(VideoParameter.ZERO);
         String name = changeName(videoParameter.getOutputFile(), videoParameter.getName(), FormatValidation.FORMAT_GIF) + videoParameter.getFormat();
         listThumbnailParameters.add(videoParameter.getOutputFile() + name);
-        outputFiles.add(videoParameter.getOutputFile() + name);
+        videoParameter.getOutputFiles().add(videoParameter.getOutputFile() + name);
         return listThumbnailParameters;
-    }
-
-    /**
-     * Creates a list of commands for the parameters given
-     * @param videoParameter - the reference VideoParameter with parameters of video
-     * @return List<List<String>> - list of commands
-     * @throws IOException
-     * @throws NoSuchAlgorithmException
-     * @throws ExecutionException
-     * @throws InterruptedException
-     */
-    private List<List<String>> getListMetadataCommands(final VideoParameter videoParameter)
-    throws NoSuchAlgorithmException, IOException, InterruptedException, ExecutionException {
-        listMetadataCommands = new ArrayList<>();
-        listMetadataParameters = new ArrayList<>();
-        String checksum = "";
-        for (String path : outputFiles) {
-            listMetadataParameters.add(new MetadataParameter(path, FORMAT, DETAIL, configPath.getConvertedFilesPath() + "", checksum));
-        }
-        for (MetadataParameter metadataParameter : listMetadataParameters) {
-            listMetadataCommands.addAll(new MetadataModel().createCommand(metadataParameter));
-        }
-        return listMetadataCommands;
     }
 
     /**
@@ -183,24 +160,10 @@ public class VideoModel implements ICommand<VideoParameter> {
     public List<List<String>> createCommand(final VideoParameter videoParameter)
             throws NoSuchAlgorithmException, IOException, InterruptedException, ExecutionException {
         list = new ArrayList<>();
-        outputFiles = new ArrayList<String>();
         try {
             list.add(convert(videoParameter));
         } catch (InvalidDataException e) {
             e.printStackTrace();
-        }
-        if (videoParameter.isExtractThumbnail()) {
-            if (videoParameter.getFormat() != VideoParameter.GIF) {
-                videoParameter.setFormat(VideoParameter.GIF);
-            }
-            if (convertedGif) {
-                String name = changeOutputName(videoParameter.getOutputFile(), videoParameter.getName(), FormatValidation.FORMAT_GIF);
-                videoParameter.setName(name);
-            }
-            list.add(extractThumbnail(videoParameter));
-        }
-        if (videoParameter.isExtractMetadata()) {
-            list.addAll(getListMetadataCommands(videoParameter));
         }
         return list;
     }

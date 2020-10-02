@@ -34,6 +34,7 @@ public class VideoParameter extends MultimediaParameter {
     private String secondsToOutput;
     private String controlLoop;
     private boolean extractThumbnail = false;
+    private List<String> outputFiles;
 
     public VideoParameter() {
     }
@@ -127,5 +128,20 @@ public class VideoParameter extends MultimediaParameter {
         validationStrategyList.add(new FormatValidation(this.getFormat()));
         ValidationContext context = new ValidationContext(validationStrategyList);
         context.validation();
+    }
+
+    /**
+     * @return the outputFiles
+     */
+    public List<String> getOutputFiles() {
+        return outputFiles;
+    }
+
+    /**
+     * Sets outputFiles value
+     * @param outputFiles the outputFiles to set
+     */
+    public void setOutputFiles(final List<String> outputFiles) {
+        this.outputFiles = outputFiles;
     }
 }
