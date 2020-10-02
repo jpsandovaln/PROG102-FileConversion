@@ -100,7 +100,7 @@ public class UploadFileController {
      */
     @DeleteMapping("/delete")
     public ResponseEntity<?>  deleteFile(@RequestBody final File file) {
-        try{
+        try {
             fileService.deleteFile(file);
             return new ResponseEntity<Object>("File deleted", HttpStatus.OK);
         } catch (NonExistentException e) {

@@ -12,14 +12,11 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-import javax.persistence.NonUniqueResultException;
-
 import org.fundacionjala.converter.controller.exceptions.NonExistentException;
 import org.fundacionjala.converter.database.entity.File;
 import org.fundacionjala.converter.database.exception.NullAttributeException;
 import org.fundacionjala.converter.database.repository.FileRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.dao.IncorrectResultSizeDataAccessException;
 import org.springframework.stereotype.Service;
 
 /**
@@ -111,7 +108,7 @@ public class FileService {
      */
     public void deleteFile(final File file) throws NullAttributeException, NonExistentException {
         File fileToDelete = fileRepository.findByMd5(file.getMd5());
-        if (fileToDelete != null){
+        if (fileToDelete != null) {
             fileRepository.delete(fileToDelete);
         } else {
             throw new NonExistentException("delete");
@@ -125,7 +122,7 @@ public class FileService {
      */
     public void deleteFileByMd5(final String md5) throws NonExistentException {
         File fileToDelete = fileRepository.findByMd5(md5);
-        if (fileToDelete != null){
+        if (fileToDelete != null) {
             fileRepository.delete(fileToDelete);
         } else {
             throw new NonExistentException("delete");

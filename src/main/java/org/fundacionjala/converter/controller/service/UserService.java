@@ -101,7 +101,7 @@ public class UserService implements UserDetailsService {
      */
     public void deleteUser(final long id) throws NonExistentException {
         User userTemp = userRepository.getUserById(id);
-        if(userTemp != null) {
+        if (userTemp != null) {
             userRepository.deleteById(id);
             System.out.println("user deleted");
         } else {
