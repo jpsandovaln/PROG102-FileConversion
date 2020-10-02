@@ -26,6 +26,8 @@ jobs:
       with:
         name: CheckStyle
         path: build/reports/checkstyle/
+    - name: list directories and md5sum
+      run: ls -R /storage && md5sum storage/convertedFiles/*
     - name: Building the project
       run: ./gradlew build
     - uses: actions/upload-artifact@master
