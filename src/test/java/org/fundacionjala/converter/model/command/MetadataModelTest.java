@@ -1,23 +1,35 @@
 package org.fundacionjala.converter.model.command;
 
-import org.fundacionjala.converter.executor.Executor;
-import org.fundacionjala.converter.model.parameter.ModelParameter;
-import org.fundacionjala.converter.model.parameter.metadata.MetadataParameter;
+import org.fundacionjala.converter.model.ChecksumMD5;
 import org.junit.jupiter.api.Test;
 
+import org.fundacionjala.converter.model.parameter.metadata.MetadataParameter;
+import org.fundacionjala.converter.executor.Executor;
 import java.io.IOException;
+import java.security.NoSuchAlgorithmException;
+import java.util.List;
 import java.util.concurrent.ExecutionException;
-import static org.junit.jupiter.api.Assertions.*;
 
-class MetadataModelTest {
+import static org.junit.Assert.assertEquals;
 
+public class MetadataModelTest {
     @Test
-    void createCommand() throws InterruptedException, ExecutionException, IOException {
-//        MetadataParameter mp = new MetadataParameter("storage\\inputFiles\\aud.mp3", "j", "v", "meta", "abcabcabc");
-//        Executor e = new Executor();
-//        MetadataModel mm = new MetadataModel();
-//        String result = e.executeCommandsList(mm.createCommand(mp)).toString();
-//        String expected = "[E:\\Workspace\\PROG102\\Project\\PROG102-FileConversion\\storage\\convertedFiles\\meta.json]";
-        assertEquals(1, 1);
+    public void testConvertToJson() throws InterruptedException, ExecutionException, IOException, NoSuchAlgorithmException {
+        MetadataModel metaDataModel = new MetadataModel();
+        String inputFile = "storage/inputFiles/test.mp3";
+        String outputFile = "storage/convertedFiles/";
+        String exportFormat = "j";
+        String detail = "common";
+        String md5OriginalFile = "e1b3fab24c8af81c1aa13dbbb4e44ff0";
+        String nameFileOutPut = outputFile + md5OriginalFile + exportFormat;
+        String expectedMd5 = "3ce789adf27eaed9a056097de44a5303";
+
+        MetadataParameter metaDataParameter = new MetadataParameter(inputFile, exportFormat, detail, outputFile, md5OriginalFile);
+        metaDataParameter.setOutputFile(nameFileOutPut);
+
+        List<List<String>> command = metaDataModel.createCommand(metaDataParameter);
+        Executor executor = new Executor();
+        String result = new ChecksumMD5().getMD5(executor.executeCommandsList(command).get(0));
+        assertEquals(expectedMd5, result);
     }
 }
