@@ -56,13 +56,7 @@ public class FileTest {
     @Test
     public void getNullIdTest() {
         File file = new File();
-        try{
-            file.getId();
-        } catch (NullAttributeException e) {
-            String actual = e.getMessage();
-            String expected = "The attribute: \"id\" is null";
-            Assert.assertEquals(expected, actual);
-        }
+        Assert.assertNull(file.getId());
     }
 
     @Test
