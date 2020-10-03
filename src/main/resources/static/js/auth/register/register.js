@@ -18,6 +18,12 @@ $(document).ready(function () {
               }
               return false;
           },);
+      $.validator.addMethod("compare_password", function(value, element, param) {
+          if ($('#rePassword').val() == $('#password').val()){
+            return true;
+          }
+          return false;
+      },);
     $("#form-createAccount").validate( {
         rules: {
             username: 'required',

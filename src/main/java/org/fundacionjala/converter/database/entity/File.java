@@ -55,12 +55,8 @@ public class File {
     /**
      * @return the id of the File
      */
-    public Long getId() throws NullAttributeException {
-        if (id != null) {
-            return id;
-        } else {
-            throw new NullAttributeException("id");
-        }
+    public Long getId() {
+        return id;
     }
     /**
      * @return the path of the File
