@@ -91,12 +91,6 @@ public class RequestMultimediaParameter extends RequestParameter {
     public void setExtractMetadata(final boolean extractMetadata) {
         this.extractMetadata = extractMetadata;
     }
-
-    /**
-     * Validates multimedia parameters
-     * @throws Exception
-     */
-
     /**
      * @return secondsToOutput
      */
@@ -112,6 +106,10 @@ public class RequestMultimediaParameter extends RequestParameter {
         this.secondsToOutput = secondsToOutput;
     }
 
+    /**
+     * Validates multimedia parameters
+     * @throws Exception
+     */
     @Override
     public void validate() throws Exception {
         super.validate();

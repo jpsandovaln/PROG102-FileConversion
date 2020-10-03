@@ -46,7 +46,7 @@ public class AudioModel implements ICommand {
         listCommands.add(convert);
         AudioParameter param = (AudioParameter) modelParameter;
         if (param.getIsCut()) {
-            try{
+            try {
                 List<String> cut = new ArrayList<>();
                 cut = cut(cut, modelParameter);
                 listCommands.add(cut);

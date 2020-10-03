@@ -26,7 +26,7 @@ public class RequestAudioParameter extends RequestMultimediaParameter {
      * Sets if audio is cut or not
      * @param cut
      */
-    public void setCut(boolean cut) {
+    public void setCut(final boolean cut) {
         this.cut = cut;
     }
 
