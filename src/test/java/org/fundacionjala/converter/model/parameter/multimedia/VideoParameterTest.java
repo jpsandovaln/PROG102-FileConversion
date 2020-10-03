@@ -1,10 +1,6 @@
 package org.fundacionjala.converter.model.parameter.multimedia;
 
-import org.junit.Test;
-import org.junit.Rule;
-import org.junit.rules.ExpectedException;
-
-import static org.hamcrest.CoreMatchers.containsString;
+import org.junit.jupiter.api.Test;
 import static junit.framework.TestCase.fail;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
