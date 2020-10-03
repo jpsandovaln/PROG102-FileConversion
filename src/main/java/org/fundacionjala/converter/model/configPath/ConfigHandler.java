@@ -11,7 +11,7 @@ final class ConfigHandler {
     private ConfigHandler() {
         try {
             this.properties = new Properties();
-            if (System.getProperty("os.name").contains("Win")) {
+            if ((System.getProperty("os.name").toLowerCase()).contains("win")) {
                 this.properties.load(getClass().getClassLoader().getResourceAsStream(CONFIG_FILE_WINDOWS));
             } else {
                 this.properties.load(getClass().getClassLoader().getResourceAsStream(CONFIG_FILE_LINUX));
