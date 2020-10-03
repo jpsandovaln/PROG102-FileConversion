@@ -2,6 +2,7 @@ package org.fundacionjala.converter.controller;
 
 import org.fundacionjala.converter.controller.service.FileUploadService;
 import org.fundacionjala.converter.executor.Executor;
+import org.fundacionjala.converter.executor.exception.CommandListEmptyException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -38,7 +39,7 @@ public class ExtractDurationController {
             String result = exec.executeSingleStringCommand(completeCommand);
             result = result.substring(0, result.indexOf("."));
             return result;
-        } catch (IOException | InterruptedException e) {
+        } catch (IOException | InterruptedException | CommandListEmptyException e) {
             return e.getMessage();
         }
     }

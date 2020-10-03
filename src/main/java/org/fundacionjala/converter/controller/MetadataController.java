@@ -9,6 +9,7 @@
 package org.fundacionjala.converter.controller;
 
 import org.fundacionjala.converter.executor.Executor;
+import org.fundacionjala.converter.executor.exception.CommandListEmptyException;
 import org.fundacionjala.converter.model.command.ICommand;
 import org.fundacionjala.converter.model.command.MetadataModel;
 import org.fundacionjala.converter.model.parameter.metadata.MetadataParameter;
@@ -89,7 +90,7 @@ public class MetadataController {
      * @throws NoSuchAlgorithmException
      */
     private List<String> execute(final MetadataParameter parameter)
-            throws InterruptedException, ExecutionException, IOException, NoSuchAlgorithmException {
+            throws InterruptedException, ExecutionException, IOException, NoSuchAlgorithmException, CommandListEmptyException {
         Executor executor = new Executor();
         ICommand metaDataModel = new MetadataModel();
         return executor.executeCommandsList(metaDataModel.createCommand(parameter));

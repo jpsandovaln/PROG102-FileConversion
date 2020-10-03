@@ -9,6 +9,7 @@
 package org.fundacionjala.converter.model.command.extractText;
 
 import org.fundacionjala.converter.executor.Executor;
+import org.fundacionjala.converter.executor.exception.CommandListEmptyException;
 import org.fundacionjala.converter.model.ChecksumMD5;
 import org.fundacionjala.converter.model.commons.exception.ConvertDocException;
 import org.fundacionjala.converter.model.commons.exception.InvalidDataException;
@@ -51,7 +52,7 @@ public class ExtractTextFacade {
      * @param parameter - the parameter to execute the conversion using tesseract
      */
     public List<String> extractText(final ExtractTextParameter parameter) throws ReadFileException, InvalidDataException,
-            InterruptedException, ExecutionException, NoSuchAlgorithmException, IOException, ConvertDocException {
+            InterruptedException, ExecutionException, NoSuchAlgorithmException, IOException, ConvertDocException, CommandListEmptyException {
         parameter.validate();
         String format = parameter.getFormat();
         parameter.setOutputFile(ConfigPath.getConvertedFilesPath());
@@ -76,7 +77,7 @@ public class ExtractTextFacade {
      * @throws ReadFileException
      * @throws ConvertDocException
      */
-    private void convertExtractTextTo(final ExtractTextParameter parameter) throws InterruptedException, ExecutionException, IOException, ReadFileException, ConvertDocException {
+    private void convertExtractTextTo(final ExtractTextParameter parameter) throws InterruptedException, ExecutionException, IOException, ReadFileException, ConvertDocException, CommandListEmptyException {
         String format = parameter.getFormat();
         executor.executeCommandsList(extractor.createCommand(parameter));
         String outputFile = parameter.getOutputFile() + parameter.getFileName();

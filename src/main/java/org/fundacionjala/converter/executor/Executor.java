@@ -1,5 +1,7 @@
 package org.fundacionjala.converter.executor;
 
+import org.fundacionjala.converter.executor.exception.CommandListEmptyException;
+
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.IOException;
@@ -25,10 +27,12 @@ public class Executor {
    * @throws IOException
    * @throws InterruptedException
    */
-  public List<String> executeCommandsList(final List<List<String>> commandsList)
-      throws InterruptedException, ExecutionException, IOException {
+  public List<String> executeCommandsList(final List<List<String>> commandsList) throws InterruptedException, ExecutionException, IOException, CommandListEmptyException {
     List<String> outputList = new ArrayList();
     for (List<String> command : commandsList) {
+      if (command.size() == 0) {
+            throw new CommandListEmptyException("Command List Empty");
+      }
       if (command.indexOf("Metadata") == -1) {
         outputList.add(execute(command));
       } else {
@@ -67,8 +71,11 @@ public class Executor {
    * @throws IOException
    * @throws InterruptedException
    */
-  public String executeMetadata(final List<String> command) throws ExecutionException, IOException, InterruptedException {
+  public String executeMetadata(final List<String> command) throws ExecutionException, IOException, InterruptedException, CommandListEmptyException {
     List<String> commandMetadata = new ArrayList<String>();
+    if (command.size() == 0) {
+      throw new CommandListEmptyException("Command List Empty");
+    }
     for (int i = 1; i < command.size() - 1; i++) {
       commandMetadata.add(command.get(i));
     }
@@ -88,7 +95,10 @@ public class Executor {
    * @throws IOException
    * @throws InterruptedException
    */
-  public String executeSingleStringCommand(final String command) throws IOException, InterruptedException {
+  public String executeSingleStringCommand(final String command) throws IOException, InterruptedException, CommandListEmptyException {
+    if (command.length() == 0) {
+      throw new CommandListEmptyException("Command Empty");
+    }
     Process processDuration = new ProcessBuilder("cmd", "/c", command).redirectErrorStream(true).start();
     processDuration.waitFor();
     StringBuilder output = new StringBuilder();

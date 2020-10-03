@@ -5,6 +5,7 @@ import org.fundacionjala.converter.controller.response.ErrorResponse;
 import org.fundacionjala.converter.controller.response.OkResponse;
 import org.fundacionjala.converter.controller.service.FileZipped;
 import org.fundacionjala.converter.executor.Executor;
+import org.fundacionjala.converter.executor.exception.CommandListEmptyException;
 import org.fundacionjala.converter.model.command.multimedia.AudioModel;
 import org.fundacionjala.converter.model.command.ICommand;
 import org.fundacionjala.converter.database.entity.File;
@@ -105,7 +106,7 @@ public class AudioController {
      * @throws NoSuchAlgorithmException
      */
     private List<String> execute(final AudioParameter audioParameter)
-            throws InterruptedException, ExecutionException, IOException, NoSuchAlgorithmException {
+            throws InterruptedException, ExecutionException, IOException, NoSuchAlgorithmException, CommandListEmptyException {
         Executor executor = new Executor();
         ICommand audioModel = new AudioModel();
         return executor.executeCommandsList(audioModel.createCommand(audioParameter));

@@ -12,6 +12,7 @@ import org.fundacionjala.converter.controller.request.RequestVideoParameter;
 import org.fundacionjala.converter.controller.response.ErrorResponse;
 import org.fundacionjala.converter.controller.response.OkResponse;
 import org.fundacionjala.converter.executor.Executor;
+import org.fundacionjala.converter.executor.exception.CommandListEmptyException;
 import org.fundacionjala.converter.model.command.ICommand;
 import org.fundacionjala.converter.database.entity.File;
 import org.fundacionjala.converter.model.command.multimedia.VideoModel;
@@ -109,7 +110,7 @@ public class VideoController {
      * @throws NoSuchAlgorithmException
      */
     private List<String> execute(final VideoParameter parameter)
-            throws InterruptedException, ExecutionException, IOException, NoSuchAlgorithmException {
+            throws InterruptedException, ExecutionException, IOException, NoSuchAlgorithmException, CommandListEmptyException {
         Executor executor = new Executor();
         ICommand videoModel = new VideoModel();
         return executor.executeCommandsList(videoModel.createCommand(parameter));
