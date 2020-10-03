@@ -1,6 +1,19 @@
 package org.fundacionjala.converter.model.parameter.multimedia;
 
+import org.fundacionjala.converter.model.commons.exception.InvalidDataException;
+import org.fundacionjala.converter.model.commons.validation.IValidationStrategy;
+import org.fundacionjala.converter.model.commons.validation.ModelParameterValidation;
+import org.fundacionjala.converter.model.commons.validation.ValidationContext;
+import org.fundacionjala.converter.model.commons.validation.audio.InputFileAudioValidation;
+import org.fundacionjala.converter.model.commons.validation.audio.FormatAudioValidation;
+import org.fundacionjala.converter.model.commons.validation.audio.BitRateAudioValidation;
+import org.fundacionjala.converter.model.commons.validation.audio.ChannelAudioValidation;
+import org.fundacionjala.converter.model.commons.validation.audio.SampleRateAudioValidation;
+import org.fundacionjala.converter.model.commons.validation.audio.CodecAudioValidation;
+
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 public class AudioParameter extends MultimediaParameter {
 
@@ -8,9 +21,7 @@ public class AudioParameter extends MultimediaParameter {
     private String bitRate;
     private String channel;
     private String sampleRate;
-    private String volume;
     private boolean isCut = false;
-    private AudioParameterValidation audioValidation = new AudioParameterValidation();
 
     /**
      * @return audio format
@@ -41,13 +52,6 @@ public class AudioParameter extends MultimediaParameter {
     }
 
     /**
-     * @return audio volume
-     */
-    public String getVolume() {
-        return volume;
-    }
-
-    /**
      * @return if is cut
      */
     public boolean getIsCut() {
@@ -60,12 +64,7 @@ public class AudioParameter extends MultimediaParameter {
      * @throws IOException
      */
     public void setInputFile(final String inputFile) throws IOException {
-        if (audioValidation.validateAudioFile(inputFile)) {
             super.setInputFile(inputFile);
-        } else {
-            // exception el archivo no es un audio.
-            System.out.println("the file does not type audio" + inputFile);
-        }
     }
 
     /**
@@ -73,12 +72,7 @@ public class AudioParameter extends MultimediaParameter {
      * @param format the  to set
      */
     public void setFormat(final String format) {
-        if (audioValidation.validateAudioFormat(format)) {
             this.format = format;
-        } else {
-            // exception the format does not belong to audio +audioFormat
-            System.out.println("the format does not belong to audio" + format);
-        }
     }
 
     /**
@@ -106,18 +100,26 @@ public class AudioParameter extends MultimediaParameter {
     }
 
     /**
-     * Sets volume value
-     * @param volume the  to set
-     */
-    public void setVolume(final String volume) {
-        this.volume = volume;
-    }
-
-    /**
      * Sets cut value
      * @param cut the  to set
      */
     public void setCut(final boolean cut) {
         isCut = cut;
+    }
+
+    /**
+     * Validate audioParameter fields
+     */
+    public void validate() throws InvalidDataException {
+        List<IValidationStrategy> validationStrategyList = new ArrayList<>();
+        validationStrategyList.add(new ModelParameterValidation(this));
+        validationStrategyList.add(new CodecAudioValidation(super.getCodec()));
+        validationStrategyList.add(new FormatAudioValidation(this.format));
+        validationStrategyList.add(new BitRateAudioValidation(this.bitRate));
+        validationStrategyList.add(new ChannelAudioValidation(this.channel));
+        validationStrategyList.add(new SampleRateAudioValidation(this.sampleRate));
+        validationStrategyList.add(new InputFileAudioValidation(this.getInputFile()));
+        ValidationContext context = new ValidationContext(validationStrategyList);
+        context.validation();
     }
 }

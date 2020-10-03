@@ -11,11 +11,8 @@ package org.fundacionjala.converter.controller;
 import org.fundacionjala.converter.controller.request.RequestVideoParameter;
 import org.fundacionjala.converter.controller.response.ErrorResponse;
 import org.fundacionjala.converter.controller.response.OkResponse;
-import org.fundacionjala.converter.executor.Executor;
-import org.fundacionjala.converter.model.command.ICommand;
 import org.fundacionjala.converter.database.entity.File;
-import org.fundacionjala.converter.model.command.multimedia.VideoModel;
-import org.fundacionjala.converter.model.commons.exception.ModelParameterException;
+import org.fundacionjala.converter.model.command.multimedia.VideoFacade;
 import org.fundacionjala.converter.model.parameter.multimedia.VideoParameter;
 import org.fundacionjala.converter.controller.service.FileService;
 import org.fundacionjala.converter.controller.service.FileUploadService;
@@ -28,8 +25,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.io.IOException;
-import java.security.NoSuchAlgorithmException;
-import java.util.List;
 import java.util.concurrent.ExecutionException;
 
 import javax.servlet.http.HttpServletResponse;
@@ -62,9 +57,10 @@ public class VideoController {
             } else {
                 filePath = fileService.getFileByMd5(md5).getPath();
             }
+            VideoFacade videoFacade = new VideoFacade();
             VideoParameter videoParameter = new VideoParameter();
             setVideoParameter(videoParameter, requestVideoParameter, filePath);
-            String result = FileZipped.zipper(videoParameter, execute(videoParameter));
+            String result = FileZipped.zipper(videoParameter, videoFacade.convertVideo(videoParameter));
             return ResponseEntity.ok().body(new OkResponse<Integer>(HttpServletResponse.SC_OK, result));
         } catch (IOException | InterruptedException | ExecutionException e) {
             return ResponseEntity.badRequest().body(
@@ -98,21 +94,5 @@ public class VideoController {
         videoParameter.setExtractThumbnail(requestVideoParameter.isExtractThumbnail());
         videoParameter.setExtractMetadata(requestVideoParameter.isExtractMetadata());
         videoParameter.setOutputFile(output);
-    }
-
-    /**
-     * Executes the command list
-     * @param parameter - the reference VideoParameter to set parameters
-     * @return list - the reference to the list<String> that contains the file paths of converted files
-     * @throws InterruptedException
-     * @throws ExecutionException
-     * @throws IOException
-     * @throws NoSuchAlgorithmException
-     */
-    private List<String> execute(final VideoParameter parameter)
-            throws InterruptedException, ExecutionException, IOException, NoSuchAlgorithmException, ModelParameterException {
-        Executor executor = new Executor();
-        ICommand videoModel = new VideoModel();
-        return executor.executeCommandsList(videoModel.createCommand(parameter));
     }
 }

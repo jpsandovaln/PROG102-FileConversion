@@ -1,13 +1,11 @@
 package org.fundacionjala.converter.model.commons.validation;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-
-import org.fundacionjala.converter.model.commons.validation.GifValidation;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 public class GifValidationTest {
 
-    /*String duration = "0:05:00";
+    String duration = "0:05:00";
     String start = "0:00:10";
     GifValidation gifValidation = new GifValidation(duration, start, "3");
 
@@ -19,10 +17,14 @@ public class GifValidationTest {
         assertEquals(expected, actual);
     }
     @Test
-    public void testConvertTimeToSkipToSecondsTenSeconds(){
+    public void testConvertStartToSecondsTenSeconds(){
         int expected = 10;
         gifValidation.convertToSeconds(start);
         int actual = gifValidation.getStart();
         assertEquals(expected, actual);
-    }*/
+    }
+    @Test
+    public void testValidateThrowsExceptionWhenStartIsGreaterThanDuration() {
+        
+    }
 }
