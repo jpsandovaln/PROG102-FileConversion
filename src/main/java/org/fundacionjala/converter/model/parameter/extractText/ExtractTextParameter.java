@@ -8,16 +8,16 @@
  */
 package org.fundacionjala.converter.model.parameter.extractText;
 
-import org.fundacionjala.converter.model.commons.validation.IValidationStrategy;
 import org.fundacionjala.converter.model.commons.validation.LanguageValidation;
 import org.fundacionjala.converter.model.commons.validation.FormatValidation;
 import org.fundacionjala.converter.model.commons.validation.NotNullOrEmpty;
+import org.fundacionjala.converter.model.commons.validation.IValidationStrategy;
+import org.fundacionjala.converter.model.commons.validation.InputFileValidation;
 import org.fundacionjala.converter.model.commons.validation.ValidationContext;
 import org.fundacionjala.converter.model.parameter.ModelParameter;
 import org.fundacionjala.converter.model.commons.exception.InvalidDataException;
-
-import java.util.List;
 import java.util.ArrayList;
+import java.util.List;
 
 public class ExtractTextParameter extends ModelParameter {
     private String language;
@@ -80,7 +80,9 @@ public class ExtractTextParameter extends ModelParameter {
         validationStrategyList.add(new LanguageValidation(this.language));
         validationStrategyList.add(new NotNullOrEmpty("language", this.language));
         validationStrategyList.add(new NotNullOrEmpty("format", this.format));
+        validationStrategyList.add(new NotNullOrEmpty("inputFile", this.getInputFile()));
         validationStrategyList.add(new FormatValidation(this.format));
+        validationStrategyList.add(new InputFileValidation(this.getInputFile()));
         ValidationContext context = new ValidationContext(validationStrategyList);
         context.validation();
     }
