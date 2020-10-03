@@ -3,18 +3,12 @@ package org.fundacionjala.converter.controller.request;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.web.multipart.MultipartFile;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.fundacionjala.converter.Application;
 import java.io.File;
 import static org.junit.jupiter.api.Assertions.*;
 import org.springframework.http.MediaType;
 import org.springframework.mock.web.MockMultipartFile;
-import org.springframework.core.io.ClassPathResource;
-import org.springframework.core.io.Resource;
 
 class RequestExtractTextParameterTest {
-    @Autowired
-    private Application application;
 
     RequestExtractTextParameter request = new RequestExtractTextParameter();
     @Test
@@ -103,33 +97,34 @@ class RequestExtractTextParameterTest {
         File file = new File(" ");
         Throwable exception = Assertions.assertThrows(
                 Exception.class, () -> {
+                    MockMultipartFile mockFile = new MockMultipartFile("", "",
+                            "image/", "imagen7 data".getBytes());
+                    MockMultipartFile multipartFile = new MockMultipartFile(
+                            "attachments",file.getName(),
+                            MediaType.MULTIPART_FORM_DATA_VALUE,
+                            mockFile.getInputStream());
                     request.setExportFormat(".txt");
-                    request.setFile((MultipartFile) file);
+                    request.setFile(mockFile);
                     request.validate();
                 }
         );
-        System.out.println(exception.getMessage());
     }
     @Test
     public void md5ValidationTest() {
         Throwable exception = Assertions.assertThrows(
                 Exception.class, () -> {
-                    Resource fileResource = new ClassPathResource(
-                            "storage/inputFiles/imagen7.jpg");
-                    //assertNotNull(fileResource);
+                    MockMultipartFile file = new MockMultipartFile("imagen7", "imagen7.jpg",
+                            "image/", "imagen7 data".getBytes());
                     MockMultipartFile multipartFile = new MockMultipartFile(
-                            "attachments",fileResource.getFilename(),
+                            "attachments",file.getName(),
                             MediaType.MULTIPART_FORM_DATA_VALUE,
-                            fileResource.getInputStream());
+                            file.getInputStream());
                     request.setExportFormat(".txt");
                     request.setLanguage("spa");
                     request.setFile(multipartFile);
                     request.setMd5("ffa5f5433efe74bc99530e84798b2ffd");
                     request.validate();
-
                 }
-
         );
-        System.out.println(exception.getMessage());
     }
 }
