@@ -7,7 +7,7 @@ import org.junit.jupiter.api.Assertions;
 public class ExtractTextParameterTest {
     ExtractTextParameter parameter = new ExtractTextParameter();
     @Test
-    public void getFileName() {
+    public void getFileNameTest() {
         parameter.setFileName("storage/inputFiles/imagen.jpg");
         String expected = "storage/inputFiles/imagen.jpg";
         String result = parameter.getFileName();
@@ -15,7 +15,7 @@ public class ExtractTextParameterTest {
     }
 
     @Test
-    public void setFileName() {
+    public void setFileNameTest() {
         parameter.setFileName("storage/inputFiles/imagen2.jpg");
         String expected = "storage/inputFiles/imagen2.jpg";
         String result = parameter.getFileName();
@@ -23,7 +23,7 @@ public class ExtractTextParameterTest {
     }
 
     @Test
-    public void getLanguage() {
+    public void getLanguageTest() {
         parameter.setLanguage("spa");
         String expected = "spa";
         String result = parameter.getLanguage();
@@ -31,7 +31,7 @@ public class ExtractTextParameterTest {
     }
 
     @Test
-    public void setLanguage() {
+    public void setLanguageTest() {
         parameter.setLanguage("spa");
         String expected = "spa";
         String result = parameter.getLanguage();
@@ -39,7 +39,7 @@ public class ExtractTextParameterTest {
     }
 
     @Test
-    public void getFormat() {
+    public void getFormatTest() {
         parameter.setFormat(".docx");
         String expected = ".docx";
         String result = parameter.getFormat();
@@ -47,7 +47,7 @@ public class ExtractTextParameterTest {
     }
 
     @Test
-    public void setFormat() {
+    public void setFormatTest() {
         parameter.setFormat(".docx");
         String expected = ".docx";
         String result = parameter.getFormat();
@@ -55,7 +55,7 @@ public class ExtractTextParameterTest {
     }
 
     @Test
-    public void testToString() {
+    public void testToStringTest() {
         parameter.setLanguage("spa");
         parameter.setFormat(".docx");
         String expected = "ExtractTextParameter [language=spa, format=.docx]";
@@ -63,7 +63,7 @@ public class ExtractTextParameterTest {
         Assertions.assertEquals(expected, result);
     }
     @Test
-    public void nullFormat() {
+    public void nullFormatTest() {
         Throwable exception = Assertions.assertThrows(
                 InvalidDataException.class,
                 () -> {
@@ -74,7 +74,7 @@ public class ExtractTextParameterTest {
         );
     }
     @Test
-    public void emptyFormat() {
+    public void emptyFormatTest() {
         Throwable exception = Assertions.assertThrows(
                 InvalidDataException.class,
                 () -> {
@@ -85,7 +85,7 @@ public class ExtractTextParameterTest {
         );
     }
     @Test
-    public void emptyLanguage() {
+    public void emptyLanguageTest() {
         Throwable exception = Assertions.assertThrows(
                 InvalidDataException.class,
                 () -> {
@@ -95,7 +95,7 @@ public class ExtractTextParameterTest {
         );
     }
     @Test
-    public void nullLanguage() {
+    public void nullLanguageTest() {
         Throwable exception = Assertions.assertThrows(
                 InvalidDataException.class,
                 () -> {
@@ -105,7 +105,7 @@ public class ExtractTextParameterTest {
         );
     }
     @Test
-    public void invalidFormat() {
+    public void invalidFormatTest() {
         Throwable exception = Assertions.assertThrows(
                 InvalidDataException.class,
                 () -> {
@@ -116,11 +116,37 @@ public class ExtractTextParameterTest {
         );
     }
     @Test
-    public void invalidLanguage() {
+    public void invalidLanguageTest() {
         Throwable exception = Assertions.assertThrows(
-                InvalidDataException.class,
-                () -> {
+                InvalidDataException.class, () -> {
                     parameter.setLanguage("spaniol");
+                    parameter.validate();
+                }
+        );
+    }
+    @Test
+    public void invalidInputFileTest() {
+        Throwable exception = Assertions.assertThrows(
+                InvalidDataException.class, () -> {
+                    parameter.setInputFile("pathInvalid");
+                    parameter.validate();
+                }
+        );
+    }
+    @Test
+    public void emptyInputFileTest() {
+        Throwable exception = Assertions.assertThrows(
+                InvalidDataException.class, () -> {
+                    parameter.setInputFile(" ");
+                    parameter.validate();
+                }
+        );
+    }
+    @Test
+    public void nullInputFileTest() {
+        Throwable exception = Assertions.assertThrows(
+                InvalidDataException.class, () -> {
+                    parameter.setInputFile(null);
                     parameter.validate();
                 }
         );
