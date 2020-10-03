@@ -4,9 +4,11 @@ $(document).ready(function() {
         if (!$('#extractThumbnail').prop('checked')) {
             $('#start').parent().hide();
             $('#duration').parent().hide();
+            $('#secondsToOutput').parent().hide();
         } else {
             $('#start').parent().show();
             $('#duration').parent().show();
+            $('#secondsToOutput').parent().show();
         }
     });
     $('#file').change( function () {
@@ -109,8 +111,8 @@ $(document).ready(function() {
             },
             duration:{
                 required: 'Please, insert the duration time',
-                min: 'Min value required 00:00:01',
-                regex: 'Format valid is hh:mm:ss'
+                min: 'Min value required 1',
+                regex: 'Format valid is a number in seconds'
             },
             sampleRate: 'Please, insert the sample rate'
         },

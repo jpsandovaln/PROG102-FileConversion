@@ -13,7 +13,7 @@
                         <span> File</span>
                     </div>
                     <div class="file-path-wrapper">
-                        <input type="file" id="file" name="file" onchange=""/>
+                        <input type="file" id="file" name="file" onchange="calculate();calculateAudioDuration();"/>
                         <input id="file-path" class="file-path" type="text" disabled>
                     </div>
                 </div>
@@ -71,14 +71,14 @@
                 </div>
                 <div class="input-field col s12 m3">
                     <input type="text" id="secondsToOutput" name="secondsToOutput" class="validate" placeholder="" readonly>
-                    <label for="secondsToOutput">Input audio total duration:</label>
+                    <label for="secondsToOutput">Input-file total duration:</label>
                 </div>
                 <div class="input-field col s12 m3" style="display:none">
                     <input type="text" id="start" min="0" name="start" placeholder="hh:mm:ss" class="validate">
                     <label for="start">start:</label>
                 </div>
                 <div class="input-field col s12 m3" style="display:none">
-                    <input type="number" id="duration" name="duration" min="1" step="1" class="validate">
+                    <input type="number" id="duration" name="duration" min="1" step="1" placeholder="" class="validate">
                     <label for="duration">duration of cut audio (seconds):</label>
                 </div>
                 <div class="input-field col s6 m2 right mt30">
