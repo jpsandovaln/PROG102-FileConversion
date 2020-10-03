@@ -58,8 +58,6 @@ public class AudioController {
                 filePath = fileService.getFileByMd5(md5).getPath();
             }
             AudioParameter audioParameter = new AudioParameter();
-            System.out.println(requestAudioParameter.isCut());
-            System.out.println(requestAudioParameter.isExtractMetadata());
             setAudioParameterValues(audioParameter, requestAudioParameter, filePath);
             String result = FileZipped.zipper(audioParameter, execute(audioParameter));
             return ResponseEntity.ok().body(new OkResponse<Integer>(HttpServletResponse.SC_OK, result));

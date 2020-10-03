@@ -62,6 +62,26 @@ $(document).ready(function() {
        "Please check your input."
      );
 
+    $.validator.addMethod(
+        "lengthDuration",
+        function() {
+            var totalDurationToString =  $('#secondsToOutput').val();
+            var totalDurationToArray = totalDurationToString.split(":");
+            var totalDurationToSeconds = ((totalDurationToArray[0] * 3600) + (totalDurationToArray[1] * 60) + parseInt(totalDurationToArray[2], 10));
+            var startString =  $('#start').val();
+            var startToArray = startString.split(":");
+            var startToSeconds = ((startToArray[0] * 3600) + (startToArray[1] * 60) + parseInt(startToArray[2], 10));
+            var durationToInt = parseInt($('#duration').val());
+            console.log("total: ", totalDurationToSeconds);
+            console.log("cut: ", startToSeconds + durationToInt);
+            if (totalDurationToSeconds < (startToSeconds + durationToInt)) {
+                return false;
+            }
+            return true;
+        },
+        "Please check your input."
+    );
+
     $("#form-audio").validate({
         rules: {
             file: 'required',
@@ -94,18 +114,7 @@ $(document).ready(function() {
                 number: true,
                 min: '1',
             },
-            secondsToOutput: {
-                required: {
-                    depends: function() {
-                        if ($('#exportFormat').prop('checked')) {
-                            return true;
-                        }
-                        return false;
-                    },
-                },
-                min: '00:00:00',
-                regex: /^([0-1]?[0-9]|[2][0-3]):([0-5][0-9])(:[0-5][0-9])$/,
-            },
+            secondsToOutput: 'lengthDuration',
             sampleRate: 'required'
         },
         messages: {
@@ -115,6 +124,9 @@ $(document).ready(function() {
             codec: 'Please, insert the codec',
             bitRate: 'Please, insert the bitRate',
             channel: 'Please, insert the channel',
+            secondsToOutput: {
+                lengthDuration:'Cut audio duration should not be longer than the original audio'
+            },
             start: {
                 required: 'Please insert the start time',
                 min: 'Min value required 00:00:00',
@@ -123,7 +135,6 @@ $(document).ready(function() {
             duration:{
                 required: 'Please, insert the duration time',
                 min: 'Min value required 1',
-                regex: 'Format valid is a number in seconds'
             },
             sampleRate: 'Please, insert the sample rate'
         },
