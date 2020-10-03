@@ -31,7 +31,7 @@ public class VideoParameter extends MultimediaParameter {
     public static final String MP4 = ".mp4";
     private String videoCodec;
     private String frames;
-    private String secondsToOutput;
+
     private String controlLoop;
     private boolean extractThumbnail = false;
 
@@ -81,21 +81,6 @@ public class VideoParameter extends MultimediaParameter {
      */
     public void setExtractThumbnail(final boolean extractThumbnail) {
         this.extractThumbnail = extractThumbnail;
-    }
-
-    /**
-     * @return secondsToOutput
-     */
-    public String getSecondsToOutput() {
-        return secondsToOutput;
-    }
-
-    /**
-     * Sets secondsToOutput value
-     * @param secondsToOutput the secondsToOutput to set
-     */
-    public void setSecondsToOutput(final String secondsToOutput) {
-        this.secondsToOutput = secondsToOutput;
     }
 
     /**

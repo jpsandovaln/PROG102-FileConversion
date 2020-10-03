@@ -21,6 +21,9 @@ public class GifValidation implements IValidationStrategy {
     private int time;
     private int start;
 
+    public GifValidation() {
+    }
+
     /**
      * @param duration
      * @param start
@@ -34,7 +37,7 @@ public class GifValidation implements IValidationStrategy {
 
     /**
      * Converts duration to seconds
-     * @param duration - String reference to object duration of this video file
+     * @param time String reference to object duration of this video file
      */
     public int convertToSeconds(final String time) throws ArrayIndexOutOfBoundsException, NullPointerException {
         String[] parts = time.split(":");

@@ -71,26 +71,26 @@ $(document).ready(function() {
             start: {
                 required: {
                     depends: function() {
-                        if ($('#extractThumbnail').prop('checked')) {
+                        if ($('#exportFormat').prop('checked')) {
                             return true;
                         }
                         return false;
                     },
                 },
-               min: '0',
-               regex: /^([0-1]?[0-9]|[2][0-3]):([0-5][0-9])(:[0-5][0-9])$/,
+                min: '00:00:00',
+                regex: /^([0-1]?[0-9]|[2][0-3]):([0-5][0-9])(:[0-5][0-9])$/,
             },
             duration: {
                 required: {
                     depends: function() {
-                        if ($('#extractThumbnail').prop('checked')) {
+                        if ($('#exportFormat').prop('checked')) {
                             return true;
                         }
                         return false;
-                    }
+                    },
                 },
+                number: true,
                 min: '1',
-                regex: /^([0-1]?[0-9]|[2][0-3]):([0-5][0-9])(:[0-5][0-9])$/,
             },
             sampleRate: 'required'
         },

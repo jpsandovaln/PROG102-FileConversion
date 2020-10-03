@@ -91,6 +91,7 @@ public class AudioController {
         audioParameter.setSampleRate(requestAudioParameter.getSampleRate()); //-ar
         audioParameter.setStart(requestAudioParameter.getStart()); //-ss
         audioParameter.setDuration(requestAudioParameter.getDuration()); //-t
+        audioParameter.setSecondsToOutput(requestAudioParameter.getSecondsToOutput());
         audioParameter.setCut(requestAudioParameter.getIsCut());
         audioParameter.setExtractMetadata(requestAudioParameter.isExtractMetadata());
     }

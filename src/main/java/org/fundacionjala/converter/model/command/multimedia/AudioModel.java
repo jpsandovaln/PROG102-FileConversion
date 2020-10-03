@@ -2,6 +2,8 @@ package org.fundacionjala.converter.model.command.multimedia;
 
 import org.fundacionjala.converter.model.command.ICommand;
 import org.fundacionjala.converter.model.command.MetadataModel;
+import org.fundacionjala.converter.model.commons.exception.InvalidDataException;
+import org.fundacionjala.converter.model.commons.validation.DurationAndStartAudioValidation;
 import org.fundacionjala.converter.model.configPath.ConfigPath;
 import org.fundacionjala.converter.model.parameter.ModelParameter;
 import org.fundacionjala.converter.model.parameter.metadata.MetadataParameter;
@@ -44,9 +46,13 @@ public class AudioModel implements ICommand {
         listCommands.add(convert);
         AudioParameter param = (AudioParameter) modelParameter;
         if (param.getIsCut()) {
-            List<String> cut = new ArrayList<>();
-            cut = cut(cut, modelParameter);
-            listCommands.add(cut);
+            try{
+                List<String> cut = new ArrayList<>();
+                cut = cut(cut, modelParameter);
+                listCommands.add(cut);
+            } catch (InvalidDataException e) {
+                e.printStackTrace();
+            }
         }
         if (param.isExtractMetadata()) {
             listCommands.add(extractMetadata(param, VOID));
@@ -103,7 +109,7 @@ public class AudioModel implements ICommand {
      * @param modelParameter - the reference ModelParameter with parameters of audio
      * @return cut - the reference List<String> of commands list to cut
      */
-    private List<String> cut(final List<String> cut, final ModelParameter modelParameter) {
+    private List<String> cut(final List<String> cut, final ModelParameter modelParameter) throws InvalidDataException {
         File file = new File(ConfigPath.getVideoAudioTool());
         String fileToolPath = file.getAbsolutePath();
         cut.add(fileToolPath);
@@ -111,6 +117,8 @@ public class AudioModel implements ICommand {
         cut.add(INPUT);
         cut.add(modelParameter.getInputFile());
         AudioParameter param = (AudioParameter) modelParameter;
+        DurationAndStartAudioValidation validator = new DurationAndStartAudioValidation(param.getDuration(), param.getStart(), param.getSecondsToOutput());
+        validator.validate();
         addToList(cut, param.getStart(), START);
         addToList(cut, param.getDuration(), DURATION);
         String nameFile = param.getName();

@@ -8,6 +8,7 @@ public abstract class MultimediaParameter<T> extends ModelParameter {
     private String codec;
     private String start;
     private String duration;
+    private String secondsToOutput;
     private boolean extractMetadata = false;
 
     /**
@@ -68,6 +69,21 @@ public abstract class MultimediaParameter<T> extends ModelParameter {
      */
     public void setDuration(final String duration) {
         this.duration = duration;
+    }
+
+    /**
+     * @return secondsToOutput
+     */
+    public String getSecondsToOutput() {
+        return secondsToOutput;
+    }
+
+    /**
+     * Sets secondsToOutput value
+     * @param secondsToOutput the secondsToOutput to set
+     */
+    public void setSecondsToOutput(final String secondsToOutput) {
+        this.secondsToOutput = secondsToOutput;
     }
 
     /**

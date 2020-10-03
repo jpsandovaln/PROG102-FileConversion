@@ -63,19 +63,23 @@
                         <span>Metadata</span>
                     </label>
                 </div>
-                <div class="input-field col s12 m4">
+                <div class="input-field col s12 m3">
                     <label for="extractThumbnail">
                         <input id="extractThumbnail" name="extractThumbnail"  type="checkbox" />
                         <span>Cut</span>
                     </label>
                 </div>
-                <div class="input-field col s12 m4" style="display:none">
+                <div class="input-field col s12 m3">
+                    <input type="text" id="secondsToOutput" name="secondsToOutput" class="validate" placeholder="" readonly>
+                    <label for="secondsToOutput">Input audio total duration:</label>
+                </div>
+                <div class="input-field col s12 m3" style="display:none">
                     <input type="text" id="start" min="0" name="start" placeholder="hh:mm:ss" class="validate">
                     <label for="start">start:</label>
                 </div>
-                <div class="input-field col s12 m4" style="display:none">
-                    <input type="text" id="duration" name="duration" placeholder="hh:mm:ss" class="validate">
-                    <label for="duration">duration:</label>
+                <div class="input-field col s12 m3" style="display:none">
+                    <input type="number" id="duration" name="duration" min="1" step="1" class="validate">
+                    <label for="duration">duration of cut audio (seconds):</label>
                 </div>
                 <div class="input-field col s6 m2 right mt30">
                     <button class="btn" type="submit">
@@ -99,5 +103,6 @@
 <script src="https://kit.fontawesome.com/35db202371.js" crossorigin="anonymous"></script>
 <script src="https://cdn.jsdelivr.net/npm/jquery-validation@1.19.2/dist/jquery.validate.min.js"></script>
 <script th:src="@{/js/audio/audio.js}"></script>
+<script th:src="@{/js/duration/duration.js}"></script>
 </body>
 </html>
