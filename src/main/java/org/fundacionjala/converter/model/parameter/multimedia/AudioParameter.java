@@ -21,7 +21,6 @@ public class AudioParameter extends MultimediaParameter {
     private String bitRate;
     private String channel;
     private String sampleRate;
-    private String volume;
     private boolean isCut = false;
 
     /**
@@ -50,13 +49,6 @@ public class AudioParameter extends MultimediaParameter {
      */
     public String getSampleRate() {
         return sampleRate;
-    }
-
-    /**
-     * @return audio volume
-     */
-    public String getVolume() {
-        return volume;
     }
 
     /**
@@ -105,14 +97,6 @@ public class AudioParameter extends MultimediaParameter {
      */
     public void setSampleRate(final String sampleRate) {
         this.sampleRate = sampleRate;
-    }
-
-    /**
-     * Sets volume value
-     * @param volume the  to set
-     */
-    public void setVolume(final String volume) {
-        this.volume = volume;
     }
 
     /**

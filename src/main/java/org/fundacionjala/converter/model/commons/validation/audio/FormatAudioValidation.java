@@ -26,11 +26,11 @@ public class FormatAudioValidation implements IValidationStrategy {
      */
     @Override
     public void validate() throws InvalidDataException {
-        if (!formatsAllowed.contains(this.format)) {
-            throw new InvalidDataException("Invalid audio format");
-        }
         if (format == null || format.isBlank()) {
             new NotNullOrEmpty("audio format", format);
+        }
+        if (!formatsAllowed.contains(this.format)) {
+            throw new InvalidDataException("Invalid audio format");
         }
     }
 }

@@ -10,12 +10,11 @@ import java.util.List;
 import static org.junit.Assert.assertEquals;
 
 public class AudioModelTest {
-    /**
    @Test
     public void testCreateCommandReturnsAListOfCommand() throws IOException {
         AudioModel audioModel = new AudioModel();
         AudioParameter audioParameter = new AudioParameter();
-        audioParameter.setInputFile("storage/inputFiles/MiEternoAmorSecreto.mp3");
+        audioParameter.setInputFile("storage/inputFiles/audio.mp3");
         audioParameter.setOutputFile("storage/convertedFiles");
         audioParameter.setCodec("libmp3lame");
         audioParameter.setChannel("1");
@@ -31,7 +30,7 @@ public class AudioModelTest {
     public void testCreateCommandReturnsOutputNameWithMd5() throws IOException {
         AudioModel audioModel = new AudioModel();
         AudioParameter audioParameter = new AudioParameter();
-        audioParameter.setInputFile("storage/inputFiles/MiEternoAmorSecreto.mp3");
+        audioParameter.setInputFile("storage/inputFiles/audio.mp3");
         audioParameter.setOutputFile("storage/convertedFiles");
         audioParameter.setCodec("libmp3lame");
         audioParameter.setChannel("1");
@@ -49,12 +48,12 @@ public class AudioModelTest {
     public void testCreateCommandReturnsCommandForCutIsTrue() throws IOException {
         AudioModel audioModel = new AudioModel();
         AudioParameter audioParameter = new AudioParameter();
-        audioParameter.setInputFile("storage/inputFiles/MiEternoAmorSecreto.mp3");
+        audioParameter.setInputFile("storage/inputFiles/audio.mp3");
         audioParameter.setFormat(".mp3");
         audioParameter.setCut(true);
         audioParameter.setStart("00:00:30");
         audioParameter.setDuration("00:00:10");
-        String expected = "[thirdParty/ffmpeg/bin/ffmpeg.exe, -y, -i, storage/inputFiles/MiEternoAmorSecreto.mp3, -ss, 00:00:30, -t, 00:00:10, storage/convertedFiles/5ab69eb2751ceeb3120b8c369f5589c9_cut.mp3]";
+        String expected = "[thirdParty/ffmpeg/bin/ffmpeg.exe, -y, -i, storage/inputFiles/audio.mp3, -ss, 00:00:30, -t, 00:00:10, storage/convertedFiles/5ab69eb2751ceeb3120b8c369f5589c9_cut.mp3]";
         List<List<String>> list = audioModel.createCommand(audioParameter);
         assertEquals(expected, list.get(1).toString());
     }
@@ -63,7 +62,7 @@ public class AudioModelTest {
     public void testCreateCommandReturnsCommandForExtractMetadata() throws IOException {
         AudioModel audioModel = new AudioModel();
         AudioParameter audioParameter = new AudioParameter();
-        audioParameter.setInputFile("storage/inputFiles/MiEternoAmorSecreto.mp3");
+        audioParameter.setInputFile("storage/inputFiles/audio.mp3");
         audioParameter.setOutputFile("storage/convertedFiles");
         audioParameter.setCodec("libmp3lame");
         audioParameter.setChannel("1");
@@ -79,7 +78,7 @@ public class AudioModelTest {
     public void testCreateCommandReturnsFourCommandListForExtractMetadataAndCut() throws IOException {
         AudioModel audioModel = new AudioModel();
         AudioParameter audioParameter = new AudioParameter();
-        audioParameter.setInputFile("storage/inputFiles/MiEternoAmorSecreto.mp3");
+        audioParameter.setInputFile("storage/inputFiles/audio.mp3");
         audioParameter.setOutputFile("storage/convertedFiles");
         audioParameter.setCodec("libmp3lame");
         audioParameter.setChannel("1");
@@ -93,5 +92,5 @@ public class AudioModelTest {
         List<List<String>> list = audioModel.createCommand(audioParameter);
         System.out.println(list.size());
         assertEquals(4, list.size());
-    }**/
+    }
 }

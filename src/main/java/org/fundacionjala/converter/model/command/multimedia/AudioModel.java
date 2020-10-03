@@ -2,6 +2,7 @@ package org.fundacionjala.converter.model.command.multimedia;
 
 import org.fundacionjala.converter.model.command.ICommand;
 import org.fundacionjala.converter.model.command.MetadataModel;
+import org.fundacionjala.converter.model.commons.exception.InvalidDataException;
 import org.fundacionjala.converter.model.configPath.ConfigPath;
 import org.fundacionjala.converter.model.parameter.metadata.MetadataParameter;
 import org.fundacionjala.converter.model.parameter.multimedia.AudioParameter;
@@ -19,14 +20,12 @@ public class AudioModel implements ICommand<AudioParameter> {
     private static final String BITRATE = "-b:a";
     private static final String CHANNEL = "-ac";
     private static final String SAMPLE_RATE = "-ar";
-    private static final String VOLUME = "-vol";
     private static final String START = "-ss";
     private static final String DURATION = "-t";
     private static final String OVERWRITING = "-y";
     private static final String INPUT = "-i";
     private static final String CUT_SUFFIX = "_cut";
     private static final String VOID = "";
-    private static final String META_SUFFIX = "_meta";
     private static final String JSON = "j";
     private static final String VERBOSE = "v";
     /**
@@ -36,7 +35,11 @@ public class AudioModel implements ICommand<AudioParameter> {
      */
     @Override
     public List<List<String>> createCommand(final AudioParameter audioParameter)  {
-        //audioParameter.validate();
+        try {
+            audioParameter.validate();
+        } catch (InvalidDataException e) {
+            e.getMessage();
+        }
         List<List<String>> listCommands = new ArrayList<>();
         List<String> convert = new ArrayList<>();
         convert = convert(convert, audioParameter);
@@ -67,7 +70,6 @@ public class AudioModel implements ICommand<AudioParameter> {
         addToList(convert, audioParameter.getBitRate(), BITRATE);
         addToList(convert, audioParameter.getChannel(), CHANNEL);
         addToList(convert, audioParameter.getSampleRate(), SAMPLE_RATE);
-        addToList(convert, audioParameter.getVolume(), VOLUME);
         String formatFile = audioParameter.getFormat();
         convert.add(fileConvertPath + audioParameter.getMd5() + formatFile);
 

@@ -25,11 +25,11 @@ public class BitRateAudioValidation implements IValidationStrategy {
      */
     @Override
     public void validate() throws InvalidDataException {
-        if (!bitRatesAllowed.contains(this.bitRate)) {
-            throw new InvalidDataException("Invalid audio bit rate");
-        }
         if (bitRate == null || bitRate.isBlank()) {
             new NotNullOrEmpty("audio bit rate", bitRate);
+        }
+        if (!bitRatesAllowed.contains(this.bitRate)) {
+            throw new InvalidDataException("Invalid audio bit rate");
         }
     }
 }

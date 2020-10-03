@@ -25,11 +25,11 @@ public class ChannelAudioValidation implements IValidationStrategy {
      */
     @Override
     public void validate() throws InvalidDataException {
-        if (!channelsAllowed.contains(this.channel)) {
-            throw new InvalidDataException("Invalid audio channel");
-        }
         if (channel == null || channel.isBlank()) {
             new NotNullOrEmpty("audio channel", channel);
+        }
+        if (!channelsAllowed.contains(this.channel)) {
+            throw new InvalidDataException("Invalid audio channel");
         }
     }
 }

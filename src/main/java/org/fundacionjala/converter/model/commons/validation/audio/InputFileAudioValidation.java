@@ -2,7 +2,6 @@ package org.fundacionjala.converter.model.commons.validation.audio;
 
 import org.fundacionjala.converter.model.commons.exception.InvalidDataException;
 import org.fundacionjala.converter.model.commons.validation.IValidationStrategy;
-import org.fundacionjala.converter.model.commons.validation.NotNullOrEmpty;
 
 import java.io.File;
 import java.io.IOException;
@@ -21,7 +20,7 @@ public class InputFileAudioValidation implements IValidationStrategy {
     @Override
     public void validate() throws InvalidDataException {
         if (inputFile == null || inputFile.isBlank()) {
-            new NotNullOrEmpty("inputFile", inputFile);
+            throw new InvalidDataException("the file is mull");
         }
         File file = new File(inputFile);
         if (!file.exists()) {
@@ -31,10 +30,10 @@ public class InputFileAudioValidation implements IValidationStrategy {
         try {
             typeFile = Files.probeContentType(file.toPath());
         } catch (IOException e) {
-            e.printStackTrace();
+            throw new InvalidDataException("this file does not type audio");
         }
         if (!typeFile.contains("audio")) {
-            throw new InvalidDataException("this file does not audio");
+            throw new InvalidDataException("this file does not type audio");
         }
     }
 }

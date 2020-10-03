@@ -24,11 +24,11 @@ public class CodecAudioValidation implements IValidationStrategy {
      */
     @Override
     public void validate() throws InvalidDataException {
-        if (!codecsAllowed.contains(this.codec)) {
-            throw new InvalidDataException("Invalid audio codec");
-        }
         if (codec == null || codec.isBlank()) {
             new NotNullOrEmpty("audio codec", codec);
+        }
+        if (!codecsAllowed.contains(this.codec)) {
+            throw new InvalidDataException("Invalid audio codec");
         }
     }
 }

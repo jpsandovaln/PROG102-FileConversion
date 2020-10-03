@@ -24,11 +24,11 @@ public class SampleRateAudioValidation implements IValidationStrategy {
      */
     @Override
     public void validate() throws InvalidDataException {
-        if (!sampleRatesAllowed.contains(this.sampleRate)) {
-            throw new InvalidDataException("Invalid sample rate");
-        }
         if (sampleRate == null || sampleRate.isBlank()) {
             new NotNullOrEmpty("sampleRate", sampleRate);
+        }
+        if (!sampleRatesAllowed.contains(this.sampleRate)) {
+            throw new InvalidDataException("Invalid sample rate");
         }
     }
 }
