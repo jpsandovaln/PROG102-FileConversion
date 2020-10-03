@@ -58,7 +58,6 @@ public class AudioController {
             } else {
                 filePath = fileService.getFileByMd5(md5).getPath();
             }
-
             AudioParameter audioParameter = new AudioParameter();
             setAudioParameterValues(audioParameter, requestAudioParameter, filePath);
             String result = FileZipped.zipper(audioParameter, execute(audioParameter));
@@ -92,7 +91,8 @@ public class AudioController {
         audioParameter.setSampleRate(requestAudioParameter.getSampleRate()); //-ar
         audioParameter.setStart(requestAudioParameter.getStart()); //-ss
         audioParameter.setDuration(requestAudioParameter.getDuration()); //-t
-        audioParameter.setCut(requestAudioParameter.getIsCut());
+        audioParameter.setSecondsToOutput(requestAudioParameter.getSecondsToOutput());
+        audioParameter.setCut(requestAudioParameter.isCut());
         audioParameter.setExtractMetadata(requestAudioParameter.isExtractMetadata());
     }
 

@@ -99,8 +99,7 @@ $(document).ready(function() {
                 },
                 number: true,
                 min: '1',
-                max: '50',
-            }, 
+            },
         },
         messages: {
             file: 'Please insert the file',

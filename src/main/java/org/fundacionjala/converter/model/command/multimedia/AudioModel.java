@@ -3,10 +3,13 @@ package org.fundacionjala.converter.model.command.multimedia;
 import org.fundacionjala.converter.model.command.ICommand;
 import org.fundacionjala.converter.model.command.MetadataModel;
 import org.fundacionjala.converter.model.commons.exception.InvalidDataException;
+import org.fundacionjala.converter.model.commons.validation.DurationAndStartAudioValidation;
 import org.fundacionjala.converter.model.configPath.ConfigPath;
+import org.fundacionjala.converter.model.parameter.ModelParameter;
 import org.fundacionjala.converter.model.parameter.metadata.MetadataParameter;
 import org.fundacionjala.converter.model.parameter.multimedia.AudioParameter;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -45,9 +48,13 @@ public class AudioModel implements ICommand<AudioParameter> {
         convert = convert(convert, audioParameter);
         listCommands.add(convert);
         if (audioParameter.getIsCut()) {
-            List<String> cut = new ArrayList<>();
-            cut = cut(cut, audioParameter);
-            listCommands.add(cut);
+            try {
+                List<String> cut = new ArrayList<>();
+                cut = cut(cut, audioParameter);
+                listCommands.add(cut);
+            } catch (InvalidDataException e) {
+                e.printStackTrace();
+            }
         }
         if (audioParameter.isExtractMetadata()) {
             listCommands.add(extractMetadata(audioParameter, VOID));
@@ -83,17 +90,28 @@ public class AudioModel implements ICommand<AudioParameter> {
         }
     }
 
-    private List<String> cut(final List<String> cut, final AudioParameter audioParameter) {
-        String fileToolPath = ConfigPath.getVideoAudioTool();
-        String fileConvertPath = ConfigPath.getConvertedFilesPath();
+    /**
+     * Cuts audio file
+     * @param cut - the reference List<String> to add to the list
+     * @param modelParameter - the reference ModelParameter with parameters of audio
+     * @return cut - the reference List<String> of commands list to cut
+     */
+    private List<String> cut(final List<String> cut, final ModelParameter modelParameter) throws InvalidDataException {
+        File file = new File(ConfigPath.getVideoAudioTool());
+        String fileToolPath = file.getAbsolutePath();
         cut.add(fileToolPath);
         cut.add(OVERWRITING);
         cut.add(INPUT);
-        cut.add(audioParameter.getInputFile());
-        addToList(cut, audioParameter.getStart(), START);
-        addToList(cut, audioParameter.getDuration(), DURATION);
-        String formatFile = audioParameter.getFormat();
-        cut.add(fileConvertPath + audioParameter.getMd5() + CUT_SUFFIX  + formatFile);
+        cut.add(modelParameter.getInputFile());
+        AudioParameter param = (AudioParameter) modelParameter;
+        DurationAndStartAudioValidation validator = new DurationAndStartAudioValidation(param.getDuration(), param.getStart(), param.getSecondsToOutput());
+        validator.validate();
+        addToList(cut, param.getStart(), START);
+        addToList(cut, param.getDuration(), DURATION);
+        String nameFile = param.getName();
+        String formatFile = param.getFormat();
+        cut.add(modelParameter.getOutputFile() + nameFile + CUT_SUFFIX + formatFile);
+        name(modelParameter);
         return cut;
     }
     private List<String> extractMetadata(final AudioParameter audioParameter, final String suffix) {
