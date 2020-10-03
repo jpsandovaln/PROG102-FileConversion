@@ -4,7 +4,12 @@ import org.fundacionjala.converter.model.commons.exception.InvalidDataException;
 import org.fundacionjala.converter.model.commons.validation.IValidationStrategy;
 import org.fundacionjala.converter.model.commons.validation.ModelParameterValidation;
 import org.fundacionjala.converter.model.commons.validation.ValidationContext;
-import org.fundacionjala.converter.model.commons.validation.audio.*;
+import org.fundacionjala.converter.model.commons.validation.audio.InputFileAudioValidation;
+import org.fundacionjala.converter.model.commons.validation.audio.FormatAudioValidation;
+import org.fundacionjala.converter.model.commons.validation.audio.BitRateAudioValidation;
+import org.fundacionjala.converter.model.commons.validation.audio.ChannelAudioValidation;
+import org.fundacionjala.converter.model.commons.validation.audio.SampleRateAudioValidation;
+import org.fundacionjala.converter.model.commons.validation.audio.CodecAudioValidation;
 
 import java.io.IOException;
 import java.util.ArrayList;

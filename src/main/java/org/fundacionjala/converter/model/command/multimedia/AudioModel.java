@@ -35,9 +35,9 @@ public class AudioModel implements ICommand<AudioParameter> {
      * @param audioParameter
      */
     @Override
-    public List<List<String>> createCommand(final AudioParameter audioParameter) {
+    public List<List<String>> createCommand(final AudioParameter audioParameter)  {
+        //audioParameter.validate();
         List<List<String>> listCommands = new ArrayList<>();
-        audioParameter.validate();
         List<String> convert = new ArrayList<>();
         convert = convert(convert, audioParameter);
         listCommands.add(convert);
