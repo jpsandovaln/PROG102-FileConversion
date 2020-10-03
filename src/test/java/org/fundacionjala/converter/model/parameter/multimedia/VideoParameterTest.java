@@ -85,13 +85,4 @@ public class VideoParameterTest {
             assertThat(e.getMessage(), is("Invalid codec"));
         }
     }
-    @Rule
-    public ExpectedException thrown = ExpectedException.none();
-
-    @Test
-    public void testSetFramesNullThrowsNullPointerException() {
-        thrown.expect(NullPointerException.class);
-        thrown.expectMessage(containsString("is null"));
-        parameter.setSecondsToOutput(null);
-    }
 }
