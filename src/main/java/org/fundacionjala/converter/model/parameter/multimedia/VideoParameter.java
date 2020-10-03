@@ -117,7 +117,7 @@ public class VideoParameter extends MultimediaParameter {
     /**
      * @return the outputFiles
      */
-    public List<String> getOutputFiles() {
+    public List<String> getOutputFiles() throws NullPointerException {
         return outputFiles;
     }
 

@@ -98,7 +98,6 @@ public class VideoModel implements ICommand<VideoParameter> {
      * @return List<String> - list of commands
      */
     private List<String> convertGif(final VideoParameter videoParameter) {
-        //System.out.println("***************convert gif **************");
         final List<String> listParameters = new ArrayList<>();
         listParameters.add(configPath.getVideoAudioTool());
         listParameters.add(VideoParameter.INPUT_COMMAND);

@@ -17,10 +17,14 @@ public class GifValidationTest {
         assertEquals(expected, actual);
     }
     @Test
-    public void testConvertTimeToSkipToSecondsTenSeconds(){
+    public void testConvertStartToSecondsTenSeconds(){
         int expected = 10;
         gifValidation.convertToSeconds(start);
         int actual = gifValidation.getStart();
         assertEquals(expected, actual);
+    }
+    @Test
+    public void testValidateThrowsExceptionWhenStartIsGreaterThanDuration() {
+        
     }
 }
