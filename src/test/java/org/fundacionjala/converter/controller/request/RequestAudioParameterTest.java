@@ -283,6 +283,8 @@ class RequestAudioParameterTest {
     }
     @Test
     public void testGetFields() {
+        requestAudioParameter.setName("name");
+        assertEquals("name", requestAudioParameter.getName());
         requestAudioParameter.setCodec("libmp3lame");
         assertEquals("libmp3lame", requestAudioParameter.getCodec());
         requestAudioParameter.setChannel("1");
