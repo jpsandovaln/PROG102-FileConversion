@@ -21,7 +21,7 @@ public class ImageModelTest {
     public void testIsResize() throws IOException {
         ImageModel imageModel = new ImageModel();
         ImageParameter imageParameter = new ImageParameter();
-        String expected = "[[thirdParty/imagemagic/image.exe, storage/inputFiles/1nar.jpg, -resize, 1000X1000!, storage\\convertedFiles/95384efd0209233dde8003713cbdb9c3(resized).png]]";
+        String expected = "[[thirdParty/linux/imagemagick/magick, storage/inputFiles/1nar.jpg, -resize, 1000X1000!, storage\\convertedFiles/95384efd0209233dde8003713cbdb9c3(resized).png]]";
         imageParameter.setInputFile("storage/inputFiles/1nar.jpg");
         imageParameter.setOutputFile("storage/convertedFiles/");
         imageParameter.setMd5("95384efd0209233dde8003713cbdb9c3");
@@ -36,7 +36,7 @@ public class ImageModelTest {
     public void testIsOnlyFormat() throws IOException {
         ImageModel imageModel = new ImageModel();
         ImageParameter imageParameter = new ImageParameter();
-        String expected = "[[thirdParty/imagemagic/image.exe, storage/inputFiles/1nar.jpg, storage/convertedFiles//95384efd0209233dde8003713cbdb9c3(FORMAT).png]]";
+        String expected = "[[thirdParty/linux/imagemagick/magick, storage/inputFiles/1nar.jpg, storage/convertedFiles//95384efd0209233dde8003713cbdb9c3(FORMAT).png]]";
         imageParameter.setInputFile("storage/inputFiles/1nar.jpg");
         imageParameter.setOutputFile("storage/convertedFiles/");
         imageParameter.setMd5("95384efd0209233dde8003713cbdb9c3");
@@ -49,7 +49,7 @@ public class ImageModelTest {
     public void testGetGray() throws IOException {
         ImageModel imageModel = new ImageModel();
         ImageParameter imageParameter = new ImageParameter();
-        String expected = "[[thirdParty/imagemagic/image.exe, storage/inputFiles/1nar.jpg, -colorspace, gray, storage\\convertedFiles/95384efd0209233dde8003713cbdb9c3(gray).png]]";
+        String expected = "[[thirdParty/linux/imagemagick/magick, storage/inputFiles/1nar.jpg, -colorspace, gray, storage\\convertedFiles/95384efd0209233dde8003713cbdb9c3(gray).png]]";
         imageParameter.setInputFile("storage/inputFiles/1nar.jpg");
         imageParameter.setOutputFile("storage/convertedFiles/");
         imageParameter.setMd5("95384efd0209233dde8003713cbdb9c3");
@@ -63,7 +63,7 @@ public class ImageModelTest {
     public void testGetCrop() throws IOException {
         ImageModel imageModel = new ImageModel();
         ImageParameter imageParameter = new ImageParameter();
-        String expected = "[[thirdParty/imagemagic/image.exe, storage/inputFiles/1nar.jpg, -crop, 0x0+78+40, storage\\convertedFiles/95384efd0209233dde8003713cbdb9c3(imageregion).png]]";
+        String expected = "[[thirdParty/linux/imagemagick/magick, storage/inputFiles/1nar.jpg, -crop, 0x0+78+40, storage\\convertedFiles/95384efd0209233dde8003713cbdb9c3(imageregion).png]]";
         imageParameter.setInputFile("storage/inputFiles/1nar.jpg");
         imageParameter.setOutputFile("storage/convertedFiles/");
         imageParameter.setMd5("95384efd0209233dde8003713cbdb9c3");
@@ -77,7 +77,7 @@ public class ImageModelTest {
     public void testGetThumbnail() throws IOException    {
         ImageModel imageModel = new ImageModel();
         ImageParameter imageParameter = new ImageParameter();
-        String expected = "[[thirdParty/imagemagic/image.exe, storage/inputFiles/1nar.jpg, -resize, 128X128, storage\\convertedFiles/95384efd0209233dde8003713cbdb9c3(thumbnail).png]]";
+        String expected = "[[thirdParty/linux/imagemagick/magick, storage/inputFiles/1nar.jpg, -resize, 128X128, storage\\convertedFiles/95384efd0209233dde8003713cbdb9c3(thumbnail).png]]";
         imageParameter.setInputFile("storage/inputFiles/1nar.jpg");
         imageParameter.setOutputFile("storage/convertedFiles/");
         imageParameter.setMd5("95384efd0209233dde8003713cbdb9c3");
@@ -91,7 +91,7 @@ public class ImageModelTest {
     public void testExtractMetadata() throws IOException    {
         ImageModel imageModel = new ImageModel();
         ImageParameter imageParameter = new ImageParameter();
-        String expected = "[Metadata, thirdParty/exiftool/exiftool.exe, -j, -v, storage/convertedFiles//95384efd0209233dde8003713cbdb9c3(thumbnail).png, 95384efd0209233dde8003713cbdb9c3(thumbnail)0png-meta_Metadata.json]";
+        String expected = "[Metadata, Metadata, /usr/bin/exiftool, -j, -v, storage/convertedFiles//95384efd0209233dde8003713cbdb9c3(thumbnail).png, 95384efd0209233dde8003713cbdb9c3(thumbnail)0png-meta_Metadata.json]";
         imageParameter.setInputFile("storage/inputFiles/1nar.jpg");
         imageParameter.setOutputFile("storage/convertedFiles/");
         imageParameter.setMd5("95384efd0209233dde8003713cbdb9c3");
