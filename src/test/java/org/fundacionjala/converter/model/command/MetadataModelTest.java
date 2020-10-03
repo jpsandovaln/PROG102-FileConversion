@@ -1,35 +1,54 @@
 package org.fundacionjala.converter.model.command;
 
-import org.fundacionjala.converter.model.ChecksumMD5;
-import org.junit.jupiter.api.Test;
-
 import org.fundacionjala.converter.model.parameter.metadata.MetadataParameter;
-import org.fundacionjala.converter.executor.Executor;
-import java.io.IOException;
-import java.security.NoSuchAlgorithmException;
-import java.util.List;
-import java.util.concurrent.ExecutionException;
 
+import org.junit.jupiter.api.Test;
 import static org.junit.Assert.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public class MetadataModelTest {
+    private String inputFile = "storage/inputFiles/test.mp3";
+    private String outputFile = "storage/convertedFiles/";
+    private String md5OriginalFile = "e1b3fab24c8af81c1aa13dbbb4e44ff0";
     @Test
-    public void testConvertToJson() throws InterruptedException, ExecutionException, IOException, NoSuchAlgorithmException {
-        MetadataModel metaDataModel = new MetadataModel();
-        String inputFile = "storage/inputFiles/test.mp3";
-        String outputFile = "storage/convertedFiles/";
+    public void testCreateCommandDetailCommon() {
+
         String exportFormat = "j";
         String detail = "common";
-        String md5OriginalFile = "e1b3fab24c8af81c1aa13dbbb4e44ff0";
+        String expected = "[[Metadata, /usr/bin/exiftool, -j, -common, storage/inputFiles/test.mp3, storage/convertedFiles/e1b3fab24c8af81c1aa13dbbb4e44ff0j_Metadata.json]]";
         String nameFileOutPut = outputFile + md5OriginalFile + exportFormat;
-        String expectedMd5 = "bbb93a7a9e7600ea16acec655366e4fd";
+        MetadataParameter parameter= new MetadataParameter(inputFile, exportFormat, detail, outputFile,
+            md5OriginalFile);
+        parameter.setOutputFile(nameFileOutPut);
 
-        MetadataParameter metaDataParameter = new MetadataParameter(inputFile, exportFormat, detail, outputFile, md5OriginalFile);
-        metaDataParameter.setOutputFile(nameFileOutPut);
+        MetadataModel metaDataModel = new MetadataModel();
+        String result = metaDataModel.createCommand(parameter).toString();
+        assertEquals(expected, result);
+    }
 
-        List<List<String>> command = metaDataModel.createCommand(metaDataParameter);
-        Executor executor = new Executor();
-        String result = new ChecksumMD5().getMD5(executor.executeCommandsList(command).get(0));
-        assertEquals(expectedMd5, result);
+    @Test
+    public void testNullPointerExceptionCreateCommand() {
+        MetadataParameter parameter = null;
+        MetadataModel metaDataModel = new MetadataModel();
+
+        assertThrows(NullPointerException.class, () -> {
+            metaDataModel.createCommand(parameter).toString();
+        });
+    }
+
+    @Test
+    public void testCreateCommandDetailDefault() {
+        String exportFormat = "j";
+        String detail = "d";
+        String expected = "[[Metadata, /usr/bin/exiftool, -j, storage/inputFiles/test.mp3, storage/convertedFiles/e1b3fab24c8af81c1aa13dbbb4e44ff0j_Metadata.json]]";
+        String nameFileOutPut = outputFile + md5OriginalFile + exportFormat;
+
+        MetadataParameter parameter= new MetadataParameter(inputFile, exportFormat, detail, outputFile,
+                md5OriginalFile);
+        parameter.setOutputFile(nameFileOutPut);
+
+        MetadataModel metaDataModel = new MetadataModel();
+        String result = metaDataModel.createCommand(parameter).toString();
+        assertEquals(expected, result);
     }
 }
