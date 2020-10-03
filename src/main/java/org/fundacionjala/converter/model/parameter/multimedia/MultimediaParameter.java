@@ -21,7 +21,7 @@ public abstract class MultimediaParameter<T> extends ModelParameter {
      * Sets name value
      * @param name the name to set
      */
-    public void setName(final String name) {
+    public void setName(final String name) throws NullPointerException {
         this.name = name;
     }
 
@@ -36,7 +36,7 @@ public abstract class MultimediaParameter<T> extends ModelParameter {
      * Sets codec value
      * @param codec the codec to set
      */
-    public void setCodec(final String codec) {
+    public void setCodec(final String codec) throws NullPointerException {
         this.codec = codec;
     }
 
@@ -51,7 +51,7 @@ public abstract class MultimediaParameter<T> extends ModelParameter {
      * Sets start value
      * @param start the start to set
      */
-    public void setStart(final String start) {
+    public void setStart(final String start) throws NullPointerException {
         this.start = start;
     }
 
@@ -66,7 +66,7 @@ public abstract class MultimediaParameter<T> extends ModelParameter {
      * Sets duration value
      * @param duration the duration to set
      */
-    public void setDuration(final String duration) {
+    public void setDuration(final String duration) throws NullPointerException {
         this.duration = duration;
     }
 
@@ -81,7 +81,7 @@ public abstract class MultimediaParameter<T> extends ModelParameter {
      * Sets extractMetadata value
      * @param extractMetadata the extractMetadata to set
      */
-    public void setExtractMetadata(final boolean extractMetadata) {
+    public void setExtractMetadata(final boolean extractMetadata) throws NullPointerException {
         this.extractMetadata = extractMetadata;
     }
 }

@@ -46,25 +46,4 @@ public interface ICommand<T extends ModelParameter> {
         }
         return newName;
     }
-
-    /**
-     * Returns a new file name
-     * @param pathOutputFile
-     * @param fileName
-     * @param format
-     * @return
-     */
-    default String changeOutputName(final String pathOutputFile, final String fileName, final String format) {
-        String file = pathOutputFile + fileName + format;
-        String nameAuxiliar = fileName;
-        File aFile = new File(file);
-        int fileNo = 0;
-        while (aFile.exists() && !aFile.isDirectory()) {
-            fileNo++;
-            nameAuxiliar = fileName + "(" + fileNo + ")";
-            aFile = new File(pathOutputFile + nameAuxiliar + format);
-        }
-        String newName = fileName + "(" + ++fileNo + ")";
-        return newName;
-    }
 }

@@ -44,7 +44,7 @@ public abstract class ModelParameter {
    * Sets format value
    * @param format the format to set
    */
-  public void setFormat(final String format) {
+  public void setFormat(final String format) throws NullPointerException {
     this.format = format;
   }
 
@@ -81,8 +81,9 @@ public abstract class ModelParameter {
   /**
    * Sets inputFile value
    * @param inputFile the inputFile to set
+ * @throws IOException
    */
-  public void setInputFile(final String inputFile) throws IOException {
+  public void setInputFile(final String inputFile) throws NullPointerException, IOException {
     this.inputFile = inputFile;
   }
 
@@ -90,7 +91,7 @@ public abstract class ModelParameter {
    * Sets outputFile value
    * @param outputFile the outputFile to set
    */
-  public void setOutputFile(final String outputFile) {
+  public void setOutputFile(final String outputFile)  throws NullPointerException {
     this.outputFile = outputFile;
   }
 }

@@ -11,8 +11,8 @@ public class InvalidDataException extends Exception {
         super(MESSAGE, ex);
     }
 
-    public InvalidDataException(final String currantMessage, final Throwable ex) {
-        super(currantMessage, ex);
+    public InvalidDataException(final String currentMessage, final Throwable ex) {
+        super(currentMessage, ex);
     }
 
     public InvalidDataException(final String currentMessage) {
