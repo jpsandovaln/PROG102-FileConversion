@@ -17,6 +17,7 @@ import java.util.concurrent.ExecutionException;
 import org.apache.commons.io.FilenameUtils;
 import org.fundacionjala.converter.executor.Executor;
 import org.fundacionjala.converter.model.command.MetadataModel;
+import org.fundacionjala.converter.model.commons.exception.InvalidDataException;
 import org.fundacionjala.converter.model.configPath.ConfigPath;
 import org.fundacionjala.converter.model.parameter.metadata.MetadataParameter;
 import org.fundacionjala.converter.model.parameter.multimedia.VideoParameter;
@@ -33,8 +34,7 @@ public class VideoFacade {
     private List<String> outputFiles;
     private List<List<String>> listMetadataCommands;
     private List<MetadataParameter> listMetadataParameters;
-    private ConfigPath configPath;
-    private static final String FORMAT = "j";   // json
+    private static final String FORMAT = "j"; // json
     private static final String DETAIL = "v";
     private static final String THUMBNAIL = "(thumbnail)";
 
@@ -52,17 +52,27 @@ public class VideoFacade {
      * @throws InterruptedException
      */
     private List<List<String>> getListMetadataCommands(final VideoParameter videoParameter)
-    throws NoSuchAlgorithmException, IOException, InterruptedException, ExecutionException {
+            throws NoSuchAlgorithmException, IOException, InterruptedException, ExecutionException {
         listMetadataCommands = new ArrayList<>();
         listMetadataParameters = new ArrayList<>();
         String checksum = "";
-        for (String path : videoParameter.getOutputFiles()) {
-            listMetadataParameters.add(new MetadataParameter(path, FORMAT, DETAIL, configPath.getConvertedFilesPath() + FilenameUtils.getBaseName(path), checksum));
+        try {
+            if (videoParameter.getOutputFiles().isEmpty()) {
+                throw (new InvalidDataException("There is no item to extract Metadata"));
+            } else {
+                for (String path : videoParameter.getOutputFiles()) {
+                    listMetadataParameters.add(new MetadataParameter(path, FORMAT, DETAIL,
+                            ConfigPath.getConvertedFilesPath() + FilenameUtils.getBaseName(path), checksum));
+                }
+                for (MetadataParameter metadataParameter : listMetadataParameters) {
+                    listMetadataCommands.addAll(new MetadataModel().createCommand(metadataParameter));
+                }
+                return listMetadataCommands;
+            }
+        } catch (InvalidDataException e) {
+            e.getMessage();
         }
-        for (MetadataParameter metadataParameter : listMetadataParameters) {
-            listMetadataCommands.addAll(new MetadataModel().createCommand(metadataParameter));
-        }
-        return listMetadataCommands;
+        return null;
     }
 
     /**
@@ -72,9 +82,11 @@ public class VideoFacade {
      * @throws InterruptedException
      * @throws IOException
      * @throws NoSuchAlgorithmException
+     * @throws InvalidDataException
      */
-    public List<String> convertVideo(final VideoParameter videoParameter)
-            throws NoSuchAlgorithmException, IOException, InterruptedException, ExecutionException {
+    public List<String> convertVideo(final VideoParameter videoParameter) throws NoSuchAlgorithmException, IOException,
+            InterruptedException, ExecutionException, InvalidDataException {
+        videoParameter.validate();
         list = new ArrayList<>();
         fullList = new ArrayList<>();
         outputFiles = new ArrayList<String>();
@@ -92,5 +104,24 @@ public class VideoFacade {
         }
         fullList = executor.executeCommandsList(list);
         return fullList;
+    }
+
+    /**
+     * @return the videoModel
+     */
+    public VideoModel getVideoModel() {
+        return videoModel;
+    }
+
+    /**
+     * Sets videoModel value
+     * @param videoModel the videoModel to set
+     */
+    public void setVideoModel(final VideoModel videoModel) throws IllegalArgumentException {
+        try {
+            this.videoModel = videoModel;
+        } catch (Exception e) {
+            new IllegalArgumentException("Invalid model.", e);
+        }
     }
 }

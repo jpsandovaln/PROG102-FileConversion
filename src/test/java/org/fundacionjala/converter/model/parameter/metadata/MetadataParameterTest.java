@@ -1,7 +1,5 @@
 package org.fundacionjala.converter.model.parameter.metadata;
 
-import com.lowagie.text.Meta;
-import org.fundacionjala.converter.model.command.MetadataModel;
 import org.fundacionjala.converter.model.parameter.ModelParameter;
 import org.junit.jupiter.api.Test;
 
