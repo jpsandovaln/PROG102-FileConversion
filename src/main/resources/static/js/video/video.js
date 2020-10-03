@@ -117,8 +117,8 @@ $(document).ready(function() {
                 min: 'Min value required 00:00:00',
                 regex: 'Format valid is hh:mm:ss'
             },
-            timeToSkip: {
-                required: 'Please insert the audio codec',
+            secondsToOutput: {
+                required: 'Please insert the duration of gif',
                 number: 'Please insert just numbers',
                 min: 'Min value required is 1',
                 max: 'Max value required is 50',

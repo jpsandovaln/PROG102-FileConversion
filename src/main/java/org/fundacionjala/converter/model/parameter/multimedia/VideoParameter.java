@@ -34,6 +34,7 @@ public class VideoParameter extends MultimediaParameter {
 
     private String controlLoop;
     private boolean extractThumbnail = false;
+    private List<String> outputFiles;
 
     public VideoParameter() {
     }
@@ -64,7 +65,7 @@ public class VideoParameter extends MultimediaParameter {
      * Sets the frames per second
      * @param frames the frames to set
      */
-    public void setFrames(final String frames) {
+    public void setFrames(final String frames) throws NullPointerException {
         this.frames = frames;
     }
 
@@ -79,7 +80,7 @@ public class VideoParameter extends MultimediaParameter {
      * Sets extractThumbnail value
      * @param extractThumbnail the extractThumbnail to set
      */
-    public void setExtractThumbnail(final boolean extractThumbnail) {
+    public void setExtractThumbnail(final boolean extractThumbnail) throws NullPointerException {
         this.extractThumbnail = extractThumbnail;
     }
 
@@ -94,10 +95,24 @@ public class VideoParameter extends MultimediaParameter {
      * Sets controlLoop value
      * @param controlLoop the controlLoop to set
      */
-    public void setControlLoop(final String controlLoop) {
+    public void setControlLoop(final String controlLoop) throws NullPointerException {
         this.controlLoop = controlLoop;
     }
 
+    /**
+     * @return the outputFiles
+     */
+    public List<String> getOutputFiles() throws NullPointerException {
+        return outputFiles;
+    }
+
+    /**
+     * Sets outputFiles value
+     * @param outputFiles the outputFiles to set
+     */
+    public void setOutputFiles(final List<String> outputFiles) throws NullPointerException {
+        this.outputFiles = outputFiles;
+    }
     /**
      * Validates the video parameters
      * @throws InvalidDataException

@@ -36,8 +36,38 @@ public class GifValidation implements IValidationStrategy {
     }
 
     /**
+     * @return the duration
+     */
+    public int getDuration() {
+        return duration;
+    }
+
+    /**
+     * Sets duration value
+     * @param duration the duration to set
+     */
+    public void setDuration(final int duration) {
+        this.duration = duration;
+    }
+
+    /**
+     * @return the start
+     */
+    public int getStart() {
+        return start;
+    }
+
+    /**
+     * Sets start value
+     * @param start the start to set
+     */
+    public void setStart(final int start) {
+        this.start = start;
+    }
+
+    /**
      * Converts duration to seconds
-     * @param time String reference to object duration of this video file
+     * @param duration - String reference to object duration of this video file
      */
     public int convertToSeconds(final String time) throws ArrayIndexOutOfBoundsException, NullPointerException {
         String[] parts = time.split(":");
@@ -56,33 +86,5 @@ public class GifValidation implements IValidationStrategy {
         if ((start < 0) && (start >= duration) && (time < 0) && (time <= start) && (time >= duration) && ((start + time) >= duration)) {
             throw new InvalidDataException("Invalid arguments to convert a Gif");
         }
-    }
-
-    /**
-     * @return the duration
-     */
-    public int getDuration() {
-        return duration;
-    }
-
-    /**
-     * @param duration the duration to set
-     */
-    public void setDuration(final int duration) {
-        this.duration = duration;
-    }
-
-    /**
-     * @return the start
-     */
-    public int getStart() {
-        return start;
-    }
-
-    /**
-     * @param start the start to set
-     */
-    public void setStart(final int start) {
-        this.start = start;
     }
 }
