@@ -3,7 +3,6 @@ package org.fundacionjala.converter.model.command.multimedia;
 import org.fundacionjala.converter.model.parameter.multimedia.VideoParameter;
 import org.fundacionjala.converter.model.command.ICommand;
 import org.fundacionjala.converter.model.commons.exception.InvalidDataException;
-import org.fundacionjala.converter.model.commons.exception.ModelParameterException;
 import org.fundacionjala.converter.model.commons.validation.FormatValidation;
 import org.fundacionjala.converter.model.commons.validation.GifValidation;
 import org.fundacionjala.converter.model.configPath.ConfigPath;
