@@ -1,5 +1,6 @@
 package org.fundacionjala.converter.model.command;
 
+import org.fundacionjala.converter.model.configPath.ConfigPath;
 import org.fundacionjala.converter.model.parameter.metadata.MetadataParameter;
 
 import org.junit.jupiter.api.Test;
@@ -15,7 +16,7 @@ public class MetadataModelTest {
 
         String exportFormat = "j";
         String detail = "common";
-        String expected = "[[Metadata, /usr/bin/exiftool, -j, -common, storage/inputFiles/test.mp3, storage/convertedFiles/e1b3fab24c8af81c1aa13dbbb4e44ff0j_Metadata.json]]";
+        String expected = "[[Metadata, " + ConfigPath.getMetaDataExtractorTool() + ", -j, -common, storage/inputFiles/test.mp3, storage/convertedFiles/e1b3fab24c8af81c1aa13dbbb4e44ff0j_Metadata.json]]";
         String nameFileOutPut = outputFile + md5OriginalFile + exportFormat;
 
         MetadataParameter parameter= new MetadataParameter(inputFile, exportFormat, detail, outputFile,
@@ -41,7 +42,7 @@ public class MetadataModelTest {
     public void testCreateCommandDetailDefault() {
         String exportFormat = "j";
         String detail = "d";
-        String expected = "[[Metadata, /usr/bin/exiftool, -j, storage/inputFiles/test.mp3, storage/convertedFiles/e1b3fab24c8af81c1aa13dbbb4e44ff0j_Metadata.json]]";
+        String expected = "[[Metadata, " + ConfigPath.getMetaDataExtractorTool() + ", -j, storage/inputFiles/test.mp3, storage/convertedFiles/e1b3fab24c8af81c1aa13dbbb4e44ff0j_Metadata.json]]";
         String nameFileOutPut = outputFile + md5OriginalFile + exportFormat;
 
         MetadataParameter parameter= new MetadataParameter(inputFile, exportFormat, detail, outputFile,
