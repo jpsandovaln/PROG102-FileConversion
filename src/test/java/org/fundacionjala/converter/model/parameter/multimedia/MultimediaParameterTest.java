@@ -1,6 +1,6 @@
 package org.fundacionjala.converter.model.parameter.multimedia;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.Assertions;
 
 public class MultimediaParameterTest {

@@ -43,8 +43,6 @@ dependencies {
 	}
 	testImplementation 'io.projectreactor:reactor-test'
 	testImplementation 'junit:junit:4.12'
-	testImplementation group: 'org.junit.jupiter', name: 'junit-jupiter', version: '5.7.0'
-    testRuntimeOnly("org.junit.vintage:junit-vintage-engine:5.7.0")
 	testImplementation 'org.mockito:mockito-core:2.7.22'
 	implementation("commons-io:commons-io:2.6")
 }
