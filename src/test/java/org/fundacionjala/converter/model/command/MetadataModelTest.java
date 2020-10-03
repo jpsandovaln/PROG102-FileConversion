@@ -18,6 +18,7 @@ public class MetadataModelTest {
         String detail = "common";
         String expected = "[[Metadata, " + ConfigPath.getMetaDataExtractorTool() + ", -j, -common, storage/inputFiles/test.mp3, storage/convertedFiles/e1b3fab24c8af81c1aa13dbbb4e44ff0j_Metadata.json]]";
         String nameFileOutPut = outputFile + md5OriginalFile + exportFormat;
+
         MetadataParameter parameter= new MetadataParameter(inputFile, exportFormat, detail, outputFile,
             md5OriginalFile);
         parameter.setOutputFile(nameFileOutPut);
