@@ -1,5 +1,6 @@
 package org.fundacionjala.converter.model.command.extractText;
 
+import org.fundacionjala.converter.executor.exception.CommandListEmptyException;
 import org.fundacionjala.converter.model.commons.exception.ConvertDocException;
 import org.fundacionjala.converter.model.commons.exception.InvalidDataException;
 import org.fundacionjala.converter.model.commons.exception.ReadFileException;
@@ -20,7 +21,7 @@ public class ExtractTextFacadeTest {
     ExtractTextParameter parameter = new ExtractTextParameter();
 
     @Test
-    public void extractTextWithFormatTxt() throws IOException, InterruptedException, ExecutionException, NoSuchAlgorithmException, InvalidDataException, ReadFileException, ConvertDocException {
+    public void extractTextWithFormatTxt() throws IOException, InterruptedException, ExecutionException, NoSuchAlgorithmException, InvalidDataException, ReadFileException, ConvertDocException, CommandListEmptyException {
         parameter.setFormat(".txt");
         parameter.setLanguage("spa");
         parameter.setFileName("demo");
@@ -33,7 +34,7 @@ public class ExtractTextFacadeTest {
         Files.deleteIfExists(Path.of("storage/convertedFiles/ffa5f5433efe74bc99530e84798b2ffd.txt"));
     }
     @Test
-    public void extractTextWithFormatDocx() throws IOException, InterruptedException, ExecutionException, NoSuchAlgorithmException, InvalidDataException, ReadFileException, ConvertDocException {
+    public void extractTextWithFormatDocx() throws IOException, InterruptedException, ExecutionException, NoSuchAlgorithmException, InvalidDataException, ReadFileException, ConvertDocException, CommandListEmptyException {
         parameter.setFormat(".docx");
         parameter.setLanguage("spa");
         parameter.setFileName("demo");
@@ -46,7 +47,7 @@ public class ExtractTextFacadeTest {
         Files.deleteIfExists(Path.of("storage/convertedFiles/ffa5f5433efe74bc99530e84798b2ffd.docx"));
     }
     @Test
-    public void extractTextWithFormatPdf() throws IOException, InterruptedException, ExecutionException, NoSuchAlgorithmException, InvalidDataException, ReadFileException, ConvertDocException {
+    public void extractTextWithFormatPdf() throws IOException, InterruptedException, ExecutionException, NoSuchAlgorithmException, InvalidDataException, ReadFileException, ConvertDocException, CommandListEmptyException {
         parameter.setFormat(".pdf");
         parameter.setLanguage("spa");
         parameter.setFileName("demo");
@@ -59,7 +60,7 @@ public class ExtractTextFacadeTest {
         Files.deleteIfExists(Path.of("storage/convertedFiles/ffa5f5433efe74bc99530e84798b2ffd.pdf"));
     }
     @Test
-    public void extractTextWithLanguageEnglish() throws IOException, InterruptedException, ExecutionException, NoSuchAlgorithmException, InvalidDataException, ReadFileException, ConvertDocException {
+    public void extractTextWithLanguageEnglish() throws IOException, InterruptedException, ExecutionException, NoSuchAlgorithmException, InvalidDataException, ReadFileException, ConvertDocException, CommandListEmptyException {
         parameter.setFormat(".pdf");
         parameter.setLanguage("en");
         parameter.setFileName("demo");
