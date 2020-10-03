@@ -65,7 +65,7 @@ public class VideoParameter extends MultimediaParameter {
      * Sets the frames per second
      * @param frames the frames to set
      */
-    public void setFrames(final String frames) {
+    public void setFrames(final String frames) throws NullPointerException {
         this.frames = frames;
     }
 
@@ -80,7 +80,7 @@ public class VideoParameter extends MultimediaParameter {
      * Sets extractThumbnail value
      * @param extractThumbnail the extractThumbnail to set
      */
-    public void setExtractThumbnail(final boolean extractThumbnail) {
+    public void setExtractThumbnail(final boolean extractThumbnail) throws NullPointerException {
         this.extractThumbnail = extractThumbnail;
     }
 
@@ -95,7 +95,7 @@ public class VideoParameter extends MultimediaParameter {
      * Sets secondsToOutput value
      * @param secondsToOutput the secondsToOutput to set
      */
-    public void setSecondsToOutput(final String secondsToOutput) {
+    public void setSecondsToOutput(final String secondsToOutput) throws NullPointerException {
         this.secondsToOutput = secondsToOutput;
     }
 
@@ -110,10 +110,24 @@ public class VideoParameter extends MultimediaParameter {
      * Sets controlLoop value
      * @param controlLoop the controlLoop to set
      */
-    public void setControlLoop(final String controlLoop) {
+    public void setControlLoop(final String controlLoop) throws NullPointerException {
         this.controlLoop = controlLoop;
     }
 
+    /**
+     * @return the outputFiles
+     */
+    public List<String> getOutputFiles() {
+        return outputFiles;
+    }
+
+    /**
+     * Sets outputFiles value
+     * @param outputFiles the outputFiles to set
+     */
+    public void setOutputFiles(final List<String> outputFiles) throws NullPointerException {
+        this.outputFiles = outputFiles;
+    }
     /**
      * Validates the video parameters
      * @throws InvalidDataException
@@ -128,20 +142,5 @@ public class VideoParameter extends MultimediaParameter {
         validationStrategyList.add(new FormatValidation(this.getFormat()));
         ValidationContext context = new ValidationContext(validationStrategyList);
         context.validation();
-    }
-
-    /**
-     * @return the outputFiles
-     */
-    public List<String> getOutputFiles() {
-        return outputFiles;
-    }
-
-    /**
-     * Sets outputFiles value
-     * @param outputFiles the outputFiles to set
-     */
-    public void setOutputFiles(final List<String> outputFiles) {
-        this.outputFiles = outputFiles;
     }
 }

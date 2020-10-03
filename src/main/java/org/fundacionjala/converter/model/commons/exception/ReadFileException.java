@@ -11,8 +11,8 @@ public class ReadFileException extends Exception {
         super(MESSAGE, ex);
     }
 
-    public ReadFileException(final String currantMessage, final Throwable ex) {
-        super(currantMessage, ex);
+    public ReadFileException(final String currentMessage, final Throwable ex) {
+        super(currentMessage, ex);
     }
 
     public ReadFileException(final String currentMessage) {

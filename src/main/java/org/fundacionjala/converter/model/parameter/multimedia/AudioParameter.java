@@ -59,7 +59,7 @@ public class AudioParameter extends MultimediaParameter {
      * @param inputFile the inputFile to set
      * @throws IOException
      */
-    public void setInputFile(final String inputFile) throws IOException {
+    public void setInputFile(final String inputFile) throws NullPointerException, IOException {
         if (audioValidation.validateAudioFile(inputFile)) {
             super.setInputFile(inputFile);
         } else {
