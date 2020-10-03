@@ -1,7 +1,9 @@
 package org.fundacionjala.converter.model.parameter.multimedia;
 
+import org.fundacionjala.converter.model.commons.exception.InvalidDataException;
 import org.fundacionjala.converter.model.commons.validation.IValidationStrategy;
 import org.fundacionjala.converter.model.commons.validation.ModelParameterValidation;
+import org.fundacionjala.converter.model.commons.validation.ValidationContext;
 import org.fundacionjala.converter.model.commons.validation.audio.*;
 
 import java.io.IOException;
@@ -119,7 +121,7 @@ public class AudioParameter extends MultimediaParameter {
     /**
      * Validate audioParameter fields
      */
-    public void validate() {
+    public void validate() throws InvalidDataException {
         List<IValidationStrategy> validationStrategyList = new ArrayList<>();
         validationStrategyList.add(new ModelParameterValidation(this));
         validationStrategyList.add(new CodecAudioValidation(super.getCodec()));
@@ -128,7 +130,7 @@ public class AudioParameter extends MultimediaParameter {
         validationStrategyList.add(new ChannelAudioValidation(this.channel));
         validationStrategyList.add(new SampleRateAudioValidation(this.sampleRate));
         validationStrategyList.add(new InputFileAudioValidation(this.getInputFile()));
-        //validationStrategyList.add(new StartAudioValidation(this.getStart()));
-        //validationStrategyList.add(new DurationAudioValidation(this.getDuration()));
+        ValidationContext context = new ValidationContext(validationStrategyList);
+        context.validation();
     }
 }
