@@ -10,20 +10,7 @@ import java.util.List;
 import static org.junit.Assert.assertEquals;
 
 public class AudioModelTest {
-    @Test
-    public void testCreateCommandReturnsEmptyListIfParameterIsEmpty() {
-        AudioModel audioModel = new AudioModel();
-        AudioParameter audioParameter = new AudioParameter();
-        int result = audioModel.createCommand(audioParameter).size();
-        assertEquals(0, result);
-    }
-    @Test
-    public void testCreateCommandReturnsEmptyListIfParameterIsNull() {
-        AudioModel audioModel = new AudioModel();
-        int result = audioModel.createCommand(null).size();
-        assertEquals(0, result);
-    }
-    @Test
+   @Test
     public void testCreateCommandReturnsAListOfCommand() throws IOException {
         AudioModel audioModel = new AudioModel();
         AudioParameter audioParameter = new AudioParameter();
@@ -86,5 +73,24 @@ public class AudioModelTest {
         List<List<String>> list = audioModel.createCommand(audioParameter);
         System.out.println(list.get(1));
         assertEquals(6, list.get(1).size());
+    }
+    @Test
+    public void testCreateCommandReturnsFourCommandListForExtractMetadataAndCut() throws IOException {
+        AudioModel audioModel = new AudioModel();
+        AudioParameter audioParameter = new AudioParameter();
+        audioParameter.setInputFile("storage/inputFiles/MiEternoAmorSecreto.mp3");
+        audioParameter.setOutputFile("storage/convertedFiles");
+        audioParameter.setCodec("libmp3lame");
+        audioParameter.setChannel("1");
+        audioParameter.setBitRate("32k");
+        audioParameter.setFormat(".wav");
+        audioParameter.setSampleRate("22050");
+        audioParameter.setCut(true);
+        audioParameter.setStart("00:00:30");
+        audioParameter.setDuration("00:00:10");
+        audioParameter.setExtractMetadata(true);
+        List<List<String>> list = audioModel.createCommand(audioParameter);
+        System.out.println(list.size());
+        assertEquals(4, list.size());
     }
 }

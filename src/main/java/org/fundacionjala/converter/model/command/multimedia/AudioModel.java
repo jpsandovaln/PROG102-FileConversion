@@ -37,6 +37,7 @@ public class AudioModel implements ICommand<AudioParameter> {
     @Override
     public List<List<String>> createCommand(final AudioParameter audioParameter) {
         List<List<String>> listCommands = new ArrayList<>();
+        audioParameter.validate();
         List<String> convert = new ArrayList<>();
         convert = convert(convert, audioParameter);
         listCommands.add(convert);
@@ -51,6 +52,7 @@ public class AudioModel implements ICommand<AudioParameter> {
                 listCommands.add(extractMetadata(audioParameter, CUT_SUFFIX));
             }
         }
+
         return listCommands;
     }
 
@@ -100,4 +102,5 @@ public class AudioModel implements ICommand<AudioParameter> {
         MetadataModel metadataModel = new MetadataModel();
         return metadataModel.createCommand(metadataParameter).get(0);
     }
+
 }
