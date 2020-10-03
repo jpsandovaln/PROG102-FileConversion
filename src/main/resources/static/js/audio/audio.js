@@ -1,7 +1,7 @@
 $(document).ready(function() {
     $("#audio-nav").addClass("btn white black-text waves-effect waves-blue-grey lighten-1");
-    $('#extractThumbnail').change(function() {
-        if (!$('#extractThumbnail').prop('checked')) {
+    $('#cut').change(function() {
+        if (!$('#cut').prop('checked')) {
             $('#start').parent().hide();
             $('#duration').parent().hide();
             $('#secondsToOutput').parent().hide();
@@ -94,6 +94,18 @@ $(document).ready(function() {
                 number: true,
                 min: '1',
             },
+            secondsToOutput: {
+                required: {
+                    depends: function() {
+                        if ($('#exportFormat').prop('checked')) {
+                            return true;
+                        }
+                        return false;
+                    },
+                },
+                min: '00:00:00',
+                regex: /^([0-1]?[0-9]|[2][0-3]):([0-5][0-9])(:[0-5][0-9])$/,
+            },
             sampleRate: 'required'
         },
         messages: {
@@ -103,7 +115,6 @@ $(document).ready(function() {
             codec: 'Please, insert the codec',
             bitRate: 'Please, insert the bitRate',
             channel: 'Please, insert the channel',
-            isCut: 'Please, insert if its cut',
             start: {
                 required: 'Please insert the start time',
                 min: 'Min value required 00:00:00',

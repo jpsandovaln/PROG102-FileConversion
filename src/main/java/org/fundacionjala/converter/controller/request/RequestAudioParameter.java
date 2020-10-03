@@ -13,7 +13,22 @@ public class RequestAudioParameter extends RequestMultimediaParameter {
     private String bitRate;
     private String channel;
     private String sampleRate;
-    private boolean isCut;
+    private boolean cut;
+
+    /**
+     * @return is Audio is cut
+     */
+    public boolean isCut() {
+        return cut;
+    }
+
+    /**
+     * Sets if audio is cut or not
+     * @param cut
+     */
+    public void setCut(boolean cut) {
+        this.cut = cut;
+    }
 
     /**
      * @return audio bit rate
@@ -36,12 +51,6 @@ public class RequestAudioParameter extends RequestMultimediaParameter {
         return sampleRate;
     }
 
-    /**
-     * @return if is cut
-     */
-    public boolean getIsCut() {
-        return isCut;
-    }
 
     /**
      * Sets bitRate value
@@ -67,13 +76,6 @@ public class RequestAudioParameter extends RequestMultimediaParameter {
         this.sampleRate = sampleRate;
     }
 
-    /**
-     * Sets cut value
-     * @param cut the  to set
-     */
-    public void setCut(final boolean cut) {
-        isCut = cut;
-    }
 
     /**
      * Validates audio parameters
