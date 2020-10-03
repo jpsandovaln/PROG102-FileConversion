@@ -84,6 +84,7 @@ public class ExtractTextParameter extends ModelParameter {
         ValidationContext context = new ValidationContext(validationStrategyList);
         context.validation();
     }
+
     /**
      * (non-Javadoc)
      * @see java.lang.Object#toString()
