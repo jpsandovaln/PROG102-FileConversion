@@ -8,16 +8,14 @@
  */
 package org.fundacionjala.converter.database.entity;
 
+import org.fundacionjala.converter.database.exception.NullAttributeException;
+
 import javax.persistence.Entity;
 import javax.persistence.Table;
-import javax.persistence.OneToMany;
 import javax.persistence.Id;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Column;
-import javax.persistence.CascadeType;
-import java.util.HashSet;
-import java.util.Set;
 
 /**
  * @author Elizabeth Bravo Flores, Mirko Romay
@@ -40,14 +38,12 @@ public class User {
     private String password;
     @Column(nullable = false)
     private String rol;
-    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
-    private Set<File> files = new HashSet<File>();
 
     public User() {
     }
+
     public User(final Long id, final String username, final String name, final String lastName, final String password, final String rol) {
     }
-
     /**
      * @return the id
      */
@@ -57,38 +53,58 @@ public class User {
     /**
      * @return the name
      */
-    public String getName() {
-        return name;
+    public String getName() throws NullAttributeException {
+        if (name != null) {
+            return name;
+        } else {
+            throw new NullAttributeException("name");
+        }
     }
     /**
      * @return the last name
      */
-    public String getLastName() {
-        return lastName;
+    public String getLastName() throws NullAttributeException {
+        if (lastName != null) {
+            return lastName;
+        } else {
+            throw new NullAttributeException("lastName");
+        }
     }
     /**
      * @return the last password
      */
-    public String getPassword() {
-        return password;
+    public String getPassword() throws NullAttributeException {
+        if (password != null) {
+            return password;
+        } else {
+            throw new NullAttributeException("password");
+        }
     }
     /**
      * @return the username
      */
-    public String getUsername() {
-        return username;
+    public String getUsername() throws NullAttributeException {
+        if (username != null) {
+            return username;
+        } else {
+            throw new NullAttributeException("username");
+        }
     }
     /**
      * @return the rol
      */
-    public String getRol() {
-        return rol;
+    public String getRol() throws NullAttributeException {
+        if (rol != null) {
+            return rol;
+        } else {
+            throw new NullAttributeException("rol");
+        }
     }
     /**
-     * @return Files related the user
+     * @param id the id to set
      */
-    public Set<File> getFiles() {
-        return files;
+    public void setId(final long id) {
+        this.id = id;
     }
     /**
      * @param name the name to set
@@ -121,17 +137,11 @@ public class User {
         this.rol = rol;
     }
     /**
-     * @param  files to relate
-     */
-    public void setFiles(final Set<File> files) {
-        this.files = files;
-    }
-    /**
      * method toString
      * @see java.lang.Object#toString()
      */
     @Override
     public String toString() {
-        return "User [name=" + name + ", lastName=" + lastName + "]";
+        return "User [id=" + id + ", username=" + username + "]";
     }
 }

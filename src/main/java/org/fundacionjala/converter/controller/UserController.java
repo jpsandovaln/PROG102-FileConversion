@@ -1,5 +1,6 @@
 package org.fundacionjala.converter.controller;
 
+import org.fundacionjala.converter.controller.exceptions.NonExistentException;
 import org.fundacionjala.converter.controller.response.ErrorResponse;
 import org.fundacionjala.converter.controller.response.OkResponse;
 import org.fundacionjala.converter.database.entity.User;
@@ -52,7 +53,7 @@ public class UserController {
     @PostMapping(value = "/add")
     public String saveUser(final User user, final Model model) {
         userService.saveUser(user);
-        return "save";
+        return "User saved";
     }
     /**
      * Edits an user
@@ -63,20 +64,27 @@ public class UserController {
      */
     @PostMapping(value = "/edit/{id}")
     public String editUser(@PathVariable("id") final Long id, final User user, final Model model) {
-        userService.updateUser(user, id);
-        return "edit";
+        try {
+            userService.updateUser(user, id);
+            return "User edited";
+        } catch (NonExistentException e) {
+            return "The user with Id: " + id + "does not exist";
+        }
     }
     /**
      * Deletes an user by id
      * @param id - the reference int of id of the user to delete
-     * @param user - the reference to User to delete
      * @param model - the reference Model
      * @return delete
      */
     @GetMapping(value = "/delete/{id}")
     public String deleteUser(@PathVariable final long id, final Model model) {
-        userService.deleteUser(id);
-        return "delete";
+        try {
+            userService.deleteUser(id);
+            return "User deleted";
+        } catch (NonExistentException e) {
+            return "The user with Id: " + id + "does not exist";
+        }
     }
 
     /**

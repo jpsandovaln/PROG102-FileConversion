@@ -1,11 +1,5 @@
 package org.fundacionjala.converter.model.command.multimedia;
 
-import java.io.IOException;
-import java.security.NoSuchAlgorithmException;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.concurrent.ExecutionException;
-
 import org.fundacionjala.converter.model.parameter.metadata.MetadataParameter;
 import org.fundacionjala.converter.model.parameter.multimedia.VideoParameter;
 import org.fundacionjala.converter.model.command.ICommand;
@@ -15,6 +9,12 @@ import org.fundacionjala.converter.model.commons.validation.FormatValidation;
 import org.fundacionjala.converter.model.commons.validation.GifValidation;
 import org.fundacionjala.converter.model.configPath.ConfigPath;
 
+import java.io.IOException;
+import java.security.NoSuchAlgorithmException;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.concurrent.ExecutionException;
+
 public class VideoModel implements ICommand<VideoParameter> {
     private List<String> listParameters;
     private List<String> listThumbnailParameters;
@@ -23,7 +23,7 @@ public class VideoModel implements ICommand<VideoParameter> {
     private List<MetadataParameter> listMetadataParameters;
     private List<String> outputFiles;
     private boolean convertedGif = false;
-    private static final String FORMAT = "j"; // json
+    private static final String FORMAT = "j";   // json
     private static final String DETAIL = "v";
     private ConfigPath configPath;
 
@@ -31,8 +31,8 @@ public class VideoModel implements ICommand<VideoParameter> {
     }
 
     /**
-     * Returns list of commands to convert the video to mp4 or gif
-     * @param videoParameter - the reference to Video Parameter
+     * Returns list of commands to convert the video file
+     * @param videoParameter - the reference VideoParameter with parameters of video
      * @return List<String> - list of commands to convert
      * @throws InvalidDataException
      */
@@ -52,8 +52,8 @@ public class VideoModel implements ICommand<VideoParameter> {
     }
 
     /**
-     * Returns list of commands to convert the video to mp4 or mov
-     * @param videoParameter - the reference to Video Parameter
+     * Returns list of commands to convert the video to mov format
+     * @param videoParameter - the reference VideoParameter with parameters of video
      * @return List<String> - list of commands to convert
      */
     private List<String> convertMov(final VideoParameter videoParameter) {
@@ -73,7 +73,7 @@ public class VideoModel implements ICommand<VideoParameter> {
 
     /**
      * Compress video
-     * @param videoParameter - the reference to Video Parameter
+     * @param videoParameter - the reference VideoParameter with parameters of video
      * @return List<String> - list of commands to convert
      */
     private List<String> compressMp4(final VideoParameter videoParameter) {
@@ -93,10 +93,11 @@ public class VideoModel implements ICommand<VideoParameter> {
 
     /**
      * Returns list of parameters to convert mp4 to gif
-     * @param videoParameter - the reference to Video Parameter
+     * @param videoParameter - the reference VideoParameter with parameters of video
      * @return List<String> - list of commands
      */
     private List<String> convertGif(final VideoParameter videoParameter) {
+        //System.out.println("***************convert gif **************");
         final List<String> listParameters = new ArrayList<>();
         listParameters.add(configPath.getVideoAudioTool());
         listParameters.add(VideoParameter.INPUT_COMMAND);
@@ -125,8 +126,7 @@ public class VideoModel implements ICommand<VideoParameter> {
      * -starts in second 10
      * -duration: 5 seconds
      * Video's duration must be greater than 15 seconds.
-     *
-     * @param videoParameter - the reference to Video Parameter
+     * @param videoParameter - the reference VideoParameter with parameters of video
      * @return List<String> - list of commands
      */
     private List<String> extractThumbnail(final VideoParameter videoParameter) {
@@ -150,7 +150,7 @@ public class VideoModel implements ICommand<VideoParameter> {
 
     /**
      * Creates a list of commands for the parameters given
-     * @param videoParameter - the reference to Video Parameter
+     * @param videoParameter - the reference VideoParameter with parameters of video
      * @return List<List<String>> - list of commands
      * @throws IOException
      * @throws NoSuchAlgorithmException
@@ -163,7 +163,7 @@ public class VideoModel implements ICommand<VideoParameter> {
         listMetadataParameters = new ArrayList<>();
         String checksum = "";
         for (String path : outputFiles) {
-            listMetadataParameters.add(new MetadataParameter(path, FORMAT, DETAIL, configPath.getConvertedFilesPath(), checksum));
+            listMetadataParameters.add(new MetadataParameter(path, FORMAT, DETAIL, configPath.getConvertedFilesPath() + "", checksum));
         }
         for (MetadataParameter metadataParameter : listMetadataParameters) {
             listMetadataCommands.addAll(new MetadataModel().createCommand(metadataParameter));
@@ -172,8 +172,8 @@ public class VideoModel implements ICommand<VideoParameter> {
     }
 
     /**
-     * Creates command
-     * @param videoParameter - the reference to Video Parameter
+     * Creates a list of commands for the parameters given
+     * @param videoParameter - the reference VideoParameter with parameters of video
      * @throws ExecutionException
      * @throws InterruptedException
      * @throws IOException

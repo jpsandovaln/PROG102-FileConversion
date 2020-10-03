@@ -12,12 +12,11 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-import javax.persistence.NonUniqueResultException;
-
+import org.fundacionjala.converter.controller.exceptions.NonExistentException;
 import org.fundacionjala.converter.database.entity.File;
+import org.fundacionjala.converter.database.exception.NullAttributeException;
 import org.fundacionjala.converter.database.repository.FileRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.dao.IncorrectResultSizeDataAccessException;
 import org.springframework.stereotype.Service;
 
 /**
@@ -70,53 +69,63 @@ public class FileService {
      * @param file - the reference to the object File to save
      */
     public void saveFile(final File file) {
-    File fileTemp = new File();
-    try {
-        if (file.getMd5() != null && file.getPath() != null) {
-            fileTemp.setPath(file.getPath());
-            fileTemp.setMd5(file.getMd5());
-            fileTemp.setUser(file.getUser());
-            fileRepository.save(fileTemp);
+        File fileTemp = new File();
+        try {
+            if (file.getMd5() != null && file.getPath() != null) {
+                fileTemp.setPath(file.getPath());
+                fileTemp.setMd5(file.getMd5());
+                fileTemp.setUser(file.getUser());
+                fileRepository.save(fileTemp);
+            }
+        } catch (NullPointerException | NullAttributeException e) {
+            e.printStackTrace();
+            System.out.println("NullPointerException occurred");
         }
-    } catch (NullPointerException e) {
-        e.printStackTrace();
-        System.out.println("NullPointerException ocurred");
-    }
     }
 
     /**
      * Updates a file in the table "files"
      * @param file - the reference to the object File to update
      */
-    public void updateFile(final File file) {
-    try {
-        if (file.getMd5() != null && file.getPath() != null) {
-            File fileTemp = fileRepository.findByMd5(file.getMd5());
-            fileTemp.setPath(file.getPath());
-            fileTemp.setMd5(file.getMd5());
-            fileRepository.save(fileTemp);
+    public void updateFile(final File file) throws NullAttributeException, NonExistentException {
+        File fileTemp = fileRepository.findByMd5(file.getMd5());
+        if (fileTemp != null) {
+            if (file.getMd5() != null && file.getPath() != null) {
+                fileTemp.setPath(file.getPath());
+                fileTemp.setMd5(file.getMd5());
+                fileTemp.setUser(file.getUser());
+                fileRepository.save(fileTemp);
+            }
+        } else {
+            throw new NonExistentException("update");
         }
-    } catch (NullPointerException | NonUniqueResultException | IncorrectResultSizeDataAccessException e) {
-        e.printStackTrace();
-        System.out.println("Error ocurred");
-    }
     }
 
     /**
      * Deletes the reference to a file in the table "files"
      * @param file - the reference to the object File to delete
+     * @throws NonExistentException
      */
-    public void deleteFile(final File file) {
+    public void deleteFile(final File file) throws NullAttributeException, NonExistentException {
         File fileToDelete = fileRepository.findByMd5(file.getMd5());
-        fileRepository.delete(fileToDelete);
+        if (fileToDelete != null) {
+            fileRepository.delete(fileToDelete);
+        } else {
+            throw new NonExistentException("delete");
+        }
     }
 
     /**
      * Deletes a file in the table "files"
      * @param md5 - the String md5 of the file to delete
+     * @throws NonExistentException
      */
-    public void deleteFileByMd5(final String md5) {
+    public void deleteFileByMd5(final String md5) throws NonExistentException {
         File fileToDelete = fileRepository.findByMd5(md5);
-        fileRepository.delete(fileToDelete);
+        if (fileToDelete != null) {
+            fileRepository.delete(fileToDelete);
+        } else {
+            throw new NonExistentException("delete");
+        }
     }
 }
