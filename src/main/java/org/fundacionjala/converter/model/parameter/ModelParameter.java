@@ -1,6 +1,9 @@
 package org.fundacionjala.converter.model.parameter;
 
+import org.fundacionjala.converter.model.ChecksumMD5;
+
 import java.io.IOException;
+import java.security.NoSuchAlgorithmException;
 
 public abstract class ModelParameter {
   private String inputFile;
@@ -63,7 +66,16 @@ public abstract class ModelParameter {
    * @return md5
    */
   public String getMd5() {
-    return md5;
+    String getMd5 = null;
+    ChecksumMD5 checksumMD5 = new ChecksumMD5();
+    try {
+      getMd5 = checksumMD5.getMD5(inputFile);
+    } catch (IOException e) {
+      e.printStackTrace();
+    } catch (NoSuchAlgorithmException e) {
+      e.printStackTrace();
+    }
+    return getMd5;
   }
 
   /**
