@@ -19,14 +19,19 @@ public class MetadataModel implements ICommand {
     private static final String TXT = ".txt";
     private static final String CSV = ".csv";
     private static final String XMP = ".XMP";
+    private static final String INDEX_JSON = "j";
+    private static final String INDEX_HTML = "h";
+    private static final String INDEX_TXT = "t";
+    private static final String INDEX_CSV = "T";
+    private static final String INDEX_XMP = "xmp";
     private Map<String, String> map = new HashMap<String, String>();
 
     public MetadataModel() {
-        map.put("j", JSON);
-        map.put("h", HTML);
-        map.put("t", TXT);
-        map.put("T", CSV);
-        map.put("xmp", XMP);
+        map.put(INDEX_JSON, JSON);
+        map.put(INDEX_HTML, HTML);
+        map.put(INDEX_TXT, TXT);
+        map.put(INDEX_CSV, CSV);
+        map.put(INDEX_XMP, XMP);
     }
 
     /**
