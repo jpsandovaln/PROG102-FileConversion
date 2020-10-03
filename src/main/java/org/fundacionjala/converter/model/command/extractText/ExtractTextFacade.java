@@ -98,7 +98,7 @@ public class ExtractTextFacade {
      * @param outputFile
      */
     private void eraseDocument(final String format, final String outputFile) throws IOException {
-        if (format.equals(FormatValidation.FORMAT_DOCX) || format.equals(FormatValidation.FORMAT_PDF) || format.equals(FormatValidation.FORMAT_TXT)) {
+        if (format.equals(FormatValidation.FORMAT_DOCX) || format.equals(FormatValidation.FORMAT_PDF)) {
             Files.delete(Paths.get(outputFile + FormatValidation.FORMAT_TXT));
         }
     }
