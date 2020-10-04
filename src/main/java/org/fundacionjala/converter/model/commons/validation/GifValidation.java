@@ -84,7 +84,7 @@ public class GifValidation implements IValidationStrategy {
     @Override
     public void validate() throws InvalidDataException {
         if ((start < 0) && (start >= duration) && (time < 0) && (time <= start) && (time >= duration) && ((start + time) >= duration)) {
-            throw new InvalidDataException("Invalid arguments to convert a Gif");
+            throw new IllegalStateException("Invalid arguments to convert a Gif");
         }
     }
 }
