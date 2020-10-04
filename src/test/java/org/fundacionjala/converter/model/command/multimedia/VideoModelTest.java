@@ -1,6 +1,7 @@
 package org.fundacionjala.converter.model.command.multimedia;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import java.io.IOException;
 import java.security.NoSuchAlgorithmException;
@@ -34,12 +35,12 @@ public class VideoModelTest {
     @Test
     public void testConvertMov() throws IOException, InvalidDataException, NoSuchAlgorithmException,
             InterruptedException, ExecutionException {
-        String tool = cConfig.getVideoAudioTool();
+        String tool = ConfigPath.getVideoAudioTool();
         String expected = "[" + tool + ", -i, storage/inputFiles/calculadora.mp4, -vcodec, copy, -acodec, copy, storage/convertedFiles/95635711ebd6ec96be366c0e20ddf2b8(mov).mov]";
         listParameters = new ArrayList<String>();
         vParameter.setOutputFiles(new ArrayList <>());
         vParameter.setInputFile("storage/inputFiles/calculadora.mp4");
-        vParameter.setOutputFile(cConfig.getConvertedFilesPath());
+        vParameter.setOutputFile(ConfigPath.getConvertedFilesPath());
         vParameter.setFormat(".mov");
         vParameter.setCodec(audioCodec);
         vParameter.setVideoCodec(videoCodec);
@@ -49,12 +50,12 @@ public class VideoModelTest {
     @Test
     public void testCompressMp4() throws IOException, InvalidDataException, NoSuchAlgorithmException,
             InterruptedException, ExecutionException {
-        String tool = cConfig.getVideoAudioTool();
+        String tool = ConfigPath.getVideoAudioTool();
         String expected = "[" + tool + ", -i, storage/inputFiles/calculadora.mp4, -vcodec, h264, -acodec, mp3, storage/convertedFiles/95635711ebd6ec96be366c0e20ddf2b8(mp4).mp4]";
         listParameters = new ArrayList<String>();
         vParameter.setOutputFiles(new ArrayList <>());
         vParameter.setInputFile("storage/inputFiles/calculadora.mp4");
-        vParameter.setOutputFile(cConfig.getConvertedFilesPath());
+        vParameter.setOutputFile(ConfigPath.getConvertedFilesPath());
         vParameter.setFormat(".mp4");
         vParameter.setCodec(audioCodec);
         vParameter.setVideoCodec(videoCodec);
@@ -64,12 +65,12 @@ public class VideoModelTest {
     @Test
     public void testConvertGif() throws IOException, InvalidDataException, NoSuchAlgorithmException,
             InterruptedException, ExecutionException {
-        String tool = cConfig.getVideoAudioTool();
+        String tool = ConfigPath.getVideoAudioTool();
         String expected = "[" + tool + ", -i, storage/inputFiles/calculadora.mp4, -ss, 0:00:15, -t, 5, -vf, \"fps=, 21, ,scale=320:-1:flags=lanczos,split[s0][s1];[s0]palettegen[p];[s1][p]paletteuse\", -loop, 1, storage/convertedFiles/95635711ebd6ec96be366c0e20ddf2b8(gif).gif]";
         listParameters = new ArrayList<String>();
         vParameter.setOutputFiles(new ArrayList <>());
         vParameter.setInputFile("storage/inputFiles/calculadora.mp4");
-        vParameter.setOutputFile(cConfig.getConvertedFilesPath());
+        vParameter.setOutputFile(ConfigPath.getConvertedFilesPath());
         vParameter.setFormat(".gif");
         vParameter.setDuration(duration);
         vParameter.setStart(start);
@@ -82,17 +83,22 @@ public class VideoModelTest {
     @Test
     public void testExtractThumbnail() throws IOException, InvalidDataException, NoSuchAlgorithmException,
             InterruptedException, ExecutionException {
-        String tool = cConfig.getVideoAudioTool();
         VideoFacade vFacade = new VideoFacade();
         String expected = "storage/convertedFiles/95635711ebd6ec96be366c0e20ddf2b8(thumbnail).gif";
         list = new ArrayList<>();
         vParameter.setInputFile("storage/inputFiles/calculadora.mp4");
-        vParameter.setOutputFile(cConfig.getConvertedFilesPath());
+        vParameter.setOutputFile(ConfigPath.getConvertedFilesPath());
         vParameter.setFormat(".mp4");
         vParameter.setCodec(audioCodec);
         vParameter.setVideoCodec(videoCodec);
         vParameter.setExtractThumbnail(extractThumbnail);
         List<String> actual = vFacade.convertVideo(vParameter);
         assertEquals(expected, actual.get(1).toString());
+    }
+    @Test
+    public void testConvertThrowsNullParameterExceptionWhenVideoParameterIsNull() {
+        Throwable exception = assertThrows(
+            NullPointerException.class, () -> vModel.convert(null));
+        assertEquals(null, exception.getMessage());
     }
 }

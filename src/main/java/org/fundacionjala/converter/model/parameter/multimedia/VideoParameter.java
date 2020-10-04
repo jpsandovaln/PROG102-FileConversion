@@ -6,6 +6,7 @@ import java.util.List;
 import org.fundacionjala.converter.model.commons.exception.InvalidDataException;
 import org.fundacionjala.converter.model.commons.validation.CodecValidation;
 import org.fundacionjala.converter.model.commons.validation.IValidationStrategy;
+import org.fundacionjala.converter.model.commons.validation.ModelParameterValidation;
 import org.fundacionjala.converter.model.commons.validation.ValidationContext;
 import org.fundacionjala.converter.model.commons.validation.NotNullOrEmpty;
 import org.fundacionjala.converter.model.commons.validation.FormatValidation;
@@ -119,6 +120,7 @@ public class VideoParameter extends MultimediaParameter {
      */
     public void validate() throws InvalidDataException {
         List<IValidationStrategy> validationStrategyList = new ArrayList<>();
+        validationStrategyList.add(new ModelParameterValidation(this));
         validationStrategyList.add(new CodecValidation(this.videoCodec));
         validationStrategyList.add(new CodecValidation(this.getCodec()));
         validationStrategyList.add(new NotNullOrEmpty("videoCodec", this.videoCodec));
