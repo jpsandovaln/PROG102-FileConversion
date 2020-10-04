@@ -300,7 +300,7 @@ class RequestAudioParameterTest {
         requestAudioParameter.setDuration("00:00:10");
         assertEquals("00:00:10", requestAudioParameter.getDuration());
         requestAudioParameter.setCut(true);
-        assertTrue(requestAudioParameter.getIsCut());
+        assertTrue(requestAudioParameter.isCut());
         requestAudioParameter.setExtractMetadata(true);
         assertTrue(requestAudioParameter.isExtractMetadata());
     }
