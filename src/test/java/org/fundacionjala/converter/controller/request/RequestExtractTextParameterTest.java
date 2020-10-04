@@ -2,7 +2,6 @@ package org.fundacionjala.converter.controller.request;
 
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
-import org.springframework.web.multipart.MultipartFile;
 import java.io.File;
 import static org.junit.jupiter.api.Assertions.*;
 import org.springframework.http.MediaType;
@@ -124,6 +123,44 @@ class RequestExtractTextParameterTest {
                     request.setFile(multipartFile);
                     request.setMd5("ffa5f5433efe74bc99530e84798b2ffd");
                     request.validate();
+                }
+        );
+    }
+    @Test
+    public void languageNullValidationTest() throws Exception {
+        Throwable exception = Assertions.assertThrows(
+                Exception.class, () -> {
+                    MockMultipartFile file = new MockMultipartFile("imagen7", "imagen7.jpg",
+                            "image/", "video data".getBytes());
+                    MockMultipartFile multipartFile = new MockMultipartFile(
+                            "attachments", file.getName(),
+                            MediaType.MULTIPART_FORM_DATA_VALUE,
+                            file.getInputStream());
+                    request.setExportFormat(".txt");
+                    request.setFile(multipartFile);
+                    request.setLanguage(null);
+                    request.setMd5("a1cbf54e11273fb97da300ec3dc57a87");
+                    request.validate();
+
+                }
+        );
+    }
+    @Test
+    public void languageEmptyValidationTest() throws Exception {
+        Throwable exception = Assertions.assertThrows(
+                Exception.class, () -> {
+                    MockMultipartFile file = new MockMultipartFile("imagen7", "imagen7.jpg",
+                            "image/", "video data".getBytes());
+                    MockMultipartFile multipartFile = new MockMultipartFile(
+                            "attachments", file.getName(),
+                            MediaType.MULTIPART_FORM_DATA_VALUE,
+                            file.getInputStream());
+                    request.setExportFormat(".txt");
+                    request.setFile(multipartFile);
+                    request.setLanguage("");
+                    request.setMd5("a1cbf54e11273fb97da300ec3dc57a87");
+                    request.validate();
+
                 }
         );
     }
