@@ -130,17 +130,11 @@ public class RequestImageParameter extends RequestParameter {
     @Override
     public void validate() throws Exception {
         super.validate();
-        if ("".equals(this.getHeight())) {
-            throw new Exception("failed Height empty");
+        if (this.getHeight() < 1) {
+            throw new Exception("Invalid height");
         }
-        if ("".equals(this.getWidth())) {
-            throw new Exception("failed Width empty");
-        }
-        if ("".equals(this.getGray())) {
-            throw new Exception("failed Force Resize empty");
-        }
-        if ("".equals(this.getExtractThumbnail())) {
-            throw new Exception("failed Thumbnail empty");
+        if (this.getWidth() < 1) {
+            throw new Exception("Invalid width");
         }
     }
 }
