@@ -38,6 +38,21 @@ public class MetadataParameter extends ModelParameter {
     }
 
     /**
+     * @param format
+     */
+    @Override
+    public void setFormat(final String format) {
+        this.format = format;
+    }
+
+    /**
+     * @param detail
+     */
+    public void setDetail(final String detail) {
+        this.detail = detail;
+    }
+
+    /**
      * Validates the parameters
      * @throws InvalidDataException
      */

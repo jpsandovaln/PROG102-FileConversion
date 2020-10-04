@@ -18,7 +18,6 @@ import java.io.IOException;
 import java.security.NoSuchAlgorithmException;
 
 public abstract class RequestParameter {
-
     private MultipartFile file;
     private String exportFormat;
     private String md5;

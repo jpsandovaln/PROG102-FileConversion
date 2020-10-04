@@ -8,6 +8,18 @@
  */
 package org.fundacionjala.converter.controller.request;
 
+import org.fundacionjala.converter.model.commons.validation.IValidationStrategy;
+import org.fundacionjala.converter.model.commons.validation.NotNullOrEmpty;
+import org.fundacionjala.converter.model.commons.validation.ValidationContext;
+import org.fundacionjala.converter.model.commons.validation.audio.CodecAudioValidation;
+import org.fundacionjala.converter.model.commons.validation.audio.SampleRateAudioValidation;
+import org.fundacionjala.converter.model.commons.validation.audio.ChannelAudioValidation;
+import org.fundacionjala.converter.model.commons.validation.audio.BitRateAudioValidation;
+import org.fundacionjala.converter.model.commons.validation.audio.FormatAudioValidation;
+
+import java.util.ArrayList;
+import java.util.List;
+
 public class RequestAudioParameter extends RequestMultimediaParameter {
 
     private String bitRate;
@@ -81,9 +93,16 @@ public class RequestAudioParameter extends RequestMultimediaParameter {
      */
     @Override
     public void validate() throws Exception {
-        super.validate();
-        if (this.getSampleRate() == null || "".equals(this.getSampleRate())) {
-            throw new Exception("failed Sample Rate empty");
-        }
+        List<IValidationStrategy> validationStrategyList = new ArrayList<>();
+        validationStrategyList.add(new CodecAudioValidation(this.getCodec()));
+        validationStrategyList.add(new FormatAudioValidation(this.getExportFormat()));
+        validationStrategyList.add(new BitRateAudioValidation(this.bitRate));
+        validationStrategyList.add(new ChannelAudioValidation(this.channel));
+        validationStrategyList.add(new SampleRateAudioValidation(this.sampleRate));
+        validationStrategyList.add(new NotNullOrEmpty("start", this.getStart()));
+        validationStrategyList.add(new NotNullOrEmpty("duration", this.getDuration()));
+        ValidationContext context = new ValidationContext(validationStrategyList);
+        context.validation();
+
     }
 }
