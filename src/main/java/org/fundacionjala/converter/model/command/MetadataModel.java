@@ -35,7 +35,7 @@ public class MetadataModel implements ICommand {
     }
 
     /**
-     *
+     * Create command
      * @param modelParameter
      * @return A list of commands that will be executed by Executor class
      */
