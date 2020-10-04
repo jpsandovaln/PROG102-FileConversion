@@ -21,6 +21,9 @@ public class GifValidation implements IValidationStrategy {
     private int time;
     private int start;
 
+    public GifValidation() {
+    }
+
     /**
      * @param duration
      * @param start

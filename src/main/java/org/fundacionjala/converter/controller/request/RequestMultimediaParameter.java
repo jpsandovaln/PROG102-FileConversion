@@ -15,6 +15,7 @@ public class RequestMultimediaParameter extends RequestParameter {
     private String start;
     private String duration;
     private boolean extractMetadata;
+    private String secondsToOutput;
 
     /**
      * @return name
@@ -90,6 +91,20 @@ public class RequestMultimediaParameter extends RequestParameter {
     public void setExtractMetadata(final boolean extractMetadata) {
         this.extractMetadata = extractMetadata;
     }
+    /**
+     * @return secondsToOutput
+     */
+    public String getSecondsToOutput() {
+        return secondsToOutput;
+    }
+
+    /**
+     * Sets secondsToOutput value
+     * @param secondsToOutput the secondsToOutput to set
+     */
+    public void setSecondsToOutput(final String secondsToOutput) {
+        this.secondsToOutput = secondsToOutput;
+    }
 
     /**
      * Validates multimedia parameters
@@ -99,7 +114,7 @@ public class RequestMultimediaParameter extends RequestParameter {
     public void validate() throws Exception {
         super.validate();
         if (this.getCodec() == null || "".equals(this.getCodec())) {
-            throw new Exception("Failed audiocodec empty");
+            throw new Exception("Failed, empty audioCodec");
         }
     }
 }

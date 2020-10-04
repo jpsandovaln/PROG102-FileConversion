@@ -15,7 +15,7 @@ public class AudioModelTest {
         AudioModel audioModel = new AudioModel();
         AudioParameter audioParameter = new AudioParameter();
         audioParameter.setInputFile("storage/inputFiles/audio.mp3");
-        audioParameter.setOutputFile("storage/convertedFiles");
+        audioParameter.setOutputFile("storage/convertedFiles/");
         audioParameter.setCodec("libmp3lame");
         audioParameter.setChannel("1");
         audioParameter.setBitRate("32k");
@@ -31,7 +31,7 @@ public class AudioModelTest {
         AudioModel audioModel = new AudioModel();
         AudioParameter audioParameter = new AudioParameter();
         audioParameter.setInputFile("storage/inputFiles/audio.mp3");
-        audioParameter.setOutputFile("storage/convertedFiles");
+        audioParameter.setOutputFile("storage/convertedFiles/");
         audioParameter.setCodec("libmp3lame");
         audioParameter.setChannel("1");
         audioParameter.setBitRate("32k");
@@ -49,10 +49,13 @@ public class AudioModelTest {
         AudioModel audioModel = new AudioModel();
         AudioParameter audioParameter = new AudioParameter();
         audioParameter.setInputFile("storage/inputFiles/audio.mp3");
+        audioParameter.setOutputFile("storage/convertedFiles/");
         audioParameter.setFormat(".mp3");
         audioParameter.setCut(true);
         audioParameter.setStart("00:00:30");
-        audioParameter.setDuration("00:00:10");
+        audioParameter.setDuration("10");
+        audioParameter.setSecondsToOutput("00:01:30");
+        audioParameter.setName("converted");
         List<List<String>> list = audioModel.createCommand(audioParameter);
         assertEquals(2, list.size());
     }
@@ -62,7 +65,7 @@ public class AudioModelTest {
         AudioModel audioModel = new AudioModel();
         AudioParameter audioParameter = new AudioParameter();
         audioParameter.setInputFile("storage/inputFiles/audio.mp3");
-        audioParameter.setOutputFile("storage/convertedFiles");
+        audioParameter.setOutputFile("storage/convertedFiles/");
         audioParameter.setCodec("libmp3lame");
         audioParameter.setChannel("1");
         audioParameter.setBitRate("32k");
@@ -78,7 +81,7 @@ public class AudioModelTest {
         AudioModel audioModel = new AudioModel();
         AudioParameter audioParameter = new AudioParameter();
         audioParameter.setInputFile("storage/inputFiles/audio.mp3");
-        audioParameter.setOutputFile("storage/convertedFiles");
+        audioParameter.setOutputFile("storage/convertedFiles/");
         audioParameter.setCodec("libmp3lame");
         audioParameter.setChannel("1");
         audioParameter.setBitRate("32k");
@@ -86,7 +89,8 @@ public class AudioModelTest {
         audioParameter.setSampleRate("22050");
         audioParameter.setCut(true);
         audioParameter.setStart("00:00:30");
-        audioParameter.setDuration("00:00:10");
+        audioParameter.setDuration("10");
+        audioParameter.setSecondsToOutput("00:01:30");
         audioParameter.setExtractMetadata(true);
         List<List<String>> list = audioModel.createCommand(audioParameter);
         System.out.println(list.size());
