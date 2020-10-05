@@ -4,6 +4,8 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.security.NoSuchAlgorithmException;
 import java.util.List;
 import java.util.concurrent.ExecutionException;
@@ -12,6 +14,7 @@ import java.util.ArrayList;
 import org.fundacionjala.converter.model.commons.exception.InvalidDataException;
 import org.fundacionjala.converter.model.configPath.ConfigPath;
 import org.fundacionjala.converter.model.parameter.multimedia.VideoParameter;
+import org.junit.After;
 import org.junit.jupiter.api.Test;
 
 public class VideoModelTest {
@@ -32,6 +35,14 @@ public class VideoModelTest {
     String audioCodec = "mp3";
     String videoCodec = "h264";
 
+    @After
+    public void clean() throws IOException {
+        Files.deleteIfExists(Path.of("storage/convertedFiles/95635711ebd6ec96be366c0e20ddf2b8(mov).mov"));
+        Files.deleteIfExists(Path.of("storage/convertedFiles/95635711ebd6ec96be366c0e20ddf2b8(mp4).mp4"));
+        Files.deleteIfExists(Path.of("storage/convertedFiles/95635711ebd6ec96be366c0e20ddf2b8(gif).gif"));
+        Files.deleteIfExists(Path.of("storage/convertedFiles/95635711ebd6ec96be366c0e20ddf2b8(thumbnail).gif"));
+    }
+    
     @Test
     public void testConvertMov() throws IOException, InvalidDataException, NoSuchAlgorithmException,
             InterruptedException, ExecutionException {

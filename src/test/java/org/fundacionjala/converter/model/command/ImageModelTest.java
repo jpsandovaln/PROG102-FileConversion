@@ -2,14 +2,29 @@ package org.fundacionjala.converter.model.command;
 
 import org.fundacionjala.converter.model.configPath.ConfigPath;
 import org.fundacionjala.converter.model.parameter.image.ImageParameter;
+import org.junit.After;
 import org.junit.jupiter.api.Test;
 
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class ImageModelTest {
+    @After
+    public void clean() throws IOException {
+        Files.deleteIfExists(Path.of("storage/convertedFiles/95384efd0209233dde8003713cbdb9c3(resized).png"));
+        Files.deleteIfExists(Path.of("storage/convertedFiles/95384efd0209233dde8003713cbdb9c3(FORMAT).png"));
+        Files.deleteIfExists(Path.of("storage/convertedFiles/95384efd0209233dde8003713cbdb9c3(gray).png"));
+        Files.deleteIfExists(Path.of("storage/convertedFiles/95384efd0209233dde8003713cbdb9c3(thumbnail).gif"));
+        Files.deleteIfExists(Path.of("storage/convertedFiles/95384efd0209233dde8003713cbdb9c3(imageregion).png"));
+        Files.deleteIfExists(Path.of("storage/convertedFiles/95384efd0209233dde8003713cbdb9c3(thumbnail).png"));
+        Files.deleteIfExists(Path.of("storage/convertedFiles/95384efd0209233dde8003713cbdb9c3(thumbnail)0png-meta_Metadata.json"));
+        Files.deleteIfExists(Path.of("storage/convertedFiles//95384efd0209233dde8003713cbdb9c3(thumbnail).png"));
+    }
+    
     @Test
     public void testCreateCommandReturnsEmptyListIfParameterIsEmpty() {
         ImageModel imageModel = new ImageModel();
