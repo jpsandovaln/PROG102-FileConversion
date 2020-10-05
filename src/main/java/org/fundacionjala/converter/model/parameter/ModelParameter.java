@@ -83,7 +83,7 @@ public abstract class ModelParameter {
   /**
    * Sets inputFile value
    * @param inputFile the inputFile to set
- * @throws IOException
+   * @throws IOException
    */
   public void setInputFile(final String inputFile) throws NullPointerException, IOException {
     this.inputFile = inputFile;

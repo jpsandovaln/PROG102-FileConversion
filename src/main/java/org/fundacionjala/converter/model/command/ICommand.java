@@ -13,7 +13,7 @@ public interface ICommand<T extends ModelParameter> {
     List<List<String>> createCommand(T modelParameter) throws NoSuchAlgorithmException, IOException, InterruptedException, ExecutionException, ModelParameterException;
 
     /**
-     *
+     * Changes name of file to be converted
      * @param modelParameter the parameter that will be added sufix
      */
     default void name(final ModelParameter modelParameter) {
@@ -30,10 +30,10 @@ public interface ICommand<T extends ModelParameter> {
 
     /**
      * Returns a new file name
-     * @param pathOutputFile
-     * @param fileName
-     * @param format
-     * @return
+     * @param pathOutputFile - the reference String of outputFile path
+     * @param fileName - the reference String to the name of the file
+     * @param format - the reference String to the format of the file
+     * @return newName - the reference String to the new Name of the file to be converted
      */
     default String changeName(final String pathOutputFile, final String fileName, final String format) {
         String file = pathOutputFile + fileName + format;

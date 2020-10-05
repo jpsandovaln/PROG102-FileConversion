@@ -24,7 +24,7 @@ public class VideoFacadeTest {
         facade = new VideoFacade();
         videoParameter = new VideoParameter();
         list = new ArrayList<String>();
-        String outputFile = "storage/outputFiles";
+        String outputFile = "storage/convertedFiles/";
         String path = "storage/inputFiles/calculadora.mp4";
         videoParameter.setInputFile(path);
         videoParameter.setOutputFile(outputFile);

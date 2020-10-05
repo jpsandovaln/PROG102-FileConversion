@@ -2,12 +2,10 @@ package org.fundacionjala.converter.model.commons.validation;
 
 import static org.junit.Assert.assertThat;
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.fail;
+import org.junit.jupiter.api.Test;
 import static org.hamcrest.CoreMatchers.is;
 
 import org.fundacionjala.converter.model.commons.exception.InvalidDataException;
-import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.Test;
 
 public class GifValidationTest {
 
