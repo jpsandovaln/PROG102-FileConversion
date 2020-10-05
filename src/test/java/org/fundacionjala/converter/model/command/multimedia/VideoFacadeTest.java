@@ -11,7 +11,10 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import org.fundacionjala.converter.model.commons.exception.InvalidDataException;
 import org.fundacionjala.converter.model.configPath.ConfigPath;
 import org.fundacionjala.converter.model.parameter.multimedia.VideoParameter;
+import java.nio.file.Files;
+import java.nio.file.Path;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
 
 public class VideoFacadeTest {
@@ -23,6 +26,10 @@ public class VideoFacadeTest {
         facade = new VideoFacade();
     }
 
+    @AfterAll
+    public void clean() throws IOException {
+        Files.deleteIfExists(Path.of("storage/convertedFiles/95635711ebd6ec96be366c0e20ddf2b8(mp4).mp4"));
+    }
     @Test
     public void testNullArgumentIsPassedToSetVideoModel() {
         try {
