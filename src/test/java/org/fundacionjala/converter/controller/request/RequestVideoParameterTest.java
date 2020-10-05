@@ -7,6 +7,7 @@ import org.springframework.mock.web.MockMultipartFile;
 import org.springframework.web.multipart.MultipartFile;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.fail;
 
 import java.io.IOException;
@@ -126,5 +127,11 @@ public class RequestVideoParameterTest {
         catch (InvalidDataException e){
             assertThat(e.getMessage(), is("Invalid value of controlLoop"));
         }
+    }
+    @Test
+    public void testWhenFormatIsMovCodecMp3IsSetted() throws InvalidDataException, Exception {
+        vRequest.setExportFormat(".mov");
+        vRequest.validate();
+        assertEquals("mp3", vRequest.getCodec());
     }
 }

@@ -76,19 +76,9 @@ public class GifValidationTest {
         GifValidation gValidation = new GifValidation(duration, start, "500");
         try {
             gValidation.validate();
-       //     fail();
         }
         catch (InvalidDataException e){
             assertThat(e.getMessage(), is("Invalid arguments to convert a Gif"));
         }
-      //  GifValidation gValidation = new GifValidation(start, start, "500");
-      //  fail();
-     /*   Throwable exception = Assertions.assertThrows(
-            InvalidDataException.class, () -> {
-          //      e.get
-            //    gValidation.validate();
-            GifValidation gValidation = new GifValidation(start, start, "500");
-            }
-        );*/
     }
 }
