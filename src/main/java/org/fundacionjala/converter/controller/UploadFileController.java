@@ -128,6 +128,7 @@ public class UploadFileController {
     }
 
     /**
+     * Gets the List of files
      * @return list - the reference List<File> of files of database
      */
     @GetMapping("/files")
@@ -140,7 +141,6 @@ public class UploadFileController {
      * @param id the reference int of id of the file
      * @return file
      */
-
     @GetMapping("/file{id}")
     public File getFile(@RequestParam final int id) {
         return  fileService.getFileById(id);

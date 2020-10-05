@@ -28,6 +28,7 @@ public class RequestAudioParameter extends RequestMultimediaParameter {
     private boolean cut;
 
     /**
+     * Gets if audio is cut or not
      * @return is Audio is cut
      */
     public boolean isCut() {
@@ -43,6 +44,7 @@ public class RequestAudioParameter extends RequestMultimediaParameter {
     }
 
     /**
+     * Gets bit rate
      * @return audio bit rate
      */
     public String getBitRate() {
@@ -50,6 +52,7 @@ public class RequestAudioParameter extends RequestMultimediaParameter {
     }
 
     /**
+     * Gets channel
      * @return audio channel
      */
     public String getChannel() {
@@ -57,6 +60,7 @@ public class RequestAudioParameter extends RequestMultimediaParameter {
     }
 
     /**
+     * Gets sample rate
      * @return audio sample rate
      */
     public String getSampleRate() {
