@@ -34,7 +34,7 @@ public class VideoFacade {
     private List<String> outputFiles;
     private List<List<String>> listMetadataCommands;
     private List<MetadataParameter> listMetadataParameters;
-    private static final String FORMAT = "j"; // json
+    private static final String FORMAT = "j";
     private static final String DETAIL = "v";
     private static final String THUMBNAIL = "(thumbnail)";
 

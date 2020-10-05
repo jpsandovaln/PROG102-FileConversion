@@ -8,8 +8,17 @@ import org.springframework.mock.web.MockMultipartFile;
 import java.io.File;
 
 import static org.junit.jupiter.api.Assertions.*;
+import org.fundacionjala.converter.model.commons.exception.InvalidDataException;
+import org.springframework.web.multipart.MultipartFile;
+import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.fail;
 
-class RequestVideoParameterTest {
+import java.io.InputStream;
+
+
+public class RequestVideoParameterTest {
 
     RequestVideoParameter requestVideoParameter = new RequestVideoParameter();
 
@@ -137,16 +146,6 @@ class RequestVideoParameterTest {
         String expected = "Could not get MD5 from input file.";
         String actual = requestVideoParameter.generateMD5("invalidPath");
         assertEquals(expected, actual);
-    }
-    @Test
-    public void nullFileValidationTest() {
-        Throwable exception = Assertions.assertThrows(
-                NullPointerException.class, () -> {
-                    requestVideoParameter.setExportFormat(".mp3");
-                    requestVideoParameter.setFile(null);
-                    requestVideoParameter.validate();
-                }
-        );
     }
     @Test
     public void emptyFileNameValidationTest() {
@@ -302,5 +301,174 @@ class RequestVideoParameterTest {
         requestVideoParameter.setCodec("mp3");
         requestVideoParameter.setVideoCodec("h264");
         requestVideoParameter.validate();
+    }
+    @Test
+    public void testSetVideoCodecNullThrowsInvalidDataException() throws Exception {
+        String name = "calculadora";
+        String path = "storage/inputFiles/calculadora.mp4";
+        InputStream is = getClass().getResourceAsStream(path);
+        MultipartFile multipartFile = new MockMultipartFile(name, name + ".mp4", "", is);
+        RequestVideoParameter vRequest = new RequestVideoParameter();
+        vRequest.setMd5("d41d8cd98f00b204e9800998ecf8427e");
+        vRequest.setFile(multipartFile);
+        vRequest.setExportFormat(".mp4");
+        vRequest.setCodec("mp3");
+        try {
+            vRequest.setVideoCodec(null);
+            vRequest.validate();
+        }
+        catch (InvalidDataException e){
+            assertThat(e.getMessage(), is("Invalid data on field = videoCodec"));
+        }
+    }
+    @Test 
+    public void testSetAudioCodecNullThrowsInvalidDataException() throws Exception {
+        String name = "calculadora";
+        String path = "storage/inputFiles/calculadora.mp4";
+        InputStream is = getClass().getResourceAsStream(path);
+        MultipartFile multipartFile = new MockMultipartFile(name, name + ".mp4", "", is);
+        RequestVideoParameter vRequest = new RequestVideoParameter();
+        vRequest.setMd5("d41d8cd98f00b204e9800998ecf8427e");
+        vRequest.setFile(multipartFile);
+        vRequest.setExportFormat(".mp4");
+        vRequest.setExportFormat(".mp4");
+        vRequest.setVideoCodec("h264");
+        try{
+            vRequest.setCodec(null);
+            vRequest.validate();
+            fail();
+        }
+        catch (Exception e){
+            assertThat(e.getMessage(), is("Failed, empty audioCodec"));
+        }
+    }
+    @Test 
+    public void testSetFormatInvalidThrowsInvalidDataException() throws Exception {
+        String name = "calculadora";
+        String path = "storage/inputFiles/calculadora.mp4";
+        InputStream is = getClass().getResourceAsStream(path);
+        MultipartFile multipartFile = new MockMultipartFile(name, name + ".mp4", "", is);
+        RequestVideoParameter vRequest = new RequestVideoParameter();
+        vRequest.setMd5("d41d8cd98f00b204e9800998ecf8427e");
+        vRequest.setFile(multipartFile);
+        vRequest.setExportFormat(".mp4");
+        vRequest.setCodec("mp3");
+        vRequest.setVideoCodec("h264");
+        try{
+            
+            vRequest.setExportFormat("libx264");
+            vRequest.validate();
+        }
+        catch (InvalidDataException e){
+            assertThat(e.getMessage(), is("Invalid format"));
+        }
+    }
+    @Test 
+    public void testSetVideoCodecInvalidThrowsInvalidDataException() throws Exception {
+        String name = "calculadora";
+        String path = "storage/inputFiles/calculadora.mp4";
+        InputStream is = getClass().getResourceAsStream(path);
+        MultipartFile multipartFile = new MockMultipartFile(name, name + ".mp4", "", is);
+        RequestVideoParameter vRequest = new RequestVideoParameter();
+        vRequest.setMd5("d41d8cd98f00b204e9800998ecf8427e");
+        vRequest.setFile(multipartFile);
+        vRequest.setExportFormat(".mp4");
+        try{
+            vRequest.setVideoCodec("dgsd");
+            vRequest.validate();
+            fail();
+        }
+        catch (InvalidDataException e){
+            assertThat(e.getMessage(), is("Invalid codec"));
+        }
+    }
+    @Test 
+    public void testSetCodecInvalidThrowsInvalidDataException() throws Exception {
+        String name = "calculadora";
+        String path = "storage/inputFiles/calculadora.mp4";
+        InputStream is = getClass().getResourceAsStream(path);
+        MultipartFile multipartFile = new MockMultipartFile(name, name + ".mp4", "", is);
+        RequestVideoParameter vRequest = new RequestVideoParameter();
+        vRequest.setMd5("d41d8cd98f00b204e9800998ecf8427e");
+        vRequest.setFile(multipartFile);
+        vRequest.setExportFormat(".mp4");
+        vRequest.setVideoCodec("h264");
+        try{
+            vRequest.setCodec("mov");
+            vRequest.validate();
+        }
+        catch (InvalidDataException e){
+            assertThat(e.getMessage(), is("Invalid codec"));
+        }
+    }
+    @Test 
+    public void testSetFramesNullThrowsException() throws Exception {
+        String start = "00:00:15";
+        String secondsToOutput = "5";
+        String controlLoop = "0";
+        String duration = "00:00:44";
+        String name = "calculadora";
+        String path = "storage/inputFiles/calculadora.mp4";
+        InputStream is = getClass().getResourceAsStream(path);
+        MultipartFile multipartFile = new MockMultipartFile(name, name + ".mp4", "", is);
+        RequestVideoParameter vRequest = new RequestVideoParameter();
+        vRequest.setMd5("d41d8cd98f00b204e9800998ecf8427e");
+        vRequest.setFile(multipartFile);
+        vRequest.setExportFormat(".gif");
+        vRequest.setVideoCodec("h264");
+        vRequest.setDuration(duration);
+        vRequest.setStart(start);
+        vRequest.setSecondsToOutput(secondsToOutput);
+        vRequest.setControlLoop(controlLoop);
+        try{
+            vRequest.setFrames(null);
+            vRequest.validate();
+            fail();
+        }
+        catch (Exception e){
+            assertThat(e.getMessage(), is("Invalid data on field = frames"));
+        }
+    }
+    @Test 
+    public void testSetControlLoopInvalidThrowsInvalidDataException() throws Exception {
+        String name = "calculadora";
+        String path = "storage/inputFiles/calculadora.mp4";
+        String start = "00:00:15";
+        String secondsToOutput = "5";
+        String duration = "00:00:44";
+        InputStream is = getClass().getResourceAsStream(path);
+        MultipartFile multipartFile = new MockMultipartFile(name, name + ".mp4", "", is);
+        RequestVideoParameter vRequest = new RequestVideoParameter();
+        vRequest.setMd5("d41d8cd98f00b204e9800998ecf8427e");
+        vRequest.setFile(multipartFile);
+        vRequest.setExportFormat(".mp4");
+        vRequest.setExportFormat(".gif");
+        vRequest.setVideoCodec("h264");
+        vRequest.setCodec("mp3");
+        vRequest.setFrames("21");
+        vRequest.setDuration(duration);
+        vRequest.setStart(start);
+        vRequest.setSecondsToOutput(secondsToOutput);
+        try{
+            vRequest.setControlLoop("2");
+            vRequest.validate();
+        }
+        catch (InvalidDataException e){
+            assertThat(e.getMessage(), is("Invalid value of controlLoop"));
+        }
+    }
+    @Test
+    public void testWhenFormatIsMovCodecMp3IsSetted() throws InvalidDataException, Exception {
+        String name = "calculadora";
+        String path = "storage/inputFiles/calculadora.mp4";
+        InputStream is = getClass().getResourceAsStream(path);
+        MultipartFile multipartFile = new MockMultipartFile(name, name + ".mp4", "", is);
+        RequestVideoParameter vRequest = new RequestVideoParameter();
+        vRequest.setMd5("d41d8cd98f00b204e9800998ecf8427e");
+        vRequest.setFile(multipartFile);
+        vRequest.setExportFormat(".mp4");
+        vRequest.setExportFormat(".mov");
+        vRequest.validate();
+        assertEquals("mp3", vRequest.getCodec());
     }
 }

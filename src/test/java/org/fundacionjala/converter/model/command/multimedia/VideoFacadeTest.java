@@ -11,6 +11,8 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import org.fundacionjala.converter.model.commons.exception.InvalidDataException;
 import org.fundacionjala.converter.model.configPath.ConfigPath;
 import org.fundacionjala.converter.model.parameter.multimedia.VideoParameter;
+import java.nio.file.Files;
+import java.nio.file.Path;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.BeforeAll;
 
@@ -45,5 +47,9 @@ public class VideoFacadeTest {
         parameter.setExtractMetadata(true);
         facade.convertVideo(parameter);
         assertEquals(expected, parameter.getOutputFiles().size());
+        Files.deleteIfExists(Path.of("storage/convertedFiles/95635711ebd6ec96be366c0e20ddf2b8(mp4).mp4"));
+        Files.deleteIfExists(Path.of("storage/convertedFiles/95635711ebd6ec96be366c0e20ddf2b8(mp4)_METADATA.json"));
+        Files.deleteIfExists(Path.of("storage/convertedFiles/95635711ebd6ec96be366c0e20ddf2b8(mov).mov"));
+        Files.deleteIfExists(Path.of("storage/convertedFiles/95635711ebd6ec96be366c0e20ddf2b8(mov)_METADATA.json"));
     }
 }

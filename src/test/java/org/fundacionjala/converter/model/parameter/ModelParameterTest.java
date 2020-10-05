@@ -1,42 +1,46 @@
 package org.fundacionjala.converter.model.parameter;
 
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.Assertions;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
+import java.io.IOException;
+
+import org.fundacionjala.converter.model.parameter.multimedia.AudioParameter;
 
 public class ModelParameterTest {
 
-    ModelParameter parameter;
+    ModelParameter parameter = new AudioParameter();
 
     @Test
     public void testSetInputFileNullThrowsNullPointerException() {
-        Throwable exception = Assertions.assertThrows(
-            NullPointerException.class, () -> {
-                parameter.setInputFile(null);
-            }
-        );
+        try {
+            parameter.setInputFile(null);
+        } catch (NullPointerException | IOException e) {
+            assertEquals("NullPointerException", e.getMessage());
+        }
     }
     @Test
     public void testSetOutputFileNullThrowsNullPointerException() {
-        Throwable exception = Assertions.assertThrows(
-            NullPointerException.class, () -> {
-                parameter.setOutputFile(null);
-            }
-        );
+        try {
+            parameter.setOutputFile(null);
+        } catch (NullPointerException e) {
+            assertEquals("NullPointerException", e.getMessage());
+        }
     }
     @Test
     public void testSetMd5NullThrowsNullPointerException() {
-        Throwable exception = Assertions.assertThrows(
-            NullPointerException.class, () -> {
-                parameter.setMd5(null);
-            }
-        );
+        try {
+            parameter.setMd5(null);
+        } catch (NullPointerException e) {
+            assertEquals("NullPointerException", e.getMessage());
+        }
     }
     @Test
     public void testSetFormatNullThrowsNullPointerException() {
-        Throwable exception = Assertions.assertThrows(
-            NullPointerException.class, () -> {
-                parameter.setFormat(null);
-            }
-        );
+        try {
+            parameter.setFormat(null);
+        } catch (NullPointerException e) {
+            assertEquals("NullPointerException", e.getMessage());
+        }
     }
 }
