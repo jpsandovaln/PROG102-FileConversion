@@ -66,6 +66,12 @@ public class AudioModel implements ICommand<AudioParameter> {
         return listCommands;
     }
 
+    /**
+     * Collects list of converter
+     * @param convert
+     * @param audioParameter
+     * @return
+     */
     private List<String> convert(final List<String> convert, final AudioParameter audioParameter) {
         String fileToolPath = ConfigPath.getVideoAudioTool();
         String fileConvertPath = ConfigPath.getConvertedFilesPath();
@@ -83,6 +89,12 @@ public class AudioModel implements ICommand<AudioParameter> {
         return convert;
     }
 
+    /**
+     * add to list if condition is true
+     * @param list
+     * @param condition
+     * @param command
+     */
     private void addToList(final List<String> list, final String condition, final String command) {
         if (condition != null) {
             list.add(command);
@@ -114,6 +126,13 @@ public class AudioModel implements ICommand<AudioParameter> {
         name(modelParameter);
         return cut;
     }
+
+    /**
+     * collects list of extract metadata
+     * @param audioParameter
+     * @param suffix
+     * @return
+     */
     private List<String> extractMetadata(final AudioParameter audioParameter, final String suffix) {
         String fileConvertPath = ConfigPath.getConvertedFilesPath();
         String input = fileConvertPath + audioParameter.getMd5() + suffix + audioParameter.getFormat();
