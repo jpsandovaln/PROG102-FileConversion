@@ -149,16 +149,6 @@ public class RequestVideoParameterTest {
         assertEquals(expected, actual);
     }
     @Test
-    public void nullFileValidationTest() {
-        Throwable exception = Assertions.assertThrows(
-                NullPointerException.class, () -> {
-                    requestVideoParameter.setExportFormat(".mp3");
-                    requestVideoParameter.setFile(null);
-                    requestVideoParameter.validate();
-                }
-        );
-    }
-    @Test
     public void emptyFileNameValidationTest() {
         File file = new File(" ");
         Throwable exception = Assertions.assertThrows(
