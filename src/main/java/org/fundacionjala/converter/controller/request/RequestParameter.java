@@ -100,10 +100,10 @@ public abstract class RequestParameter {
         }
 
         if (!this.generateMD5(new FileUploadService().saveTmpFile(file)).equals(md5)) {
-            throw new Exception("Faild in the md5");
+            throw new Exception("Failed in the md5");
         }
         if (this.getMd5() == null || "".equals(this.getMd5())) {
-            throw new Exception("failed md5 null");
+            throw new Exception("Failed md5 null");
         }
     }
 

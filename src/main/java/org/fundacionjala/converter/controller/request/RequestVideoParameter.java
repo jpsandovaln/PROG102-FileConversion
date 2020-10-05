@@ -8,9 +8,24 @@
  */
 package org.fundacionjala.converter.controller.request;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import org.fundacionjala.converter.model.commons.exception.InvalidDataException;
+import org.fundacionjala.converter.model.commons.validation.CodecValidation;
+import org.fundacionjala.converter.model.commons.validation.IValidationStrategy;
+import org.fundacionjala.converter.model.commons.validation.ValidationContext;
+import org.fundacionjala.converter.model.commons.validation.NotNullOrEmpty;
+import org.fundacionjala.converter.model.commons.validation.FramesGifValidation;
+import org.fundacionjala.converter.model.commons.validation.GifValidation;
+
 public class RequestVideoParameter extends RequestMultimediaParameter {
 
-    private static final String VIDEO_CODEC_SUPPORTED = "h264";
+    private static final String MOV = ".mov";
+    private static final String GIF = ".gif";
+    private static final String LOOP_FOREVER = "0";
+    private static final String NO_LOOP = "-1";
+    private static final String CODEC = "mp3";
     private String videoCodec;
     private String frames;
     private String controlLoop;
@@ -77,17 +92,35 @@ public class RequestVideoParameter extends RequestMultimediaParameter {
     }
 
     /**
-     * Validates video parameters
+     * Validates the video parameters
      * @throws Exception
+     * @throws InvalidDataException
      */
     @Override
-    public void validate() throws Exception {
+    public void validate() throws Exception, InvalidDataException {
+        List<IValidationStrategy> validationStrategyList;
+        if (this.getExportFormat().equals(MOV)) {
+            this.setCodec(CODEC);
+        } else {
+            validationStrategyList = new ArrayList<>();
+            if (this.getExportFormat().equals(GIF)) {
+                validationStrategyList.add(new NotNullOrEmpty("frames", this.frames));
+                validationStrategyList.add(new NotNullOrEmpty("controlLoop", this.controlLoop));
+                validationStrategyList.add(new NotNullOrEmpty("duration", this.getDuration()));
+                validationStrategyList.add(new NotNullOrEmpty("start", this.getStart()));
+                validationStrategyList.add(new NotNullOrEmpty("secondsToOutput", this.getSecondsToOutput()));
+                validationStrategyList.add(new FramesGifValidation(this.frames));
+                validationStrategyList.add(new GifValidation(this.getDuration(), this.getStart(), this.getSecondsToOutput()));
+                if ((!this.controlLoop.equals(LOOP_FOREVER)) || (!this.controlLoop.equals(NO_LOOP))) {
+                    new Exception("Invalid value of controlLoop");
+                }
+            } else {
+                validationStrategyList.add(new NotNullOrEmpty("videoCodec", this.videoCodec));
+                validationStrategyList.add(new CodecValidation(this.videoCodec));
+            }
+            ValidationContext context = new ValidationContext(validationStrategyList);
+            context.validation();
+        }
         super.validate();
-        if (this.videoCodec == null || "".equals(this.videoCodec)) {
-            throw new Exception("failed video Codec empty");
-        }
-        if (!this.videoCodec.equals(VIDEO_CODEC_SUPPORTED)) {
-            throw new Exception("Invalid value of video Codec");
-        }
     }
 }

@@ -32,7 +32,6 @@ dependencies {
 	implementation('io.jsonwebtoken:jjwt:0.9.1')
 	compileOnly 'org.projectlombok:lombok'
 	runtimeOnly 'mysql:mysql-connector-java'
-	compile('com.h2database:h2')
 	developmentOnly 'org.springframework.boot:spring-boot-devtools'
 	compile 'com.itextpdf:itext7-core:7.0.2'
 	compile group: "org.apache.poi", name: "poi", version: "3.9"

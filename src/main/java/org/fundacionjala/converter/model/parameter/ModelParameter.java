@@ -13,13 +13,7 @@ public abstract class ModelParameter {
 
   public ModelParameter() {
   }
-  /**
-   * Sets  value
-   * @param md5
-   */
-  public void setMd5(final String md5) {
-    this.md5 = md5;
-  }
+
   public ModelParameter(final String inputFile, final String outputFile, final String md5) {
     this.inputFile = inputFile;
     this.outputFile = outputFile;
@@ -31,6 +25,14 @@ public abstract class ModelParameter {
     this.outputFile = outputFile;
     this.md5 = md5;
     this.format = format;
+  }
+
+  /**
+   * Sets md5 value
+   * @param md5
+   */
+  public void setMd5(final String md5) {
+    this.md5 = md5;
   }
 
   /**
