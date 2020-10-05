@@ -30,8 +30,9 @@ public class VideoModel implements ICommand<VideoParameter> {
      * @param videoParameter - the reference VideoParameter with parameters of video
      * @return List<String> - list of commands to convert
      * @throws InvalidDataException
+     * @throws NullPointerException
      */
-    public List<String> convert(final VideoParameter videoParameter) throws InvalidDataException {
+    public List<String> convert(final VideoParameter videoParameter) throws InvalidDataException, NullPointerException {
         String format = videoParameter.getFormat();
         if (format.equals(FormatValidation.FORMAT_MP4)) {
             videoParameter.validate();
@@ -41,7 +42,8 @@ public class VideoModel implements ICommand<VideoParameter> {
         } else if (format.equals(FormatValidation.FORMAT_GIF)) {
             String newName = videoParameter.getMd5() + GIF;
             videoParameter.setName(newName);
-            GifValidation gifValidation = new GifValidation(videoParameter.getDuration(), videoParameter.getStart(), videoParameter.getSecondsToOutput());
+            GifValidation gifValidation = new GifValidation(videoParameter.getDuration(), videoParameter.getStart(),
+                    videoParameter.getSecondsToOutput());
             gifValidation.validate();
             return convertGif(videoParameter);
         } else if (format.equals(FormatValidation.FORMAT_MOV)) {

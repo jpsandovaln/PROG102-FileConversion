@@ -1,8 +1,11 @@
 package org.fundacionjala.converter.model.command.multimedia;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.security.NoSuchAlgorithmException;
 import java.util.List;
 import java.util.concurrent.ExecutionException;
@@ -11,6 +14,7 @@ import java.util.ArrayList;
 import org.fundacionjala.converter.model.commons.exception.InvalidDataException;
 import org.fundacionjala.converter.model.configPath.ConfigPath;
 import org.fundacionjala.converter.model.parameter.multimedia.VideoParameter;
+import org.junit.After;
 import org.junit.jupiter.api.Test;
 
 public class VideoModelTest {
@@ -31,6 +35,14 @@ public class VideoModelTest {
     String audioCodec = "mp3";
     String videoCodec = "h264";
 
+    @After
+    public void clean() throws IOException {
+        Files.deleteIfExists(Path.of("storage/convertedFiles/95635711ebd6ec96be366c0e20ddf2b8(mov).mov"));
+        Files.deleteIfExists(Path.of("storage/convertedFiles/95635711ebd6ec96be366c0e20ddf2b8(mp4).mp4"));
+        Files.deleteIfExists(Path.of("storage/convertedFiles/95635711ebd6ec96be366c0e20ddf2b8(gif).gif"));
+        Files.deleteIfExists(Path.of("storage/convertedFiles/95635711ebd6ec96be366c0e20ddf2b8(thumbnail).gif"));
+    }
+    
     @Test
     public void testConvertMov() throws IOException, InvalidDataException, NoSuchAlgorithmException,
             InterruptedException, ExecutionException {
@@ -64,10 +76,6 @@ public class VideoModelTest {
             InterruptedException, ExecutionException {
         String expected = "[" + ConfigPath.getVideoAudioTool() + ", -i, storage/inputFiles/calculadora.mp4, -ss, 0:00:15, -t, 5, -vf, \"fps=, 21, ,scale=320:-1:flags=lanczos,split[s0][s1];[s0]palettegen[p];[s1][p]paletteuse\", -loop, 1, storage/convertedFiles/95635711ebd6ec96be366c0e20ddf2b8(gif).gif]";
         listParameters = new ArrayList<String>();
-        vParameter.setOutputFiles(new ArrayList <>());
-        vParameter.setInputFile("storage/inputFiles/calculadora.mp4");
-        vParameter.setOutputFile(ConfigPath.getConvertedFilesPath());
-        vParameter.setFormat(".gif");
         vParameter.setDuration(duration);
         vParameter.setStart(start);
         vParameter.setSecondsToOutput(secondsToOutput);
@@ -90,5 +98,11 @@ public class VideoModelTest {
         vParameter.setExtractThumbnail(extractThumbnail);
         List<String> actual = vFacade.convertVideo(vParameter);
         assertEquals(expected, actual.get(1).toString());
+    }
+    @Test
+    public void testConvertThrowsNullParameterExceptionWhenVideoParameterIsNull() {
+        Throwable exception = assertThrows(
+            NullPointerException.class, () -> vModel.convert(null));
+        assertEquals(null, exception.getMessage());
     }
 }
