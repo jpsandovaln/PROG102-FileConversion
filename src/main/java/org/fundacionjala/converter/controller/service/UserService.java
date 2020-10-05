@@ -106,7 +106,7 @@ public class UserService implements UserDetailsService {
     }
 
     /**
-     * Create an userDetails
+     * Creates an userDetails
      * @param username- the reference to the user authenticate
      */
     @Override
@@ -126,7 +126,7 @@ public class UserService implements UserDetailsService {
     }
 
     /**
-     * Create a list<GrantedAuthority> of roles
+     * Creates a list<GrantedAuthority> of roles
      * @param rol- the reference to the user authenticate
      * @return auths, a list<GrantedAuthority>
      */

@@ -82,8 +82,8 @@ public class MetadataController {
     }
 
     /**
-     *
-     * @param parameter
+     * Executes the command list
+     * @param parameter - the reference ImageParameter to set parameters
      * @throws InterruptedException
      * @throws ExecutionException
      * @throws IOException
