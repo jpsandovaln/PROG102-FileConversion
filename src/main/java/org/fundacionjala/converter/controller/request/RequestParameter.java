@@ -8,7 +8,7 @@
  */
 package org.fundacionjala.converter.controller.request;
 
-import org.fundacionjala.converter.model.ChecksumMD5;
+import org.fundacionjala.converter.model.utility.ChecksumMD5;
 import org.fundacionjala.converter.database.entity.File;
 import org.fundacionjala.converter.controller.service.FileService;
 import org.fundacionjala.converter.controller.service.FileUploadService;
