@@ -1,6 +1,6 @@
 package org.fundacionjala.converter.model.parameter;
 
-import org.fundacionjala.converter.model.ChecksumMD5;
+import org.fundacionjala.converter.model.utility.ChecksumMD5;
 
 import java.io.IOException;
 import java.security.NoSuchAlgorithmException;

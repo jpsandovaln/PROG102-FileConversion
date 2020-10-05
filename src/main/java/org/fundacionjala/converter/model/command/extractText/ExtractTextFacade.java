@@ -9,7 +9,7 @@
 package org.fundacionjala.converter.model.command.extractText;
 
 import org.fundacionjala.converter.executor.Executor;
-import org.fundacionjala.converter.model.ChecksumMD5;
+import org.fundacionjala.converter.model.utility.ChecksumMD5;
 import org.fundacionjala.converter.model.commons.exception.ExtractTextException;
 import org.fundacionjala.converter.model.commons.validation.FormatValidation;
 import org.fundacionjala.converter.model.configPath.ConfigPath;

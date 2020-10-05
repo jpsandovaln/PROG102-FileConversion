@@ -1,8 +1,7 @@
 package org.fundacionjala.converter.model;
 
-import org.fundacionjala.converter.model.ChecksumMD5;
+import org.fundacionjala.converter.model.utility.ChecksumMD5;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.Assertions;
 
 import static org.junit.Assert.assertEquals;
 import java.io.IOException;

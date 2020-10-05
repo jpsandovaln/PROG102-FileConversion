@@ -6,7 +6,7 @@
  * Information and shall use it only in accordance with the terms of the
  * license agreement you entered into with Fundacion Jala
  */
-package org.fundacionjala.converter.model;
+package org.fundacionjala.converter.model.utility;
 
 import java.io.File;
 import java.io.FileInputStream;
