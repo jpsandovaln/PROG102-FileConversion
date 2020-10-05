@@ -62,7 +62,6 @@ public class UserService implements UserDetailsService {
                 user.setPassword(passCrypt);
             }
             userRepository.save(user);
-            System.out.println("user saved");
         } catch (Exception e) {
             e.printStackTrace();
             System.out.println(e.getMessage());
@@ -84,10 +83,8 @@ public class UserService implements UserDetailsService {
                 userTemp.setUsername(user.getUsername());
                 userTemp.setRol(user.getRol());
                 userRepository.save(userTemp);
-                System.out.println("User updated");
             } catch (NullAttributeException e) {
                 e.printStackTrace();
-                System.out.println(e.getMessage());
             }
         } else {
             throw new NonExistentException("update");
@@ -103,7 +100,6 @@ public class UserService implements UserDetailsService {
         User userTemp = userRepository.getUserById(id);
         if (userTemp != null) {
             userRepository.deleteById(id);
-            System.out.println("user deleted");
         } else {
             throw new NonExistentException("delete");
         }
