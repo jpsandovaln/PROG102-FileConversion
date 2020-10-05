@@ -2,6 +2,7 @@ package org.fundacionjala.converter.model.command.multimedia;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.io.IOException;
 import java.nio.file.Files;
@@ -22,7 +23,7 @@ public class VideoModelTest {
     private static final String duration = "0:00:44";
     private static final String start = "0:00:15";
     private static final String secondsToOutput = "5";
-    private static final String controlLoop = "1";
+    private static final String controlLoop = "0";
     private static final String frames = "21";
     private static final boolean extractThumbnail = true;
     String md5 = "95635711ebd6ec96be366c0e20ddf2b8";
@@ -74,15 +75,19 @@ public class VideoModelTest {
     @Test
     public void testConvertGif() throws IOException, InvalidDataException, NoSuchAlgorithmException,
             InterruptedException, ExecutionException {
-        String expected = "[" + ConfigPath.getVideoAudioTool() + ", -i, storage/inputFiles/calculadora.mp4, -ss, 0:00:15, -t, 5, -vf, \"fps=, 21, ,scale=320:-1:flags=lanczos,split[s0][s1];[s0]palettegen[p];[s1][p]paletteuse\", -loop, 1, storage/convertedFiles/95635711ebd6ec96be366c0e20ddf2b8(gif).gif]";
+        //String expected = "[" + ConfigPath.getVideoAudioTool() + ", -i, storage/inputFiles/calculadora.mp4, -ss, 0:00:15, -t, 5, -vf, \"fps=, 21, ,scale=320:-1:flags=lanczos,split[s0][s1];[s0]palettegen[p];[s1][p]paletteuse\", -loop, 1, storage/convertedFiles/95635711ebd6ec96be366c0e20ddf2b8(gif).gif]";
         listParameters = new ArrayList<String>();
+        vParameter.setInputFile("storage/inputFiles/calculadora.mp4");
+        vParameter.setOutputFile(ConfigPath.getConvertedFilesPath());
+        vParameter.setMd5(md5);
+        vParameter.setFormat(".gif");
         vParameter.setDuration(duration);
         vParameter.setStart(start);
         vParameter.setSecondsToOutput(secondsToOutput);
         vParameter.setFrames(frames);
         vParameter.setControlLoop(controlLoop);
-        List<String> actual = vModel.createCommand(vParameter).get(0);
-        assertEquals(expected, actual.toString());
+        int actual = vFacade.convertVideo(vParameter).size();
+        assertTrue(actual > 0);
     }
     @Test
     public void testExtractThumbnail() throws IOException, InvalidDataException, NoSuchAlgorithmException,

@@ -9,7 +9,6 @@ import java.io.File;
 
 import static org.junit.jupiter.api.Assertions.*;
 import org.fundacionjala.converter.model.commons.exception.InvalidDataException;
-import org.junit.jupiter.api.BeforeEach;
 import org.springframework.web.multipart.MultipartFile;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;

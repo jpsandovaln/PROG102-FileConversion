@@ -14,7 +14,6 @@ import org.fundacionjala.converter.model.parameter.multimedia.VideoParameter;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
 
 public class VideoFacadeTest {
@@ -26,10 +25,6 @@ public class VideoFacadeTest {
         facade = new VideoFacade();
     }
 
-    @AfterAll
-    public void clean() throws IOException {
-        Files.deleteIfExists(Path.of("storage/convertedFiles/95635711ebd6ec96be366c0e20ddf2b8(mp4).mp4"));
-    }
     @Test
     public void testNullArgumentIsPassedToSetVideoModel() {
         try {
@@ -52,5 +47,9 @@ public class VideoFacadeTest {
         parameter.setExtractMetadata(true);
         facade.convertVideo(parameter);
         assertEquals(expected, parameter.getOutputFiles().size());
+        Files.deleteIfExists(Path.of("storage/convertedFiles/95635711ebd6ec96be366c0e20ddf2b8(mp4).mp4"));
+        Files.deleteIfExists(Path.of("storage/convertedFiles/95635711ebd6ec96be366c0e20ddf2b8(mp4)_METADATA.json"));
+        Files.deleteIfExists(Path.of("storage/convertedFiles/95635711ebd6ec96be366c0e20ddf2b8(mov).mov"));
+        Files.deleteIfExists(Path.of("storage/convertedFiles/95635711ebd6ec96be366c0e20ddf2b8(mov)_METADATA.json"));
     }
 }

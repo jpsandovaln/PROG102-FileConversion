@@ -3,6 +3,7 @@ package org.fundacionjala.converter.model.command.multimedia;
 import org.junit.After;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
+import org.fundacionjala.converter.model.configPath.ConfigPath;
 import org.fundacionjala.converter.model.parameter.multimedia.AudioParameter;
 
 import java.io.IOException;
@@ -30,7 +31,7 @@ public class AudioModelTest {
         audioParameter.setFormat(".wav");
         audioParameter.setSampleRate("22050");
         audioParameter.setMd5("5ab69eb2751ceeb3120b8c369f5589c9");
-        String expected = "[[/usr/bin/ffmpeg, -y, -i, storage/inputFiles/audio.mp3, -codec:a, libmp3lame, -b:a, 32k, -ac, 1, -ar, 22050, storage/convertedFiles/5ab69eb2751ceeb3120b8c369f5589c9.wav]]";
+        String expected = "[[" + ConfigPath.getVideoAudioTool() + ", -y, -i, storage/inputFiles/audio.mp3, -codec:a, libmp3lame, -b:a, 32k, -ac, 1, -ar, 22050, storage/convertedFiles/5ab69eb2751ceeb3120b8c369f5589c9.wav]]";
         List<List<String>> list = audioModel.createCommand(audioParameter);
         assertEquals(expected, list.toString());
     }
