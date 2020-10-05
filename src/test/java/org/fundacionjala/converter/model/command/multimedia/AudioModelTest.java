@@ -1,16 +1,24 @@
 package org.fundacionjala.converter.model.command.multimedia;
 
+import org.junit.After;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
-
 import org.fundacionjala.converter.model.parameter.multimedia.AudioParameter;
 
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.util.List;
 
 import static org.junit.Assert.assertEquals;
 
 public class AudioModelTest {
-   @Test
+    @After
+    public void clean() throws IOException {
+        Files.deleteIfExists(Path.of("storage/convertedFiles/5ab69eb2751ceeb3120b8c369f5589c9.wav"));
+    }
+
+    @Test
     public void testCreateCommandReturnsAListOfCommand() throws IOException {
         AudioModel audioModel = new AudioModel();
         AudioParameter audioParameter = new AudioParameter();
@@ -22,9 +30,9 @@ public class AudioModelTest {
         audioParameter.setFormat(".wav");
         audioParameter.setSampleRate("22050");
         audioParameter.setMd5("5ab69eb2751ceeb3120b8c369f5589c9");
+        String expected = "[[/usr/bin/ffmpeg, -y, -i, storage/inputFiles/audio.mp3, -codec:a, libmp3lame, -b:a, 32k, -ac, 1, -ar, 22050, storage/convertedFiles/5ab69eb2751ceeb3120b8c369f5589c9.wav]]";
         List<List<String>> list = audioModel.createCommand(audioParameter);
-        assertEquals(13, list.get(0).size());
-        System.out.println(list.get(0));
+        assertEquals(expected, list.toString());
     }
     @Test
     public void testCreateCommandReturnsOutputNameWithMd5() throws IOException {
@@ -73,7 +81,6 @@ public class AudioModelTest {
         audioParameter.setSampleRate("22050");
         audioParameter.setExtractMetadata(true);
         List<List<String>> list = audioModel.createCommand(audioParameter);
-        System.out.println(list.get(1));
         assertEquals(6, list.get(1).size());
     }
     @Test
@@ -93,7 +100,6 @@ public class AudioModelTest {
         audioParameter.setSecondsToOutput("00:01:30");
         audioParameter.setExtractMetadata(true);
         List<List<String>> list = audioModel.createCommand(audioParameter);
-        System.out.println(list.size());
         assertEquals(4, list.size());
     }
 }

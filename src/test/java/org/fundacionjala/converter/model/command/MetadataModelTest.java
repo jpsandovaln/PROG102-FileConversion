@@ -2,15 +2,24 @@ package org.fundacionjala.converter.model.command;
 
 import org.fundacionjala.converter.model.configPath.ConfigPath;
 import org.fundacionjala.converter.model.parameter.metadata.MetadataParameter;
-
+import org.junit.After;
 import org.junit.jupiter.api.Test;
 import static org.junit.Assert.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
+
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
 
 public class MetadataModelTest {
     private String inputFile = "storage/inputFiles/test.mp3";
     private String outputFile = "storage/convertedFiles/";
     private String md5OriginalFile = "e1b3fab24c8af81c1aa13dbbb4e44ff0";
+    
+    @After
+    public void clean() throws IOException {
+        Files.deleteIfExists(Path.of("storage/convertedFiles/e1b3fab24c8af81c1aa13dbbb4e44ff0j_Metadata.json"));
+    }
     @Test
     public void testCreateCommandDetailCommon() {
 

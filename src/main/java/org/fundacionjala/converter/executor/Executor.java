@@ -13,7 +13,7 @@ public class Executor {
   private boolean debugOutput;
 
   public Executor() {
-    debugOutput = true;
+    debugOutput = false;
   }
 
   /**
