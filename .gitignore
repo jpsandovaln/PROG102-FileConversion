@@ -35,7 +35,7 @@ out/
 
 ### Project ###
 /storage/*
-/thirdParty/*
+#/thirdParty/*
 /src/main/resources/application.properties
 application.properties
 bin/
